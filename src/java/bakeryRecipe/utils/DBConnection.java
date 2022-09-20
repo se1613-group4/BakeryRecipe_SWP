@@ -4,7 +4,6 @@
  */
 package bakeryRecipe.utils;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +14,7 @@ import org.apache.tomcat.dbcp.dbcp2.DataSourceConnectionFactory;
 
 /**
  *
- * @author DELL
+ * @author LamVo
  */
 public class DBConnection implements Serializable{
     private static Connection con;

@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebFilter;
 
 /**
  *
- * @author DELL
+ * @author LamVo
  */
 @WebFilter(filterName = "SampleFilter", urlPatterns = {"/*"})
 public class SampleFilter implements Filter {

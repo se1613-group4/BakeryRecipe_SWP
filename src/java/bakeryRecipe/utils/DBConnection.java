@@ -4,7 +4,6 @@
  */
 package bakeryRecipe.utils;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +14,8 @@ import org.apache.tomcat.dbcp.dbcp2.DataSourceConnectionFactory;
 
 /**
  *
- * @author DELL
- */hgvtyrfvutcvjuybhn
+ * @author LamVo
+ */
 public class DBConnection implements Serializable{
     private static Connection con;
     private static String URL="jdbc:mysql://localhost:3306/swp_bakery_recipe";

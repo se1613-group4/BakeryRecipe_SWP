@@ -26,7 +26,7 @@ public class Recipe_tblDTO implements Serializable{
     private Date lastModified;
     private boolean isActived;
     private boolean isHidden;
-    // Constructor
+    // Constructors
     public Recipe_tblDTO() {
     }
 

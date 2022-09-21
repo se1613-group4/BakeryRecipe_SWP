@@ -18,11 +18,11 @@ import org.apache.tomcat.dbcp.dbcp2.DataSourceConnectionFactory;
  */
 public class DBConnection implements Serializable{
     private static Connection con;
-    private static String URL="jdbc:mysql://localhost:3306/swp_bakery_recipe";
+    private static String URL="jdbc:mysql://localhost:3306/bakery_recipe";
     private static String USER="root";
     private static String PASSWORD="123bakeryrecipe123";
  
-    public static Connection getConnection() { //chua test connection
+    public static Connection getConnection() {
         con = null;
         try {
             // driver register

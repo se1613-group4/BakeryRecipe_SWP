@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MainController extends HttpServlet {
     // Function Name (dispatched page)
-    private final String HOME_PAGE = "home_page.jsp";
+    private final String HOME_PAGE = "index.jsp";
     //...
     
     /**

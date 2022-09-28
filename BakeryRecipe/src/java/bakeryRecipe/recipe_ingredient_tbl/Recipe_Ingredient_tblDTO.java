@@ -15,17 +15,21 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
     private int recipeId;
     private int ingredientId;
     private String unit;
-    private int quality;
+    private int quantity;
+    private String ingredientName;
     // Constructors
     public Recipe_Ingredient_tblDTO() {
     }
 
-    public Recipe_Ingredient_tblDTO(int recipeId, int ingredientId, String unit, int quality) {
+    public Recipe_Ingredient_tblDTO(int recipeId, int ingredientId, String unit, int quantity, String ingredientName) {
         this.recipeId = recipeId;
         this.ingredientId = ingredientId;
         this.unit = unit;
-        this.quality = quality;
+        this.quantity = quantity;
+        this.ingredientName = ingredientName;
     }
+
+    
     // Getters
 
     public int getRecipeId() {
@@ -40,9 +44,14 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
         return unit;
     }
 
-    public int getQuality() {
-        return quality;
+    public int getQuantity() {
+        return quantity;
     }
+
+    public String getIngredientName() {
+        return ingredientName;
+    }
+    
     // Setters
     public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
@@ -56,8 +65,13 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
         this.unit = unit;
     }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
+
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
+    }
+    
     
 }

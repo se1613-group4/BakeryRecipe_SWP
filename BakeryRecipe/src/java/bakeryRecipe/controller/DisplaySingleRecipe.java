@@ -5,9 +5,13 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LamVo
  */
-public class MainController extends HttpServlet {
-    // Function Name (dispatched page)
-    private final String HOME_PAGE = "index.jsp";
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
+@WebServlet(name = "DisplaySingleRecipe", urlPatterns = {"/DisplaySingleRecipe"})
+public class DisplaySingleRecipe extends HttpServlet {
+    
+    private final String RECIPE_NOT_FOUND_PAGE = "error_404.html";
+    private final String SINGLE_RECIPE_PAGE = "single_recipe.jsp";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +39,19 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String action = request.getParameter("btaction");
-        String url = HOME_PAGE_CONTROLLER;
+        String url = RECIPE_NOT_FOUND_PAGE;
         try {
-            if (action == null) {
-                // url = current view page --do nothing
-            } // update new function dispatch here
-            // else {...} 
+            if (request.getParameter("recipeId") != null) {
+                int recipeId = Integer.parseInt(request.getParameter("recipeId"));
+                //1. Call DAO (method)
+                Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+                Recipe_tblDTO recipeDto = recipeDao.getRecipe(recipeId);
+                //2. Process result
+                request.setAttribute("RECIPE_INFO", recipeDto);
+                url = SINGLE_RECIPE_PAGE;
+            }
+        } catch (SQLException ex) {
+            log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

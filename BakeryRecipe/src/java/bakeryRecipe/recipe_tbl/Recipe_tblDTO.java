@@ -84,6 +84,7 @@ public class Recipe_tblDTO implements Serializable{
         this.category = category;
         this.image = image;
     }
+
     
     // Getters
     public int getRecipeId() {

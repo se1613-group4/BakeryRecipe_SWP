@@ -44,25 +44,35 @@
             <i class="fas fa-angle-double-up"></i>
         </a>
         <!-- ScrollUp End Here -->                 
-        
+
         <p>This is my jsp home page</p>
-        
+
         <!-- Header Area Start Here -->
         <%@include file="header.html" %>
         <!-- Header Area End Here -->
-        
+
+        <!-- Search input -->
+        <div class="col-lg-4">
+            <div class="nav-action-elements-layout3">
+                <form class="search-form" action="MainController">
+                    <input type="text" id="ooooo" value="" placeholder="Type here........" name="txtSearchValue"/>
+                    <button type="submit" class="search-btn" value="Search" name="btAction"><i class="flaticon-search"></i></button>
+                </form>
+            </div>
+        </div>
+
         <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
         <section class="ranna-slider-area">
-            <div class="container">
+            <div class="container">                
                 <div class="rc-carousel nav-control-layout2" data-loop="true" data-items="30" data-margin="5"
-                    data-autoplay="false" data-autoplay-timeout="5000" data-smart-speed="700" data-dots="false"
-                    data-nav="true" data-nav-speed="false" data-r-x-small="1" data-r-x-small-nav="true"
-                    data-r-x-small-dots="false" data-r-x-medium="1" data-r-x-medium-nav="true" data-r-x-medium-dots="false"
-                    data-r-small="1" data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
-                    data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1" data-r-large-nav="true"
-                    data-r-large-dots="false" data-r-extra-large="1" data-r-extra-large-nav="true"
-                    data-r-extra-large-dots="false">
-                    
+                     data-autoplay="false" data-autoplay-timeout="5000" data-smart-speed="700" data-dots="false"
+                     data-nav="true" data-nav-speed="false" data-r-x-small="1" data-r-x-small-nav="true"
+                     data-r-x-small-dots="false" data-r-x-medium="1" data-r-x-medium-nav="true" data-r-x-medium-dots="false"
+                     data-r-small="1" data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
+                     data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1" data-r-large-nav="true"
+                     data-r-large-dots="false" data-r-extra-large="1" data-r-extra-large-nav="true"
+                     data-r-extra-large-dots="false">
+
                     <c:set var="top3Recipes" value="${sessionScope.TOP3_RECIPES}"/>
                     <c:forEach var="recipeDto" items="${top3Recipes}" varStatus="counter">
                         <c:set var="author" value="${recipeDto.authorInfo}"/>
@@ -71,20 +81,20 @@
                         <c:url var="single_recipe_url" value="DisplaySingleRecipe">
                             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
                         </c:url>
-                        
+
                         <div class="ranna-slider-content-layout1">
-                        <figure class="item-figure"><a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a></figure>
-                        <div class="item-content">
-                            <span class="sub-title">${category.name}</span>
-                            <h2 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h2>                            
-                            <p>${recipeDto.description}</p>
-                            <ul class="entry-meta">
-                                <li><a href="#"><i class="fas fa-clock"></i>${recipeDto.totalTime} Mins</a></li>
-                                <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span> Likes</a></li>
-                            </ul>
-                        </div>
-                    </div> 
+                            <figure class="item-figure"><a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a></figure>
+                            <div class="item-content">
+                                <span class="sub-title">${category.name}</span>
+                                <h2 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h2>                            
+                                <p>${recipeDto.description}</p>
+                                <ul class="entry-meta">
+                                    <li><a href="#"><i class="fas fa-clock"></i>${recipeDto.totalTime} Mins</a></li>
+                                    <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                    <li><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span> Likes</a></li>
+                                </ul>
+                            </div>
+                        </div> 
                     </c:forEach>
                 </div>
             </div>
@@ -110,29 +120,29 @@
                                     <c:param name="recipeId" value="${recipeDto.recipeId}"/>
                                 </c:url>
                                 <div class="col-12">                                
-                                <div class="product-box-layout1">
-                                    <figure class="item-figure"><a href="${single_recipe_url}"><img src="${image.imgLink}"
-                                                alt="Product"></a></figure>
-                                    <div class="item-content">
-                                        <span class="sub-title">${category.name}</span>
-                                        <h2 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h2>
-                                        <p>${recipeDto.description}</p>
-                                        <ul class="entry-meta">
-                                            <li><a href="#"><i class="fas fa-clock"></i>${recipeDto.totalTime} Mins</a></li>
-                                            <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
-                                            <li><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span> Likes</a></li>
-                                        </ul>
+                                    <div class="product-box-layout1">
+                                        <figure class="item-figure"><a href="${single_recipe_url}"><img src="${image.imgLink}"
+                                                                                                        alt="Product"></a></figure>
+                                        <div class="item-content">
+                                            <span class="sub-title">${category.name}</span>
+                                            <h2 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h2>
+                                            <p>${recipeDto.description}</p>
+                                            <ul class="entry-meta">
+                                                <li><a href="#"><i class="fas fa-clock"></i>${recipeDto.totalTime} Mins</a></li>
+                                                <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                                <li><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span> Likes</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> 
+                                </div> 
                             </c:forEach>                  
-                                                        
+
                         </div>
                         <div class="ranna-ad-box">
                             <a href="#"><img src="img/figure/figure1.jpg" alt="ad"></a>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
                         <!-- Top 5 Recipes-->
                         <div class="widget">                            
@@ -167,7 +177,7 @@
                                 </ul>
                             </div>
                         </div>
-                                    
+
                         <!-- Category List-->
                         <div class="widget">
                             <div class="section-heading heading-dark">
@@ -224,7 +234,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                         <div class="product-box-layout2">
                             <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product11.jpg"
-                                        alt="Product"></a></figure>
+                                                                                           alt="Product"></a></figure>
                             <div class="item-content">
                                 <span class="sub-title">BREAKFAST</span>
                                 <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
@@ -240,7 +250,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                         <div class="product-box-layout2">
                             <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product12.jpg"
-                                        alt="Product"></a></figure>
+                                                                                           alt="Product"></a></figure>
                             <div class="item-content">
                                 <span class="sub-title">DESERT</span>
                                 <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
@@ -256,7 +266,7 @@
                     <div class="col-lg-4 d-block d-md-none d-lg-block col-sm-12 col-12">
                         <div class="product-box-layout2">
                             <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product13.jpg"
-                                        alt="Product"></a></figure>
+                                                                                           alt="Product"></a></figure>
                             <div class="item-content">
                                 <span class="sub-title">JUICE</span>
                                 <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>                                
@@ -285,7 +295,7 @@
                             <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="product-box-layout3">
                                     <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product14.jpg"
-                                                alt="Product"></a></figure>
+                                                                                                   alt="Product"></a></figure>
                                     <div class="item-content">
                                         <span class="sub-title">BREAKFAST</span>
                                         <h3 class="item-title"><a href="single-recipe1.html">Asian Chicken Noodles</a></h3>
@@ -312,7 +322,7 @@
                             <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="product-box-layout3">
                                     <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product15.jpg"
-                                                alt="Product"></a></figure>
+                                                                                                   alt="Product"></a></figure>
                                     <div class="item-content">
                                         <span class="sub-title">SEA FOOD</span>
                                         <h3 class="item-title"><a href="single-recipe1.html">Italiano Salad Mixed</a></h3>
@@ -339,7 +349,7 @@
                             <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="product-box-layout3">
                                     <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product16.jpg"
-                                                alt="Product"></a></figure>
+                                                                                                   alt="Product"></a></figure>
                                     <div class="item-content">
                                         <span class="sub-title">SALAD</span>
                                         <h3 class="item-title"><a href="single-recipe1.html">Maxican Dessert</a></h3>
@@ -366,7 +376,7 @@
                             <div class="d-lg-block d-xl-none col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="product-box-layout3">
                                     <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product14.jpg"
-                                                alt="Product"></a></figure>
+                                                                                                   alt="Product"></a></figure>
                                     <div class="item-content">
                                         <span class="sub-title">BREAKFAST</span>
                                         <h3 class="item-title"><a href="single-recipe1.html">Asian Chicken Noodles</a></h3>
@@ -399,14 +409,14 @@
                             </div>
                             <div class="widget-featured-feed">
                                 <div class="rc-carousel nav-control-layout1" data-loop="true" data-items="3"
-                                    data-margin="5" data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700"
-                                    data-dots="false" data-nav="true" data-nav-speed="false" data-r-x-small="1"
-                                    data-r-x-small-nav="true" data-r-x-small-dots="false" data-r-x-medium="1"
-                                    data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
-                                    data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
-                                    data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1"
-                                    data-r-large-nav="true" data-r-large-dots="false" data-r-extra-large="1"
-                                    data-r-extra-large-nav="true" data-r-extra-large-dots="false">
+                                     data-margin="5" data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700"
+                                     data-dots="false" data-nav="true" data-nav-speed="false" data-r-x-small="1"
+                                     data-r-x-small-nav="true" data-r-x-small-dots="false" data-r-x-medium="1"
+                                     data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
+                                     data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
+                                     data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1"
+                                     data-r-large-nav="true" data-r-large-dots="false" data-r-extra-large="1"
+                                     data-r-extra-large-nav="true" data-r-extra-large-dots="false">
                                     <div class="featured-box-layout1">
                                         <div class="item-img">
                                             <img src="img/product/product17.jpg" alt="Brand" class="img-fluid">
@@ -487,50 +497,50 @@
             </div>
         </section>
         <!-- Popular Recipe End Here -->
-        
+
         <!-- Footer Area Start Here -->
         <%@include file="footer.html" %>
         <!-- Footer Area End Here -->
-        
-    <!-- Modal Start-->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="title-default-bold mb-none">Login</div>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form class="login-form">
-                        <input class="main-input-box" type="text" placeholder="User Name" />
-                        <input class="main-input-box" type="password" placeholder="Password" />
-                        <div class="inline-box mb-5 mt-4">
-                            <div class="checkbox checkbox-primary">
-                                <input id="modal-checkbox" type="checkbox">
-                                <label for="modal-checkbox">Remember Me</label>
+
+        <!-- Modal Start-->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="title-default-bold mb-none">Login</div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login-form">
+                            <input class="main-input-box" type="text" placeholder="User Name" />
+                            <input class="main-input-box" type="password" placeholder="Password" />
+                            <div class="inline-box mb-5 mt-4">
+                                <div class="checkbox checkbox-primary">
+                                    <input id="modal-checkbox" type="checkbox">
+                                    <label for="modal-checkbox">Remember Me</label>
+                                </div>
+                                <label class="lost-password"><a href="#">Lost your password?</a></label>
                             </div>
-                            <label class="lost-password"><a href="#">Lost your password?</a></label>
+                            <div class="inline-box mb-5 mt-4">
+                                <button class="btn-fill" type="submit" value="Login">Login</button>
+                                <a href="#" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>
+                            </div>
+                        </form>
+                        <label>Login connect with your Social Network</label>
+                        <div class="login-box-social">
+                            <ul>
+                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                            </ul>
                         </div>
-                        <div class="inline-box mb-5 mt-4">
-                            <button class="btn-fill" type="submit" value="Login">Login</button>
-                            <a href="#" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>
-                        </div>
-                    </form>
-                    <label>Login connect with your Social Network</label>
-                    <div class="login-box-social">
-                        <ul>
-                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>    
-    <!-- Modal End-->
-        
+        </div>    
+        <!-- Modal End-->
+
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <!-- Bootstrap Js -->

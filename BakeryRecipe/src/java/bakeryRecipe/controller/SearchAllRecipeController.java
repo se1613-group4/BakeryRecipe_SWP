@@ -4,7 +4,14 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author LamVo
+ * @author thongnt
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
 
+@WebServlet(name = "SearchAllRecipeController", urlPatterns = {"/SearchAllRecipeController"})
+public class SearchAllRecipeController extends HttpServlet {
     private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
+    private final String SEARCH_RESULT_PAGE = "search.jsp";
+    
 
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,21 +42,28 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
+        
+        String url = HOME_PAGE;
+        String searchValue = request.getParameter("txtSearchValue");
+        
         try {
-            if (action == null) {
-            } else 
-                if (action.equals("Search")) {
-                    url = SEARCH_CONTROLER;
-                }
-
-        } finally {
+             if (!searchValue.trim().isEmpty()) {
+            //1. Call DAO
+                 Recipe_tblDAO dao = new Recipe_tblDAO();
+            
+            //2. Process result
+                 List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue);
+            
+            //3. setAttribute to request
+                request.setAttribute("SEARCH_RESULT", result);
+                url = SEARCH_RESULT_PAGE;
+             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

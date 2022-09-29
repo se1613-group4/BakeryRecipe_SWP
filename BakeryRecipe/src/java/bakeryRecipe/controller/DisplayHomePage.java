@@ -1,29 +1,29 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author LamVo
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
-
-    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
+@WebServlet(name = "DisplayHomePage", urlPatterns = {"/DisplayHomePage"})
+public class DisplayHomePage extends HttpServlet {
+    private final String HOME_PAGE = "home_page.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,21 +36,29 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
+        
+        String url = HOME_PAGE;        
         try {
-            if (action == null) {
-            } else 
-                if (action.equals("Search")) {
-                    url = SEARCH_CONTROLER;
-                }
-
+            HttpSession session = request.getSession(true);
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+            
+            recipeDao.loadTopRecipe(3);
+            List<Recipe_tblDTO> top3Recipes = recipeDao.getRecipeDtoList();
+            session.setAttribute("TOP3_RECIPES", top3Recipes);
+            
+            recipeDao.loadTopRecipe(5);
+            List<Recipe_tblDTO> top5Recipes = recipeDao.getRecipeDtoList();
+            session.setAttribute("TOP5_RECIPES", top5Recipes);
+            
+            recipeDao.loadRecentlyRecipe();
+            List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
+            session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
+            
+        } catch (SQLException ex) {
+            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

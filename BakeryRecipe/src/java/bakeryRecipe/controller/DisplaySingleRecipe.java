@@ -1,10 +1,14 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,14 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LamVo
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
-
-    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
+@WebServlet(name = "DisplaySingleRecipe", urlPatterns = {"/DisplaySingleRecipe"})
+public class DisplaySingleRecipe extends HttpServlet {
+    
+    private final String RECIPE_NOT_FOUND_PAGE = "error_404.html";
+    private final String SINGLE_RECIPE_PAGE = "single_recipe.jsp";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,21 +38,24 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
+        
+        String url = RECIPE_NOT_FOUND_PAGE;
         try {
-            if (action == null) {
-            } else 
-                if (action.equals("Search")) {
-                    url = SEARCH_CONTROLER;
-                }
-
+            if (request.getParameter("recipeId") != null) {
+                int recipeId = Integer.parseInt(request.getParameter("recipeId"));
+                //1. Call DAO (method)
+                Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+                Recipe_tblDTO recipeDto = recipeDao.getRecipe(recipeId);
+                //2. Process result
+                request.setAttribute("RECIPE_INFO", recipeDto);
+                url = SINGLE_RECIPE_PAGE;
+            }
+        } catch (SQLException ex) {
+            log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -25,6 +25,11 @@ public class Image_tblDTO implements Serializable{
         this.recipeId = recipeId;
         this.imgLink = imgLink;
     }
+    
+    public Image_tblDTO(int imgId, String imgLink) {
+        this.imgId = imgId;
+        this.imgLink = imgLink;
+    }
     // Getters
 
     public int getImgId() {

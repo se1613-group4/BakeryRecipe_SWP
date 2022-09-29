@@ -19,12 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
 
-    private final String HOME_PAGE = "index.jsp";
+//    private final String HOME_PAGE = "index.jsp";
     private final String SEARCH_PAGE = "search.jsp";
     private final String SEARCH_CONTROLER = "SearchAllRecipeController";
     private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
     private final String REGISTER_CONTROLLER = "RegisterServlet";
     private final String LOGIN_CONTROLLER = "LoginServlet";
+    private final String CREATE_RECIPE_CONTROLLER = "CreateNewRecipe";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,18 +44,16 @@ public class MainController extends HttpServlet {
         String action = request.getParameter("btAction");
         try {
             if (action == null) {
-            } else 
-                if (action.equals("Search")) {
-                    url = SEARCH_CONTROLER;
-                }
-            else 
-                if (action.equals("Register")) {
-                    url = REGISTER_CONTROLLER;
-                }
-            else 
-                if (action.equals("Login")) {
-                    url = LOGIN_CONTROLLER;
-                }
+                // do nothing
+            } else if (action.equals("Search")) {
+                url = SEARCH_CONTROLER;
+            } else if (action.equals("Register")) {
+                url = REGISTER_CONTROLLER;
+            } else if (action.equals("Login")) {
+                url = LOGIN_CONTROLLER;
+            } else if (action.equals("createRecipe")) {
+                url = CREATE_RECIPE_CONTROLLER;
+            }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

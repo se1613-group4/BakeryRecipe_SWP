@@ -20,6 +20,10 @@ public class User_tblDTO implements Serializable{
     public User_tblDTO() {
     }
 
+    public User_tblDTO(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public User_tblDTO(int userId, Date createdDate) {
         this.userId = userId;
         this.createdDate = createdDate;

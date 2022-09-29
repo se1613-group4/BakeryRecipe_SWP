@@ -51,6 +51,8 @@
         <%@include file="header_user.jsp" %>
         <!-- Header Area End Here -->
         
+        <h1>Welcome, ${sessionScope.USER.userId}</h1>
+
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">

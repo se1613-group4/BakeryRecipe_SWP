@@ -25,6 +25,11 @@ public class Profile_tblDTO implements Serializable{
     public Profile_tblDTO() {
     }
 
+    public Profile_tblDTO(int userId, Date lastModified) {
+        this.userId = userId;
+        this.lastModified = lastModified;
+    }
+
     public Profile_tblDTO(int profileId, int userId, String fullName, String gender, String avatarUrl, String biography, Date lastModified) {
         this.profileId = profileId;
         this.userId = userId;

@@ -6,9 +6,12 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.user_tbl.User_tblDAO;
+import bakeryRecipe.user_tbl.User_tblDTO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.DBConnection;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,8 +30,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
-    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_RESULT_PAGE = "search.jsp";
+    private final String ERROR = "home_page.jsp";
+    private final String SUCCESS = "login.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,29 +45,48 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String url = HOME_PAGE;
-        String register = request.getParameter("btnRegister");
+        String url = ERROR;
+        //String register = request.getParameter("btAction");
         
-        try ( PrintWriter out = response.getWriter()) {
+        try {
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String phoneNumber= request.getParameter("phoneNumber");
             Date lastModified= Date.valueOf(LocalDate.now());
             //make user object
-            Account_tblDTO dto = new Account_tblDTO(0, 0, name, password, email, phoneNumber, lastModified, true, false);
-
+            User_tblDTO userDto=new User_tblDTO(lastModified);
+            Account_tblDTO accDto = new Account_tblDTO(0, 0, name, password, email, phoneNumber, lastModified, true, false);
+            Profile_tblDTO proDto= new Profile_tblDTO(0, 0, name, ERROR, url, email, lastModified);
             //create a database model
-            Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
-            if (dao.saveUser(dto)) {
-            response.sendRedirect("home_page.jsp");
-            } else {
-                    String errorMessage = "User Available";
-                    HttpSession regSession = request.getSession();
-                    regSession.setAttribute("RegError", errorMessage);
-                    response.sendRedirect("registration.jsp");
-                    }
+            User_tblDAO userDao= new User_tblDAO(DBConnection.getConnection());
+            Account_tblDAO accDao = new Account_tblDAO(DBConnection.getConnection());
+            Profile_tblDAO proDao = new Profile_tblDAO();
+            
+            boolean userResult = userDao.CreateUser_tbl();
+            int cuurentUserId = userDao.getCurrentUserId();
+            boolean accResult = accDao.saveUser(accDto, cuurentUserId);
+            boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId);
+            
+//            if (userDao.CreateUser_tbl() && accDao.saveUser(dto) ) {
+//            response.sendRedirect("home_page.jsp");
+//            } else {
+//                    String errorMessage = "User Available";
+//                    HttpSession regSession = request.getSession();
+//                    regSession.setAttribute("RegError", errorMessage);
+//                    response.sendRedirect("registration.jsp");
+//                    }
+            if (userResult && accResult && profileResult) {
+                HttpSession session = request.getSession();
+                session.setAttribute(name, name);
+                response.sendRedirect(SUCCESS);
+                
+            }
 
+        } catch (SQLException ex) {
+            log("Error at RegisterServlet: "+ex.toString());
+        } finally{
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

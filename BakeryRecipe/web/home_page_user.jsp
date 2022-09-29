@@ -50,7 +50,7 @@
         <!-- Header Area Start Here -->
         <%@include file="header_user.html" %>
         <!-- Header Area End Here -->
-        <h1>Welcome, ${sessionScope.USER.username}</h1>
+        <h1>Welcome, ${sessionScope.USER.userId}</h1>
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">

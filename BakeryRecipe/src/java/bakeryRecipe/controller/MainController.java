@@ -22,7 +22,6 @@ public class MainController extends HttpServlet {
     private final String HOME_PAGE = "index.jsp";
     private final String SEARCH_PAGE = "search.jsp";
     private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-
     private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,6 +38,7 @@ public class MainController extends HttpServlet {
         /* TODO output your page here. You may use following sample code. */
         //String url = HOME_PAGE;
         String url = HOME_PAGE_CONTROLLER;
+        String action = request.getParameter("btAction");
         try {
             if (action == null) {
             } else 

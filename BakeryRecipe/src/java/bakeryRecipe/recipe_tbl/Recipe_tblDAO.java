@@ -23,7 +23,15 @@ import java.util.List;
  * @author LamVo
  */
 public class Recipe_tblDAO implements Serializable {
-    // function of DAO code here
+    
+    private List<Recipe_tblDTO> recipeDtoList;
+
+    /**
+     * @return list of recipe DTO (s)
+     */
+    public List<Recipe_tblDTO> getRecipeDtoList() {
+        return this.recipeDtoList;
+    }
 
     /**
      * Search all Recipe object by name
@@ -44,54 +52,58 @@ public class Recipe_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Write SQL String
-                String sql = "select \n"
-                        + "	recipe_id, \n"
-                        + "    user_id, \n"
-                        + "    category_id, \n"
-                        + "    name, \n"
-                        + "    serving,\n"
-                        + "    instruction,\n"
-                        + "    prepare_time,\n"
-                        + "    cook_time,\n"
-                        + "    liked_count, \n"
-                        + "    saved_count,\n"
-                        + "    created_date, \n"
-                        + "    last_modified,\n"
-                        + "    is_actived,\n"
-                        + "    is_hidden \n"
-                        + "from recipe_tbl\n"
-                        + "where name like ? and is_hidden = false;";
+                String sql = "SELECT liked_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
+                        + "		profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, \n"
+                        + "        serving, (prepare_time+cook_time) as total_time, instruction, R.last_modified\n"
+                        + "FROM (select liked_count, recipe_id, name, serving, prepare_time, cook_time, instruction, last_modified, category_id, user_id, is_actived, is_hidden\n"
+                        + "			from recipe_tbl \n"
+                        + "			where is_actived = 1 and is_hidden = 0\n"
+                        + "				and name like ?) as R\n"
+                        + "	inner join category_tbl on R.category_id = category_tbl.category_id\n"
+                        + "	inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
+                        + "    inner join image_tbl on R.recipe_id = image_tbl.recipe_id";
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setString(1, "%" + searchValue + "%");
                 //4. Execute statement
                 rs = stm.executeQuery();
                 //5. Process result= rs.getInt("recipe_id");
-                while (rs.next()) {
-                    int recipeId = rs.getInt("recipe_id");
-                    int userId = rs.getInt("user_id");
-                    int categoryId = rs.getInt("category_id");
-                    String name = rs.getString("name");
+                while (rs.next()) {// get recipe DTO info
+                    int recipeId = rs.getInt("R.recipe_id");
+                    String recipeName = rs.getString("recipe_name");
+                    String description = rs.getString("instruction");
                     int serving = rs.getInt("serving");
-                    int preTime = rs.getInt("prepare_time"); // prepare time in minute
-                    int cookTime = rs.getInt("cook_time"); // cooking time in minute
+                    int totalTime = rs.getInt("total_time");
                     int likedCount = rs.getInt("liked_count");
-                    int savedCount = rs.getInt("saved_count");
-                    Date createdDate = rs.getDate("created_date");
-                    Date lastModified = rs.getDate("last_modified");
-                    boolean isActived = rs.getBoolean("is_actived");
-                    boolean isHidden = rs.getBoolean("is_hidden");
-                    
-                    Recipe_tblDTO dto = new Recipe_tblDTO(recipeId, userId, categoryId, name, serving, preTime, cookTime, likedCount, savedCount, createdDate, lastModified, isActived, isHidden);
-                    
-                    if (recipesList == null)
+                    Date lastModified = rs.getDate("R.last_modified");
+                    // get user's profile DTO info
+                    int userId = rs.getInt("profile_tbl.user_id");
+                    String authorName = rs.getString("profile_tbl.full_name");
+                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
+                    // get category DTO info
+                    int categoryId = rs.getInt("category_tbl.category_id");
+                    String categoryName = rs.getString("category_name");
+                    Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
+                    // get image info
+                    int imgId = rs.getInt("img_id");
+                    String imgLink = rs.getString("img_link");
+                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
+                    // create recipeDTO
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, totalTime, likedCount, lastModified, authorInfo, category, image);
+                    // check recipe dto list not null
+                    if (recipesList == null) {
                         recipesList = new ArrayList<>();
+                    }
                     //recipesList has existed
-                    recipesList.add(dto);
+                    recipesList.add(recipeDto);
                 }//end traverse ResultSet
             }
             return recipesList;
-        } finally {if (stm != null) {
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
                 stm.close();
             }
             if (connection != null) {
@@ -100,14 +112,6 @@ public class Recipe_tblDAO implements Serializable {
         }
     }
 
-    private List<Recipe_tblDTO> recipeDtoList;
-
-    /**
-     * @return list of recipe DTO (s)
-     */
-    public List<Recipe_tblDTO> getRecipeDtoList() {
-        return this.recipeDtoList;
-    }
 
     /**
      * Load top 5 recipe DTO by count of likes

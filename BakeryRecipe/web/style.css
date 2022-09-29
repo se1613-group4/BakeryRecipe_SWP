@@ -23,6 +23,7 @@
 15. Footer Css
 16. 500 Error Page Css --Lam added
 17. 404 Error Page Css --Lam added
+18. Search Page customise Css --Thong added
 /*=======================================================================
 1. Typography 
 =========================================================================*/
@@ -12304,4 +12305,18 @@ svg {
      fill: transparent;
     stroke-dashoffset:  -200;
   } 
+}
+
+
+/* thongnt customizations */
+.input-group {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+    justify-content: center;
 }

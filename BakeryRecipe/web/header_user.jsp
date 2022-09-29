@@ -92,6 +92,10 @@
                                         </button>
                                     </li>
                                     <li>
+                                        <a href="MainController?btAction=DisplayProfile" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                            PROFILE</a>
+                                    </li>
+                                    <li>
                                         <a href="MainController?btAction=createRecipe" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
                                     </li>

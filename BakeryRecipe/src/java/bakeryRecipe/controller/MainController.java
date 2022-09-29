@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "MainController", urlPatterns = {"/MainController"})
 public class MainController extends HttpServlet {
 
-    private final String HOME_PAGE = "index.jsp";
+//    private final String HOME_PAGE = "index.jsp";
     private final String SEARCH_PAGE = "search.jsp";
     private final String SEARCH_CONTROLER = "SearchAllRecipeController";
     private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";

@@ -5,7 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<!doctype html>
 <html class="no-js" lang="">
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -36,6 +38,7 @@
     <!-- Modernizr Js -->
     <script src="js/modernizr-3.6.0.min.js"></script>
 </head>
+
 <body>
     <!--[if lte IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -52,8 +55,9 @@
     <!-- ScrollUp End Here -->
     <div id="wrapper" class="wrapper">
         <!-- Header Area Start Here -->
-        <%@include file="header.html" %>
+        <%@include file="header_1.html" %>
         <!-- Header Area End Here -->
+        <h1>Welcome, ${sessionScope.USER.username}</h1>
         <!-- Slider Area Start Here -->
         <section class="ranna-slider-area">
             <div class="container">
@@ -906,14 +910,16 @@
     <div id="search" class="search-wrap">
         <button type="button" class="close">×</button>
         <form class="search-form">
-            <input type="search" id="ooooo" value="" placeholder="Type here........" name="txtSearchValue"/>
-            <button type="submit" class="search-btn" value="Search" name="btAction"><i class="flaticon-search"></i></button>
+            <input type="search" id="ooooo" value="" placeholder="Type here........" />
+            <button type="submit" class="search-btn"><i class="flaticon-search"></i></button>
         </form>
     </div>
     <!-- Search Box End Here -->
     <!-- Modal Start-->
     <form action="LoginServlet" method="post">
+                    
     <div class="modal fade" id="myModal" role="dialog">
+        
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -922,16 +928,9 @@
                 </div>
                 <div class="modal-body">
                     <form class="login-form">
-                        <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
-                        <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
+                        
+                        <input class="main-input-box" name="txtUsername" type="text" placeholder="UserName" />
                         <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
-                        <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
                         <div class="inline-box mb-5 mt-4">
                             <div class="checkbox checkbox-primary">
                                 <input id="modal-checkbox" type="checkbox">
@@ -958,6 +957,8 @@
         </div>
     </div>
     <p>
+    
+    
     <!-- Modal End-->
     <!-- Jquery Js -->
     <script src="js/jquery-3.3.1.min.js"></script>

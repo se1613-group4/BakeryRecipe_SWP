@@ -4,27 +4,23 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author LamVo
+ * @author PC
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
-
-    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
-    private final String REGISTER_CONTROLLER = "RegisterServlet";
-    private final String LOGIN_CONTROLLER = "LoginServlet";
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
+    private static final String SUCCESS="DisplayHomePage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,29 +33,17 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
-        String action = request.getParameter("btAction");
-        try {
-            if (action == null) {
-            } else 
-                if (action.equals("Search")) {
-                    url = SEARCH_CONTROLER;
-                }
-            else 
-                if (action.equals("Register")) {
-                    url = REGISTER_CONTROLLER;
-                }
-            else 
-                if (action.equals("Login")) {
-                    url = LOGIN_CONTROLLER;
-                }
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+        String url= SUCCESS;
+        try {            
+            HttpSession session = request.getSession(false);
+            if (session!=null) {
+                session.invalidate();
+                
 
+            }
+        }finally{
+            response.sendRedirect(url);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,6 +5,8 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.comment_tbl.Comment_tblDAO;
+import bakeryRecipe.comment_tbl.Comment_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author LamVo
+ * @author LamVo, thongnt
  */
 @WebServlet(name = "DisplaySingleRecipe", urlPatterns = {"/DisplaySingleRecipe"})
 public class DisplaySingleRecipe extends HttpServlet {
@@ -49,6 +51,13 @@ public class DisplaySingleRecipe extends HttpServlet {
                 //2. Process result
                 request.setAttribute("RECIPE_INFO", recipeDto);
                 url = SINGLE_RECIPE_PAGE;
+                //----------------------------
+                //thongnt section
+                //1. Call DAO
+                Comment_tblDAO commentDao = new Comment_tblDAO();
+                Comment_tblDTO commentDto = commentDao.getCommentByRecipeId(recipeId);
+                //2. Process result
+                request.setAttribute("COMMENT_INFO", commentDto);
             }
         } catch (SQLException ex) {
             log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());

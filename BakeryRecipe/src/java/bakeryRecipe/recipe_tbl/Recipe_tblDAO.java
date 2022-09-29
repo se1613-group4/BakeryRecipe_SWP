@@ -327,7 +327,7 @@ public class Recipe_tblDAO implements Serializable {
                 stm.setInt(1, recipeId);
                 //4. execute query
                 rs = stm.executeQuery(); // do phia tren da nap roi nen ko can truyen them tham so de nap vao bo nho
-                //5 process result
+                //5. process result
                 if (rs.next()) {
                     // get recipe DTO info
                     String recipeName = rs.getString("recipe_name");

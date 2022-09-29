@@ -76,9 +76,8 @@
         <c:set var="image" value="${recipeDto.image}"/>
         <c:url var="single_recipe_url" value="DisplaySingleRecipe">
             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-        </c:url>
-        
-        <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">
+        </c:url>        
+        <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
             <div class="container">
                 <div class="row gutters-60">
                     <div class="col-lg-8">
@@ -347,6 +346,11 @@
                                     </div>
                                 </div>             
                             </div>
+                           
+                           
+                           
+                           <jsp:include page="comment.jsp" />
+                           
                             <div class="recipe-reviews">
                                 <div class="section-heading heading-dark">
                                     <h2 class="item-heading">RECIPE REVIEWS</h2>
@@ -407,6 +411,8 @@
                                     </li>
                                 </ul>
                             </div>
+                           
+                           
                             <div class="leave-review">
                                 <div class="section-heading heading-dark">
                                     <h2 class="item-heading">LEAVE A REVIEW</h2>

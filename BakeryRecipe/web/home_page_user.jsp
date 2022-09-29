@@ -48,9 +48,9 @@
         <p>This is my jsp home page</p>
 
         <!-- Header Area Start Here -->
-        <%@include file="header.html" %>
+        <%@include file="header_user.html" %>
         <!-- Header Area End Here -->
-
+        <h1>Welcome, ${sessionScope.USER.username}</h1>
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
@@ -503,7 +503,7 @@
         <!-- Footer Area End Here -->
 
         <!-- Modal Start-->
-    
+    <form action="MainController"  method="post">
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -512,7 +512,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form class="login-form" action="MainController"  method="post">
+                        <form class="login-form">
                             <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
                             <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
                          <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
@@ -548,7 +548,7 @@
                 </div>
             </div>
         </div>
-
+    </form>
         <!-- Modal End-->
 
         <!-- Jquery Js -->

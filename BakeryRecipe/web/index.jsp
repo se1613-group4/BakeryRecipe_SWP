@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!doctype html>
 <html class="no-js" lang="">
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -37,7 +36,6 @@
     <!-- Modernizr Js -->
     <script src="js/modernizr-3.6.0.min.js"></script>
 </head>
-
 <body>
     <!--[if lte IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>

@@ -1,3 +1,10 @@
+<%-- 
+    Document   : header_user
+    Created on : Sep 29, 2022, 5:18:34 PM
+    Author     : LamVo
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html class="no-js" lang="">
     <head>
@@ -74,7 +81,7 @@
                             <div class="nav-action-elements-layout1">
                                 <ul>   
                                     <li>
-                                        Welcome, ...
+                                        Welcome, ${sessionScope.USER.username}
                                     </li>
                                     <!-- Logout Button-->
                                     <li>
@@ -85,8 +92,8 @@
                                         </button>
                                     </li>
                                     <li>
-                                        <a href="submit-recipe.html" class="fill-btn"><i class="flaticon-plus-1"></i>SUBMIT
-                                            RECIPE</a>
+                                        <a href="MainController?btAction=createRecipe" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                            CREATE RECIPE</a>
                                     </li>
                                 </ul>
                             </div>

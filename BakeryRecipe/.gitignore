@@ -9,6 +9,8 @@ build/
 nbbuild/
 dist/
 nbdist/
+database_script/
+bakery_recipe_template/
 .nb-gradle/
 BakeryRecipe/src/java/bakeryRecipe/utils/
 # End of https://www.toptal.com/developers/gitignore/api/netbeans

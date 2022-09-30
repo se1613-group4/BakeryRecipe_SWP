@@ -18,7 +18,7 @@ public class DBConnection implements Serializable {
     private static Connection connection;
     private static String URL = "jdbc:mysql://localhost:3306/bakery_recipe";
     private static String USER = "root";
-    private static String PASSWORD = "123bakeryrecipe123";
+    private static String PASSWORD = "se141158";
     
     // Function: get connection from MySQL
     public static Connection getConnection() throws SQLException {        

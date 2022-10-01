@@ -9,6 +9,18 @@ build/
 nbbuild/
 dist/
 nbdist/
+
+
+#config cua inteliji 
+out/
+.idea/
+build.xml
+.DS_Store
+BakeryRecipe.iml
+
+#config trong team
+/BakeryRecipe/src/java/bakeryRecipe/utils/DBConnection.java
+
 .nb-gradle/
 
 

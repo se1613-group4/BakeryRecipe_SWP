@@ -7,9 +7,12 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +26,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "DisplayHomePage", urlPatterns = {"/DisplayHomePage"})
 public class DisplayHomePage extends HttpServlet {
-    private final String HOME_PAGE = "home_page.jsp";
+//    private final String HOME_PAGE = "home_page.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +40,15 @@ public class DisplayHomePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String url = HOME_PAGE;        
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        
+        // Mapping url        
+        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;        
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();

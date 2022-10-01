@@ -13,16 +13,14 @@ import java.sql.SQLException;
  *
  * @author LamVo
  */
-public class DBConnection implements Serializable {
-
-    private static Connection connection;
-    private static String URL = "jdbc:mysql://localhost:3306/bakery_recipe";
-    private static String USER = "root";
-    private static String PASSWORD = "123bakeryrecipe123";
+public class DBConnection implements Serializable {    
+    private static final String URL = "jdbc:mysql://localhost:3306/bakery_recipe";
+    private static final String USER = "root";
+    private static final String PASSWORD = "123bakeryrecipe123";
     
     // Function: get connection from MySQL
     public static Connection getConnection() throws SQLException {        
-        connection = null;
+        Connection connection = null;
         // Register driver
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         // Get connection

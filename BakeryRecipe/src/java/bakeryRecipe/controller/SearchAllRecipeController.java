@@ -6,10 +6,13 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "SearchAllRecipeController", urlPatterns = {"/SearchAllRecipeController"})
 public class SearchAllRecipeController extends HttpServlet {
-    private final String HOME_PAGE = "index.jsp";
+//    private final String HOME_PAGE = "index.jsp";
     private final String SEARCH_RESULT_PAGE = "search.jsp";
     
 
@@ -40,7 +43,16 @@ public class SearchAllRecipeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String url = HOME_PAGE;
+         /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        
+        // Mapping url         
+        String url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.HOME_PAGE) ;
+        
         String searchValue = request.getParameter("txtSearchValue");
         
         try {

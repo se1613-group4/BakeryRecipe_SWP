@@ -37,57 +37,51 @@
     </head>
 
     <body>
-        <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
-        <c:set var="category" value="${recipeDto.category}"/>
-        <c:set var="commentDto" value="${requestScope.COMMENT_INFO}"/>}
-        <c:set var="userId" value="${commentDto.userId}"/>}
-        <c:set var="commentDetail" value="${commentDto.commentDetail}"/>}
-        <c:set var="createdDate" value="${commentDto.createdDate}"/>}
-        <c:set var="lastModified" value="${commentDto.lastModified}"/>}
-        <c:set var="isActived" value="${commentDto.isActived}"/>}
-        <c:set var="recipeId" value="${commentDto.recipeId}"/>}
-        
-        
-        
-        <div class="recipe-reviews">
-            <div class="section-heading heading-dark">
-                <h2 class="item-heading">RECIPE COMMENTS</h2>
-            </div>
-            <div class="avarage-rating-wrap">
-                <div class="avarage-rating">Avarage Rating: 
-                    <span class="rating-icon-wrap">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                    <span class="rating-number">(5)</span>                                        
+
+        <c:set var="commentsList" value="${requestScope.COMMENTS_LIST}"/>
+        <c:if test="${not empty commentsList}">
+            <div class="recipe-reviews">
+                <div class="section-heading heading-dark">
+                    <h2 class="item-heading">RECIPE COMMENTS</h2>
                 </div>
-                <div class="total-reviews">Total Reviews:<span class="review-number">(02)</span></div>
+                <div class="avarage-rating-wrap">
+                    <div class="total-reviews">Total Comments: <span class="review-number">(${commentsList.size()})</span></div>
+                </div>
+                <ul>
+                    <c:forEach var="commentDto" items="${commentsList}">
+                        <c:set var="userId" value="${commentDto.userId}"/>
+                        <c:set var="fullName" value="${commentDto.fullName}"/>
+                        <c:set var="avtUrl" value="${commentDto.avtUrl}"/>
+                        <c:set var="commentDetail" value="${commentDto.commentDetail}"/>
+                        <c:set var="createdDate" value="${commentDto.createdDate}"/>
+                        <c:set var="lastModified" value="${commentDto.lastModified}"/>
+
+                        <li class="reviews-single-item">
+                            <div class="media media-none--xs">
+                                <img src="${avtUrl}" alt="commenter-avatar" class="media-img-auto">
+                                <div class="media-body">
+                                    <h4 class="comment-title">${fullName}</h4>
+                                    <span class="post-date">${createdDate}</span>
+                                    <p>${commentDetail}</p>
+                                    <ul class="item-rating">
+                                        <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                        <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                        <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                        <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                        <li class="single-item star-empty"><i class="fas fa-star"></i></li>
+                                        <li class="single-item"><span>9<span> / 10</span></span> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </c:forEach>
+                </ul>
             </div>
-            <ul>
-                <li class="reviews-single-item">
-                    <div class="media media-none--xs">
-                        <img src="img/blog/comment1.jpg" alt="Comment" class="media-img-auto">
-                        <div class="media-body">
-                            <h4 class="comment-title">${commentDetail}</h4>
-                            <span class="post-date">${createdDate}</span>
-                            <p>${commentDetail}</p>
-                            <ul class="item-rating">
-                                <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                <li class="single-item star-empty"><i class="fas fa-star"></i></li>
-                                <li class="single-item"><span>9<span> / 10</span></span> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                
-            </ul>
-        </div>
+        </c:if>
+
+
 
 
         <div class="leave-review">

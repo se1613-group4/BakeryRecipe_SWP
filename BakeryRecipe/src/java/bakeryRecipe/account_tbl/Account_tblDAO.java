@@ -5,31 +5,31 @@
  */
 package bakeryRecipe.account_tbl;
 
-import bakeryRecipe.user_tbl.User_tblDTO;
 import java.io.Serializable;
-import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
  * @author LamVo
  */
 public class Account_tblDAO implements Serializable {
+      private List<Account_tblDTO>  accountDtoList;
 
-    Connection con;
+  public List<Account_tblDTO> getaccountDtoList() {
+        return this.accountDtoList;
+    }
 
     public Account_tblDAO(Connection con) {
-        this.con = con;
     }
 
     //for register user 
     public boolean saveUser(Account_tblDTO acc, int currentUserId) {
-
+      Connection con;
         boolean set = false;
         Date now = Date.valueOf(LocalDate.now());
         try {
@@ -38,7 +38,7 @@ public class Account_tblDAO implements Serializable {
                     + " email, phone_number, last_modified, is_actived, is_admin)"
                     + " values ( ?, ?, ?, ?, ?, ?, ?, ?);";
 
-            PreparedStatement pt = this.con.prepareStatement(query);
+            PreparedStatement pt = con.prepareStatement(query);
             pt.setInt(1, currentUserId);
             pt.setString(2, acc.getUsername());
             pt.setString(3, acc.getPassword());
@@ -80,5 +80,9 @@ public class Account_tblDAO implements Serializable {
         }
         return usr;
     }
-
+  public List<Account_tblDTO> getListAccountUser(){
+       
+      
+      return accountDtoList;
+  }
 }

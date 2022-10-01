@@ -1,0 +1,6 @@
+#file an cua mac os 
+.DS_Store
+#cac config rieng
+database_script/
+bakery_recipe_template/
+README.md

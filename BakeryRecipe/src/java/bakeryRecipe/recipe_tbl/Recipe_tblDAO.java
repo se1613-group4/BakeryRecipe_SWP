@@ -140,7 +140,7 @@ public class Recipe_tblDAO implements Serializable {
                 connection.close();
             }
         }
-    }//end searchAllRecipe function
+    }
 
 
     /**

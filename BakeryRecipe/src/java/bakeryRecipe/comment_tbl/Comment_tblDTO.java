@@ -10,17 +10,19 @@ import java.sql.Date;
 
 /**
  *
- * @author LamVo, ThongNT
+ * @author LamVo
  */
 public class Comment_tblDTO implements Serializable{
     private int userId;
     private int recipeId;
-    private String fullName;
-    private String avtUrl;
     private String commentDetail;
     private Date createdDate;
     private Date lastModified;
     private boolean isActived;
+    
+    private String commenterFullName;
+    private int likedCount;
+    private String commenterAvatarImg;
     
     
     // Constructors
@@ -37,15 +39,16 @@ public class Comment_tblDTO implements Serializable{
         this.isActived = isActived;
     }
 
-    public Comment_tblDTO(int userId, int recipeId, String fullName, String avtUrl, String commentDetail, Date createdDate, Date lastModified, boolean isActived) {
+    public Comment_tblDTO(int userId, int recipeId, String commentDetail, Date createdDate, Date lastModified, boolean isActived, String commenterFullName, int likedCount, String commenterAvatarImg) {
         this.userId = userId;
         this.recipeId = recipeId;
-        this.fullName = fullName;
-        this.avtUrl = avtUrl;
         this.commentDetail = commentDetail;
         this.createdDate = createdDate;
         this.lastModified = lastModified;
         this.isActived = isActived;
+        this.commenterFullName = commenterFullName;
+        this.likedCount = likedCount;
+        this.commenterAvatarImg = commenterAvatarImg;
     }
     
     
@@ -75,12 +78,16 @@ public class Comment_tblDTO implements Serializable{
         return isActived;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getCommenterFullName() {
+        return commenterFullName;
     }
 
-    public String getAvtUrl() {
-        return avtUrl;
+    public int getLikedCount() {
+        return likedCount;
+    }
+
+    public String getCommenterAvatarImg() {
+        return commenterAvatarImg;
     }
     
     
@@ -110,11 +117,17 @@ public class Comment_tblDTO implements Serializable{
         this.isActived = isActived;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setCommenterFullName(String commenterFullName) {
+        this.commenterFullName = commenterFullName;
+    }
+
+    public void setLikedCount(int likedCount) {
+        this.likedCount = likedCount;
+    }
+
+    public void setCommenterAvatarImg(String commenterAvatarImg) {
+        this.commenterAvatarImg = commenterAvatarImg;
     }
     
-    public void setAvtUrl(String avtUrl) {
-        this.avtUrl = avtUrl;
-    }
+    
 }

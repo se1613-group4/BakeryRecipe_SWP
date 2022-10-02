@@ -9,13 +9,9 @@ import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import bakeryRecipe.comment_tbl.Comment_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "DisplaySingleRecipe", urlPatterns = {"/DisplaySingleRecipe"})
 public class DisplaySingleRecipe extends HttpServlet {
-
+    
+    private final String RECIPE_NOT_FOUND_PAGE = "error_404.html";
+    private final String SINGLE_RECIPE_PAGE = "single_recipe.jsp";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,13 +40,8 @@ public class DisplaySingleRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //Get site map 
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        // End get site map
-
-        String url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.RECIPE_NOT_FOUND_PAGE);
+        
+        String url = RECIPE_NOT_FOUND_PAGE;
         try {
             if (request.getParameter("recipeId") != null) {
                 int recipeId = Integer.parseInt(request.getParameter("recipeId"));
@@ -56,15 +50,14 @@ public class DisplaySingleRecipe extends HttpServlet {
                 Recipe_tblDTO recipeDto = recipeDao.getRecipe(recipeId);
                 //2. Process result
                 request.setAttribute("RECIPE_INFO", recipeDto);
-                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
+                url = SINGLE_RECIPE_PAGE;
                 //----------------------------
                 //thongnt section
-                //DISPLAY COMMENTS FUNCTION
                 //1. Call DAO
                 Comment_tblDAO commentDao = new Comment_tblDAO();
-                List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
+                Comment_tblDTO commentDto = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
-                request.setAttribute("COMMENTS_LIST", commentsList);
+                request.setAttribute("COMMENT_INFO", commentDto);
             }
         } catch (SQLException ex) {
             log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());

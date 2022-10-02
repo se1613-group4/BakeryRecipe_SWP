@@ -11,5 +11,10 @@ dist/
 nbdist/
 .nb-gradle/
 
+out/
+.idea/
+.DS_Store
+BakeryRecipe.iml
+/BakeryRecipe/src/java/bakeryRecipe/utils/DBConnection.java
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans

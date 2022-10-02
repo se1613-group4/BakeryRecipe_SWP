@@ -35,7 +35,7 @@ public class Recipe_tblDAO implements Serializable {
 
     /**
      * Search all Recipe object by name
-     *
+     * Author: ThongNT
      * @param searchValue characters of recipe's name
      * @return A list of Recipe_tblDTO objects
      * @throws SQLException
@@ -145,7 +145,7 @@ public class Recipe_tblDAO implements Serializable {
 
     /**
      * Load top 5 recipe DTO by count of likes
-     *
+     * Author: LamVo
      * @param topNum
      * @throws java.sql.SQLException
      */

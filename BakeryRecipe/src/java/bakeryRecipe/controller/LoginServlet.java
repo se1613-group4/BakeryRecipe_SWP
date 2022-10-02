@@ -25,8 +25,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-private final String ERROR = "index.jsp";
-    private static final String SUCCESS="home_page_user.jsp";
+
+    private final String ERROR = "index.jsp";
+    private final String SUCCESS = "home_page_user.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,19 +42,20 @@ private final String ERROR = "index.jsp";
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */                 
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             //feth data from login form
-            
+
             String username = request.getParameter("txtUsername");
             String pass = request.getParameter("txtPassword");
-            if(username==null || username.isEmpty()){
+            if (username == null || username.isEmpty()) {
                 request.setAttribute("errorUserID", "UserID not empty");
-                
+
             }
-            if(pass==null || pass.isEmpty()){
-                 request.setAttribute("errorUserPassword", "Password not empty");
-            } if (username != null && pass != null && !username.isEmpty() && !pass.isEmpty()) {
+            if (pass == null || pass.isEmpty()) {
+                request.setAttribute("errorUserPassword", "Password not empty");
+            }
+            if (username != null && pass != null && !username.isEmpty() && !pass.isEmpty()) {
                 Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
                 Account_tblDTO user = dao.login(username, pass);
                 if (user != null) {
@@ -60,12 +63,12 @@ private final String ERROR = "index.jsp";
                     session.setAttribute("USER", user);
                     //response.sendRedirect("welcome.jsp");
                     response.sendRedirect(SUCCESS);
-                    
-                }else{
+
+                } else {
                     out.println("user not found");
                 }
             }
-            
+
 //            Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
 //            Account_tblDTO acc = dao.login(username, pass);
 //            
@@ -77,11 +80,9 @@ private final String ERROR = "index.jsp";
 //            }else{
 //                out.println("user not found");
 //            }
-
-            
-        }catch (Exception e) {
-            log("Error at LoginServlet: "+e.toString());
-        }finally{
+        } catch (Exception e) {
+            log("Error at LoginServlet: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
@@ -98,11 +99,11 @@ private final String ERROR = "index.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (SQLException ex) {
-        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -116,11 +117,11 @@ private final String ERROR = "index.jsp";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (SQLException ex) {
-        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

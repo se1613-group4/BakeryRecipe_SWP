@@ -17,9 +17,4 @@ public class AppContants { // mapping all features strings
     public class SearchAllRecipesFeature {
         public static final String HOME_PAGE = "homePageJsp";
     }
-    
-    public class DisplaySingleRecipeFeature {
-        public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
-        public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";        
-    }
 }

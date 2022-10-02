@@ -9,17 +9,13 @@ build/
 nbbuild/
 dist/
 nbdist/
-
+.nb-gradle/
 
 #config cua inteliji 
 out/
 .idea/
-build.xml
 .DS_Store
 BakeryRecipe.iml
 /BakeryRecipe/src/java/bakeryRecipe/utils/DBConnection.java
-
-.nb-gradle/
-
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans

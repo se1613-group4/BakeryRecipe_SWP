@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DispatchFilter implements Filter {
     
-    private static final boolean DEBUG = true;
+    private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -99,7 +99,7 @@ public class DispatchFilter implements Filter {
     public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (DEBUG) {                
+            if (debug) {                
                 log("DispatchFilter:Initializing filter");
             }
         }

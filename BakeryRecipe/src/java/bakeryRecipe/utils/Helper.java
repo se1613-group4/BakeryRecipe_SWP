@@ -22,7 +22,7 @@ public class Helper implements Serializable {
         // Get siteMaps file path
         String siteMapsFilePath = contextScope.getInitParameter("SITEMAPS_FILE_PATH");
         InputStream is = null;
-        Properties siteMaps= null;
+        Properties siteMaps= null;;
         try {
             // Get file siteMaps properties as stream
             is = contextScope.getResourceAsStream(siteMapsFilePath);

@@ -68,7 +68,7 @@ public class SearchAllRecipeController extends HttpServlet {
                 url = SEARCH_RESULT_PAGE;
              }
         } catch (SQLException ex) {
-            log("SearchAllRecipe Controller _ SQL " + ex.getMessage());
+            ex.printStackTrace();
         } finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

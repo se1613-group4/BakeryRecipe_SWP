@@ -351,7 +351,7 @@
                            
                            <jsp:include page="comment.jsp" />
                            
-<!--                            <div class="recipe-reviews">
+                            <div class="recipe-reviews">
                                 <div class="section-heading heading-dark">
                                     <h2 class="item-heading">RECIPE REVIEWS</h2>
                                 </div>
@@ -459,7 +459,7 @@
                                     </div>
                                     <div class="form-response"></div>
                                 </form>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
 

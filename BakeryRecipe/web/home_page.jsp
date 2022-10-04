@@ -45,8 +45,6 @@
         </a>
         <!-- ScrollUp End Here -->                 
 
-        <p>This is my jsp home page</p>
-
         <!-- Header Area Start Here -->
         <%@include file="header.html" %>
         <!-- Header Area End Here -->
@@ -78,7 +76,7 @@
                         <c:set var="author" value="${recipeDto.authorInfo}"/>
                         <c:set var="category" value="${recipeDto.category}"/>
                         <c:set var="image" value="${recipeDto.image}"/>
-                        <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                        <c:url var="single_recipe_url" value="displaySingleRecipe">
                             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
                         </c:url>
 
@@ -514,15 +512,7 @@
                     <div class="modal-body">
                         <form class="login-form" action="MainController"  method="post">
                             <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
-                            <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
                             <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
-                            <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
                             <div class="inline-box mb-5 mt-4">
                                 <div class="checkbox checkbox-primary">
                                     <input id="modal-checkbox" type="checkbox">

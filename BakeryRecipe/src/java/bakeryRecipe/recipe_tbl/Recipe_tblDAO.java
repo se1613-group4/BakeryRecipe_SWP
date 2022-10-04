@@ -297,7 +297,7 @@ public class Recipe_tblDAO implements Serializable {
 
     /**
      * Get a recipe DTO by recipeID
-     *
+     * Author: LamVo
      * @param recipeId
      * @return one recipe DTO
      * @throws java.sql.SQLException
@@ -369,5 +369,77 @@ public class Recipe_tblDAO implements Serializable {
         }
         return result;
     }
-            
+    
+    /**
+     * Create new recipe
+     */
+    
+    /**
+     * Load one user's recipes
+     * Author: LamVo
+     * @param userId
+     */
+    public void loadAllRecipes(int userId) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        this.recipeDtoList = null;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT liked_count, R.recipe_id, R.name as recipe_name, created_date, img_id, img_link,\n"
+                        + "             category_tbl.category_id, category_tbl.name as category_name, \n"
+                        + "             (prepare_time+cook_time) as total_time, instruction\n"
+                        + "FROM (select liked_count, recipe_id, name, prepare_time, cook_time, instruction, category_id, created_date\n"
+                        + "		from recipe_tbl \n"
+                        + "		where is_actived = 1 and user_id = ?) as R\n"
+                        + "	inner join category_tbl on R.category_id = category_tbl.category_id\n"
+                        + "     inner join image_tbl on R.recipe_id = image_tbl.recipe_id";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, userId);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                    // get recipe DTO info
+                    int recipeId = rs.getInt("R.recipe_id");
+                    String recipeName = rs.getString("recipe_name");
+                    String description = rs.getString("instruction");
+                    int totalTime = rs.getInt("total_time");
+                    int likedCount = rs.getInt("liked_count");
+                    Date createDate = rs.getDate("created_date");                                        
+                    // get category DTO info
+                    int categoryId = rs.getInt("category_tbl.category_id");
+                    String categoryName = rs.getString("category_name");
+                    Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
+                    // get image info
+                    int imgId = rs.getInt("img_id");
+                    String imgLink = rs.getString("img_link");
+                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
+                    // create recipeDTO
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, description, totalTime, likedCount, createDate, category, image);
+                    // check recipe dto list not null
+                    if (this.recipeDtoList == null) {
+                        this.recipeDtoList = new ArrayList<>();
+                    }// end check recipeIdList is null
+                    // add to recipeId list
+                    this.recipeDtoList.add(recipeDto);
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

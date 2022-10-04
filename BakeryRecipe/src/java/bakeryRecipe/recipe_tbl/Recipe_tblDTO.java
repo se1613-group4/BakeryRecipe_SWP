@@ -57,6 +57,17 @@ public class Recipe_tblDTO implements Serializable{
         this.category = category;
         this.image = image;
     }    
+
+    public Recipe_tblDTO(int recipeId, String name, String description, int totalTime, int likedCount, Date createdDate, Category_tblDTO category, Image_tblDTO image) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.description = description;
+        this.totalTime = totalTime;
+        this.likedCount = likedCount;
+        this.createdDate = createdDate;
+        this.category = category;
+        this.image = image;
+    }
     
     public Recipe_tblDTO(int recipeId, String name, int serving, String description, int preTime, int cookTime, int likedCount, int savedCount, Date lastModified, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image) {
         this.recipeId = recipeId;

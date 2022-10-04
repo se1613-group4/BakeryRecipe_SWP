@@ -37,6 +37,13 @@ public class Account_tblDTO implements Serializable{
         this.username = username;
         this.password = password;
     }
+
+    public Account_tblDTO(int userId, String username,boolean isAdmin) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
     
     
 

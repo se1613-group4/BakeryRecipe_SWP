@@ -52,10 +52,10 @@
                                      <h3 class="color-red">Bạn Đã Mất Kết Nối Với Server,Vui Lòng Kiểm Tra Lại Đường Truyền Hoặc Làm Mới !</h3>
                                 </c:if>
                                 <c:if test="${requestScope.getdashboardInfo_Admin =! null}">
-                                    <h3> Tổng số người dùng :   <br />
-                                         Tổng số bài đăng :      <br />
-                                         Tổng số người active:   <br />
-                                         Tổng số người bị ban :   <br />
+                                    <h3> Tổng số người dùng :  ${requestScope.getdashboardInfo_Admin.infoDashBoard[0]}  <br />
+                                         Tổng số bài đăng :    ${requestScope.getdashboardInfo_Admin.infoDashBoard[1]}   <br />
+                                         Tổng số người active: ${requestScope.getdashboardInfo_Admin.infoDashBoard[2]}   <br />
+                                         Tổng số người bị ban : ${requestScope.getdashboardInfo_Admin.infoDashBoard[3]}   <br />
                                     </h3>
 
                                 </c:if>

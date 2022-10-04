@@ -22,4 +22,8 @@ public class AppContants { // mapping all features strings
         public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";        
     }
+    public class DisplayOwnRecipesFeature {
+        public static final String MY_RECIPES_PAGE = "myRecipesPage";
+    }
+    
 }

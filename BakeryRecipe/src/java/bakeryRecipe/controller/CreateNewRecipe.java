@@ -6,7 +6,8 @@
 package bakeryRecipe.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Properties;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +33,19 @@ public class CreateNewRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateNewRecipe</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateNewRecipe at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        
+        // Mapping url        
+        String url = "";
+        try {
+            
+        } finally {
+            
         }
     }
 

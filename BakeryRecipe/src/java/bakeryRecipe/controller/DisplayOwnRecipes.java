@@ -1,32 +1,36 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author LamVo
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "DisplayOwnRecipes", urlPatterns = {"/DisplayOwnRecipes"})
+public class DisplayOwnRecipes extends HttpServlet {
 
-//    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
-    private final String REGISTER_CONTROLLER = "RegisterServlet";
-    private final String LOGIN_CONTROLLER = "LoginController";
-    private final String CREATE_RECIPE_CONTROLLER = "CreateNewRecipe";
-    private final String DISPLAY_USER_PROFILE_CONTROLLER = "DisplayUserProfile";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,29 +43,27 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
-        String action = request.getParameter("btAction");
+        
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        // Mapping url
+        String url = siteMaps.getProperty(AppContants.DisplayOwnRecipesFeature.MY_RECIPES_PAGE);
         try {
-            if (action == null) {
-                // do nothing
-            } else if (action.equals("Search")) {
-                url = SEARCH_CONTROLER;
-            } else if (action.equals("Register")) {
-                url = REGISTER_CONTROLLER;
-            } else if (action.equals("Login")) {
-                url = LOGIN_CONTROLLER;
-            } else if (action.equals("createRecipe")) {
-                url = CREATE_RECIPE_CONTROLLER;
-            } else if (action.equals("DisplayProfile")) {
-                    url = DISPLAY_USER_PROFILE_CONTROLLER;
-                }
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
+            recipeDao.loadAllRecipes(userId);
+            List<Recipe_tblDTO> recipeList = recipeDao.getRecipeDtoList();
+            request.setAttribute("MY_RECIPE_LIST", recipeList);
+        } catch (SQLException ex) {
+            log("DisplayOwnRecipes Controller _ SQL " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

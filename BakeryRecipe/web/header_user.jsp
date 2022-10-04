@@ -4,6 +4,7 @@
     Author     : LamVo
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html class="no-js" lang="">
@@ -50,27 +51,13 @@
                             </div>
                             <nav class="site-nav">
                                 <ul id="site-menu" class="site-menu">
-                                    <li><a href="MainController">Home</a>
+                                    <li><a href="userHomePage">Home</a>
                                     </li>
                                     <li>
                                         <a href="category.html">Category</a>
                                     </li>
                                     <li>
-                                        <a href="#">Recipes</a>
-                                        <ul class="dropdown-menu-col-1">
-                                            <li>
-                                                <a href="recipe-with-sidebar.html">Recipes With Sidebar</a>
-                                            </li>
-                                            <li>
-                                                <a href="recipe-without-sidebar.html">Recipes Without Sidebar</a>
-                                            </li>
-                                            <li>
-                                                <a href="single-recipe1.html">Single Recipe 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="single-recipe2.html">Single Recipe 2</a>
-                                            </li>
-                                        </ul>
+                                        <a href="#">All Recipes</a>
                                     </li>
                                                                                                            
                                 </ul>
@@ -79,26 +66,40 @@
 
                         <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
                             <div class="nav-action-elements-layout1">
-                                <ul>   
+                                <ul class="site-menu">                                     
+                                    <!--profile user-->
                                     <li>
-                                        Welcome, ${sessionScope.USER.username}
+                                        <a href="#">
+                                            <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
+                                        <ul class="dropdown-menu-col-1" id="dropdown-user">
+                                            <li>
+                                                <a href="MainController?btAction=DisplayProfile">
+                                                    Profile</a>
+                                            </li>
+                                            <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
+                                            <li>
+                                                <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
+                                            </li>                                            
+                                        </ul>
                                     </li>
-                                    <!-- Logout Button-->
-                                    <li>
-                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
-                                            <a href="LogoutServlet" class="login-btn" >
-                                                <i class="flaticon-profile"></i>Logout
-                                            </a>
-                                        </button>
-                                    </li>
+                                    
+                                    <!--
                                     <li>
                                         <a href="MainController?btAction=DisplayProfile" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             PROFILE</a>
                                     </li>
+                                    -->
                                     <li>
-                                        <a href="MainController?btAction=createRecipe" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                        <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
                                     </li>
+
+                                    <!-- Logout Button-->
+                                    <li>
+                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
+                                            <a href="LogoutServlet" class="login-btn">Logout</a>
+                                        </button>                                        
+                                    </li>                                    
                                 </ul>
                             </div>
 

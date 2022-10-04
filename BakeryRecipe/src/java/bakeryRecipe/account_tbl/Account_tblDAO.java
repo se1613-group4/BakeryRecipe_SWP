@@ -51,9 +51,9 @@ public class Account_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "SELECT user_id, username, is_admin\n"
+                String sql = "SELECT user_id,is_admin,last_modified,is_actived\n"
                         + "FROM account_tbl\n"
-                        + "WHERE username LIKE ? AND password = ? AND is_actived = 1";
+                        + "WHERE username = ? AND password = ? ";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setString(1, username);
@@ -62,9 +62,11 @@ public class Account_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 if (rs.next()) {
+                    boolean isActived = rs.getBoolean("is_actived");
                     int userId = rs.getInt("user_id");
-                    boolean role = rs.getBoolean("is_admin");
-                    result = new Account_tblDTO(userId, username, role);
+                    boolean isAdmin = rs.getBoolean("is_admin");
+                    Date lastModif = rs.getDate("last_modified");
+                   result = (isActived) ? new Account_tblDTO(userId, username,isAdmin) : new Account_tblDTO(false,lastModif);
                 }
             }
         } finally {

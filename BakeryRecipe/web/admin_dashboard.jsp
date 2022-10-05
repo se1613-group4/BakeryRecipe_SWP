@@ -32,36 +32,27 @@
             <div class="tbl-cell menu-container">
                 <ul id="menu">
                     <li><a href="#dashboard" id="menu-dashboard"><i class="fa fa-upload"></i>Tổng Quan </a></li>
-                    <li><a href="#listuser" id="menu-"><i class="fa fa-play"></i>Danh Sách Người Dùng </a></li>
-                    <li><a href="#userdetail" id="menu-userdetail"><i class="fa fa-sitemap"></i>Thông Tin Chi Tiết</a></li>
+                    <li><a href="#listuser" id="menu-user"><i class="fa fa-play"></i>Danh Sách Người Dùng </a></li>
+                    <li><a href="#userdetail" id="menu-userdetail"><i class="fa fa-sitemap"></i>Chi Tiết Người Dùng</a></li>
                     <li><a href="#listpostuser" id="menu-listpost"><i class="fa fa-upload"></i>Danh Sách Bài Đăng</a></li>
                     <li><a href="#postdetail" id="menu-postdetail"><i class="fa fa-upload"></i>Chi Tiết Bài Đăng</a></li>
 
-                    <li><a href="#help" id="menu-help"><i class="fa fa-question-circle-o"></i>Thông Tin &#38; Hỗ Trợ</a></li>
+                    <li><a href="#help" id="menu-help"><i class="fa fa-question-circle-o"></i>Thông Tin &#3Dùng; Hỗ Trợ</a></li>
                 </ul>
             </div>
             <div class="tbl-cell container">
-                <div class="content">
-                    <div id="dashboard" class="main-content">
-                        <h2><i class="fa fa-info"></i>Các Báo Cáo Tổng Quan : </h2>
-                        <div class="content-container">
-                            <from method="post">
-                                <button type="submit" name="btnAction" value="getdashboardInfo_Admin"> Làm Mới </button> <br />
-                            </from>
-                                <c:if test="${requestScope.getdashboardInfo_Admin == null}">
-                                     <h3 class="color-red">Bạn Đã Mất Kết Nối Với Server,Vui Lòng Kiểm Tra Lại Đường Truyền Hoặc Làm Mới !</h3>
-                                </c:if>
-                                <c:if test="${requestScope.getdashboardInfo_Admin =! null}">
-                                    <h3> Tổng số người dùng :  ${requestScope.getdashboardInfo_Admin.infoDashBoard[0]}  <br />
-                                         Tổng số bài đăng :    ${requestScope.getdashboardInfo_Admin.infoDashBoard[1]}   <br />
-                                         Tổng số người active: ${requestScope.getdashboardInfo_Admin.infoDashBoard[2]}   <br />
-                                         Tổng số người bị ban : ${requestScope.getdashboardInfo_Admin.infoDashBoard[3]}   <br />
-                                    </h3>
-
-                                </c:if>
-                        </div>
-                    </div>
-                </div>
+                	<div id="dashboard" class="main-content">
+					<h2><i class="fa fa-info"></i>Tổng Quan:  <button> Làm mới </button> </h2>  
+					<div class="content-container">
+						<p>
+                                                    <a href="#listuser" id="menu-user">  Tổng Số Tài Khoản :    </a>    <br/>
+                                                    <a href="#listuser" id="menu-user">  Tài Khoản Hoạt động :</a>  <br/>
+                                                      <a href="#listuser" id="menu-user">Tài Khoản Bị Khóa :  </a>  <br/>
+                                                     <a href="#listuser" id="menu-user">  Tổng Số Bài Đăng : </a>  <br/>
+						</p>
+                                               
+					</div>
+				</div>
             </div>
         </div>
     </div>

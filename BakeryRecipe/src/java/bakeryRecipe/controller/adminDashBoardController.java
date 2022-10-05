@@ -4,20 +4,27 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDAO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Properties;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jexk
  */
-@WebServlet(name = "AdminLoadDashboard", urlPatterns = {"/AdminLoadDashboard"})
-public class AdminLoadDashboard extends HttpServlet {
+@WebServlet(name = "adminDashBoardController", urlPatterns = {"/adminDashBoardController"})
+public class adminDashBoardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,18 +38,24 @@ public class AdminLoadDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminLoadDashboard</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminLoadDashboard at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        String url = AppContants.Admin.ADMIN_HOME;
+        ArrayList<Integer> result = null ;
+        try {
+            HttpSession session = request.getSession();
+            Account_tblDAO dao = new Account_tblDAO();
+            result = (ArrayList<Integer>)  dao.getDashBoardInfoAdmin();
+             session.setAttribute("ADMIN_DASHBOARD",result);
+        } catch (SQLException ex) {
+            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+        } finally {
+//           RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+       response.sendRedirect(url);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -25,5 +25,7 @@ public class AppContants { // mapping all features strings
     public class DisplayOwnRecipesFeature {
         public static final String MY_RECIPES_PAGE = "myRecipesPage";
     }
-    
+    public class RemoveRecipeFeature {
+        public static final String ERROR_PAGE = "errorPage";
+    }
 }

@@ -6,7 +6,6 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.utils.DBConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -56,7 +55,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("errorUserPassword", "Password not empty");
             }
             if (username != null && pass != null && !username.isEmpty() && !pass.isEmpty()) {
-                Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
+                Account_tblDAO dao = new Account_tblDAO();
                 Account_tblDTO user = dao.login(username, pass);
                 if (user != null) {
                     HttpSession session = request.getSession();

@@ -184,13 +184,13 @@ select:focus {
 }
 
 .background {
-    background: #fff;
+    background: #808080;
 }
 
 #hdr {
     min-width: 980px;
     width: 100%;
-    background: #333;
+    background: #E66EB2;
     padding: 10px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -213,7 +213,7 @@ select:focus {
 	float: left;
     width: 9%;
 }
-}
+
 
 .hdr-inner {
     width: 100%;
@@ -377,4 +377,49 @@ select:focus {
 .strucutre-image img {
     width: 100%;
     height: auto;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
 }

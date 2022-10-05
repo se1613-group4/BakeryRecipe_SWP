@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
             Profile_tblDTO proDto= new Profile_tblDTO(0, 0, name, ERROR, url, email, lastModified);
             //create a database model
             User_tblDAO userDao= new User_tblDAO(DBConnection.getConnection());
-            Account_tblDAO accDao = new Account_tblDAO(DBConnection.getConnection());
+            Account_tblDAO accDao = new Account_tblDAO();
             Profile_tblDAO proDao = new Profile_tblDAO();
             
             boolean userResult = userDao.CreateUser_tbl();

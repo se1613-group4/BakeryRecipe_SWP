@@ -6,18 +6,23 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.utils.DBConnection;
+import bakeryRecipe.account_tbl.LoginError;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import bakeryRecipe.utils.AppContants;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -25,9 +30,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-
-    private final String ERROR = "index.jsp";
-    private final String SUCCESS = "home_page_user.jsp";
+//private static final String USERNAME_PATTERN = "^[a-z0-9._-]{3,15}$"; 
+//private Pattern pattern;    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,49 +45,86 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try (PrintWriter out = response.getWriter()) {
+
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        String url = siteMaps.getProperty(AppContants.LoginFeatures.INVALID_PAGE);
+        LoginError errors = new LoginError();
+        boolean foundErr = false;
+        try {
             /* TODO output your page here. You may use following sample code. */
-            //feth data from login form
+            //feth data from login form            
+            String username = request.getParameter("txtUsername").trim();
+            String password = request.getParameter("txtPassword");
 
-            String username = request.getParameter("txtUsername");
-            String pass = request.getParameter("txtPassword");
-            if (username == null || username.isEmpty()) {
-                request.setAttribute("errorUserID", "UserID not empty");
+//            pattern = Pattern.compile(USERNAME_PATTERN); 
+            Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{6,20}");
+            /*
+            Must be 8-15 characters and must start with a letter
+            May not contain special characters – only letters and numbers
+            */
+            Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]{6,30}");
+            /*
+            Must be 8-15 characters and must start with a letter
+            Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
+            Must contain at least one number (0123456789)
+            Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
+            */
+            if (username.isEmpty()) {
+                foundErr = true;
+                errors.setUserameEmptyErr("Username must be not empty!");
+            }
+            if (usernamePattern.matcher(username).matches() == false) {
+                foundErr = true;
+                errors.setUserameFormatErr("Username wrong format, username "
+                        + "must be 8-15 characters and must start with a letter "
+                        + "and may not contain special characters");
+            }
 
+            if (password.isEmpty()) {
+                foundErr = true;
+                errors.setPasswordEmptyErr("Password must be not empty!");
             }
-            if (pass == null || pass.isEmpty()) {
-                request.setAttribute("errorUserPassword", "Password not empty");
+            if (passwordPattern.matcher(password).matches() == false) {
+                foundErr = true;
+                errors.setPasswordFormatErr("password wrong format, password "
+                        + "contain at least one lower-case letter, Must contain at least one number "
+                        + "and may not contain special characters");
             }
-            if (username != null && pass != null && !username.isEmpty() && !pass.isEmpty()) {
-                Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
-                Account_tblDTO user = dao.login(username, pass);
+
+//            if (pattern.matcher(username).matches()) {
+//                foundErr = true;
+//                errors.setUserameFormatErr("Username must có từ 3 - 15 kí tự!");
+//            }
+            if (foundErr) {
+                request.setAttribute("LOGIN_ERR", errors);
+            } else {
+                //1. call model/DAO
+                //- new DAO obj, then call method on DAO object
+                Account_tblDAO dao = new Account_tblDAO();
+                Account_tblDTO user = dao.login(username, password);
+                //2. process result
                 if (user != null) {
-                    HttpSession session = request.getSession();
+                    url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
+                    HttpSession session = request.getSession(true);
                     session.setAttribute("USER", user);
-                    //response.sendRedirect("welcome.jsp");
-                    response.sendRedirect(SUCCESS);
-
-                } else {
-                    out.println("user not found");
+                    // Write cookie
+//                Cookie cookie = new Cookie(username, password); // day chi la demo, lam that phai co hashcode                
+//                cookie.setMaxAge(60*60);
+//                response.addCookie(cookie);                
+                } //end if user click login
+                else {
+                    errors.setAccountNotFound("Wrong username and password! Try again!");
+                    request.setAttribute("LOGIN_ERR", errors);
                 }
             }
+        } catch (SQLException ex) {
+            log("LoginController _ SQL " + ex.getMessage());
 
-//            Account_tblDAO dao = new Account_tblDAO(DBConnection.getConnection());
-//            Account_tblDTO acc = dao.login(username, pass);
-//            
-//            if(acc!=null){
-//                HttpSession session = request.getSession();
-//                session.setAttribute("LOGIN", acc);
-////                response.sendRedirect("welcome.jsp");
-//                response.sendRedirect("index_1.jsp");
-//            }else{
-//                out.println("user not found");
-//            }
-        } catch (Exception e) {
-            log("Error at LoginServlet: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+//            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

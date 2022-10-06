@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="bakeryRecipe.account_tbl.LoginError" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -503,7 +504,7 @@
         <!-- Footer Area End Here -->
 
         <!-- Modal Start-->
-    
+
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -512,27 +513,68 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form class="login-form" action="MainController"  method="post">
-                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
-                            <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
-                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
-                            <%=request.getAttribute("errorUserID")==null?"" : request.getAttribute("errorUserID")%>
-                         <c:if test="${requestScope.errorUserID!=null && not empty requestScope.errorUserID}">
-                            <h1>${requestScope.errorUserID}</h1>
-                        </c:if>
+                        <form class="login-form" action="MainController"  method="post" id="loginform">
+<!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
+                            
+<!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
+                           
+
                             <div class="inline-box mb-5 mt-4">
-                                <div class="checkbox checkbox-primary">
+<!--                                <div class="checkbox checkbox-primary">
                                     <input id="modal-checkbox" type="checkbox">
                                     <label for="modal-checkbox">Remember Me</label>
+                                </div>-->
+<!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
+                            </div>
+                            <div class="inline-box mb-5 mt-4">
+                                <button class="btn-fill" type="submit" value="Login1" name="btAction">Login</button>
+                                <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
+<!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
+                                    <i class="flaticon-profile"></i>register here
+                                </button>-->
+                                <div class="inline-box mb-5 mt-4">
+                                <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
                                 </div>
+                            </div>
+                        </form>
+                        <label>Login connect with your Social Network</label>
+                        <div class="login-box-social">
+                            <ul>
+                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade 2" id="myModal2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="title-default-bold mb-none">register</div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login-form" action="MainController"  method="post">
+                            <input class="main-input-box" name="name" type="text" placeholder="User Name" />
+
+                            <input class="main-input-box" name="email" type="text" placeholder="Useremail" />
+                            <input class="main-input-box" type="password" placeholder="Password" name="password" required>
+                            <p>phoneNumber</p>
+                            <input class="main-input-box" type="text" placeholder="PhoneNumber" name="phoneNumber" required>
+                            <div class="inline-box mb-5 mt-4">
+
                                 <label class="lost-password"><a href="#">Lost your password?</a></label>
                             </div>
                             <div class="inline-box mb-5 mt-4">
-                                <button class="btn-fill" type="submit" value="Login" name="btAction">Login</button>
-                                <a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>
+                                <button class="btn-fill" type="submit" value="Register" name="btAction">register</button>
+
+
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>

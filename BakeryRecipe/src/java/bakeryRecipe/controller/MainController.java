@@ -23,10 +23,14 @@ public class MainController extends HttpServlet {
     private final String SEARCH_PAGE = "search.jsp";
     private final String SEARCH_CONTROLER = "SearchAllRecipeController";
     private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
+    private final String HOME_PAGE = "home_page.jsp";
     private final String REGISTER_CONTROLLER = "RegisterServlet";
     private final String LOGIN_CONTROLLER = "LoginServlet";
     private final String CREATE_RECIPE_CONTROLLER = "CreateNewRecipe";
     private final String DISPLAY_USER_PROFILE_CONTROLLER = "DisplayUserProfile";
+    private final String LOGIN_PAGE = "login.jsp";
+    private final String REGISTER_PAGE = "register.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,8 +59,14 @@ public class MainController extends HttpServlet {
             } else if (action.equals("createRecipe")) {
                 url = CREATE_RECIPE_CONTROLLER;
             } else if (action.equals("DisplayProfile")) {
-                    url = DISPLAY_USER_PROFILE_CONTROLLER;
-                }
+                url = DISPLAY_USER_PROFILE_CONTROLLER;
+            } else if (action.equals("Login1")) {
+                url = LOGIN_PAGE;
+            }else if (action.equals("Register1")) {
+                url = REGISTER_PAGE;
+            }else if (action.equals("Home")) {
+                url = HOME_PAGE_CONTROLLER;
+            }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

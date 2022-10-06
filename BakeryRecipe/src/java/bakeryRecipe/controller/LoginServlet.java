@@ -70,27 +70,27 @@ public class LoginServlet extends HttpServlet {
             Must contain at least one number (0123456789)
             Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
             */
-            if (username.isEmpty()) {
-                foundErr = true;
-                errors.setUserameEmptyErr("Username must be not empty!");
-            }
-            if (usernamePattern.matcher(username).matches() == false) {
-                foundErr = true;
-                errors.setUserameFormatErr("Username wrong format, username "
-                        + "must be 8-15 characters and must start with a letter "
-                        + "and may not contain special characters");
-            }
+//            if (username.isEmpty()) {
+//                foundErr = true;
+//                errors.setUserameEmptyErr("Username must be not empty!");
+//            }
+//            if (usernamePattern.matcher(username).matches() == false) {
+//                foundErr = true;
+//                errors.setUserameFormatErr("Username wrong format, username "
+//                        + "must be 8-15 characters and must start with a letter "
+//                        + "and may not contain special characters");
+//            }
 
-            if (password.isEmpty()) {
-                foundErr = true;
-                errors.setPasswordEmptyErr("Password must be not empty!");
-            }
-            if (passwordPattern.matcher(password).matches() == false) {
-                foundErr = true;
-                errors.setPasswordFormatErr("password wrong format, password "
-                        + "contain at least one lower-case letter, Must contain at least one number "
-                        + "and may not contain special characters");
-            }
+//            if (password.isEmpty()) {
+//                foundErr = true;
+//                errors.setPasswordEmptyErr("Password must be not empty!");
+//            }
+//            if (passwordPattern.matcher(password).matches() == false) {
+//                foundErr = true;
+//                errors.setPasswordFormatErr("password wrong format, password "
+//                        + "contain at least one lower-case letter, Must contain at least one number "
+//                        + "and may not contain special characters");
+//            }
 
 //            if (pattern.matcher(username).matches()) {
 //                foundErr = true;

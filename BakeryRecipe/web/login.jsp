@@ -90,20 +90,20 @@
                                 <!--LOGIN FORM-->
                                 <c:set var="error" value="${requestScope.LOGIN_ERR}"></c:set>
                                 <form class="login-form" action="MainController"  method="post">
-                                    <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
+                                    <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" required
+                                           oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.userameEmptyErr}">
                                         <font color="red">${error.userameEmptyErr}</font></br>
                                     </c:if>
-                                    <c:if test="${not empty error.userameFormatErr}">
-                                        <font color="red">${error.userameFormatErr}</font></br>
-                                    </c:if>
-                                    <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
+                                    
+                                    <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" required
+                                           oninvalid="this.setCustomValidity('Enter password Here')"
+                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.passwordEmptyErr}">
                                         <font color="red">${error.passwordEmptyErr}</font></br>
                                     </c:if>
-                                    <c:if test="${not empty error.passwordFormatErr}">
-                                        <font color="red">${error.passwordFormatErr}</font></br>
-                                    </c:if>    
+                                       
 
                                     <c:if test="${not empty error.accountNotFound}">
                                         <font color="red">${error.accountNotFound}</font></br>

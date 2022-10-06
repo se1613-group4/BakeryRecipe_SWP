@@ -12,31 +12,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register</title>
-        
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Bakery Recipe| Register</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.png">
-    <!-- Normalize Css -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <!-- Main Css -->
-    <link rel="stylesheet" href="css/main.css">
-    <!-- Bootstrap Css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Animate CSS -->
-    <link rel="stylesheet" href="css/animate.min.css">
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="css/fontawesome-all.min.css">
-    <!-- Flaticon CSS -->
-    <link rel="stylesheet" href="fonts/flaticon.css">
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Modernizr Js -->
-    <script src="js/modernizr-3.6.0.min.js"></script>
+
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Bakery Recipe| Register</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="img/favicon.png">
+        <!-- Normalize Css -->
+        <link rel="stylesheet" href="css/normalize.css">
+        <!-- Main Css -->
+        <link rel="stylesheet" href="css/main.css">
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- Animate CSS -->
+        <link rel="stylesheet" href="css/animate.min.css">
+        <!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <!-- Flaticon CSS -->
+        <link rel="stylesheet" href="fonts/flaticon.css">
+        <!-- Custom Css -->
+        <link rel="stylesheet" href="style.css">
+        <!-- Modernizr Js -->
+        <script src="js/modernizr-3.6.0.min.js"></script>
 
     </head>
     <body>
@@ -87,38 +87,50 @@
                                 </div>
                                 <!--REGISTER FORM-->
                                 <c:set var="error" value="${requestScope.REGISTER_ERR}"></c:set>
-                                <form class="login-form" action="MainController"  method="post">
-                                    <input value="${param.txtUsername}" class="main-input-box" name="txtUsername" type="text" placeholder="User Name"  />
+                                    <form class="login-form" action="MainController"  method="post">
+                                        <input required value="${param.txtUsername}" class="main-input-box" name="txtUsername" type="text" placeholder="User Name"  
+                                           oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                            oninput="this.setCustomValidity('')"/>
+                                    
+                                    
                                     <c:if test="${not empty error.usernameFormatErr}">
                                         <font color="red">${error.usernameFormatErr}</font></br>
                                     </c:if>
-                                    
-                                    <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
+
+                                    <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" required
+                                           oninvalid="this.setCustomValidity('Enter password Here')"
+                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.passwordFormatErr}">
                                         <font color="red">${error.passwordFormatErr}</font></br>
                                     </c:if>
-                                    
-                                    <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" />
+
+                                    <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
+                                           oninvalid="this.setCustomValidity('Enter Confirm password Here')"
+                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.confirmNotMathched}">
                                         <font color="red">${error.confirmNotMathched}</font></br>
                                     </c:if>    
-                                        
-                                    <input value="${param.txtEmail}" class="main-input-box" name="txtEmail" type="email" placeholder="Email" />
+
+                                    <input value="${param.txtEmail}" class="main-input-box" name="txtEmail" type="email" placeholder="Email" required
+                                           oninvalid="this.setCustomValidity('Enter Email Here')"
+                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.emailFormatErr}">
                                         <font color="red">${error.emailFormatErr}</font></br>
                                     </c:if>
-                                        
-                                    <input value="${param.txtPhonenumber}" class="main-input-box" name="txtPhonenumber" type="phonenumber" placeholder="Phonenumber" />
-                                     <c:if test="${not empty error.phonenumberFormatErr}">
+
+                                    <input value="${param.txtPhonenumber}" class="main-input-box" name="txtPhonenumber" type="phonenumber" placeholder="Phonenumber" required
+                                           oninvalid="this.setCustomValidity('Enter Phonenumber Here')"
+                                            oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.phonenumberFormatErr}">
                                         <font color="red">${error.phonenumberFormatErr}</font></br>
                                     </c:if>   
                                     <c:if test="${not empty error.usernameExisted}">
                                         <font color="red">${error.usernameExisted}</font></br>
                                     </c:if>
-                                   
+
                                     <div class="inline-box mb-5 mt-4">
                                         <button class="btn-fill" type="submit" value="Register" name="btAction">Register</button>
-                                        
+
                                     </div>
                                 </form>
 

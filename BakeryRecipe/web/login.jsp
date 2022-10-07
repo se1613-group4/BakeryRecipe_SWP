@@ -116,7 +116,7 @@
                                         <label class="lost-password"><a href="#">Lost your password?</a></label>
                                     </div>
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" value="Login" name="btAction">Login</button>
+                                        <button class="btn-fill" type="submit" value="Loginsl" name="btAction">Login</button>
                                         <button class="btn-fill" type="submit" value="Register1" name="btAction">Register</button>
                                     </div>
                                 </form>

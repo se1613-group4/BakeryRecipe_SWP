@@ -37,6 +37,17 @@ public class Account_tblDTO implements Serializable{
         this.username = username;
         this.password = password;
     }
+    public Account_tblDTO(int userId, String username, boolean isAdmin) {
+        this.userId = userId;
+        this.username = username;
+        this.isAdmin = isAdmin;
+    }
+    public Account_tblDTO(int userId, String username,Date lastModified,boolean role) {
+        this.userId = userId;
+        this.username = username;
+        this.lastModified = lastModified;
+        this.isAdmin = role;
+    }
     
     
 
@@ -51,7 +62,12 @@ public class Account_tblDTO implements Serializable{
         this.isActived = isActived;
         this.isAdmin = isAdmin;
     }
-    // Getters
+
+    public Account_tblDTO(boolean isActived,Date lastModified) {
+        this.isActived = isActived;
+        this.lastModified = lastModified;
+    }
+
 
     public int getAccountId() {
         return accountId;

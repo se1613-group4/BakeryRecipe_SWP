@@ -44,14 +44,10 @@
             <i class="fas fa-angle-double-up"></i>
         </a>
         <!-- ScrollUp End Here -->                 
-
-        <p>This is my jsp home page</p>
-
+      
         <!-- Header Area Start Here -->
         <%@include file="header_user.jsp" %>
-        <!-- Header Area End Here -->
-        
-        <h1>Welcome, ${sessionScope.USER.userId}</h1>
+        <!-- Header Area End Here -->                
 
         <!-- Search input -->
         <div class="col-lg-4">

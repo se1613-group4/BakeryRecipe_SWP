@@ -23,8 +23,6 @@ import java.time.LocalDate;
  */
 public class User_tblDAO implements Serializable{
     // function of DAO code here
-    
-    
     public int getCurrentUserId() throws SQLException {
         //User_tblDTO usr = null;
         Connection con = null;

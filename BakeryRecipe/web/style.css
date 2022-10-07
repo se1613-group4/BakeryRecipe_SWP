@@ -12320,3 +12320,10 @@ svg {
     width: 100%;
     justify-content: center;
 }
+
+/*===========================================
+lam edit user dropdown (in header)
+=============================================*/
+#dropdown-user {
+	display: inline-block;
+}

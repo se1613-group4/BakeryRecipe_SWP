@@ -96,12 +96,12 @@
                         </c:url>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                         <div class="product-box-layout1">
-                            <!-- Remove Link -->                            
-                            <a href="${remove_recipe_url}" class="linkStyle">
-                                <i class="fa-solid fa-trash-can"></i>Remove</a>
-                            <!-- Edit Link-->                            
-                            <a href="#editRecipe?recipeId=recipeId" class="linkStyle">
-                                <i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                            <!-- Remove Link -->
+                            <i class="fa-solid fa-trash-can"></i>
+                            <a href="${remove_recipe_url}">Remove</a>
+                            <!-- Edit Link-->
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <a href="#editRecipe?recipeId=recipeId">Edit</a>
                             
                             <figure class="item-figure"><a href="${single_recipe_url}">
                                     <img src="${image.imgLink}"

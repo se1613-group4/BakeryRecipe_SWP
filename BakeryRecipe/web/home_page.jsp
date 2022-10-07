@@ -511,19 +511,29 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form class="login-form" action="MainController"  method="post">
-                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />
-                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />
+                        <form class="login-form" action="MainController"  method="post" id="loginform">
+                            <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
+
+                            <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
+
+
                             <div class="inline-box mb-5 mt-4">
-                                <div class="checkbox checkbox-primary">
-                                    <input id="modal-checkbox" type="checkbox">
-                                    <label for="modal-checkbox">Remember Me</label>
-                                </div>
-                                <label class="lost-password"><a href="#">Lost your password?</a></label>
+                                <!--                                <div class="checkbox checkbox-primary">
+                                                                    <input id="modal-checkbox" type="checkbox">
+                                                                    <label for="modal-checkbox">Remember Me</label>
+                                                                </div>-->
+                                <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
                             </div>
                             <div class="inline-box mb-5 mt-4">
-                                <button class="btn-fill" type="submit" value="Login" name="btAction">Login</button>
-                                <a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>
+                                <button class="btn-fill" type="submit" value="LoginPage" name="btAction">Login</button>
+                                <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
+                                <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
+                                                                    <i class="flaticon-profile"></i>register here
+                                                                </button>-->
+<!--                                <div class="inline-box mb-5 mt-4">
+                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
+                                </div>-->
+                                <button class="btn-fill" type="submit" value="Register1" name="btAction">Register</button>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>

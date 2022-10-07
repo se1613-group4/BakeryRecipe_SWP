@@ -31,8 +31,22 @@ public class AppContants { // mapping all features strings
 
         public static final String MY_RECIPES_PAGE = "myRecipesPage";
     }
+
     public class RemoveRecipeFeature {
+
         public static final String ERROR_PAGE = "errorPage";
+    }
+
+    public class LoginFeatures {
+
+        public static final String INVALID_PAGE = "loginJsp";
+        public static final String HOME_PAGE_USER = "homePageUser";
+    }
+
+    public class RegisterFeatures {
+
+        public static final String ERROR_PAGE = "regisrerJsp";
+        public static final String LOGIN_PAGE = "loginJsp";
     }
 
     public class Admin {

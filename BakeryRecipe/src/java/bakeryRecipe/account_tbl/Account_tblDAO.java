@@ -174,5 +174,41 @@ public class Account_tblDAO implements Serializable {
           return  result;
     }
     
-    getListAccountAdmin()
+   public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex,int pagesize) throws SQLException{
+       ArrayList<Account_tblDTO> result = null;
+         Connection connection = null;
+       PreparedStatement stm = null;
+       ResultSet rs = null;
+       
+       try {
+           //1. make connection
+           connection = DBConnection.getConnection();
+           if (connection != null) {
+               //2. create sql string
+               String sql = "call getlistaccount_Admin(?,?)";
+               //3. create statement obj
+               stm = connection.prepareStatement(sql); // tao ra obj rong
+                 stm.setInt(1, pageindex);
+                 stm.setInt(2, pagesize);
+               //4. execute query
+               rs = stm.executeQuery();
+               //5 process result
+               while (rs.next()) {
+                  result = new ArrayList<Account_tblDTO>();
+                  result.add(new Account_tblDTO());
+               }
+           }
+       } finally {
+           if (rs != null) {
+               rs.close();
+           }
+           if (stm != null) {
+               stm.close();
+           }
+           if (connection != null) {
+               connection.close();
+           }
+       }
+       return result;
+   }
 }

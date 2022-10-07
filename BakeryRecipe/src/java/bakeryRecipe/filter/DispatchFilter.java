@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,6 +54,7 @@ public class DispatchFilter implements Filter {
             // Get siteMaps Attribute (in contextScope)
             ServletContext context = request.getServletContext();
             Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+            
             // Get resource name (URL Patern)
             int lastIndex = uri.lastIndexOf("/");
             String resource = uri.substring(lastIndex + 1);

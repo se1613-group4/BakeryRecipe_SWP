@@ -59,8 +59,8 @@
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
                                 <div class="content-container center">
                                       <form action="MainController">
-                                        <input type="text"  value="" placeholder="name,username,...." name="txtSearchValue"/>
-                                                <button type="submit" value="AdminSearch" name="btAction">Tìm Kiếm </button>
+                                        <input type="text"  value="" placeholder="name,username,...." name=""/>
+                                                <button type="submit">Tìm Kiếm </button>
                                       </form>
                                 </div>
                                 <div class="content-container">

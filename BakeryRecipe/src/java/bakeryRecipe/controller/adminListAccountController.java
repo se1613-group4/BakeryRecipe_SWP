@@ -5,6 +5,7 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "adminDashBoardController", urlPatterns = {"/adminDashBoardController"})
-public class adminDashBoardController extends HttpServlet {
+@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
+public class adminListAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,15 +38,17 @@ public class adminDashBoardController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        ServletContext context = getServletContext();
+         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         String url = AppContants.Admin.ADMIN_HOME;
-        ArrayList<Integer> result = null ;
+        int pageindex ;
+        int pagesize =10 ;
+        ArrayList<Account_tblDTO> result = null ;
         try {
             HttpSession session = request.getSession();
+              pageindex = (Integer) session.getAttribute("ADMIN_PAGE_INDEX");
             Account_tblDAO dao = new Account_tblDAO();
-            result = (ArrayList<Integer>)  dao.getDashBoardInfoAdmin();
+            result = (ArrayList<Account_tblDTO>)  dao.getListAccountAdmin(pageindex,pagesize);
              session.setAttribute("ADMIN_DASHBOARD",result);
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());

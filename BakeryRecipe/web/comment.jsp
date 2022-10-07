@@ -101,7 +101,7 @@
                         <label>Comment :</label>
                         <textarea placeholder="" class="textarea form-control" name="txtCommentContent" rows="7" cols="20" data-error="Message field is required" required></textarea>
                         <div class="help-block with-errors"></div>
-                    </div>
+                    </div>git ad
                     <div class="col-12 form-group mb-0">
                         <button type="submit" class="item-btn" value="Comment" name="btAction">COMMENT</button>
                     </div>

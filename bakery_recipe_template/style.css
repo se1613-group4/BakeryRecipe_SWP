@@ -12327,6 +12327,14 @@ lam edit user dropdown (in header)
 #dropdown-user {
 	display: block;
 }
-.edit_delete {
+/*===========================================
+19. My Recipes page Css - Lam added
+=============================================*/
+.linkStyle {
+    color: #4b4a5b;
 	display: inline-block;
+	margin-right: 15px;
+}
+.linkStyle:hover {
+	color: #ff7171;
 }

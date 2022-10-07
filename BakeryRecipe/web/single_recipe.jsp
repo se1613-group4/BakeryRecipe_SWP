@@ -37,8 +37,7 @@
     <script src="js/modernizr-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>My Single Recipe</h1>
-    Recipe Id: ${param.recipeId} </br>
+    <h1>My Single Recipe</h1>    
     <!-- Pre loader Start Here -->
     <div id="preloader"></div>
     <!-- Pre loader End Here -->
@@ -48,6 +47,15 @@
     </a>
     <!-- Scroll Up End Here -->
     
+    <c:set var="user" value="${sessionScope.USER}"/>
+    <c:if test="${not empty user}">
+        <%@include file="header_user.jsp" %>
+    </c:if>
+    <c:if test="${empty user}">
+        <%@include file="header.html" %>
+    </c:if>
+    
+    <!---->
     <div id="wrapper" class="wrapper">        
         <!-- Inner Page Banner Area Start Here -->
         <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">

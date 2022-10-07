@@ -45,9 +45,9 @@
     </a>
     <!-- ScrollUp End Here -->
     
-     <!-- Header Area Start Here -->
-        <%@include file="header_user.jsp" %>
-        <!-- Header Area End Here -->
+    <!-- Header Area Start Here -->
+    <jsp:include page="header_user.jsp"></jsp:include>
+    <!-- Header Area End Here -->
     
     <div id="wrapper" class="wrapper">        
         <!-- Inne Page Banner Area Start Here -->

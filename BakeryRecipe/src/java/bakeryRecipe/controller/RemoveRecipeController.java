@@ -5,8 +5,12 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Properties;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +36,32 @@ public class RemoveRecipeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RemoveRecipeController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RemoveRecipeController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        
+        // Mapping url        
+        String urlRewriting = AppContants.RemoveRecipeFeature.ERROR_PAGE;
+        int recipeId = Integer.parseInt(request.getParameter("recipeId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        try {
+            //1. call DAO
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+            boolean result = recipeDao.removeRecipe(recipeId);
+            //2. proccess
+            if (result) {
+                // call search function again by using url rewriting
+                urlRewriting ="displayOwnRecipes"
+                        + "?userId=" + userId;
+            }
+            
+        } catch (SQLException ex) {
+            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
+        } finally {
+            response.sendRedirect(urlRewriting);
         }
     }
 

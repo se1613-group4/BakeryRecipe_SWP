@@ -92,6 +92,7 @@
                         </c:url>
                         <c:url var="remove_recipe_url" value="removeRecipeController">
                             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                            <c:param name="userId" value="${sessionScope.USER.userId}"/>
                         </c:url>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                         <div class="product-box-layout1">

@@ -27,6 +27,7 @@ public class Recipe_tblDAO implements Serializable {
     private List<Recipe_tblDTO> recipeDtoList;
 
     /**
+     * Author: LamVo
      * @return list of recipe DTO (s)
      */
     public List<Recipe_tblDTO> getRecipeDtoList() {
@@ -378,6 +379,7 @@ public class Recipe_tblDAO implements Serializable {
      * Load one user's recipes
      * Author: LamVo
      * @param userId
+     * @throws java.sql.SQLException
      */
     public void loadAllRecipes(int userId) 
             throws SQLException {
@@ -441,5 +443,45 @@ public class Recipe_tblDAO implements Serializable {
                 con.close();
             }
         }
+    }
+    
+    /**
+     * Remove one recipe of a user (soft delete) set isActive = 0 
+     * @param recipeId
+     * @return boolean result
+     * @throws java.sql.SQLException
+     */
+    public boolean removeRecipe(int recipeId) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "UPDATE recipe_tbl \n"
+                        + "SET is_actived = 0 \n"
+                        + "WHERE (recipe_id = ?)";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, recipeId);
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;                
     }
 }

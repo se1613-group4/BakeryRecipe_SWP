@@ -55,7 +55,7 @@ public class adminListAccountController extends HttpServlet {
         } finally {
 //           RequestDispatcher rd = request.getRequestDispatcher(url);
 //            rd.forward(request, response);
-       response.sendRedirect(url);
+           response.sendRedirect(url);
         }
         
     }

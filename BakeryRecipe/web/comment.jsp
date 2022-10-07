@@ -1,7 +1,7 @@
 <%-- 
     Document   : comment
     Created on : Sep 29, 2022, 6:18:35 PM
-    Author     : trung
+    Author     : ThongNT
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -39,6 +39,7 @@
     <body>
 
         <c:set var="commentsList" value="${requestScope.COMMENTS_LIST}"/>
+        <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
         <c:if test="${not empty commentsList}">
             <div class="recipe-reviews">
                 <div class="section-heading heading-dark">
@@ -89,43 +90,20 @@
                 <h2 class="item-heading">LEAVE A REVIEW</h2>
             </div>
             <div class="rate-wrapper">
-                <div class="rate-label">Rating</div>
+                <div class="rate-label">Like</div>
                 <div class="rate">
-                    <div class="rate-item"><i class="fa fa-star" aria-hidden="true"></i></div>
-                    <div class="rate-item"><i class="fa fa-star" aria-hidden="true"></i></div>
-                    <div class="rate-item"><i class="fa fa-star" aria-hidden="true"></i></div>
-                    <div class="rate-item"><i class="fa fa-star" aria-hidden="true"></i></div>
-                    <div class="rate-item"><i class="fa fa-star" aria-hidden="true"></i></div>
+                    <div class="rate-item"><i class="fa fa-heart" aria-hidden="true"></i></div>
                 </div>
             </div>
-            <form class="leave-form-box">
+            <form action="CreateNewComment" class="leave-form-box">
                 <div class="row">
                     <div class="col-12 form-group">
                         <label>Comment :</label>
-                        <textarea placeholder="" class="textarea form-control" name="message" rows="7"
-                                  cols="20" data-error="Message field is required" required></textarea>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <label>Name :</label>
-                        <input type="text" placeholder="" class="form-control" name="name"
-                               data-error="Name field is required" required>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <label>E-mail :</label>
-                        <input type="email" placeholder="" class="form-control" name="email"
-                               data-error="E-mail field is required" required>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-lg-4 form-group">
-                        <label>Website :</label>
-                        <input type="email" placeholder="" class="form-control" name="email"
-                               data-error="E-mail field is required" required>
+                        <textarea placeholder="" class="textarea form-control" name="txtCommentContent" rows="7" cols="20" data-error="Message field is required" required></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="col-12 form-group mb-0">
-                        <button type="submit" class="item-btn">POST REVIEW</button>
+                        <button type="submit" class="item-btn" value="Comment" name="btAction">COMMENT</button>
                     </div>
                 </div>
                 <div class="form-response"></div>

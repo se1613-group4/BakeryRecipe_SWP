@@ -29,8 +29,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "DisplayUserProfile", urlPatterns = {"/DisplayUserProfile"})
 public class DisplayUserProfile extends HttpServlet {
 
-    private final String PROFILE_PAGE = "single-author.jsp";
-    private final String HOME_PAGE = "home_page_user.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

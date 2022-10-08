@@ -60,13 +60,18 @@
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
 
+                                
+                                <form action="adminListAccountController">
+                                    <input type="text" name="searchuseradmin" placeholder="username,phonenumber,.." size="15" required /> 
+                                <input type="submit" > Tìm Kiếm <input/>
+                                </form>
+                               
                                 <div class="content-container">
                                     <div class ="content">
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
-                                             <li><a href="adminListAccountController?listuserrowindex=${i}" >${i}</a></li>
+                                             <li><a href="adminListAccountController?listuserrowindex=${i}&searchuseradmin=${searchuseradmin}" >${i}</a></li>
                                         </c:forEach>
                                                                        
-
                                     </div>
                                     <table id="customers">
                                         <tr>

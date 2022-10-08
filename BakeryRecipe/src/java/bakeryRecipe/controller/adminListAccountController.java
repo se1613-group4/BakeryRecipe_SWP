@@ -49,21 +49,26 @@ public class adminListAccountController extends HttpServlet {
               
             HttpSession session = request.getSession();
             String test =   request.getParameter("listuserrowindex");
+            String searchuseradmin = request.getParameter("searchuseradmin");
+            
               if(test == null){
                   pageindex = 1 ;
               }else{
                    pageindex = Integer.parseInt(test);
               }
               
+            String searchvalue = searchuseradmin == null ? " " : searchuseradmin;
+              
+              
             Account_tblDAO dao = new Account_tblDAO();
             endindex = dao.getEndIndexAccountListAdmin();
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(pageindex, 10);
+            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
             
             session.setAttribute("ADMIN_LIST_USER", result);
             session.setAttribute("end_account", endindex);
             
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
         } finally {
 //           RequestDispatcher rd = request.getRequestDispatcher(url);
 //            rd.forward(request, response);

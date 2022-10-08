@@ -5,15 +5,13 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Properties;
-import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,13 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author dangh
+ * @author ThongNT
  */
-@WebServlet(name = "DisplayUserProfile", urlPatterns = {"/DisplayUserProfile"})
-public class DisplayUserProfile extends HttpServlet {
-
-    private final String PROFILE_PAGE = "single-author.jsp";
-    private final String HOME_PAGE = "home_page_user.jsp";
+@WebServlet(name = "CreateNewCommentController", urlPatterns = {"/CreateNewCommentController"})
+public class CreateNewCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,40 +39,45 @@ public class DisplayUserProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //start get sitemap
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        //end get sitemap
-        
-        String url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.USER_HOME_PAGE);
-        
+        // End get site map
+
+        // Mapping url        
+        String urlRewriting = siteMaps.getProperty(AppContants.AddNewCommentFeature.ERROR_PAGE);
+        //user_id       int(11)
+        //recipe_id     int(11)
+        //comment_detail text
+        //created_date
+        //last_modified
+        //is_actived
         try {
-            HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            System.out.println(user.getUserId());
-            //call dao
-            Profile_tblDAO daoProfile = new Profile_tblDAO();
-            Follow_tblDAO daoFollow = new Follow_tblDAO();
-            //process result
-            Profile_tblDTO profile = daoProfile.displayUserProfile(user.getUserId());
-            System.out.println("");
-            int follower_amount = daoFollow.displayFollower(user.getUserId());
-            int following_amount = daoFollow.displayFollowing(user.getUserId());
-            request.setAttribute("USER_PROFILE", profile);
-            request.setAttribute("USER_FOLLOWERS", follower_amount);
-            request.setAttribute("USER_FOLLOWING", following_amount);
-            //redirect webpage
-            url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);
-        }catch(SQLException ex){
-            log("Error at DisplayUserProfile: " + ex.toString());
-        }catch(NamingException ex){
-            log("Error at DisplayUserProfile: " + ex.toString());
+            HttpSession session = request.getSession(true);
+            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+            if (currentUser == null) {
+                urlRewriting = siteMaps.getProperty(AppContants.AddNewCommentFeature.LOGIN_PAGE);
+            } else {
+                int user_id = currentUser.getUserId();
+                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
+                String comment_detail = request.getParameter("txtCommentContent");
+                Date created_date = new Date(Calendar.getInstance().getTime().getTime());
+                Date last_modified = new Date(Calendar.getInstance().getTime().getTime());
+                boolean is_actived = true;
+//            System.out.println("UnitTest: " + user_id + recipe_id + comment_detail + created_date + last_modified + is_actived);
+                Comment_tblDAO dao = new Comment_tblDAO();
+                if (dao.addNewComment(user_id, recipe_id, comment_detail, created_date, last_modified, is_actived)) {
+                    urlRewriting = siteMaps.getProperty(AppContants.AddNewCommentFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
+                }//end check result
+            }//end check has been login
+        } catch (SQLException ex) {
+            log("CreateNewComment Controller _ SQL " + ex.getMessage());
+        } finally {
+            response.sendRedirect(urlRewriting);
         }
-        finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

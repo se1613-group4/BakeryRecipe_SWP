@@ -65,7 +65,7 @@
                                 <h1>User Register Page</h1>
                                 <ul>
                                     <li>
-                                        <a href=MainController name="btAction" value="Home">Home</a>
+                                        <a href=homePage name="btAction" value="Home">Home</a>
                                     </li>
                                     <li>Register</li>
                                 </ul>
@@ -87,49 +87,62 @@
                                 </div>
                                 <!--REGISTER FORM-->
                                 <c:set var="error" value="${requestScope.REGISTER_ERR}"></c:set>
-                                    <form class="login-form" action="MainController"  method="post">
+                                    <form class="login-form" action="registerController"  method="post">
                                         <input required value="${param.txtUsername}" class="main-input-box" name="txtUsername" type="text" placeholder="User Name"  
                                            oninvalid="this.setCustomValidity('Enter User Name Here')"
-                                            oninput="this.setCustomValidity('')"/>
-                                    
-                                    
+                                           oninput="this.setCustomValidity('')"/>
+
+
                                     <c:if test="${not empty error.usernameFormatErr}">
                                         <font color="red">${error.usernameFormatErr}</font></br>
                                     </c:if>
 
                                     <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" required
                                            oninvalid="this.setCustomValidity('Enter password Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.passwordFormatErr}">
                                         <font color="red">${error.passwordFormatErr}</font></br>
                                     </c:if>
 
                                     <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
                                            oninvalid="this.setCustomValidity('Enter Confirm password Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.confirmNotMathched}">
                                         <font color="red">${error.confirmNotMathched}</font></br>
-                                    </c:if>    
+                                    </c:if>   
+
+                                    <input value="${param.txtFullname}" class="main-input-box" name="txtFullname" type="text" placeholder="Fullname" required
+                                           oninvalid="this.setCustomValidity('Enter Fullname Here')"
+                                           oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.fullnameFormatErr}">
+                                        <font color="red">${error.fullnameFormatErr}</font></br>
+                                    </c:if>
 
                                     <input value="${param.txtEmail}" class="main-input-box" name="txtEmail" type="email" placeholder="Email" required
                                            oninvalid="this.setCustomValidity('Enter Email Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.emailFormatErr}">
                                         <font color="red">${error.emailFormatErr}</font></br>
+                                    </c:if>
+                                    <c:if test="${not empty error.emailExisted}">
+                                        <font color="red">${error.emailExisted}</font></br>
                                     </c:if>
 
                                     <input value="${param.txtPhonenumber}" class="main-input-box" name="txtPhonenumber" type="phonenumber" placeholder="Phonenumber" required
                                            oninvalid="this.setCustomValidity('Enter Phonenumber Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.phonenumberFormatErr}">
                                         <font color="red">${error.phonenumberFormatErr}</font></br>
-                                    </c:if>   
+                                    </c:if>  
+                                    <c:if test="${not empty error.phonenumberExisted}">
+                                        <font color="red">${error.phonenumberExisted}</font></br>
+                                    </c:if>
                                     <c:if test="${not empty error.usernameExisted}">
                                         <font color="red">${error.usernameExisted}</font></br>
                                     </c:if>
 
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" value="Register" name="btAction">Register</button>
+                                        <button class="btn-fill" type="submit" >Register</button>
 
                                     </div>
                                 </form>

@@ -57,6 +57,7 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String email = request.getParameter("txtEmail");
         String password = request.getParameter("txtPassword");
+        String fullname =request.getParameter("txtFullname");
         String confirm = request.getParameter("txtConfirm");
         String phoneNumber = request.getParameter("txtPhonenumber");
         Date lastModified = Date.valueOf(LocalDate.now());
@@ -65,13 +66,14 @@ public class RegisterServlet extends HttpServlet {
         /*
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
-        */
+         */
         Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
         /*
         Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
         Must contain at least one number (0123456789)
         Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
-        */
+         */
+        Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
                 "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
 //        String EMAIL_PATTERN
@@ -81,7 +83,7 @@ public class RegisterServlet extends HttpServlet {
             - Chứa một ký tự @, sau @ là tên miền.
             - Tên miền có thể là domain.xxx.yyy hoặc domain.xxx. 
                 Trong đó xxx và yyy là các chữ cái và có độ dài từ 2 trở lên.*/
-        Pattern phonenumberPattern =Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
+        Pattern phonenumberPattern = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
         /*
         0388888888
         0588888888
@@ -89,8 +91,9 @@ public class RegisterServlet extends HttpServlet {
         0888888888
         0988888888
         8488888888
-        */
+         */
         try {
+            Account_tblDAO accDAO = new Account_tblDAO();
             if (usernamePattern.matcher(username).matches() == false) {
                 foundErr = true;
                 errors.setUsernameFormatErr("Username wrong format.\n "
@@ -105,20 +108,38 @@ public class RegisterServlet extends HttpServlet {
                         + "Password contain at least one lower-case letter.\n"
                         + "Must contain at least one number "
                         + "and may not contain special characters");
-            } else if (!confirm.trim().equals(password)) {
+            } 
+            if (!confirm.trim().equals(password)) {
                 foundErr = true;
                 errors.setConfirmNotMathched("Confirm must matches password");
             }
+            if (fullnamePattern.matcher(fullname).matches() == false) {
+                foundErr = true;
+                errors.setFullnameFormatErr("Fullname wrong format");
+            }
+            
+            boolean checkEmailExit = accDAO.checkEmail(email);
             if (emailPattern.matcher(email).matches() == false) {
                 foundErr = true;
-                errors.setEmailFormatErr("Email Start with a letter.\n" +
-"              - Contains only letters, numbers and dashes (-).\n" +
-"              - Contains an @ character, after @ is the domain name.");
+                errors.setEmailFormatErr("Email Start with a letter.\n"
+                        + "              - Contains only letters, numbers and dashes (-).\n"
+                        + "              - Contains an @ character, after @ is the domain name.");
             }
+            if (checkEmailExit == true) {
+                foundErr = true;
+                errors.setEmailExisted("Email existed try again!");
+            }
+            
+            boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
             if (phonenumberPattern.matcher(phoneNumber).matches() == false) {
                 foundErr = true;
-                errors.setPhonenumberFormatErr("phonenumer must is Vietnam's phone number!");
+                errors.setPhonenumberFormatErr("Phonenumer must is Vietnam's phone number!");
+            } 
+            if (checkPhonenumberExit == true) {
+                foundErr = true;
+                errors.setPhonenumberExisted("Phonenumer existed try again!");
             }
+            
             if (foundErr) {
                 request.setAttribute("REGISTER_ERR", errors);
             } else {
@@ -134,7 +155,7 @@ public class RegisterServlet extends HttpServlet {
                 boolean userResult = userDao.CreateUser_tbl();
                 int cuurentUserId = userDao.getCurrentUserId();
                 boolean accResult = accDao.saveUser(accDto, cuurentUserId);
-                boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId);
+                boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId,fullname);
                 if (userResult && accResult && profileResult) {
                     url = siteMaps.getProperty(AppContants.RegisterFeatures.LOGIN_PAGE);
                     HttpSession session = request.getSession(true);

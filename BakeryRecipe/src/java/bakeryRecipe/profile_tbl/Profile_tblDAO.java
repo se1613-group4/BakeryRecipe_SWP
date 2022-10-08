@@ -23,7 +23,7 @@ import javax.naming.NamingException;
 public class Profile_tblDAO implements Serializable {
 
     // function of DAO code here
-    public boolean CreateProfile_tbl(Profile_tblDTO pro, int currentUserId) throws SQLException {
+    public boolean CreateProfile_tbl(Profile_tblDTO pro, int currentUserId, String fullname) throws SQLException {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -33,12 +33,13 @@ public class Profile_tblDAO implements Serializable {
         try {
             con = DBConnection.getConnection();
             if (con != null) {
-                String query = " insert into Profile_tbl (user_id, last_modified) \n"
-                        + "values (?, ?);";
+                String query = " insert into Profile_tbl (user_id, last_modified, full_name) \n"
+                        + "values (?, ?, ?);";
 
                 PreparedStatement pt = con.prepareStatement(query);
                 pt.setInt(1, currentUserId);
                 pt.setDate(2, now);
+                pt.setString(3, fullname);
                 pt.executeUpdate();
                 set = true;
             }
@@ -105,4 +106,6 @@ public class Profile_tblDAO implements Serializable {
         }
         return result;
     }
+    
+    
 }

@@ -12,31 +12,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Bakery Recipe| Login</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.png">
-    <!-- Normalize Css -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <!-- Main Css -->
-    <link rel="stylesheet" href="css/main.css">
-    <!-- Bootstrap Css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Animate CSS -->
-    <link rel="stylesheet" href="css/animate.min.css">
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="css/fontawesome-all.min.css">
-    <!-- Flaticon CSS -->
-    <link rel="stylesheet" href="fonts/flaticon.css">
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Modernizr Js -->
-    <script src="js/modernizr-3.6.0.min.js"></script>
+
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Bakery Recipe| Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="img/favicon.png">
+        <!-- Normalize Css -->
+        <link rel="stylesheet" href="css/normalize.css">
+        <!-- Main Css -->
+        <link rel="stylesheet" href="css/main.css">
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- Animate CSS -->
+        <link rel="stylesheet" href="css/animate.min.css">
+        <!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <!-- Flaticon CSS -->
+        <link rel="stylesheet" href="fonts/flaticon.css">
+        <!-- Custom Css -->
+        <link rel="stylesheet" href="style.css">
+        <!-- Modernizr Js -->
+        <script src="js/modernizr-3.6.0.min.js"></script>
 
     </head>
     <body>
@@ -65,7 +65,7 @@
                                 <h1>User Login Page</h1>
                                 <ul>
                                     <li>
-                                        <a href=MainController name="btAction" value="Home">Home</a>
+                                        <a href=homePage name="btAction" value="Home">Home</a>
                                     </li>
                                     <li>Login</li>
                                 </ul>
@@ -75,10 +75,11 @@
                 </div>
             </section>
             <!-- Inne Page Banner Area End Here -->
-            
+
             <font color="red">${message}</font></br>
             <c:remove var="message" scope="session" /> 
             <!-- Login Area Start Here -->
+
             <section class="login-page-wrap padding-top-80 padding-bottom-50">
                 <div class="container">
                     <div class="row gutters-60">
@@ -89,21 +90,24 @@
                                 </div>
                                 <!--LOGIN FORM-->
                                 <c:set var="error" value="${requestScope.LOGIN_ERR}"></c:set>
-                                <form class="login-form" action="MainController"  method="post">
+                                
+                                
+                                <form class="login-form" action="loginController"  method="post">
+
                                     <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" required
                                            oninvalid="this.setCustomValidity('Enter User Name Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.userameEmptyErr}">
                                         <font color="red">${error.userameEmptyErr}</font></br>
                                     </c:if>
-                                    
+
                                     <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" required
                                            oninvalid="this.setCustomValidity('Enter password Here')"
-                                            oninput="this.setCustomValidity('')"/>
+                                           oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.passwordEmptyErr}">
                                         <font color="red">${error.passwordEmptyErr}</font></br>
                                     </c:if>
-                                       
+
 
                                     <c:if test="${not empty error.accountNotFound}">
                                         <font color="red">${error.accountNotFound}</font></br>
@@ -116,8 +120,10 @@
                                         <label class="lost-password"><a href="#">Lost your password?</a></label>
                                     </div>
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" value="Loginsl" name="btAction">Login</button>
-                                        <button class="btn-fill" type="submit" value="Register1" name="btAction">Register</button>
+                                        <!--                                        <button class="btn-fill"  value="loginC" name="btAction">Login</button>-->
+                                        <button class="btn-fill" type="submit" >Login</button>
+                                        <c:url var="register_url" value="registerPage"></c:url>
+                                        <a href="${register_url}">Register</a>
                                     </div>
                                 </form>
 

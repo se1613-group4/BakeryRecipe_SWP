@@ -21,7 +21,8 @@ import java.util.List;
  *
  * @author LamVo
  */
-public class Account_tblDAO implements Serializable { 
+public class Account_tblDAO implements Serializable {
+
     /**
      * Author: LamVo
      *
@@ -56,7 +57,7 @@ public class Account_tblDAO implements Serializable {
                     int userId = rs.getInt("user_id");
                     boolean isAdmin = rs.getBoolean("is_admin");
                     Date lastModif = rs.getDate("last_modified");
-                   result = (isActived) ? new Account_tblDTO(userId, username,isAdmin) : new Account_tblDTO(false,lastModif);
+                    result = (isActived) ? new Account_tblDTO(userId, username, isAdmin) : new Account_tblDTO(false, lastModif);
                 }
             }
         } finally {
@@ -73,7 +74,7 @@ public class Account_tblDAO implements Serializable {
         return result;
     }
 
-   // for register user 
+    // for register user 
     public boolean saveUser(Account_tblDTO acc, int currentUserId) throws SQLException {
         Connection con = null;
         Statement stm = null;
@@ -115,7 +116,7 @@ public class Account_tblDAO implements Serializable {
         return set;
     }
 
-   // user login
+    // user login
     public Account_tblDTO login(String username, String pass) throws SQLException {
         Account_tblDTO acc = null;
         Connection con = null;
@@ -154,22 +155,19 @@ public class Account_tblDAO implements Serializable {
         return acc;
     }
 
-    
-       private List<Account_tblDTO> accounts;
-    public List<Account_tblDTO> getAccounts() 
-    { 
-        return accounts ;
+    private List<Account_tblDTO> accounts;
+
+    public List<Account_tblDTO> getAccounts() {
+        return accounts;
     }
-    
-    
-    
+
     // -------- ADMIN SITE --------
-    public List<Integer> getDashBoardInfoAdmin() throws SQLException{
-        List<Integer> result = null ;
+    public List<Integer> getDashBoardInfoAdmin() throws SQLException {
+        List<Integer> result = null;
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
+
         try {
             //1. make connection
             connection = DBConnection.getConnection();
@@ -177,16 +175,16 @@ public class Account_tblDAO implements Serializable {
                 //2. create sql string
                 String sql = "call getdashboardInfo_Admin";
                 //3. create statement obj
-               stm = connection.prepareStatement(sql); // tao ra obj rong
-               
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+
                 //4. execute query
-               rs = stm.executeQuery();
+                rs = stm.executeQuery();
                 //5 process result
                 if (rs.next()) {
-                   result = new ArrayList<>();
-                   result.add(rs.getInt("total_account"));   // total 
-                   result.add(rs.getInt("actived_account"));  // active 
-                   result.add( result.get(0)-result.get(1));  // ban 
+                    result = new ArrayList<>();
+                    result.add(rs.getInt("total_account"));   // total 
+                    result.add(rs.getInt("actived_account"));  // active 
+                    result.add(result.get(0) - result.get(1));  // ban 
                 }
             }
         } finally {
@@ -200,46 +198,121 @@ public class Account_tblDAO implements Serializable {
                 connection.close();
             }
         }
-          return  result;
+        return result;
     }
-    
 
-   public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex,int pagesize) throws SQLException{
-       ArrayList<Account_tblDTO> result = null;
-         Connection connection = null;
-       PreparedStatement stm = null;
-       ResultSet rs = null;
-       
-       try {
-           //1. make connection
-           connection = DBConnection.getConnection();
-           if (connection != null) {
-               //2. create sql string
-               String sql = "call getlistaccount_Admin(?,?)";
-               //3. create statement obj
-               stm = connection.prepareStatement(sql); // tao ra obj rong
-                 stm.setInt(1, pageindex);
-                 stm.setInt(2, pagesize);
-               //4. execute query
-               rs = stm.executeQuery();
-               //5 process result
-               while (rs.next()) {
-                  result = new ArrayList<Account_tblDTO>();
-                  result.add(new Account_tblDTO());
-               }
-           }
-       } finally {
-           if (rs != null) {
-               rs.close();
-           }
-           if (stm != null) {
-               stm.close();
-           }
-           if (connection != null) {
-               connection.close();
-           }
-       }
-       return result;
-   }
+    public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex, int pagesize) throws SQLException {
+        ArrayList<Account_tblDTO> result = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "call getlistaccount_Admin(?,?)";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, pageindex);
+                stm.setInt(2, pagesize);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                    result = new ArrayList<Account_tblDTO>();
+                    result.add(new Account_tblDTO());
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+    //check phonenumber alredy exist
+    public boolean checkPhonenumber(String phonenumber) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select phone_number from account_tbl where phone_number like ? ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, phonenumber);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set= true;
+                } else {
+                    set= false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set ;
+
+    }
+    //check Email alredy exist
+    public boolean checkEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select email from account_tbl where email like ? ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set= true;
+                } else {
+                    set= false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set ;
+
+    }
 
 }

@@ -203,7 +203,45 @@ public class Account_tblDAO implements Serializable {
           return  result;
     }
     
+   public int getEndIndexAccountListAdmin() throws SQLException{
+       Connection connection = null;
+       PreparedStatement stm = null;
+       ResultSet rs = null;
+       int result = 0;
+       try {
+           //1. make connection
+           connection = DBConnection.getConnection();
+           if (connection != null) {
+               //2. create sql string
+               String sql = " select count(acc.is_actived) as total_rows from account_tbl acc\n"
+                       + " where acc.is_admin=false ";
+               //3. create statement obj
+               stm = connection.prepareStatement(sql); // tao ra obj rong
 
+               //4. execute query
+               rs = stm.executeQuery();
+               //5 process result
+               if (rs.next()) {
+                  result = rs.getInt("total_rows");
+               }
+               
+               result = result / 10 ;
+               System.out.println(result);
+           }
+       } finally {
+           if (rs != null) {
+               rs.close();
+           }
+           if (stm != null) {
+               stm.close();
+           }
+           if (connection != null) {
+               connection.close();
+           }
+       }
+       return result;
+   }
+    
    public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex,int pagesize) throws SQLException{
        ArrayList<Account_tblDTO> result = null;
          Connection connection = null;
@@ -223,9 +261,21 @@ public class Account_tblDAO implements Serializable {
                //4. execute query
                rs = stm.executeQuery();
                //5 process result
+               //int accountId, int userId, String username, String password, String email, String phoneNumber, Date lastModified, boolean isActived, boolean isAdmin
+                result = new ArrayList<>();
                while (rs.next()) {
-                  result = new ArrayList<Account_tblDTO>();
-                  result.add(new Account_tblDTO());
+                    result.add(new Account_tblDTO(
+                          rs.getInt("account_id"),
+                          rs.getInt("user_id"),
+                          rs.getString("username"),
+                          "***",
+                          rs.getString("email"),
+                          rs.getString("phone_number"),
+                          rs.getDate("last_modified"),
+                          rs.getBoolean("is_actived"),
+                          false
+                      ));
+                  
                }
            }
        } finally {

@@ -54,95 +54,60 @@
                                     </c:if>
                                 </div>
                             </div>
-                         
+
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
-                                <div class="content-container center">
-                                      <form action="MainController">
-                                        <input type="text"  value="" placeholder="name,username,...." name=""/>
-                                                <button type="submit">Tìm Kiếm </button>
-                                      </form>
-                                </div>
+                             
                                 <div class="content-container">
-                   
-                                    <c:set var="listUser" value="${sessionScope.ADMIN_LIST_USER}"/> 
-                                    <%--<c:if test="${empty listUser}"> <H3> Mất Kết Nối Với DATABASE,Load file stored produce,Nhấn Nút Làm Mới </h3></c:if>--%>
-                                    <c:if test="${not empty listUser}">
-
-                                    </c:if>
+                                       <div class ="content">
+                                         <p href="#">&laquo;</p>
+                                        <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
+                                            <p href="adminListAccountController?listuserrowindex=${i}">${i}</p>
+                                        </c:forEach>
+                                        <p href="#">&raquo;</p>
+                                        
+                                </div>
                                     <table id="customers">
                                         <tr>
                                             <th>Stt </th>  
-                                            <th>Họ và Tên </th>
                                             <th>Username </th>
-                                            <th>Số Điện Thoại </th>
                                             <th>Email </th>
+                                            <th>Sdt </th>
                                             <th>Lần Cuối Chỉnh Sửa </th> 
-                                            <th>Trạng Thái Hiện Hành  </th>  
+                                            <th>Đang Hoạt Động </th>  
                                         </tr>
-                                        <tr>
-                                            <td>Alfreds Futterkiste</td>
-                                            <td>Maria Anders</td>
-                                            <td>Germany</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Berglunds snabbköp</td>
-                                            <td>Christina Berglund</td>
-                                            <td>Sweden</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Centro comercial Moctezuma</td>
-                                            <td>Francisco Chang</td>
-                                            <td>Mexico</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ernst Handel</td>
-                                            <td>Roland Mendel</td>
-                                            <td>Austria</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Island Trading</td>
-                                            <td>Helen Bennett</td>
-                                            <td>UK</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Königlich Essen</td>
-                                            <td>Philip Cramer</td>
-                                            <td>Germany</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Laughing Bacchus Winecellars</td>
-                                            <td>Yoshi Tannamuri</td>
-                                            <td>Canada</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Magazzini Alimentari Riuniti</td>
-                                            <td>Giovanni Rovelli</td>
-                                            <td>Italy</td>
-                                        </tr>
-                                        <tr>
-                                            <td>North/South</td>
-                                            <td>Simon Crowther</td>
-                                            <td>UK</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Paris spécialités</td>
-                                            <td>Marie Bertrand</td>
-                                            <td>France</td>
-                                        </tr>
+                                        <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
+                                            <tr>
+                                                <td>
+                                                    ${account.accountId}
+                                                </td>
+                                                <td>
+                                                    ${account.username}
+                                                </td>
+                                                <td>
+                                                    ${account.email}
+                                                </td>
+                                                <td>
+                                                    ${account.phoneNumber}
+                                                </td>
+                                                <td>
+                                                    ${account.lastModified}
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="vehicle1" checked="${account.isActived}">
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+
                                     </table>
 
-                                </div>
-                                <div class="pagination " >
-                                    <a href="#">&laquo;</a>
-                                    <a href="#">1</a>
-                                    <a href="#" class="active">2</a>
-                                    <a href="#">3</a>
-                                    <a href="#">4</a>
-                                    <a href="#">5</a>
-                                    <a href="#">6</a>
-                                    <a href="#">&raquo;</a>
-                                </div>
+                                    </div>
+                                    
+                                
+                                        
+                                       
+                                
+                               
                             </div>
 
                         </div>

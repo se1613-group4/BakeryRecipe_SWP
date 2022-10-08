@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,24 +39,36 @@ public class adminListAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         ServletContext context = getServletContext();
+        ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex ;
-        int pagesize =10 ;
-        ArrayList<Account_tblDTO> result = null ;
+        int pageindex;  //  trang đang đứng 
+        int endindex;    /// trang cuoi cung 
+        ArrayList<Account_tblDTO> result = null;
         try {
+              
             HttpSession session = request.getSession();
-              pageindex = (Integer) session.getAttribute("ADMIN_PAGE_INDEX");
+            String test =   request.getParameter("listuserrowindex");
+              if(test == null){
+                  pageindex = 1 ;
+              }else{
+                   pageindex = Integer.parseInt(test);
+              }
+              
+              
             Account_tblDAO dao = new Account_tblDAO();
-            result = (ArrayList<Account_tblDTO>)  dao.getListAccountAdmin(pageindex,pagesize);
-             session.setAttribute("ADMIN_DASHBOARD",result);
+            endindex = dao.getEndIndexAccountListAdmin();
+            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(pageindex, 10);
+            
+            session.setAttribute("ADMIN_LIST_USER", result);
+            session.setAttribute("end_account", endindex);
+            
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
 //           RequestDispatcher rd = request.getRequestDispatcher(url);
 //            rd.forward(request, response);
-           response.sendRedirect(url);
+            response.sendRedirect(url);
         }
         
     }

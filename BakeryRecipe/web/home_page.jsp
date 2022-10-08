@@ -53,7 +53,7 @@
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
-                <form class="search-form" action="MainController">
+                <form class="search-form" action="SearchAllRecipeController">
                     <input type="text" id="ooooo" value="" placeholder="Type here........" name="txtSearchValue"/>
                     <button type="submit" class="search-btn" value="Search" name="btAction"><i class="flaticon-search"></i></button>
                 </form>

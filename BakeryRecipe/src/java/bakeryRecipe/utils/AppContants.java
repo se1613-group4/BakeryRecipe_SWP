@@ -62,4 +62,8 @@ public class AppContants { // mapping all features strings
 
     }
 
+    public class DisplayUserProfileFeartures{
+        public static final String PROFILE_PAGE = "userProfilePage";
+        public static final String USER_HOME_PAGE = "userHomePage";
+    } 
 }

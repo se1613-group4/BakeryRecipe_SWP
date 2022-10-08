@@ -226,7 +226,6 @@ public class Account_tblDAO implements Serializable {
                }
                
                result = result / 10 ;
-               System.out.println(result);
            }
        } finally {
            if (rs != null) {

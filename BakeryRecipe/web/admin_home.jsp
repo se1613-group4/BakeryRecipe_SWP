@@ -44,6 +44,8 @@
                         <div class="content">
                             <div id="dashboard" class="main-content">
                                 <h2><i class="fa fa-info"></i>Tổng Quan :</h2>  
+
+
                                 <div class="content-container">
                                     <c:set var="adminDashBoard" value="${sessionScope.ADMIN_DASHBOARD}"></c:set>
                                     <c:if test="${empty adminDashBoard}"> <H3> Mất Kết Nối Với DATABASE,Load file stored produce,Nhấn Nút Làm Mới </h3></c:if>
@@ -57,16 +59,15 @@
 
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
-                             
+
                                 <div class="content-container">
-                                       <div class ="content">
-                                         <p href="#">&laquo;</p>
+                                    <div class ="content">
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
-                                            <p href="adminListAccountController?listuserrowindex=${i}">${i}</p>
+                                             <li><a href="adminListAccountController?listuserrowindex=${i}" >${i}</a></li>
                                         </c:forEach>
-                                        <p href="#">&raquo;</p>
-                                        
-                                </div>
+                                                                       
+
+                                    </div>
                                     <table id="customers">
                                         <tr>
                                             <th>Stt </th>  
@@ -101,13 +102,13 @@
 
                                     </table>
 
-                                    </div>
-                                    
-                                
-                                        
-                                       
-                                
-                               
+                                </div>
+
+
+
+
+
+
                             </div>
 
                         </div>

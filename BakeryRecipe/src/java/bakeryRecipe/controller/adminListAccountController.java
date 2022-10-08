@@ -55,7 +55,6 @@ public class adminListAccountController extends HttpServlet {
                    pageindex = Integer.parseInt(test);
               }
               
-              
             Account_tblDAO dao = new Account_tblDAO();
             endindex = dao.getEndIndexAccountListAdmin();
             result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(pageindex, 10);

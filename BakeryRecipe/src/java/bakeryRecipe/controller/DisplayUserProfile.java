@@ -8,10 +8,13 @@ import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +44,13 @@ public class DisplayUserProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = PROFILE_PAGE;
+        
+        //start get sitemap
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        //end get sitemap
+        
+        String url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.USER_HOME_PAGE);
         
         try {
             HttpSession session = request.getSession();
@@ -59,7 +68,7 @@ public class DisplayUserProfile extends HttpServlet {
             request.setAttribute("USER_FOLLOWERS", follower_amount);
             request.setAttribute("USER_FOLLOWING", following_amount);
             //redirect webpage
-            url = PROFILE_PAGE;
+            url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);
         }catch(SQLException ex){
             log("Error at DisplayUserProfile: " + ex.toString());
         }catch(NamingException ex){

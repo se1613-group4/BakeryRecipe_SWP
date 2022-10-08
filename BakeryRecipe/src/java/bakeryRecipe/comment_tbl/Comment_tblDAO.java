@@ -108,4 +108,45 @@ public class Comment_tblDAO implements Serializable {
             }
         }
     } //end getCommentByRecipeId function
+
+    public boolean addNewComment(int user_id, int recipe_id, String comment_detail, Date created_date, Date last_modified, boolean is_actived) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+
+        try {
+            //1. Make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Create SQl String
+                String sql = "insert into comment_tbl (user_id, recipe_id, comment_detail, created_date, last_modified, is_actived) \n"
+                        + "	values (?, ?, ?, ?, ?, ?);";
+                //3. Create statement obj
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, user_id);
+                stm.setInt(2, recipe_id);
+                stm.setString(3, comment_detail);
+                stm.setDate(4, created_date);
+                stm.setDate(5, last_modified);
+                stm.setBoolean(6, is_actived);
+//                System.out.println("----------------------------------------------");
+                //4. Execute query
+                int tmp = stm.executeUpdate();
+//                System.out.println("SQLLLLLLLLLLL: " + (tmp == 0));
+
+                //5. Process result
+                if (tmp != 0) {
+                    result = true;
+                }
+            }//end check conection is not null            
+            return result;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    } //end addNewComment function
 }

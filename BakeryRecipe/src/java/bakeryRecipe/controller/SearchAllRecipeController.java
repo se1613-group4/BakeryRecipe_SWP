@@ -65,7 +65,8 @@ public class SearchAllRecipeController extends HttpServlet {
             
             //3. setAttribute to request
                 request.setAttribute("SEARCH_RESULT", result);
-                url = SEARCH_RESULT_PAGE;
+                url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);
+
              }
         } catch (SQLException ex) {
             log("SearchAllRecipe Controller _ SQL " + ex.getMessage());

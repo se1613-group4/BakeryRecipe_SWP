@@ -51,10 +51,10 @@
                             </div>
                             <nav class="site-nav">
                                 <ul id="site-menu" class="site-menu">
-                                    <li><a href="userHomePage">Home</a>
+                                    <li><a href="homePage">Home</a>
                                     </li>
                                     <li>
-                                        <a href="category.html">Category</a>
+                                        <a href="#">Category</a>
                                     </li>
                                     <li>
                                         <a href="#">All Recipes</a>
@@ -73,22 +73,22 @@
                                             <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
                                         <ul class="dropdown-menu-col-1" id="dropdown-user">
                                             <li>
-                                                <a href="MainController?btAction=DisplayProfile">
+                                                <a href="displayUserProfileController">
                                                     Profile</a>
                                             </li>
                                             <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
-                                            <li>
-                                                <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
+                                                <li>
+                                                    <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
                                             </li>                                            
                                         </ul>
                                     </li>
                                     
-                                    <!--
-                                    <li>
-                                        <a href="MainController?btAction=DisplayProfile" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                    
+<!--                                    <li>
+                                        <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             PROFILE</a>
-                                    </li>
-                                    -->
+                                    </li>-->
+                                    
                                     <li>
                                         <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>

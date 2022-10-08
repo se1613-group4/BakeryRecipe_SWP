@@ -52,9 +52,16 @@
         </a>
         <!-- ScrollUp End Here -->
         <div id="wrapper" class="wrapper">
-            <!-- Header -->
-            <%@include file="header.html" %>
-
+            <!-- Header start here-->
+            <c:set var="user" value="${sessionScope.USER}"></c:set>
+            <c:if test="${empty user}">
+                <%@include file="header.html" %>
+            </c:if>
+            <c:if test="${not empty user}">
+                <jsp:include page="header_user.jsp"></jsp:include>
+            </c:if>
+            <!-- Header end here-->
+            
             <!-- Inne Page Banner Area Start Here -->
             <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
                 <div class="container">

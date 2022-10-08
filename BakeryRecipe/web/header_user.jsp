@@ -51,10 +51,10 @@
                             </div>
                             <nav class="site-nav">
                                 <ul id="site-menu" class="site-menu">
-                                    <li><a href="userHomePage">Home</a>
+                                    <li><a href="homePage">Home</a>
                                     </li>
                                     <li>
-                                        <a href="category.html">Category</a>
+                                        <a href="#">Category</a>
                                     </li>
                                     <li>
                                         <a href="#">All Recipes</a>
@@ -77,8 +77,8 @@
                                                     Profile</a>
                                             </li>
                                             <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
-                                            <li>
-                                                <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
+                                                <li>
+                                                    <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
                                             </li>                                            
                                         </ul>
                                     </li>

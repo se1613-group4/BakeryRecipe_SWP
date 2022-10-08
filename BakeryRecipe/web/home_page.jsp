@@ -35,8 +35,7 @@
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
-    <body>
-    <H1> LOOOK AT ME </H1>
+    <body>    
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->
@@ -47,13 +46,19 @@
         <!-- ScrollUp End Here -->                 
 
         <!-- Header Area Start Here -->
-        <%@include file="header.html" %>
+            <c:set var="user" value="${sessionScope.USER}"></c:set>
+            <c:if test="${empty user}">
+                <%@include file="header.html" %>
+            </c:if>
+            <c:if test="${not empty user}">
+                <jsp:include page="header_user.jsp"></jsp:include>
+            </c:if>
         <!-- Header Area End Here -->
 
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
-                <form class="search-form" action="MainController">
+                <form class="search-form" action="SearchAllRecipeController">
                     <input type="text" id="ooooo" value="" placeholder="Type here........" name="txtSearchValue"/>
                     <button type="submit" class="search-btn" value="Search" name="btAction"><i class="flaticon-search"></i></button>
                 </form>

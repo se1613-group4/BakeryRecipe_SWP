@@ -13,21 +13,34 @@ import java.io.Serializable;
 public class RegisterError implements Serializable{
     private String usernameFormatErr;
     private String passwordFormatErr;
+    private String fullnameFormatErr;
     private String phonenumberFormatErr;
     private String emailFormatErr;
     private String confirmNotMathched;
     private String usernameExisted;
+    private String phonenumberExisted;
+    private String emailExisted;
 
     public RegisterError() {
     }
 
-    public RegisterError(String usernameFormatErr, String passwordFormatErr, String phonenumberFormatErr, String emailFormatErr, String confirmNotMathched, String usernameExisted) {
+    public RegisterError(String usernameFormatErr, String passwordFormatErr, String phonenumberFormatErr, String emailFormatErr, String confirmNotMathched, String usernameExisted, String phonenumberExisted, String emailExisted) {
         this.usernameFormatErr = usernameFormatErr;
         this.passwordFormatErr = passwordFormatErr;
         this.phonenumberFormatErr = phonenumberFormatErr;
         this.emailFormatErr = emailFormatErr;
         this.confirmNotMathched = confirmNotMathched;
         this.usernameExisted = usernameExisted;
+        this.phonenumberExisted = phonenumberExisted;
+        this.emailExisted = emailExisted;
+    }
+
+    public String getFullnameFormatErr() {
+        return fullnameFormatErr;
+    }
+
+    public void setFullnameFormatErr(String fullnameFormatErr) {
+        this.fullnameFormatErr = fullnameFormatErr;
     }
 
     public String getUsernameFormatErr() {
@@ -78,6 +91,20 @@ public class RegisterError implements Serializable{
         this.usernameExisted = usernameExisted;
     }
 
-    
-    
+    public String getPhonenumberExisted() {
+        return phonenumberExisted;
+    }
+
+    public void setPhonenumberExisted(String phonenumberExisted) {
+        this.phonenumberExisted = phonenumberExisted;
+    }
+
+    public String getEmailExisted() {
+        return emailExisted;
+    }
+
+    public void setEmailExisted(String emailExisted) {
+        this.emailExisted = emailExisted;
+    }
+
 }

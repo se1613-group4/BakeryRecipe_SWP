@@ -507,7 +507,8 @@
         <!-- Footer Area End Here -->
 
         <!-- Modal Start-->
-    
+
+
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -516,7 +517,9 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form class="login-form" action="MainController"  method="post" id="loginform">
+                        <c:url var="login_url" value="loginPage"></c:url>
+                        <c:url var="register_url" value="registerPage"></c:url>
+                        <form class="login-form" action="login_url"  method="post" id="loginform">
                             <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
 
                             <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
@@ -530,15 +533,15 @@
                                 <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
                             </div>
                             <div class="inline-box mb-5 mt-4">
-                                <button class="btn-fill" type="submit" value="LoginPage" name="btAction">Login</button>
+                                <a href="${login_url}">Login</a>
                                 <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
                                 <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
                                                                     <i class="flaticon-profile"></i>register here
                                                                 </button>-->
-<!--                                <div class="inline-box mb-5 mt-4">
-                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
-                                </div>-->
-                                <button class="btn-fill" type="submit" value="Register1" name="btAction">Register</button>
+                                <!--                                <div class="inline-box mb-5 mt-4">
+                                                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
+                                                                </div>-->
+                                <a href="${register_url}">Register</a>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>

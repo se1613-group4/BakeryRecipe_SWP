@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = siteMaps.getProperty(AppContants.LoginFeatures.INVALID_PAGE);
+        String url = siteMaps.getProperty(AppContants.LoginFeatures.LOGIN_PAGE);
         LoginError errors = new LoginError();
         boolean foundErr = false;
         try {
@@ -108,10 +108,7 @@ public class LoginServlet extends HttpServlet {
                     url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", user);
-                    // Write cookie
-//                Cookie cookie = new Cookie(username, password); // day chi la demo, lam that phai co hashcode                
-//                cookie.setMaxAge(60*60);
-//                response.addCookie(cookie);                
+                    session.setAttribute("LOGIN_PAGE1", user);
                 } //end if user click login
                 else {
                     errors.setAccountNotFound("Wrong username and password! Try again!");

@@ -73,7 +73,7 @@
                                             <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
                                         <ul class="dropdown-menu-col-1" id="dropdown-user">
                                             <li>
-                                                <a href="MainController?btAction=DisplayProfile">
+                                                <a href="displayUserProfileController">
                                                     Profile</a>
                                             </li>
                                             <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
@@ -83,12 +83,12 @@
                                         </ul>
                                     </li>
                                     
-                                    <!--
-                                    <li>
-                                        <a href="MainController?btAction=DisplayProfile" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                    
+<!--                                    <li>
+                                        <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             PROFILE</a>
-                                    </li>
-                                    -->
+                                    </li>-->
+                                    
                                     <li>
                                         <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>

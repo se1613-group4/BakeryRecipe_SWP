@@ -160,84 +160,6 @@ public class Account_tblDAO implements Serializable {
     public List<Account_tblDTO> getAccounts() {
         return accounts;
     }
-
-    // -------- ADMIN SITE --------
-    public List<Integer> getDashBoardInfoAdmin() throws SQLException {
-        List<Integer> result = null;
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "call getdashboardInfo_Admin";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                if (rs.next()) {
-                    result = new ArrayList<>();
-                    result.add(rs.getInt("total_account"));   // total 
-                    result.add(rs.getInt("actived_account"));  // active 
-                    result.add(result.get(0) - result.get(1));  // ban 
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex, int pagesize) throws SQLException {
-        ArrayList<Account_tblDTO> result = null;
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "call getlistaccount_Admin(?,?)";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setInt(1, pageindex);
-                stm.setInt(2, pagesize);
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                while (rs.next()) {
-                    result = new ArrayList<Account_tblDTO>();
-                    result.add(new Account_tblDTO());
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return result;
-    }
     //check phonenumber alredy exist
     public boolean checkPhonenumber(String phonenumber) throws SQLException {
         Connection connection = null;
@@ -314,6 +236,84 @@ public class Account_tblDAO implements Serializable {
         return set ;
 
     }
+    
+    // -------- ADMIN SITE --------
+    public List<Integer> getDashBoardInfoAdmin() throws SQLException {
+        List<Integer> result = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "call getdashboardInfo_Admin";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    result = new ArrayList<>();
+                    result.add(rs.getInt("total_account"));   // total 
+                    result.add(rs.getInt("actived_account"));  // active 
+                    result.add(result.get(0) - result.get(1));  // ban 
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+//  Code duplicattion
+//    public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex, int pagesize) throws SQLException {
+//        ArrayList<Account_tblDTO> result = null;
+//        Connection connection = null;
+//        PreparedStatement stm = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            //1. make connection
+//            connection = DBConnection.getConnection();
+//            if (connection != null) {
+//                //2. create sql string
+//                String sql = "call getlistaccount_Admin(?,?)";
+//                //3. create statement obj
+//                stm = connection.prepareStatement(sql); // tao ra obj rong
+//                stm.setInt(1, pageindex);
+//                stm.setInt(2, pagesize);
+//                //4. execute query
+//                rs = stm.executeQuery();
+//                //5 process result
+//                while (rs.next()) {
+//                    result = new ArrayList<Account_tblDTO>();
+//                    result.add(new Account_tblDTO());
+//                }
+//            }
+//        } finally {
+//            if (rs != null) {
+//                rs.close();
+//            }
+//            if (stm != null) {
+//                stm.close();
+//            }
+//            if (connection != null) {
+//                connection.close();
+//            }
+//        }
+//        return result;
+//    }
     
    public int getEndIndexAccountListAdmin() throws SQLException{
        Connection connection = null;

@@ -241,7 +241,7 @@ public class Account_tblDAO implements Serializable {
        return result;
    }
     
-   public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex,int pagesize) throws SQLException{
+   public ArrayList<Account_tblDTO> getListAccountAdmin(String searchvalue,int pageindex,int pagesize) throws SQLException{
        ArrayList<Account_tblDTO> result = null;
          Connection connection = null;
        PreparedStatement stm = null;
@@ -252,11 +252,12 @@ public class Account_tblDAO implements Serializable {
            connection = DBConnection.getConnection();
            if (connection != null) {
                //2. create sql string
-               String sql = "call getlistaccount_Admin(?,?)";
+               String sql = "call getlistaccount_Admin(?,?,?)";
                //3. create statement obj
                stm = connection.prepareStatement(sql); // tao ra obj rong
-                 stm.setInt(1, pageindex);
-                 stm.setInt(2, pagesize);
+                 stm.setString(1,searchvalue);
+                 stm.setInt(2, pageindex);
+                 stm.setInt(3, pagesize);
                //4. execute query
                rs = stm.executeQuery();
                //5 process result

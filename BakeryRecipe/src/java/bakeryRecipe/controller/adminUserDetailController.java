@@ -4,28 +4,20 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDAO;
-import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Properties;
-
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jexk
  */
-@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
-public class adminListAccountController extends HttpServlet {
+@WebServlet(name = "adminUserDetailController", urlPatterns = {"/adminUserDetailController"})
+public class adminUserDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,42 +31,18 @@ public class adminListAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex;  //  trang đang đứng 
-        int endindex;    /// trang cuoi cung 
-        ArrayList<Account_tblDTO> result = null;
-        try {
-             
-            HttpSession session = request.getSession();
-            String test =request.getParameter("roww");
-            String searchuseradmin = request.getParameter("a");
-            
-            
-              if(test == null){
-                  pageindex = 1 ;
-              }else{
-                   pageindex = Integer.parseInt(test);
-              }
-            String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
-              
-              System.out.println("gia tri tra ve " + searchvalue);
-            Account_tblDAO dao = new Account_tblDAO();
-            endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
-            
-            session.setAttribute("ADMIN_LIST_USER", result);
-            session.setAttribute("end_account", endindex);
-            
-        } catch (SQLException ex) {
-            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
-        } finally {
-//           RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet adminUserDetailController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet adminUserDetailController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

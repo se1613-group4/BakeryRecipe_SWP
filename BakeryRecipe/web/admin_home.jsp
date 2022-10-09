@@ -58,21 +58,26 @@
                             </div>
 
                             <div id="listuser" class="main-content">
-                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
+                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :
 
-                                
+                                </h2>  
+
+
                                 <form action="adminListAccountController">
-                                    <input type="text" name="searchuseradmin" placeholder="username,phonenumber,.." size="15" required /> 
-                                <input type="submit" > Tìm Kiếm <input/>
+                                    <input class="search-form" type="text" name="a" placeholder="username,phonenumber,.." size="15" required /> 
+
+                                    <input class="search-button" type="Submit"> <input/>
+
                                 </form>
-                               
+
                                 <div class="content-container">
-                                    <div class ="content">
+                                    <h5
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
-                                             <li><a href="adminListAccountController?listuserrowindex=${i}&searchuseradmin=${searchuseradmin}" >${i}</a></li>
+                                            <li><a href="adminListAccountController?roww=${i}&a=${account.accountId}">${i}</a></li>
                                         </c:forEach>
-                                                                       
-                                    </div>
+                                    </h5>
+
+
                                     <table id="customers">
                                         <tr>
                                             <th>Stt </th>  
@@ -88,7 +93,7 @@
                                                     ${account.accountId}
                                                 </td>
                                                 <td>
-                                                    ${account.username}
+                                                    <a href="adminUserDetailController?usdetail=${account.username}">${account.username}</a>
                                                 </td>
                                                 <td>
                                                     ${account.email}
@@ -100,11 +105,31 @@
                                                     ${account.lastModified}
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" name="vehicle1" checked="${account.isActived}">
+                                                    <c:if test="${account.isActived}">
+                                                        Đang Hoạt Động
+                                                    </c:if>
+                                                    <c:if test="${!account.isActived}">
+                                                        Bị Ban
+                                                    </c:if>
                                                 </td>
                                             </tr>
-                                        </c:forEach>
 
+                                        </c:forEach>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <input class="search-button" type="Submit"/> Làm Mới 
+                                            </td>
+                                        </tr>
                                     </table>
 
                                 </div>

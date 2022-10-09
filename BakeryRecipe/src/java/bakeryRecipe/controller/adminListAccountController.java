@@ -59,7 +59,6 @@ public class adminListAccountController extends HttpServlet {
               }
             String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
               
-              System.out.println("gia tri tra ve " + searchvalue);
             Account_tblDAO dao = new Account_tblDAO();
             endindex = dao.getEndIndexAccountListAdmin(searchvalue);
             result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);

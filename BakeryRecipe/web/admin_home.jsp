@@ -20,13 +20,16 @@
         <link rel="stylesheet" href="admin_css/style.css">
     </head>
     <body>
+        <!--header-->
         <div id="hdr">
             <div class="hdr-inner">
                 <h1>Trang Quản Trị Bakery Recipe</h1>
             </div>
         </div>
+      <!--body-->
         <div class="div-center bdy">
             <div class="tbl">
+                <!--nav menu-->
                 <div class="tbl-row">
                     <div class="tbl-cell menu-container">
                         <ul id="menu">
@@ -39,9 +42,10 @@
                         </ul>
                     </div>
 
-
                     <div class="tbl-cell container">
                         <div class="content">
+               <!--session 1--> 
+
                             <div id="dashboard" class="main-content">
                                 <h2><i class="fa fa-info"></i>Tổng Quan :</h2>  
 
@@ -57,17 +61,12 @@
                                 </div>
                             </div>
 
+               <!--session 2-->
                             <div id="listuser" class="main-content">
-                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :
-
-                                </h2>  
-
-
+                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>
                                 <form action="adminListAccountController">
                                     <input class="search-form" type="text" name="a" placeholder="username,phonenumber,.." size="15" required /> 
                                 </form>
-                          
-             
                                 <div class="content-container">
                                     <h5
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
@@ -83,79 +82,55 @@
                                             <th>Last Modified </th> 
                                             <th>Status  </th>  
                                         </tr>
-                                    <c:if test="${ empty sessionScope.ADMIN_LIST_USER}">
-                                        <H3> No Result Found!  </h3>
-                                    </c:if>
-                                    <c:if test="${ not empty sessionScope.ADMIN_LIST_USER}">
-                                         <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
-                                            <tr>
-                                                <td>
-                                                    ${account.accountId}
-                                                </td>
-                                                <td>
-                                                    <a href="adminUserDetailController?usdetail=${account.username}">${account.username}</a>
-                                                </td>
-                                                <td>
-                                                    ${account.email}
-                                                </td>
-                                                <td>
-                                                    ${account.phoneNumber}
-                                                </td>
-                                                <td>
-                                                    ${account.lastModified}
-                                                </td>
-                                                <td>
-                                                    <c:if test="${account.isActived}">
-                                                        Actived
-                                                    </c:if>
-                                                    <c:if test="${!account.isActived}">
-                                                        Banned
-                                                    </c:if>
-                                                </td>
-                                            </tr>
-
-                                        </c:forEach>
-                                    </c:if>
-                                       
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
-                                            <td>
+                                        <c:if test="${ empty sessionScope.ADMIN_LIST_USER}">
+                                            <H3> No Result Found!  </h3>
+                                            </c:if>
+                                            <c:if test="${ not empty sessionScope.ADMIN_LIST_USER}">
+                                             <form action="tess">
+                                                <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
+                                                <tr>
+                                                    <td>
+                                                          <input type="Submit" name="usid"value="${account.userId}">
+                                                    </td>
+                                                    <td>
+                                                               ${account.username}
+                                                    </td>
+                                                    <td>
+                                                        ${account.email}
+                                                    </td>
+                                                    <td>
+                                                        ${account.phoneNumber}
+                                                    </td>
+                                                    <td>
+                                                        ${account.lastModified}
+                                                    </td>
+                                                    <td>
+                                                        <c:if test="${account.isActived}">
+                                                            Actived
+                                                        </c:if>
+                                                        <c:if test="${!account.isActived}">
+                                                            Banned
+                                                        </c:if>
+                                                    </td>
+                                                </tr>
+                                                        </form>
+                                            </c:forEach>
+                                        </c:if>
                                                 <a  href="adminListAccountController"  type="Submit"/> Làm Mới </a>
-                                            </td>
-                                        </tr>
                                     </table>
 
                                 </div>
-                                <!<!-- userdetail -->
-                                <div id="userdetail" class="main-content">
-                                    <h2><i class="fa fa-info"></i>Tổng Quan :</h2>  
-
-
+                            </div>
+                <!--session 3-->
+                            <div id="userdetail" class="main-content">
+                                    <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
                                     <div class="content-container">
-                                    <c:set var="adminDashBoard" value="${sessionScope.ADMIN_DASHBOARD}"></c:set>
-                                    <c:if test="${empty adminDashBoard}"> <H3> Mất Kết Nối Với DATABASE,Load file stored produce,Nhấn Nút Làm Mới </h3></c:if>
-                                        <c:if test="${not empty adminDashBoard}">
-                                        <h3>  Tổng Số Tài Khoản : ${adminDashBoard.get(0)} </h3> <br/>
-                                        <h3> Tài Khoản Hoạt động  ${adminDashBoard.get(1)}  </h3> <br/>
-                                        <h3> Tài Khoản Bị Khóa :  ${adminDashBoard.get(2)} </h3> <br/>
-                                    </c:if>
+                                        <c:if test="${empty usinfo}"> <H3> Another Admin just delete this user,please try again later</h3></c:if>
+                                            <c:if test="${not empty usifo}">
+                                                 ${usifo.toString()}
+                                        </c:if>
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-                            </div>
-
                         </div>
 
 

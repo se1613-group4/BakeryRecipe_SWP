@@ -48,42 +48,52 @@
 
                                 <div class="content-container">
                                     <c:set var="adminDashBoard" value="${sessionScope.ADMIN_DASHBOARD}"></c:set>
-                                    <c:if test="${empty adminDashBoard}"> <H3> Mất Kết Nối Với DATABASE,Load file stored produce,Nhấn Nút Làm Mới </h3></c:if>
+                                    <c:if test="${empty adminDashBoard}"> <H3> Lost Connection,Load file stored produce,Press Summit Button </h3></c:if>
                                         <c:if test="${not empty adminDashBoard}">
-                                        <h3>  Tổng Số Tài Khoản : ${adminDashBoard.get(0)} </h3> <br/>
-                                        <h3> Tài Khoản Hoạt động  ${adminDashBoard.get(1)}  </h3> <br/>
-                                        <h3> Tài Khoản Bị Khóa :  ${adminDashBoard.get(2)} </h3> <br/>
+                                        <h3>  Total Account : ${adminDashBoard.get(0)} </h3> <br/>
+                                        <h3>  Acctived Account :   ${adminDashBoard.get(1)}  </h3> <br/>
+                                        <h3>  Banned Account :  ${adminDashBoard.get(2)} </h3> <br/>
                                     </c:if>
                                 </div>
                             </div>
 
                             <div id="listuser" class="main-content">
-                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :</h2>  
+                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng :
 
+                                </h2>  
+
+
+                                <form action="adminListAccountController">
+                                    <input class="search-form" type="text" name="a" placeholder="username,phonenumber,.." size="15" required /> 
+                                </form>
+                          
+             
                                 <div class="content-container">
-                                    <div class ="content">
+                                    <h5
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
-                                             <li><a href="adminListAccountController?listuserrowindex=${i}" >${i}</a></li>
+                                            <li><a href="adminListAccountController?roww=${i}&a=${a}">${i}</a></li>
                                         </c:forEach>
-                                                                       
-
-                                    </div>
+                                    </h5>
                                     <table id="customers">
                                         <tr>
                                             <th>Stt </th>  
                                             <th>Username </th>
                                             <th>Email </th>
-                                            <th>Sdt </th>
-                                            <th>Lần Cuối Chỉnh Sửa </th> 
-                                            <th>Đang Hoạt Động </th>  
+                                            <th>Phone </th>
+                                            <th>Last Modified </th> 
+                                            <th>Status  </th>  
                                         </tr>
-                                        <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
+                                    <c:if test="${ empty sessionScope.ADMIN_LIST_USER}">
+                                        <H3> No Result Found!  </h3>
+                                    </c:if>
+                                    <c:if test="${ not empty sessionScope.ADMIN_LIST_USER}">
+                                         <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
                                             <tr>
                                                 <td>
                                                     ${account.accountId}
                                                 </td>
                                                 <td>
-                                                    ${account.username}
+                                                    <a href="adminUserDetailController?usdetail=${account.username}">${account.username}</a>
                                                 </td>
                                                 <td>
                                                     ${account.email}
@@ -95,16 +105,51 @@
                                                     ${account.lastModified}
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" name="vehicle1" checked="${account.isActived}">
+                                                    <c:if test="${account.isActived}">
+                                                        Actived
+                                                    </c:if>
+                                                    <c:if test="${!account.isActived}">
+                                                        Banned
+                                                    </c:if>
                                                 </td>
                                             </tr>
-                                        </c:forEach>
 
+                                        </c:forEach>
+                                    </c:if>
+                                       
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <a  href="adminListAccountController"  type="Submit"/> Làm Mới </a>
+                                            </td>
+                                        </tr>
                                     </table>
 
                                 </div>
+                                <!<!-- userdetail -->
+                                <div id="userdetail" class="main-content">
+                                    <h2><i class="fa fa-info"></i>Tổng Quan :</h2>  
 
 
+                                    <div class="content-container">
+                                    <c:set var="adminDashBoard" value="${sessionScope.ADMIN_DASHBOARD}"></c:set>
+                                    <c:if test="${empty adminDashBoard}"> <H3> Mất Kết Nối Với DATABASE,Load file stored produce,Nhấn Nút Làm Mới </h3></c:if>
+                                        <c:if test="${not empty adminDashBoard}">
+                                        <h3>  Tổng Số Tài Khoản : ${adminDashBoard.get(0)} </h3> <br/>
+                                        <h3> Tài Khoản Hoạt động  ${adminDashBoard.get(1)}  </h3> <br/>
+                                        <h3> Tài Khoản Bị Khóa :  ${adminDashBoard.get(2)} </h3> <br/>
+                                    </c:if>
+                                </div>
+                            </div>
 
 
 

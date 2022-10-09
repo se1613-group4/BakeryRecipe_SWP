@@ -86,11 +86,11 @@
                                             <H3> No Result Found!  </h3>
                                             </c:if>
                                             <c:if test="${ not empty sessionScope.ADMIN_LIST_USER}">
-                                             <form action="tess">
+                                            <form action="adminUserDetailController" method="post">
                                                 <c:forEach items="${sessionScope.ADMIN_LIST_USER}" var="account">
                                                 <tr>
                                                     <td>
-                                                          <input type="Submit" name="usid"value="${account.userId}">
+                                                          <input type="submit" name="usid"value="${account.userId}">
                                                     </td>
                                                     <td>
                                                                ${account.username}

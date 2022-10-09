@@ -1,4 +1,4 @@
-/*@font-face {
+@font-face {
     font-family: "Open Sans";
     src: url("OpenSans-Regular.ttf");
 }
@@ -133,7 +133,7 @@ textarea {
 .mybutton {
  background-color: white;
   color: black;
-  border: 2px solid #4CAF50;  Green 
+  border: 2px solid #4CAF50;  
 }
 
 button {
@@ -153,7 +153,7 @@ select:focus {
 }
 
 
------------------ Commom Classes------------------------
+/*----------------- Commom Classes------------------------*/
 
 .tbl {
     display: table;
@@ -398,4 +398,4 @@ select:focus {
 .pagination a:hover:not(.active) {
   background-color: #ddd;
   border-radius: 5px;
-  }*/
+  }

@@ -58,15 +58,12 @@ public class AppContants { // mapping all features strings
     }
 
     public class Admin {
-
+        public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
         public static final String ADMIN_LISTUSER = "adminListUserController";
-        public static final String ADMIN_LISTPOST = "adminListPostController";
-        public static final String ADMIN_USERDETAIL = "adminUserDetailController";
-        public static final String ADMIN_POSTDETAIL = "adminPostDetail";
-        public static final String ADMIN_UPDATEUSER = "adminUpdateUser";
-        public static final String ADMIN_UPDATEPOST = "adminUpdatePost";
+        public static final String ADMIN_USDETAIL = "adminUsdetail";
+        public static final String ADMIN_LISTRECIPE = "listRecipeAdmin";
 
     }
 

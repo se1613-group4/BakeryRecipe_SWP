@@ -17,7 +17,7 @@ import java.sql.Date;
  */
 public class Recipe_tblDTO implements Serializable{
     private int recipeId;
-    //private int userId;
+    private int userId;
     //private int categoryId;
     private String name;
     private int serving;

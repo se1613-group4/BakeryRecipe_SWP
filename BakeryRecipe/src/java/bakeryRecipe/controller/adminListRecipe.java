@@ -4,14 +4,16 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDAO;
-import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,55 +26,38 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
-public class adminListAccountController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "listRecipeAdmin", urlPatterns = {"/listRecipeAdmin"})
+ public class adminListRecipe extends HttpServlet {
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex;  //  trang đang đứng 
-        int endindex;    /// trang cuoi cung 
-        ArrayList<Account_tblDTO> result = null;
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        HttpSession session = request.getSession();
+
+        String urlRewriting = AppContants.Admin.ADMIN_USDETAIL;
+        String test = request.getParameter("usid");
+        int  usid = test==null? 1 :  Integer.parseInt(test);
         try {
-             
-            HttpSession session = request.getSession();
-            String test =request.getParameter("roww");
-            String searchuseradmin = request.getParameter("a");
+            Profile_tblDAO dao = new Profile_tblDAO();
+            Profile_tblDTO  dto =dao.displayUserProfile(usid);
             
+            if (dto != null) {
+                    session.setAttribute( "usinf", dto);
+                    urlRewriting ="adminHome";
+            }
             
-              if(test == null){
-                  pageindex = 1 ;
-              }else{
-                   pageindex = Integer.parseInt(test);
-              }
-            String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
-              
-            Account_tblDAO dao = new Account_tblDAO();
-            endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
-            
-            session.setAttribute("ADMIN_LIST_USER", result);
-            session.setAttribute("end_account", endindex);
             
         } catch (SQLException ex) {
-            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
-        } finally {
-
-            response.sendRedirect(url);
+            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+          Logger.getLogger(adminUsdetail.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+            response.sendRedirect(urlRewriting);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

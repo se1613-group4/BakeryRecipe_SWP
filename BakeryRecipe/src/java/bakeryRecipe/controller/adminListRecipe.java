@@ -6,10 +6,12 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,24 +40,23 @@ import javax.servlet.http.HttpSession;
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_USDETAIL;
-        String test = request.getParameter("usid");
-        int  usid = test==null? 1 :  Integer.parseInt(test);
+        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String test = request.getParameter("usrecid");
+        int  usid = test==null? 0 :  Integer.parseInt(test);
+        
         try {
-            Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayUserProfile(usid);
+             Recipe_tblDAO dao = new Recipe_tblDAO();
+            ArrayList<Recipe_tblDTO> rslt = dao.AdmingetRecipebyUser(usid);
             
-            if (dto != null) {
-                    session.setAttribute( "usinf", dto);
-                    urlRewriting ="adminHome";
+            
+            if (rslt != null) {
+                    session.setAttribute( "ADMIN_LIST_RECIPE", rslt);
             }
             
             
         } catch (SQLException ex) {
             log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-          Logger.getLogger(adminUsdetail.class.getName()).log(Level.SEVERE, null, ex);
-      } finally {
+        } finally {
             response.sendRedirect(urlRewriting);
         }
     }

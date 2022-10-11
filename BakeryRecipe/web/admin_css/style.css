@@ -1,4 +1,4 @@
-/*@font-face {
+@font-face {
     font-family: "Open Sans";
     src: url("OpenSans-Regular.ttf");
 }
@@ -153,7 +153,6 @@ select:focus {
 }
 
 
------------------ Commom Classes------------------------
 
 .tbl {
     display: table;
@@ -398,4 +397,4 @@ select:focus {
 .pagination a:hover:not(.active) {
   background-color: #ddd;
   border-radius: 5px;
-  }*/
+  }

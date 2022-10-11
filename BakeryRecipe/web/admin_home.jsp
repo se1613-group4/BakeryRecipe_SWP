@@ -13,7 +13,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Management</title>
-        <link rel="icon" type="image/x-icon" href="../../../../IdeaProjects/BakeryRecipe_SWP/BakeryRecipe/web/admin_img/favicon.png">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
         <link rel="stylesheet" href="admin_font/css/font-awesome.min.css">
         <link rel="stylesheet" href="admin_css/prettify.css">
@@ -152,11 +151,7 @@
 
 
                                     <c:if test="${ not empty sessionScope.ADMIN_LIST_RECIPE}">
-                                        <h5>
-                                            <c:forEach begin="1" end="${sessionScope.ADMIN_LIST_RECIPE}" var="o" >
-                                                <li><a href="listRecipeAdmin?roww=${o}">${o}</a></li>
-                                                </c:forEach>
-                                        </h5>
+
                                         <table id="customers">
                                             <tr>
                                                 <th>Id </th>  
@@ -172,18 +167,23 @@
                                                 <c:forEach items="${sessionScope.ADMIN_LIST_RECIPE}" var="rec">
                                                     <tr>                                                                                
                                                         <td>
-                                                            <input type="submit" name="usid" value="${rec.recipeId}">
+                                                            ${rec.recipeId}
+                                                        </td>
+                                                        <td>
+                                                            ${rec.name}
                                                         </td>
                                                         <td>
                                                             ${rec.likedCount}
                                                         </td>
+                                                       
                                                         <td>
                                                             ${rec.savedCount}
                                                         </td>
+                                                        
                                                         <td>
-                                                            ${rec.phoneNumber}
+                                                            ${rec.createdDate}
                                                         </td>
-                                                        <td>
+                                                         <td>
                                                             ${rec.lastModified}
                                                         </td>
                                                         <td>

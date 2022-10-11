@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bakeryRecipe.category_tbl;
+package bakeryRecipe.ingredient_tbl;
 
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
@@ -18,30 +18,29 @@ import java.util.List;
  *
  * @author LamVo
  */
-public class Category_tblDAO implements Serializable{
-    
-    private List<Category_tblDTO> categoryDtoList;
+public class Ingredient_tblDAO implements Serializable{
+    private List<Ingredient_tblDTO> ingredientDtoList;
 
     /**
      * Author: LamVo
      * @return list of category DTO (s)
      */
-    public List<Category_tblDTO> getCategoryDtoList() {
-        return this.categoryDtoList;
+    public List<Ingredient_tblDTO> getIngredientDtoList() {
+        return this.ingredientDtoList;
     }
-     public void loadAllCategory()
+     public void loadAllIngredient()
             throws SQLException {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        this.categoryDtoList = null;
+        this.ingredientDtoList = null;
         try {
             //1. make connection
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
-                String sql = "SELECT category_id, name as category_name\n"
-                        + "FROM bakery_recipe.category_tbl";
+                String sql = "SELECT ingredient_id, name as ingredient_name\n"
+                        + "FROM bakery_recipe.ingredient_tbl";
                 //3. create statement obj
                 stm = con.createStatement();
                 //4. execute query
@@ -49,15 +48,15 @@ public class Category_tblDAO implements Serializable{
                 //5 process result
                 while (rs.next()) {                    
                     // get category DTO info
-                    int categoryId = rs.getInt("category_id");
-                    String categoryName = rs.getString("category_name");
-                    Category_tblDTO categoryDto = new Category_tblDTO(categoryId, categoryName);                                                            
+                    int ingredientId = rs.getInt("ingredient_id");
+                    String ingredientName = rs.getString("ingredient_name");
+                    Ingredient_tblDTO ingredientDto = new Ingredient_tblDTO(ingredientId, ingredientName);
                     // check categoryDto list not null
-                    if (this.categoryDtoList == null) {
-                        this.categoryDtoList = new ArrayList<>();
+                    if (this.ingredientDtoList == null) {
+                        this.ingredientDtoList = new ArrayList<>();
                     }// end check categoryDto list is null
                     // add to categoryDto list
-                    this.categoryDtoList.add(categoryDto);
+                    this.ingredientDtoList.add(ingredientDto);
                 }// end process rs
             }// end check con not null
         } finally {
@@ -71,5 +70,5 @@ public class Category_tblDAO implements Serializable{
                 con.close();
             }
         }
-    }// end loadAllCategory function
+    }// end loadAllIngredient function
 }

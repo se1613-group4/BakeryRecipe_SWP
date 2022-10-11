@@ -90,7 +90,7 @@
                                     </li>-->
                                     
                                     <li>
-                                        <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                        <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
                                     </li>
 

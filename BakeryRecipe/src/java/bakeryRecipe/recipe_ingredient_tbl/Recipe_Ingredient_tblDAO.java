@@ -12,5 +12,5 @@ import java.io.Serializable;
  * @author LamVo
  */
 public class Recipe_Ingredient_tblDAO implements Serializable{
-    // function of DAO code here
+   
 }

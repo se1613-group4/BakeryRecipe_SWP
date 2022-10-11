@@ -23,11 +23,12 @@ import java.util.List;
  * @author LamVo
  */
 public class Recipe_tblDAO implements Serializable {
-    
+
     private List<Recipe_tblDTO> recipeDtoList;
 
     /**
      * Author: LamVo
+     *
      * @return list of recipe DTO (s)
      */
     public List<Recipe_tblDTO> getRecipeDtoList() {
@@ -35,8 +36,8 @@ public class Recipe_tblDAO implements Serializable {
     }
 
     /**
-     * Search all Recipe object by name
-     * Author: ThongNT
+     * Search all Recipe object by name Author: ThongNT
+     *
      * @param searchValue characters of recipe's name
      * @return A list of Recipe_tblDTO objects
      * @throws SQLException
@@ -102,25 +103,25 @@ public class Recipe_tblDAO implements Serializable {
                     int totalTime = rs.getInt("total_time");
                     int likedCount = rs.getInt("liked_count");
                     Date lastModified = rs.getDate("R.last_modified");
-                    
+
                     // get user's profile DTO info
                     int userId = rs.getInt("profile_tbl.user_id");
                     String authorName = rs.getString("profile_tbl.full_name");
                     Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
-                    
+
                     // get category DTO info
                     int categoryId = rs.getInt("category_tbl.category_id");
                     String categoryName = rs.getString("category_name");
                     Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
-                    
+
                     // get image info
                     int imgId = rs.getInt("img_id");
                     String imgLink = rs.getString("img_link");
                     Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
-                    
+
                     // create recipeDTO
                     Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, totalTime, likedCount, lastModified, authorInfo, category, image);
-                    
+
                     // check recipe dto list not null
                     if (recipesList == null) {
                         recipesList = new ArrayList<>();
@@ -143,10 +144,9 @@ public class Recipe_tblDAO implements Serializable {
         }
     }//end searchAllRecipe function
 
-
     /**
-     * Load top 5 recipe DTO by count of likes
-     * Author: LamVo
+     * Load top 5 recipe DTO by count of likes Author: LamVo
+     *
      * @param topNum
      * @throws java.sql.SQLException
      */
@@ -295,8 +295,8 @@ public class Recipe_tblDAO implements Serializable {
     }// end loadRecentlyRecipe function
 
     /**
-     * Get a recipe DTO by recipeID
-     * Author: LamVo
+     * Get a recipe DTO by recipeID Author: LamVo
+     *
      * @param recipeId
      * @return one recipe DTO
      * @throws java.sql.SQLException
@@ -368,18 +368,17 @@ public class Recipe_tblDAO implements Serializable {
         }
         return result;
     }
-    
+
     /**
      * Create new recipe
      */
-    
     /**
-     * Load one user's recipes
-     * Author: LamVo
+     * Load one user's recipes Author: LamVo
+     *
      * @param userId
      * @throws java.sql.SQLException
      */
-    public void loadAllRecipes(int userId) 
+    public void loadAllRecipes(int userId)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -412,7 +411,7 @@ public class Recipe_tblDAO implements Serializable {
                     String description = rs.getString("instruction");
                     int totalTime = rs.getInt("total_time");
                     int likedCount = rs.getInt("liked_count");
-                    Date createDate = rs.getDate("created_date");                                        
+                    Date createDate = rs.getDate("created_date");
                     // get category DTO info
                     int categoryId = rs.getInt("category_tbl.category_id");
                     String categoryName = rs.getString("category_name");
@@ -443,14 +442,15 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }
-    
+
     /**
-     * Remove one recipe of a user (soft delete) set isActive = 0 
+     * Remove one recipe of a user (soft delete) set isActive = 0
+     *
      * @param recipeId
      * @return boolean result
      * @throws java.sql.SQLException
      */
-    public boolean removeRecipe(int recipeId) 
+    public boolean removeRecipe(int recipeId)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -481,7 +481,53 @@ public class Recipe_tblDAO implements Serializable {
                 con.close();
             }
         }
-        return result;                
+        return result;
+    }
+
+    public ArrayList<Recipe_tblDTO> AdmingetRecipebyUser(int usid) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Recipe_tblDTO> result = null;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "call getlistRecipefromUser_admin(?)";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, usid);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                    if(result == null){
+                        result = new ArrayList<>();
+                    }
+                       result.add(new Recipe_tblDTO(
+                               rs.getInt("recipe_id"),
+                               rs.getString("name"),
+                               rs.getInt("liked_count"),
+                               rs.getInt("saved_count"),
+                               rs.getDate("created_date"),
+                               rs.getDate("last_modified"),
+                               rs.getBoolean("is_actived")
+                       ));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
     }
     
     /**

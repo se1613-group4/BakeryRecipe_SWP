@@ -21,12 +21,12 @@
             30
         </session-timeout>
     </session-config>
-    <error-page>
+<!--    <error-page>    KHI NAO LAM XONG ROI HANG THEM 404 VAO, NO KHONG BAO LOI TREN LOG MAC OS - TOM CAT
         <error-code>404</error-code>
         <location>/error_404.html</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
         <location>/error_500.html</location>
-    </error-page>
+    </error-page>-->
 </web-app>

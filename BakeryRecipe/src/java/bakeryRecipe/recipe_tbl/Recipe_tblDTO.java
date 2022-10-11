@@ -39,6 +39,7 @@ public class Recipe_tblDTO implements Serializable{
     public Recipe_tblDTO() {
     }
 
+
     public Recipe_tblDTO(int userId, int categoryId, String name, int serving, String description, int preTime, int cookTime) {
         this.userId = userId;
         this.categoryId = categoryId;
@@ -48,7 +49,6 @@ public class Recipe_tblDTO implements Serializable{
         this.preTime = preTime;
         this.cookTime = cookTime;
     }
-    
     
     public Recipe_tblDTO(int recipeId, String name, int serving, String description, int preTime, int cookTime, int totalTime, int likedCount, int savedCount, Date createdDate, Date lastModified, boolean isActived, boolean isHidden, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image) {
         this.recipeId = recipeId;
@@ -105,6 +105,16 @@ public class Recipe_tblDTO implements Serializable{
         this.authorInfo = authorInfo;
         this.category = category;
         this.image = image;
+    }
+
+    public Recipe_tblDTO(int recipeId, String name, int likedCount,int savedCount, Date createdDate, Date lastModified, boolean isActived) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.likedCount = likedCount;
+        this.savedCount = savedCount;
+        this.createdDate = createdDate;
+        this.lastModified = lastModified;
+        this.isActived = isActived;
     }
 
     

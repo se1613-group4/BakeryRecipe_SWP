@@ -71,4 +71,8 @@ public class AppContants { // mapping all features strings
         public static final String PROFILE_PAGE = "userProfilePage";
         public static final String USER_HOME_PAGE = "userHomePage";
     } 
+    
+    public class DisplaySubmitRecipeFeature{
+        public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
+    }
 }

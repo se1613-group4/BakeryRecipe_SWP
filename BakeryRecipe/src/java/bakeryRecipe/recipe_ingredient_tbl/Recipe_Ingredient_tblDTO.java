@@ -16,6 +16,7 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
     private int ingredientId;
     private String unit;
     private int quantity;
+    
     private String ingredientName;
     // Constructors
     public Recipe_Ingredient_tblDTO() {

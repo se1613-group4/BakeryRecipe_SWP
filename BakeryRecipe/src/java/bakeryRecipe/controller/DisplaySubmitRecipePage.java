@@ -5,28 +5,31 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.category_tbl.Category_tblDAO;
+import bakeryRecipe.category_tbl.Category_tblDTO;
+import bakeryRecipe.ingredient_tbl.Ingredient_tblDAO;
+import bakeryRecipe.ingredient_tbl.Ingredient_tblDTO;
+import bakeryRecipe.unit_tbl.Unit_tblDAO;
+import bakeryRecipe.unit_tbl.Unit_tblDTO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author LamVo
  */
-@WebServlet(name = "CreateNewRecipe", urlPatterns = {"/CreateNewRecipe"})
-public class CreateNewRecipe extends HttpServlet {
+@WebServlet(name = "DisplaySubmitRecipePage", urlPatterns = {"/DisplaySubmitRecipePage"})
+public class DisplaySubmitRecipePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,33 +51,34 @@ public class CreateNewRecipe extends HttpServlet {
         // End get site map
         
         // Mapping url        
-        String url = "";
-        //Get parameters
-        HttpSession session = request.getSession();
-        int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
-        String recipeName = request.getParameter("txtRecipeName");
-        int categoryId = Integer.parseInt(request.getParameter("txtCategoryId"));
-        String description = request.getParameter("txtDescription");
-        int prepTime = Integer.parseInt(request.getParameter("txtPrepTime"));
-        int cookTime = Integer.parseInt(request.getParameter("txtCookTime"));
-        int serving = Integer.parseInt(request.getParameter("txtServing"));
-        int ingredientId = Integer.parseInt(request.getParameter("txtIngredientId"));
-        double quantity = Double.parseDouble(request.getParameter("txtQuantity"));
-        int unitId = Integer.parseInt(request.getParameter("txtUnitId"));
-        // all validate data
+        String url = siteMaps.getProperty(AppContants.DisplaySubmitRecipeFeature.SUBMIT_RECIPE_PAGE);
         try {
-//            public Recipe_tblDTO(int userId, int categoryId, String name, int serving, String description, int preTime, int cookTime)
-            Recipe_tblDTO recipeDto = new Recipe_tblDTO(userId, categoryId, recipeName, serving, description, prepTime, cookTime);
-            // call reippe DAO and insert into recipe_tbl
-            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            boolean insertRecipeResult = recipeDao.insertRecipe(recipeDto);
-            System.out.println("======RESULT=======" + insertRecipeResult);
-            // call recipe_ingredientDao and indert into recipe_ingredient_tbl
-            // call imageDao and insert into image_tbl
+            // Load all category recipe
+            Category_tblDAO categoryDao = new Category_tblDAO();
+            categoryDao.loadAllCategory();
+            List<Category_tblDTO> categoryList = categoryDao.getCategoryDtoList();
+            if (categoryList != null) {
+                request.setAttribute("CATRGORY_LIST", categoryList);
+            }
+            // Load all ingredient
+            Ingredient_tblDAO ingredientDao = new Ingredient_tblDAO();
+            ingredientDao.loadAllIngredient();
+            List<Ingredient_tblDTO> ingredienList = ingredientDao.getIngredientDtoList();
+            if (ingredienList != null) {
+                request.setAttribute("INGREDIENT_LIST", ingredienList);
+            }
+            // Load all unit
+            Unit_tblDAO unitDao = new Unit_tblDAO();
+            unitDao.loadAllUnit();
+            List<Unit_tblDTO> unitList = unitDao.getUnitDtoList();
+            if (unitList != null) {
+                request.setAttribute("UNIT_LIST", unitList);
+            }
         } catch (SQLException ex) {
-            log("CreateNewRecipe Controller _ SQL " + ex.getMessage());
+            log("DisplaySubmitRecipePage Controller _ SQL " + ex.getMessage());
         } finally {
-            
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

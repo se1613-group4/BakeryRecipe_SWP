@@ -89,19 +89,20 @@
             <div class="section-heading heading-dark">
                 <h2 class="item-heading">LEAVE A REVIEW</h2>
             </div>
-            <div class="rate-wrapper">
+<!--            <div class="rate-wrapper">
                 <div class="rate-label">Like</div>
                 <div class="rate">
                     <div class="rate-item"><i class="fa fa-heart" aria-hidden="true"></i></div>
                 </div>
-            </div>
+            </div>-->
             <form action="CreateNewComment" class="leave-form-box">
                 <div class="row">
                     <div class="col-12 form-group">
                         <label>Comment :</label>
                         <textarea placeholder="" class="textarea form-control" name="txtCommentContent" rows="7" cols="20" data-error="Message field is required" required></textarea>
                         <div class="help-block with-errors"></div>
-                    </div>git ad
+                    </div>
+                    <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
                     <div class="col-12 form-group mb-0">
                         <button type="submit" class="item-btn" value="Comment" name="btAction">COMMENT</button>
                     </div>

@@ -132,7 +132,6 @@ public class Comment_tblDAO implements Serializable {
 //                System.out.println("----------------------------------------------");
                 //4. Execute query
                 int tmp = stm.executeUpdate();
-//                System.out.println("SQLLLLLLLLLLL: " + (tmp == 0));
 
                 //5. Process result
                 if (tmp != 0) {

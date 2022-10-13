@@ -17,17 +17,23 @@ public class AppContants { // mapping all features strings
     }
 
     public class SearchAllRecipesFeature {
-        
+
         public static final String HOME_PAGE = "homePageJsp";
         public static final String SEARCH_RESULT_PAGE = "searchResultPage";
     }
-    
+
     public class AddNewCommentFeature {
-        
-        public static final String PREVIOUS_RECIPE_PAGE = "singleRecipePage";
+
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "DisplaySingleRecipeController";
         public static final String ERROR_PAGE = "addCommentErrorPage";
-        public static final String LOGIN_PAGE = "loginJsp";
+        public static final String LOGIN_PAGE = "loginPage";
+    }
+
+    public class LikeFeature {
+
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "DisplaySingleRecipeController";
     }
 
     public class DisplaySingleRecipeFeature {
@@ -47,7 +53,8 @@ public class AppContants { // mapping all features strings
     }
 
     public class LoginFeatures {
-        public static final String LOGIN_PAGE = "loginPage";        
+
+        public static final String LOGIN_PAGE = "loginPage";
         public static final String HOME_PAGE_USER = "homePageUser";
     }
 
@@ -70,8 +77,9 @@ public class AppContants { // mapping all features strings
 
     }
 
-    public class DisplayUserProfileFeartures{
+    public class DisplayUserProfileFeartures {
+
         public static final String PROFILE_PAGE = "userProfilePage";
         public static final String USER_HOME_PAGE = "userHomePage";
-    } 
+    }
 }

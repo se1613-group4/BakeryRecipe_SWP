@@ -5,8 +5,10 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import bakeryRecipe.comment_tbl.Comment_tblDTO;
+import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -21,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -65,6 +68,29 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
+
+                //DISPLAY LIKES OF RECIPE FUNCTION
+                //1. Call DAO
+                Like_tblDAO likeDao = new Like_tblDAO();
+                int likeCount = likeDao.getLikesNums(recipeId);
+                //2. Process result
+                request.setAttribute("LIKES_COUNT", likeCount);
+
+                //CHECK IF LIKED FUNCTION
+                HttpSession session = request.getSession(true);
+                Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+                int isLiked = 0;
+                if (currentUser == null) {
+                    isLiked = -1;
+                } else {
+                    if (likeDao.isLiked(recipeId, currentUser.getUserId())) {
+                        isLiked = 1;
+                    }//end check if user has liked recipe                    
+                }//end check if user has login
+
+                request.setAttribute("ISLIKED", isLiked);
+                System.out.println("ISLIKED ======= " + isLiked);
+
             }
         } catch (SQLException ex) {
             log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());

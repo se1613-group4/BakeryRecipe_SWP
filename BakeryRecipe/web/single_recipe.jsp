@@ -74,6 +74,7 @@
         <c:set var="author" value="${recipeDto.authorInfo}"/>
         <c:set var="category" value="${recipeDto.category}"/>
         <c:set var="image" value="${recipeDto.image}"/>
+        <c:set var="likeCount" value="${requestScope.LIKES_COUNT}"/>
         <c:url var="single_recipe_url" value="DisplaySingleRecipe">
             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
         </c:url>        
@@ -89,7 +90,7 @@
                                     <ul class="entry-meta">
                                         <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
                                         <li class="single-meta"><a href="#DisplayAuthorInfo"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
-                                        <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span>
+                                        <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                 Likes</a></li>
                                     </ul>
                                 </div>
@@ -348,7 +349,7 @@
                             </div>
                            
                            
-                           
+                           <jsp:include page="like.jsp" />
                            <jsp:include page="comment.jsp" />
                            
 <!--                            <div class="recipe-reviews">

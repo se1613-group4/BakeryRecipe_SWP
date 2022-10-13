@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.NamingException;
 
 /**
  *
@@ -353,7 +354,7 @@ public class Account_tblDAO implements Serializable {
        return result;
    }
     
-   public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex,int pagesize) throws SQLException{
+   public ArrayList<Account_tblDTO> getListAccountAdmin1(int pageindex,int pagesize) throws SQLException{
        ArrayList<Account_tblDTO> result = null;
          Connection connection = null;
        PreparedStatement stm = null;
@@ -403,4 +404,234 @@ public class Account_tblDAO implements Serializable {
        return result;
    }
 
+   //check password alredy exist
+    public boolean checkPasword(int userId, String password) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select password from account_tbl "
+                        + "where user_id=? and password=?";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, userId);
+                stm.setString(2, password);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set= true;
+                } else {
+                    set= false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set ;
+
+    }
+    
+   //update password when logged
+   public boolean uploadPassword(int userId, String oldPassword, String newPassword) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        Date now = Date.valueOf(LocalDate.now());
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "update account_tbl set password=?, last_modified=? "
+                        + "where user_id=? and password=?";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, newPassword );
+                stm.setDate(2, now);
+                stm.setInt(3, userId );
+                stm.setString(4, oldPassword );
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;                
+    }
+   
+   public boolean deleteAccount(int userID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "update account_tbl set is_actived=false where user_id=?";
+                //3. create statement obj
+                stm = con.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, userID);
+                //4. execute query
+                int affactedRows = stm.executeUpdate();
+                //5 process result
+                if (affactedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+   
+   //check email and phonenumber when you are not logged in to the system
+   public boolean checkEmailAndPhonenumber(String email, String phonenumber) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select user_id from account_tbl where email=? and phone_number=?";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                stm.setString(2, phonenumber);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set= true;
+                } else {
+                    set= false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set ;
+
+    }
+   
+   //check new password is the same old password when have email and phonenumber
+   public boolean checkPasswordEP(String email, String phonenumber, String newPassword) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select user_id from account_tbl where email=? and phone_number=? and password=?";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                stm.setString(2, phonenumber);
+                stm.setString(3, newPassword);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set= true;
+                } else {
+                    set= false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set ;
+
+    }
+   
+   //update password when have email and phonenumber
+   public boolean uploadPasswordEP(String email, String phonenumber, String newPassword) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        Date now = Date.valueOf(LocalDate.now());
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "update account_tbl set password=?, last_modified=? "
+                        + "where email=? and phone_number=? ";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, newPassword );
+                stm.setDate(2, now);
+                stm.setString(3, email );
+                stm.setString(4, phonenumber );
+                
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;                
+    }
 }

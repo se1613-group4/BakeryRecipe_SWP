@@ -74,4 +74,18 @@ public class AppContants { // mapping all features strings
         public static final String PROFILE_PAGE = "userProfilePage";
         public static final String USER_HOME_PAGE = "userHomePage";
     } 
+    
+    public class ResetPasswordFeartures{
+        public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
+        public static final String USER_HOME_PAGE = "userHomePage";
+    }
+    
+    public class RemoveAccountFeartures{        
+        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String LOGIN_PAGE = "loginPage";
+    } 
+    public class ForgotPaswordFeartures{        
+        public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
+        public static final String LOGIN_PAGE = "loginPage";
+    }
 }

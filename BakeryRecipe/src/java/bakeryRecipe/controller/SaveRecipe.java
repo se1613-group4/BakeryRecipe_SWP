@@ -4,31 +4,24 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
-import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.save_tbl.Save_tblDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author dangh
  */
-@WebServlet(name = "DisplayUserProfile", urlPatterns = {"/DisplayUserProfile"})
-public class DisplayUserProfile extends HttpServlet {
-
+@WebServlet(name = "SaveRecipe", urlPatterns = {"/SaveRecipe"})
+public class SaveRecipe extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,38 +35,23 @@ public class DisplayUserProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //start get sitemap
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        //end get sitemap
-        
-        String url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.USER_HOME_PAGE);
-        
-        try {
-            HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            //call dao
-            Profile_tblDAO daoProfile = new Profile_tblDAO();
-            Follow_tblDAO daoFollow = new Follow_tblDAO();
-            //process result
-            Profile_tblDTO profile = daoProfile.displayUserProfile(user.getUserId());
-            int follower_amount = daoFollow.displayFollower(user.getUserId());
-            int following_amount = daoFollow.displayFollowing(user.getUserId());
-            request.setAttribute("USER_PROFILE", profile);
-            request.setAttribute("USER_FOLLOWERS", follower_amount);
-            request.setAttribute("USER_FOLLOWING", following_amount);
-            
-            System.out.println("user display id" + user.getUserId());
 
+        String url = "single_recipe.jsp";
+        int userId = Integer.parseInt(request.getParameter("txtRecipeId"));
+
+        try {
+            //call dao 
+            Save_tblDAO dao = new Save_tblDAO();
+            boolean result = dao.SearchSaveRecipe(userId);
+            request.setAttribute("SAVED", result);
             //redirect webpage
-            url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);
-        }catch(SQLException ex){
-            log("Error at DisplayUserProfile: " + ex.toString());
-        }catch(NamingException ex){
-            log("Error at DisplayUserProfile: " + ex.toString());
-        }
-        finally{
+            url = "single_recipe.jsp";
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

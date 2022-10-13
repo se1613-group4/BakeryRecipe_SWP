@@ -5,6 +5,7 @@
  */
 package bakeryRecipe.profile_tbl;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -12,7 +13,7 @@ import java.sql.Date;
  *
  * @author LamVo
  */
-public class Profile_tblDTO implements Serializable{
+public class Profile_tblDTO extends Account_tblDTO implements Serializable{
     private int profileId;
     private int userId;
     private String fullName;
@@ -38,6 +39,15 @@ public class Profile_tblDTO implements Serializable{
         this.avatarUrl = avatarUrl;
         this.biography = biography;
         this.lastModified = lastModified;
+    }
+    
+    
+    public Profile_tblDTO(String username, String password, String fullName, String email, String phoneNumber, String gender, String avatarUrl, String bio, boolean isActived, boolean isAdmin) {
+        super(username, password, email, phoneNumber, isActived, isAdmin);
+        this.fullName = fullName;
+        this.biography = bio;
+        this.gender = gender;
+        this.avatarUrl = avatarUrl;
     }
     
     public Profile_tblDTO(int userId, String fullName) {

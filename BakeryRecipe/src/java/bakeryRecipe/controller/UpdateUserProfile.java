@@ -50,8 +50,8 @@ public class UpdateUserProfile extends HttpServlet {
 
         String url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
 //        String url = "single-author.jsp";
-//        UpdateError errors = new UpdateError();
-//        boolean foundErr = false;
+        UpdateError errors = new UpdateError();
+        boolean foundErr = false;
         boolean result = false;
         String userId = request.getParameter("txtUserId");
         String recipeId = request.getParameter("");
@@ -62,117 +62,95 @@ public class UpdateUserProfile extends HttpServlet {
         String phoneNumber = request.getParameter("txtPhoneNumber");
         String gender = request.getParameter("txtGender");
         String biography = request.getParameter("txtBiography");
-//        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
-//        /*
-//        Must be 8-15 characters and must start with a letter
-//        May not contain special characters – only letters and numbers
-//         */
-//        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
-//        /*
-//        Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
-//        Must contain at least one number (0123456789)
-//        Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
-//         */
-//        Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
-//        Pattern emailPattern = Pattern.compile(
-//                "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
-//        /*  - Bắt đầu bằng chữ cái.
-//            - Chỉ chứa chữ cái, chữ số và dấu gạch ngang (-).
-//            - Chứa một ký tự @, sau @ là tên miền.
-//            - Tên miền có thể là domain.xxx.yyy hoặc domain.xxx. 
-//                Trong đó xxx và yyy là các chữ cái và có độ dài từ 2 trở lên.*/
-//        Pattern phonenumberPattern = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
-//        /*
-//        0388888888
-//        0588888888
-//        0788888888
-//        0888888888
-//        0988888888
-//        8488888888
-//         */
-//        Pattern bioPattern = Pattern.compile("{0,3000}");
-//        Pattern genderPattern = Pattern.compile("{1,10}");
+        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
+        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
+        Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
+        Pattern emailPattern = Pattern.compile(
+                "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
+        Pattern phonenumberPattern = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
+        Pattern bioPattern = Pattern.compile("^.{0,10}$");
+        Pattern genderPattern = Pattern.compile("^[a-zA-Z]{1,10}$");
 
         try {
-//            Account_tblDAO accDAO = new Account_tblDAO();
-//            if (usernamePattern.matcher(username).matches() == false) {
-//                foundErr = true;
-//                errors.setUsernameFormatErr("Username wrong format.\n "
-//                        + "Username must be 8-15 characters.\n "
-//                        + "Must start with a letter.\n "
-//                        + "May not contain special characters");
-//            }
-//
-//            if (passwordPattern.matcher(password).matches() == false) {
-//                foundErr = true;
-//                errors.setPasswordFormatErr("password wrong format.\n  "
-//                        + "Password contain at least one lower-case letter.\n"
-//                        + "Must contain at least one number "
-//                        + "and may not contain special characters");
-//            }
-//
-//            if (fullnamePattern.matcher(fullName).matches() == false) {
-//                foundErr = true;
-//                errors.setFullnameFormatErr("Fullname wrong format");
-//            }
-//
-//            boolean checkEmailExit = accDAO.checkEmail(email);
-//            if (emailPattern.matcher(email).matches() == false) {
-//                foundErr = true;
-//                errors.setEmailFormatErr("Email Start with a letter.\n"
-//                        + "              - Contains only letters, numbers and dashes (-).\n"
-//                        + "              - Contains an @ character, after @ is the domain name.");
-//            }
-//            if (checkEmailExit == true) {
-//                foundErr = true;
-//                errors.setEmailExisted("Email existed try again!");
-//            }
-//
-//            boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
-//            if (phonenumberPattern.matcher(phoneNumber).matches() == false) {
-//                foundErr = true;
-//                errors.setPhonenumberFormatErr("Phonenumer must is Vietnam's phone number!");
-//            }
-//            if (checkPhonenumberExit == true) {
-//                foundErr = true;
-//                errors.setPhonenumberExisted("Phonenumer existed try again!");
-//            }
-//            if (bioPattern.matcher(biography).matches() == false) {
-//                foundErr = true;
-//                errors.setBioFormatError("Bio wrong format.\n  "
-//                        + "Bio contain 0-3000 characters.\n"
-//                );
-//            }
-//            if (genderPattern.matcher(gender).matches() == false) {
-//                foundErr = true;
-//                errors.setGenderFormatError("Gender wrong format.\n  "
-//                        + "Gender contain 1-10 characters.\n"
-//                );
-//            }
-//            if (foundErr) {
-//                request.setAttribute("UPDATE_ERR", errors);
-//            } else {
+            Account_tblDAO accDAO = new Account_tblDAO();
+            if (usernamePattern.matcher(username).matches() == false) {
+                foundErr = true;
+                errors.setUsernameFormatErr("Username wrong format.\n "
+                        + "Username must be 8-15 characters.\n "
+                        + "Must start with a letter.\n "
+                        + "May not contain special characters");
+            }
+
+            if (passwordPattern.matcher(password).matches() == false) {
+                foundErr = true;
+                errors.setPasswordFormatErr("password wrong format.\n  "
+                        + "Password contain at least one lower-case letter.\n"
+                        + "Must contain at least one number "
+                        + "and may not contain special characters");
+            }
+
+            if (fullnamePattern.matcher(fullName).matches() == false) {
+                foundErr = true;
+                errors.setFullnameFormatErr("Fullname wrong format");
+            }
+
+            boolean checkEmailExit = accDAO.checkEmail(email);
+            if (emailPattern.matcher(email).matches() == false) {
+                foundErr = true;
+                errors.setEmailFormatErr("Email Start with a letter.\n"
+                        + "              - Contains only letters, numbers and dashes (-).\n"
+                        + "              - Contains an @ character, after @ is the domain name.");
+            }
+            if (checkEmailExit == true) {
+                foundErr = true;
+                errors.setEmailExisted("Email existed try again!");
+            }
+
+            boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
+            if (phonenumberPattern.matcher(phoneNumber).matches() == false) {
+                foundErr = true;
+                errors.setPhonenumberFormatErr("Phonenumer must is Vietnam's phone number!");
+            }
+            if (checkPhonenumberExit == true) {
+                foundErr = true;
+                errors.setPhonenumberExisted("Phonenumer existed try again!");
+            }
+            if (bioPattern.matcher(biography).matches() == false) {
+                foundErr = true;
+                errors.setBioFormatError("Bio wrong format.\n  "
+                        + "Bio contain 0-3000 characters.\n"
+                );
+            }
+            if (genderPattern.matcher(gender).matches() == false) {
+                foundErr = true;
+                errors.setGenderFormatError("Gender wrong format.\n  "
+                        + "Gender contain 1-10 characters.\n"
+                );
+            }
+            if (foundErr) {
+                request.setAttribute("UPDATE_ERR", errors);
+            } else {
                 HttpSession session = request.getSession();
                 Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-                System.out.println("UserID to update: ***********" + user.getUserId());
+//                System.out.println("UserID to update: ***********" + user.getUserId());
 
                 //call DAO
                 Profile_tblDAO dao = new Profile_tblDAO();
 //                System.out.println("user update id" + user.getUserId());
-                result = dao.updateUserProfile(user.getUserId(), username, password, fullName, email, phoneNumber, gender, url, biography, result, result);
+                result = dao.updateUserProfile(user.getUserId(), username, password, fullName, email, phoneNumber, gender, url, biography, true, result);
                 //process result 
                 if (result) {
                     url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
 
                 }
-//            }
+            }
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("Error at DisplayUserProfile: " + ex.toString());
-//            if (msg.contains("duplicate")) { // trung username (key) cung la SQLException
-//                errors.setUsernameExisted(username + " is existed");
-//                request.setAttribute("REGISTER_ERR", errors);
-//            }
+            if (msg.contains("duplicate")) { // trung username (key) cung la SQLException
+                errors.setUsernameExisted(username + " is existed");
+                request.setAttribute("UPDATE_ERR", errors);
+            }
         } catch (NamingException ex) {
             log("Error at DisplayUserProfile: " + ex.toString());
         } finally {

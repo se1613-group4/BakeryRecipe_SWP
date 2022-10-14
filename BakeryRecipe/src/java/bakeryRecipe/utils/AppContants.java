@@ -58,15 +58,12 @@ public class AppContants { // mapping all features strings
     }
 
     public class Admin {
-
+        public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
         public static final String ADMIN_LISTUSER = "adminListUserController";
-        public static final String ADMIN_LISTPOST = "adminListPostController";
-        public static final String ADMIN_USERDETAIL = "adminUserDetail";
-        public static final String ADMIN_POSTDETAIL = "adminPostDetail";
-        public static final String ADMIN_UPDATEUSER = "adminUpdateUser";
-        public static final String ADMIN_UPDATEPOST = "adminUpdatePost";
+        public static final String ADMIN_USDETAIL = "adminUsdetail";
+        public static final String ADMIN_LISTRECIPE = "listRecipeAdmin";
 
     }
 
@@ -75,6 +72,7 @@ public class AppContants { // mapping all features strings
         public static final String USER_HOME_PAGE = "userHomePage";
     } 
     
+
     public class ResetPasswordFeartures{
         public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
         public static final String USER_HOME_PAGE = "userHomePage";
@@ -87,5 +85,9 @@ public class AppContants { // mapping all features strings
     public class ForgotPaswordFeartures{        
         public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
         public static final String LOGIN_PAGE = "loginPage";
+
+    public class DisplaySubmitRecipeFeature{
+        public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
+
     }
 }

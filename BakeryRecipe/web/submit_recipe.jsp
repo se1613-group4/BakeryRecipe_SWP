@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -59,12 +60,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumbs-area">
-                                <h1>Submit a Recipe</h1>
+                                <h1>Submit Recipe</h1>
                                 <ul>
                                     <li>
                                         <a href=" ">Home</a>
                                     </li>
-                                    <li>Recipe Post</li>
+                                    <li>Submit Recipe</li>
                                 </ul>
                             </div>
                         </div>
@@ -72,7 +73,7 @@
                 </div>
             </section>
             <!-- Inne Page Banner Area End Here -->
-            <!-- Submit Recipe Area Start Here -->
+            <!-- Submit Recipe Area Start Here -->                                        
             <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">
                 <div class="container">
                     <div class="row gutters-60">
@@ -81,7 +82,7 @@
                     </div>
                     <div class="col-lg-8">
                         <!--Create Recipe Form-->
-                        <form class="submit-recipe-form" action="createRecipeController">
+                        <form class="submit-recipe-form" action="createRecipeController" method="post">
 
                             <!--Input recipe name-->
                             <div class="form-group">
@@ -91,23 +92,24 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                             <!--Choose category-->
+                            <c:set var="categoryList" value="${requestScope.CATRGORY_LIST}"></c:set>
                             <div class="form-group">
-                                <label>Choose Category</label>
-                                <select class="select2" name="filter-by">
-                                    <option value="0">Breakfast</option>
-                                    <option value="1">Newest</option>
-                                    <option value="2">Top Sell</option>
-                                    <option value="3">Top Rated</option>
-                                    <option value="4">Price High</option>
-                                    <option value="5">Low Price</option>
+                                <label>Recipe Category</label>
+                                <select class="select2" name="txtCategoryId">
+                                    <option value="" disabled="disabled" selected="selected">Choose Category</option>
+                                <c:if test="${not empty categoryList}">
+                                    <c:forEach var="categoryDto" items="${categoryList}">
+                                        <option value="${categoryDto.categoryId}">${categoryDto.name}</option>
+                                    </c:forEach>
+                                </c:if>                                    
                                 </select>
                             </div>
                             <!--Input recipe description-->
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea placeholder="Short description about your recipe..." 
-                                        class="textarea form-control" name="txtRecipeDes" id="form-message"
-                                        rows="3" cols="20" data-error="Message field is required" required></textarea>
+                                        class="textarea form-control" name="txtDescription" id="form-message"
+                                        rows="3" cols="20" data-error="Description field is required" required></textarea>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <!--Upload photos-->
@@ -126,23 +128,23 @@
                             </div>
                             <!--Input additional information-->
                             <div class="additional-input-wrap">
-                                <label>Additional Informations:</label>
+                                <label>Additional Information</label>
                                 <div class="row gutters-5">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-4">
                                         <div class="form-group additional-input-box icon-left">
                                             <i class="far fa-clock"></i>
                                             <input type="text" placeholder="Preparation Time (in minutes)" class="form-control"
                                                 name="txtPrepTime">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-4">
                                         <div class="form-group additional-input-box icon-left">
                                             <i class="fas fa-utensils"></i>
                                             <input type="text" placeholder="Cooking Time (in minutes)" class="form-control"
                                                 name="txtCookTime">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-4">
                                         <div class="form-group additional-input-box icon-left">
                                             <i class="fas fa-users"></i>
                                             <input type="text" placeholder="Serving People: 00" class="form-control"
@@ -152,68 +154,49 @@
                                 </div>
                             </div>
                             <!--Input ingredients-->
-                            <div class="additional-input-wrap" id="ingredient-parent">
-                                <label>Ingredients:</label>
-                                
-                                    <!--1-->
+                            <c:set var="ingredientList" value="${requestScope.INGREDIENT_LIST}"></c:set>
+                            <c:set var="unitList" value="${requestScope.UNIT_LIST}"></c:set>                             
+                            <div class="additional-input-wrap" id="ingre-parent">                                
+                                <label>Ingredients</label>                                
+                                <!--1-->
                                 <div class="row no-gutters" id="ingredient-sample">
+                                    <!--Select Ingredient-->
                                     <div class="col-5">
                                         <div class="form-group additional-input-box icon-left">  
-                                            <select class="select2" name="txtIngredient">
-                                                <option value="">Ingredient</option>
-                                                <option value="ingredient 1">Egg</option>
-                                                <option value="ingredient 2">Orange</option>
-                                                <option value="ingredient 3">Water</option>
-                                                <option value="ingredient 4">Apple</option>
-                                                <option value="ingredient 5">Grape</option>
+                                            <select class="select2 input-select2" name="txtIngredientId">
+                                                <option value="" disabled="disabled" selected="selected">Ingredient</option>
+                                            <c:if test="${not empty ingredientList}">
+                                                <c:forEach var="ingredientDto" items="${ingredientList}">
+                                                    <option value="${ingredientDto.ingredientId}">${ingredientDto.name}</option>
+                                                </c:forEach>
+                                            </c:if>
                                             </select>                                         
                                             <!-- <input type="text" placeholder="Ingredient" class="form-control"
                                                 name="txtIngredient"> -->
                                         </div>
                                     </div>
+                                    <!--Input Quantity-->
                                     <div class="col-3">
                                         <div class="form-group additional-input-box icon-left">
                                             <input type="number" step="0.01" placeholder="Quantity" class="form-control"
                                                 name="txtQuantity">
                                         </div>
                                     </div>
+                                    <!--Select Unit-->                                      
                                     <div class="col-4">
-                                        <div class="form-group additional-input-box icon-right" id="unit-sample">
-                                            <select class="select2" name="txtUnit">
-                                                <option value="">Unit</option>
-                                                <option value="Unit 1">Gram</option>
-                                                <option value="Unit 2">Kilogram</option>
-                                                <option value="Unit 3">Pour</option>
-                                                <option value="Unit 4">Mililit</option>
-                                                <option value="Unit 5">Liter</option>
+                                        <div class="form-group additional-input-box icon-right">
+                                            <select class="select2 input-select2" name="txtUnitId">
+                                                <option value=""  disabled="disabled" selected="selected">Unit</option>
+                                            <c:if test="${not empty unitList}">
+                                                <c:forEach var="unitDto" items="${unitList}">
+                                                    <option value="${unitDto.unitId}">${unitDto.unitName}</option>
+                                                </c:forEach>
+                                            </c:if>
                                             </select>  
                                             <i class="fas fa-times"></i>
                                         </div>
-                                    </div>
-                                    
+                                    </div>                                    
                                 </div>
-                                    <!--2-->
-<!--                                <div class="row no-gutters">
-                                    <div class="col-5">
-                                        <div class="form-group additional-input-box icon-left">
-                                            <input type="text" placeholder="Ingredient" class="form-control"
-                                                name="name">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group additional-input-box icon-left">
-                                            <input type="text" placeholder="Quantity" class="form-control"
-                                                name="name">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group additional-input-box icon-right">
-                                            <input type="text" placeholder="Unit" class="form-control"
-                                                name="name">
-                                            <i class="fas fa-times"></i>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <!--Add ingredient button-->
                                 <button type="button" class="btn-upload" id="add-ingre-tbn" onclick="test()"><i class="flaticon-add-plus-button"></i>ADD NEW
                                     INGREDIENT</button>
@@ -221,7 +204,15 @@
                             <!--Input instruction (steps)-->
                             <div class="form-group">
                                 <label>Instruction</label>
-                                <div class="summernote"></div>
+                                <div class="row no-gutters" id="step-sample">                                    
+                                    <!--Input Quantity-->
+                                    <div class="col-10">
+                                        <div class="form-group additional-input-box icon-left">
+                                            <input type="text"placeholder="Type detail step instruction" class="form-control"
+                                                   name="txtStep" value="">
+                                        </div>
+                                    </div>                                   
+                                </div>
                             </div>
                             <button type="submit" class="btn-submit">SUBMIT RECIPE</button>
                         </form>
@@ -254,7 +245,10 @@
         <!-- Smoothscroll Js -->
         <script src="js/smoothscroll.min.js"></script>
         <!-- Custom Js -->
-        <script src="js/main.js"></script>
+        <!--<script src="js/main.js"></script>-->
         <script src="js/submit_recipe.js"></script>
+<!--        <script>
+                                    
+        </script>-->
     </body>
 </html>

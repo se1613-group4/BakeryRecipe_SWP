@@ -162,6 +162,84 @@ public class Account_tblDAO implements Serializable {
         return accounts;
     }
 
+    //check phonenumber alredy exist
+    public boolean checkPhonenumber(String phonenumber) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select phone_number from account_tbl where phone_number like ? ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, phonenumber);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
+
+    //check Email alredy exist
+    public boolean checkEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select email from account_tbl where email like ? ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
+
     // -------- ADMIN SITE --------
     public List<Integer> getDashBoardInfoAdmin() throws SQLException {
         List<Integer> result = null;
@@ -202,29 +280,30 @@ public class Account_tblDAO implements Serializable {
         return result;
     }
 
-    public ArrayList<Account_tblDTO> getListAccountAdmin(int pageindex, int pagesize) throws SQLException {
-        ArrayList<Account_tblDTO> result = null;
+    public int getEndIndexAccountListAdmin(String searchvalue) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        int result = 0;
         try {
             //1. make connection
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "call getlistaccount_Admin(?,?)";
+                String sql = " select count(acc.is_actived) as total_rows from account_tbl acc\n"
+                        + " where acc.is_admin=false and acc.username like ? or acc.phone_number like ? ";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setInt(1, pageindex);
-                stm.setInt(2, pagesize);
+                stm.setString(1, "%"+searchvalue+"%");
+                stm.setString(2, "%"+searchvalue+"%");
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result
-                while (rs.next()) {
-                    result = new ArrayList<Account_tblDTO>();
-                    result.add(new Account_tblDTO());
+                if (rs.next()) {
+                    result = rs.getInt("total_rows");
                 }
+
+                result = result / 10;
             }
         } finally {
             if (rs != null) {
@@ -239,120 +318,7 @@ public class Account_tblDAO implements Serializable {
         }
         return result;
     }
-    //check phonenumber alredy exist
-    public boolean checkPhonenumber(String phonenumber) throws SQLException {
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        boolean set = false;
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "select phone_number from account_tbl where phone_number like ? ";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setString(1, phonenumber);
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                if (rs.next()) {
-                    set= true;
-                } else {
-                    set= false;
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return set ;
-
-    }
-    //check Email alredy exist
-    public boolean checkEmail(String email) throws SQLException {
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        boolean set = false;
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "select email from account_tbl where email like ? ";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setString(1, email);
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                if (rs.next()) {
-                    set= true;
-                } else {
-                    set= false;
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return set ;
-
-    }
-    
-   public int getEndIndexAccountListAdmin() throws SQLException{
-       Connection connection = null;
-       PreparedStatement stm = null;
-       ResultSet rs = null;
-       int result = 0;
-       try {
-           //1. make connection
-           connection = DBConnection.getConnection();
-           if (connection != null) {
-               //2. create sql string
-               String sql = " select count(acc.is_actived) as total_rows from account_tbl acc\n"
-                       + " where acc.is_admin=false ";
-               //3. create statement obj
-               stm = connection.prepareStatement(sql); // tao ra obj rong
-
-               //4. execute query
-               rs = stm.executeQuery();
-               //5 process result
-               if (rs.next()) {
-                  result = rs.getInt("total_rows");
-               }
-               
-               result = result / 10 ;
-           }
-       } finally {
-           if (rs != null) {
-               rs.close();
-           }
-           if (stm != null) {
-               stm.close();
-           }
-           if (connection != null) {
-               connection.close();
-           }
-       }
-       return result;
-   }
+  
     
    public ArrayList<Account_tblDTO> getListAccountAdmin1(int pageindex,int pagesize) throws SQLException{
        ArrayList<Account_tblDTO> result = null;
@@ -374,35 +340,36 @@ public class Account_tblDAO implements Serializable {
                rs = stm.executeQuery();
                //5 process result
                //int accountId, int userId, String username, String password, String email, String phoneNumber, Date lastModified, boolean isActived, boolean isAdmin
+
                 result = new ArrayList<>();
-               while (rs.next()) {
+                while (rs.next()) {
                     result.add(new Account_tblDTO(
-                          rs.getInt("account_id"),
-                          rs.getInt("user_id"),
-                          rs.getString("username"),
-                          "***",
-                          rs.getString("email"),
-                          rs.getString("phone_number"),
-                          rs.getDate("last_modified"),
-                          rs.getBoolean("is_actived"),
-                          false
-                      ));
-                  
-               }
-           }
-       } finally {
-           if (rs != null) {
-               rs.close();
-           }
-           if (stm != null) {
-               stm.close();
-           }
-           if (connection != null) {
-               connection.close();
-           }
-       }
-       return result;
-   }
+                            rs.getInt("account_id"),
+                            rs.getInt("user_id"),
+                            rs.getString("username"),
+                            "***",
+                            rs.getString("email"),
+                            rs.getString("phone_number"),
+                            rs.getDate("last_modified"),
+                            rs.getBoolean("is_actived"),
+                            false
+                    ));
+
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
 
    //check password alredy exist
     public boolean checkPasword(int userId, String password) throws SQLException {

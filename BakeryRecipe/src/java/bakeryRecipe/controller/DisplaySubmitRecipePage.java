@@ -1,31 +1,35 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDAO;
-import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.category_tbl.Category_tblDAO;
+import bakeryRecipe.category_tbl.Category_tblDTO;
+import bakeryRecipe.ingredient_tbl.Ingredient_tblDAO;
+import bakeryRecipe.ingredient_tbl.Ingredient_tblDTO;
+import bakeryRecipe.unit_tbl.Unit_tblDAO;
+import bakeryRecipe.unit_tbl.Unit_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author LamVo
  */
-@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
-public class adminListAccountController extends HttpServlet {
+@WebServlet(name = "DisplaySubmitRecipePage", urlPatterns = {"/DisplaySubmitRecipePage"})
+public class DisplaySubmitRecipePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,40 +43,43 @@ public class adminListAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex;  //  trang đang đứng 
-        int endindex;    /// trang cuoi cung 
-        ArrayList<Account_tblDTO> result = null;
-        try {
-             
-            HttpSession session = request.getSession();
-            String test =request.getParameter("roww");
-            String searchuseradmin = request.getParameter("a");
-            
-            
-              if(test == null){
-                  pageindex = 1 ;
-              }else{
-                   pageindex = Integer.parseInt(test);
-              }
-            String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
-              
-            Account_tblDAO dao = new Account_tblDAO();
-            endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
-            
-            session.setAttribute("ADMIN_LIST_USER", result);
-            session.setAttribute("end_account", endindex);
-            
-        } catch (SQLException ex) {
-            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
-        } finally {
-
-            response.sendRedirect(url);
-        }
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
         
+        // Mapping url        
+        String url = siteMaps.getProperty(AppContants.DisplaySubmitRecipeFeature.SUBMIT_RECIPE_PAGE);
+        try {
+            // Load all category recipe
+            Category_tblDAO categoryDao = new Category_tblDAO();
+            categoryDao.loadAllCategory();
+            List<Category_tblDTO> categoryList = categoryDao.getCategoryDtoList();
+            if (categoryList != null) {
+                request.setAttribute("CATRGORY_LIST", categoryList);
+            }
+            // Load all ingredient
+            Ingredient_tblDAO ingredientDao = new Ingredient_tblDAO();
+            ingredientDao.loadAllIngredient();
+            List<Ingredient_tblDTO> ingredienList = ingredientDao.getIngredientDtoList();
+            if (ingredienList != null) {
+                request.setAttribute("INGREDIENT_LIST", ingredienList);
+            }
+            // Load all unit
+            Unit_tblDAO unitDao = new Unit_tblDAO();
+            unitDao.loadAllUnit();
+            List<Unit_tblDTO> unitList = unitDao.getUnitDtoList();
+            if (unitList != null) {
+                request.setAttribute("UNIT_LIST", unitList);
+            }
+        } catch (SQLException ex) {
+            log("DisplaySubmitRecipePage Controller _ SQL " + ex.getMessage());
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -18,6 +18,7 @@ public class DBConnection implements Serializable {
     private static final String USER = "root";
 
     private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "123bakeryrecipe123";
 
     
     // Function: get connection from MySQL

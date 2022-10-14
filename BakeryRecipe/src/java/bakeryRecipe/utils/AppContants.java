@@ -17,13 +17,13 @@ public class AppContants { // mapping all features strings
     }
 
     public class SearchAllRecipesFeature {
-        
+
         public static final String HOME_PAGE = "homePageJsp";
         public static final String SEARCH_RESULT_PAGE = "searchResultPage";
     }
-    
+
     public class AddNewCommentFeature {
-        
+
         public static final String PREVIOUS_RECIPE_PAGE = "singleRecipePage";
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "DisplaySingleRecipeController";
         public static final String ERROR_PAGE = "addCommentErrorPage";
@@ -47,7 +47,8 @@ public class AppContants { // mapping all features strings
     }
 
     public class LoginFeatures {
-        public static final String LOGIN_PAGE = "loginPage";        
+
+        public static final String LOGIN_PAGE = "loginPage";
         public static final String HOME_PAGE_USER = "homePageUser";
     }
 
@@ -58,6 +59,7 @@ public class AppContants { // mapping all features strings
     }
 
     public class Admin {
+
         public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
@@ -67,27 +69,34 @@ public class AppContants { // mapping all features strings
 
     }
 
-    public class DisplayUserProfileFeartures{
+    public class DisplayUserProfileFeartures {
+
         public static final String PROFILE_PAGE = "userProfilePage";
         public static final String USER_HOME_PAGE = "userHomePage";
-    } 
-    
+    }
 
-    public class ResetPasswordFeartures{
+    public class ResetPasswordFeartures {
+
         public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
         public static final String USER_HOME_PAGE = "userHomePage";
     }
-    
-    public class RemoveAccountFeartures{        
+
+    public class RemoveAccountFeartures {
+
         public static final String USER_HOME_PAGE = "userHomePage";
         public static final String LOGIN_PAGE = "loginPage";
-    } 
-    public class ForgotPaswordFeartures{        
+    }
+
+    public class ForgotPaswordFeartures {
+
         public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
         public static final String LOGIN_PAGE = "loginPage";
+    }
 
-    public class DisplaySubmitRecipeFeature{
+    public class DisplaySubmitRecipeFeature {
+
         public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
 
     }
+
 }

@@ -81,6 +81,7 @@
         <c:set var="author" value="${recipeDto.authorInfo}"/>
         <c:set var="category" value="${recipeDto.category}"/>
         <c:set var="image" value="${recipeDto.image}"/>
+        <c:set var="likeCount" value="${requestScope.LIKES_COUNT}"/>
         <c:url var="single_recipe_url" value="DisplaySingleRecipe">
             <c:param name="recipeId" value="${recipeDto.recipeId}"/>
         </c:url>
@@ -98,7 +99,7 @@
                                     <ul class="entry-meta">
                                         <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
                                         <li class="single-meta"><a href="#DisplayAuthorInfo"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
-                                        <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span>
+                                        <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                 Likes</a></li>
                                         <c:if test="${save_result == false || empty save_result}">
                                             <li class="single-meta">
@@ -379,6 +380,52 @@
                                                 </div>
                                             </div>
                                         </div>
+<!-- <<<<<<< thongnt  -->
+                                    </div>
+                                </div>             
+                            </div>
+                           
+                           
+                           <jsp:include page="like.jsp" />
+                           <jsp:include page="comment.jsp" />
+                           
+<!--                            <div class="recipe-reviews">
+                                <div class="section-heading heading-dark">
+                                    <h2 class="item-heading">RECIPE REVIEWS</h2>
+                                </div>
+                                <div class="avarage-rating-wrap">
+                                    <div class="avarage-rating">Avarage Rating: 
+                                        <span class="rating-icon-wrap">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                        <span class="rating-number">(5)</span>                                        
+                                    </div>
+                                    <div class="total-reviews">Total Reviews:<span class="review-number">(02)</span></div>
+                                </div>
+                                <ul>
+                                    <li class="reviews-single-item">
+                                        <div class="media media-none--xs">
+                                            <img src="img/blog/comment1.jpg" alt="Comment" class="media-img-auto">
+                                            <div class="media-body">
+                                                <h4 class="comment-title">Liza Zaman</h4>
+                                                <span class="post-date">September 27, 2018</span>
+                                                <p>Absolutely great recipe. I cooked it for my kids and they loved it, even 
+                                                        asked for more, can you believe it?</p>
+                                                <ul class="item-rating">
+                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
+                                                    <li class="single-item star-empty"><i class="fas fa-star"></i></li>
+                                                    <li class="single-item"><span>9<span> / 10</span></span> </li>
+                                                </ul>
+                                                <a href="#" class="item-btn">REPLY<i class="fas fa-long-arrow-alt-right"></i></a>
+<!-- ======= How to resolve it? TT  conflict in main start here -->
+                  <!--
                                         <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                                             <div class="product-box-layout2">
                                                 <figure class="item-figure"><img src="img/product/product12.jpg"
@@ -391,6 +438,8 @@
                                                         <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
                                                     </ul>
                                                 </div>
+                            -->
+<!-- >>>>>>> main conflict in main end here-->
                                             </div>
                                         </div>
                                         <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
@@ -411,7 +460,7 @@
 
 
 
-                                <jsp:include page="comment.jsp" />
+<!--co xoa dong nay ko?-->                                <jsp:include page="comment.jsp" />
 
                                 <!--                            <div class="recipe-reviews">
                                                                 <div class="section-heading heading-dark">

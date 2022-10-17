@@ -87,7 +87,7 @@
                 <div class="container">
                     <div class="adv-search-wrap">
                         <div class="input-group">
-                            <form action="MainController" style="width: 100% !important;    display: flex !important;    justify-content: center !important;">
+                            <form action="SearchAllRecipeController" style="width: 100% !important;    display: flex !important;    justify-content: center !important;">
                                 <input type="text" class="form-control" placeholder="Author Name or Recipe Search . . ." name="txtSearchValue" value="${searchValue}"/>
 
                                 <div class="btn-group" style="display: inline-block">                            

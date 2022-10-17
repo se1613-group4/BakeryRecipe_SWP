@@ -39,7 +39,7 @@ public class Ingredient_tblDAO implements Serializable{
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
-                String sql = "SELECT ingredient_id, name as ingredient_name\n"
+                String sql = "SELECT ingredient_id, name as ingredient_name, unit\n"
                         + "FROM bakery_recipe.ingredient_tbl";
                 //3. create statement obj
                 stm = con.createStatement();
@@ -50,7 +50,8 @@ public class Ingredient_tblDAO implements Serializable{
                     // get category DTO info
                     int ingredientId = rs.getInt("ingredient_id");
                     String ingredientName = rs.getString("ingredient_name");
-                    Ingredient_tblDTO ingredientDto = new Ingredient_tblDTO(ingredientId, ingredientName);
+                    String unit = rs.getString("unit");
+                    Ingredient_tblDTO ingredientDto = new Ingredient_tblDTO(ingredientId, ingredientName,unit);
                     // check categoryDto list not null
                     if (this.ingredientDtoList == null) {
                         this.ingredientDtoList = new ArrayList<>();

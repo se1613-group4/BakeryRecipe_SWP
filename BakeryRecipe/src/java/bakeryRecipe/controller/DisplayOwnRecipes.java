@@ -5,6 +5,7 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -49,7 +51,10 @@ public class DisplayOwnRecipes extends HttpServlet {
         // Mapping url
         String url = siteMaps.getProperty(AppContants.DisplayOwnRecipesFeature.MY_RECIPES_PAGE);
         try {
-            int userId = Integer.parseInt(request.getParameter("userId"));
+            // get userID from Session scope
+            HttpSession session = request.getSession();
+            int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
+            // call DAO
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
             recipeDao.loadAllRecipes(userId);
             List<Recipe_tblDTO> recipeList = recipeDao.getRecipeDtoList();

@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/animate.min.css">
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <script src="https://kit.fontawesome.com/6166015301.js" crossorigin="anonymous"></script>
     <!-- Flaticon CSS -->
     <link rel="stylesheet" href="fonts/flaticon.css">
     <!-- Owl Carousel CSS -->
@@ -37,8 +38,6 @@
     <script src="js/modernizr-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>My Single Recipe</h1>
-    Recipe Id: ${param.recipeId} </br>
     <!-- Pre loader Start Here -->
     <div id="preloader"></div>
     <!-- Pre loader End Here -->
@@ -47,6 +46,15 @@
         <i class="fas fa-angle-double-up"></i>
     </a>
     <!-- Scroll Up End Here -->
+    <!--Header start here-->
+    <c:set var="user" value="${sessionScope.USER}"></c:set>
+            <c:if test="${empty user}">
+                <%@include file="header.html" %>
+            </c:if>
+            <c:if test="${not empty user}">
+                <jsp:include page="header_user.jsp"></jsp:include>
+            </c:if>
+    <!--Header end here-->
     
     <div id="wrapper" class="wrapper">        
         <!-- Inner Page Banner Area Start Here -->
@@ -58,7 +66,7 @@
                             <h1>Single Recipe</h1>
                             <ul>
                                 <li>
-                                    <a href="home_page.jsp">Home</a>
+                                    <a href="homePage">Home</a>
                                 </li>
                                 <li>Recipe Details</li>
                             </ul>
@@ -84,19 +92,24 @@
                         <div class="single-recipe-layout1">
                             <div class="ctg-name">${category.name}</div>
                             <h2 class="item-title">${recipeDto.name}</h2>
+                            <!--header recipe information-->
                             <div class="row mb-4">
                                 <div class="col-xl-9 col-12">
                                     <ul class="entry-meta">
                                         <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
                                         <li class="single-meta"><a href="#DisplayAuthorInfo"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
                                         <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span>
-                                                Likes</a></li>
+                                                Likes</a></li>   
+                                        <li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
+                                                Saves</a></li>
                                     </ul>
                                 </div>
                             </div>
+                            <!--image of recipe-->
                             <div class="item-figure">
                                 <img src="${image.imgLink}" alt="Post Image">
                             </div>
+                            <!--Recipe Icon Addition information Detail-->
                             <div class="item-feature">
                                 <ul>
                                     <li>
@@ -145,8 +158,8 @@
                                                     <i class="far fa-eye"></i>
                                                 </div>
                                                 <div class="media-body space-sm">
-                                                    <div class="feature-title">SAVES</div>
-                                                    <div class="feature-sub-title">${recipeDto.savedCount}</div>
+                                                    <div class="feature-title">VIEWS</div>
+                                                    <div class="feature-sub-title">0</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,12 +173,21 @@
                                     <div class="col-xl-6 col-12">
                                         <div class="ingridients-wrap">
                                             <h3 class="item-title"><i class="fas fa-list-ul"></i>Ingridients</h3>
-                                            
+                                            <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
+                                            <c:if test="${not empty ingreList}">
+                                                <c:forEach var="ingredient" items="${ingreList}">
+                                                <div class="checkbox checkbox-primary">
+                                                    <!--<input id="checkbox1" type="checkbox">-->
+                                                    <!--<label>${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</label>-->
+                                                    <p>+  ${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</p>
+                                                </div>
+                                                </c:forEach>
+                                            </c:if>
                                             <!-- List ingredients-->
-                                            <div class="checkbox checkbox-primary">
+<!--                                            <div class="checkbox checkbox-primary">
                                                 <input id="checkbox1" type="checkbox">
                                                 <label for="checkbox1">1 cup sifted all purpose flour</label>
-                                            </div>
+                                            </div>-->
                                             <!--End of list ingredients-->
                                         </div>
                                     </div>
@@ -177,11 +199,22 @@
                                 <div class="section-heading heading-dark">
                                     <h2 class="item-heading">DIRECTIONS</h2>
                                 </div>
-                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
+<!--                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
                                     taped so innocuously side crudey mightily rigorous plot life. New homes in
                                     particular are subject. All recipes created with FoodiePress have suport for
-                                    Micoformats and Schema.org is a collaboration byo improve convallis.</p>
-                                <div class="direction-box-layout1">
+                                    Micoformats and Schema.org is a collaboration byo improve convallis.</p>-->
+                                <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
+                                <c:if test="${not empty stepList}">
+                                    <c:forEach var="step" items="${stepList}" varStatus="counter">
+                                    <div class="direction-box-layout1">
+                                    <div class="item-content">
+                                        <div class="serial-number">Step ${counter.count}</div>
+                                        <p>${step}</p>
+                                    </div>
+                                    </div>
+                                    </c:forEach>
+                                </c:if>
+<!--                                <div class="direction-box-layout1">
                                     <div class="item-content">
                                         <div class="serial-number">01 Step</div>
                                         <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
@@ -216,7 +249,7 @@
                                             the web by creat inegaera structured markupinn ocuously
                                             side crudey mightily rigorous plot life.</p>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             
                            <!-- Tag of this Recipe-->

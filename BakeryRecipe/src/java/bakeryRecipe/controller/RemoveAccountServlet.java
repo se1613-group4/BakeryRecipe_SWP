@@ -8,10 +8,10 @@ import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
-
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,10 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author PC
  */
-@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
-public class adminListAccountController extends HttpServlet {
+@WebServlet(name = "RemoveAccountServlet", urlPatterns = {"/RemoveAccountServlet"})
+public class RemoveAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,38 +41,25 @@ public class adminListAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex;  //  trang đang đứng 
-        int endindex;    /// trang cuoi cung 
-        ArrayList<Account_tblDTO> result = null;
+        String urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.USER_HOME_PAGE);
+        Account_tblDAO accDAO = new Account_tblDAO();
+        HttpSession session = request.getSession();
+        Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
         try {
-             
-            HttpSession session = request.getSession();
-            String test =request.getParameter("roww");
-            String searchuseradmin = request.getParameter("a");
-            
-            
-              if(test == null){
-                  pageindex = 1 ;
-              }else{
-                   pageindex = Integer.parseInt(test);
-              }
-            String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
-              
-            Account_tblDAO dao = new Account_tblDAO();
-            endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-//            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
-            
-            session.setAttribute("ADMIN_LIST_USER", result);
-            session.setAttribute("end_account", endindex);
-            
+            /* TODO output your page here. You may use following sample code. */
+            boolean result=accDAO.deleteAccount(user.getUserId());
+            if (result) {
+                urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.LOGIN_PAGE);
+                request.setAttribute("submitDone","done");
+            }
         } catch (SQLException ex) {
-            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
+            log("DeleteAccountServlet _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("DeleteAccountServlet _ Naming " + ex.getMessage());
         } finally {
-
-            response.sendRedirect(url);
+            // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
+            response.sendRedirect(urlRewriting); // sendRedirect + urlRewriting ~ 
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

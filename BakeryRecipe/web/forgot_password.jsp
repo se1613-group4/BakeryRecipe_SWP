@@ -6,17 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="bakeryRecipe.account_tbl.LoginError" %>
+<%@page import="bakeryRecipe.account_tbl.RegisterError" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Forgot Password</title>
 
         <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bakery Recipe| Login</title>
+        <title>Bakery Recipe| Forgot Password</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -37,16 +37,21 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
+        <script type="text/javascript">
 
+            function testAlertDialog() {
+
+                alert(${message});
+            }
+            <c:remove var="message" scope="session" />
+        </script>
     </head>
     <body>
     <body>
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-        <c:if test="${not empty submitDone}">
-        <script>alert("your account is delete");
-        </script></c:if>
+
         <!-- Add your site or application content here -->
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
@@ -64,12 +69,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumbs-area">
-                                <h1>User Login Page</h1>
+                                <h1>Forgot Password Page</h1>
                                 <ul>
                                     <li>
                                         <a href=homePage name="btAction" value="Home">Home</a>
                                     </li>
-                                    <li>Login</li>
+                                    <li>Forgot Password</li>
                                 </ul>
                             </div>
                         </div>
@@ -78,55 +83,59 @@
             </section>
             <!-- Inne Page Banner Area End Here -->
 
-            <font color="red">${message}</font></br>
-            <c:remove var="message" scope="session" /> 
             <!-- Login Area Start Here -->
-
             <section class="login-page-wrap padding-top-80 padding-bottom-50">
                 <div class="container">
                     <div class="row gutters-60">
                         <div class="col-lg-8">
                             <div class="login-box-layout1">
                                 <div class="section-heading heading-dark">
-                                    <h2 class="item-heading">LOGIN FORM</h2>
+                                    <h2 class="item-heading">FORGOT PASSWORD FORM</h2>
                                 </div>
-                                <!--LOGIN FORM-->
-                                <c:set var="error" value="${requestScope.LOGIN_ERR}"></c:set>
-                                
-                                
-                                <form class="login-form" action="loginController"  method="post">
+                                <!--FORGOT PASSWORD FORM-->
+                                <c:set var="error" value="${requestScope.FORGOTPASSWOD_ERR}"></c:set>
+                                    <form class="login-form" action="forgotPasswordController"  method="post">
 
-                                    <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" required
-                                           oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                        <input value="${param.txtEmail}" class="main-input-box" name="txtEmail" type="email" placeholder="Email" required
+                                           oninvalid="this.setCustomValidity('Enter Email Here')"
                                            oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.userameEmptyErr}">
-                                        <font color="red">${error.userameEmptyErr}</font></br>
+                                    <c:if test="${not empty error.emailExisted}">
+                                        <font color="red">${error.emailExisted}</font></br>
                                     </c:if>
 
-                                    <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" required
+                                    <input value="${param.txtPhonenumber}" class="main-input-box" name="txtPhonenumber" type="phonenumber" placeholder="Phonenumber" required
+                                           oninvalid="this.setCustomValidity('Enter Phonenumber Here')"
+                                           oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.phonenumberExisted}">
+                                        <font color="red">${error.phonenumberExisted}</font></br>
+                                    </c:if>  
+                                        
+                                    <c:if test="${not empty error.emailAndPhonenumberNotMathErr}">
+                                        <font color="red">${error.emailAndPhonenumberNotMathErr}</font></br>
+                                    </c:if>  
+                                        
+                                    <input class="main-input-box" name="txtNewPassword" type="password" placeholder="Password" required
                                            oninvalid="this.setCustomValidity('Enter password Here')"
                                            oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.passwordEmptyErr}">
-                                        <font color="red">${error.passwordEmptyErr}</font></br>
+                                    <c:if test="${not empty error.newPasswordFormatErr}">
+                                        <font color="red">${error.newPasswordFormatErr}</font></br>
+                                    </c:if>
+                                    <c:if test="${not empty error.newPasswordSameAsErr}">
+                                        <font color="red">${error.newPasswordSameAsErr}</font></br>
                                     </c:if>
 
+                                    <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
+                                           oninvalid="this.setCustomValidity('Enter Confirm password Here')"
+                                           oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.confirmNotMathched}">
+                                        <font color="red">${error.confirmNotMathched}</font></br>
+                                    </c:if> 
 
-                                    <c:if test="${not empty error.accountNotFound}">
-                                        <font color="red">${error.accountNotFound}</font></br>
-                                    </c:if>
+
+
                                     <div class="inline-box mb-5 mt-4">
-                                        <div class="checkbox checkbox-primary">
-                                            <input id="modal-checkbox" type="checkbox">
-                                            <label for="modal-checkbox">Remember Me</label>
-                                        </div>
-                                        <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
-                                        <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label>
-                                    </div>
-                                    <div class="inline-box mb-5 mt-4">
-                                        <!--                                        <button class="btn-fill"  value="loginC" name="btAction">Login</button>-->
-                                        <button class="btn-fill" type="submit" >Login</button>
-                                        <c:url var="register_url" value="registerPage"></c:url>
-                                        <a href="${register_url}">Register</a>
+                                        <button class="btn-fill" type="submit" >Update Password</button>
+
                                     </div>
                                 </form>
 

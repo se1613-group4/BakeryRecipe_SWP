@@ -75,9 +75,33 @@ public class AppContants { // mapping all features strings
         public static final String USER_HOME_PAGE = "userHomePage";
     }
 
+    public class ResetPasswordFeartures {
+
+        public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
+        public static final String USER_HOME_PAGE = "userHomePage";
+    }
+
+    public class RemoveAccountFeartures {
+
+        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String LOGIN_PAGE = "loginPage";
+    }
+
+    public class ForgotPaswordFeartures {
+
+        public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
+        public static final String LOGIN_PAGE = "loginPage";
+    }
+
     public class DisplaySubmitRecipeFeature {
 
         public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
+
+    }
+    
+    public class CreateRecipeFeature {
+        public static final String ERROR_PAGE = "errorPage";
+        public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
     }
 
     public class UpdateUserProfile {

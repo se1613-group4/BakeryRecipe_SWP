@@ -1,19 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
-import javax.servlet.RequestDispatcher;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,10 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author LamVo
+ * @author PC
  */
-@WebServlet(name = "DisplayOwnRecipes", urlPatterns = {"/DisplayOwnRecipes"})
-public class DisplayOwnRecipes extends HttpServlet {
+@WebServlet(name = "RemoveAccountServlet", urlPatterns = {"/RemoveAccountServlet"})
+public class RemoveAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,29 +39,26 @@ public class DisplayOwnRecipes extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        /**
-         * Get site map (Copy this for all controller)
-         */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
-        // Mapping url
-        String url = siteMaps.getProperty(AppContants.DisplayOwnRecipesFeature.MY_RECIPES_PAGE);
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        String urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.USER_HOME_PAGE);
+        Account_tblDAO accDAO = new Account_tblDAO();
+        HttpSession session = request.getSession();
+        Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
         try {
-            // get userID from Session scope
-            HttpSession session = request.getSession();
-            int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
-            // call DAO
-            Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
-            recipeDao.loadAllRecipes(userId);
-            List<Recipe_tblDTO> recipeList = recipeDao.getRecipeDtoList();
-            request.setAttribute("MY_RECIPE_LIST", recipeList);
+            /* TODO output your page here. You may use following sample code. */
+            boolean result=accDAO.deleteAccount(user.getUserId());
+            if (result) {
+                urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.LOGIN_PAGE);
+                request.setAttribute("submitDone","done");
+            }
         } catch (SQLException ex) {
-            log("DisplayOwnRecipes Controller _ SQL " + ex.getMessage());
+            log("DeleteAccountServlet _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("DeleteAccountServlet _ Naming " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
+            response.sendRedirect(urlRewriting); // sendRedirect + urlRewriting ~ 
         }
     }
 

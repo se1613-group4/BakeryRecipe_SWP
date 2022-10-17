@@ -200,7 +200,7 @@
                                     <!--Input Quantity-->
                                     <div class="col-5">
                                         <div class="form-group additional-input-box icon-right">
-                                            <input type="number" step="0.01" min="0" placeholder="Quantity" class="form-control"
+                                            <input type="number" step="0.01" min="0.01" placeholder="Quantity" class="form-control"
                                                 name="txtQuantity"/>
                                             <i class="fas fa-times" onclick="removeElement(this)"></i>
                                         </div>

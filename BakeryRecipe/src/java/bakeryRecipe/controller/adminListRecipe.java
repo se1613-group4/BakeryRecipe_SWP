@@ -4,14 +4,18 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDAO;
-import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,55 +28,37 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "adminListAccountController", urlPatterns = {"/adminListAccountController"})
-public class adminListAccountController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "listRecipeAdmin", urlPatterns = {"/listRecipeAdmin"})
+ public class adminListRecipe extends HttpServlet {
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
-        int pageindex;  //  trang đang đứng 
-        int endindex;    /// trang cuoi cung 
-        ArrayList<Account_tblDTO> result = null;
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        HttpSession session = request.getSession();
+
+        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String test = request.getParameter("usrecid");
+        int  usid = test==null? 0 :  Integer.parseInt(test);
+        
         try {
-             
-            HttpSession session = request.getSession();
-            String test =request.getParameter("roww");
-            String searchuseradmin = request.getParameter("a");
+             Recipe_tblDAO dao = new Recipe_tblDAO();
+            ArrayList<Recipe_tblDTO> rslt = dao.AdmingetRecipebyUser(usid);
             
             
-              if(test == null){
-                  pageindex = 1 ;
-              }else{
-                   pageindex = Integer.parseInt(test);
-              }
-            String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
-              
-            Account_tblDAO dao = new Account_tblDAO();
-            endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
+            if (rslt != null) {
+                    session.setAttribute( "ADMIN_LIST_RECIPE", rslt);
+            }
             
-            session.setAttribute("ADMIN_LIST_USER", result);
-            session.setAttribute("end_account", endindex);
             
         } catch (SQLException ex) {
-            log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
+            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
         } finally {
-
-            response.sendRedirect(url);
+            response.sendRedirect(urlRewriting);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

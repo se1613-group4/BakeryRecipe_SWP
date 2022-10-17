@@ -103,4 +103,10 @@ public class AppContants { // mapping all features strings
         public static final String ERROR_PAGE = "errorPage";
         public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
     }
+
+    public class UpdateUserProfile {
+
+        public static final String USER_PROFILE_PAGE = "userProfilePage";
+        public static final String DISPLAY_USER_PROFILE_CONTROLLER = "displayUserProfileController";
+    }
 }

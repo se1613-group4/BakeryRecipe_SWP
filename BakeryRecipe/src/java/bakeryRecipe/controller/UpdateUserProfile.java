@@ -6,20 +6,14 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.account_tbl.RegisterError;
-import bakeryRecipe.user_tbl.User_tblDAO;
-import bakeryRecipe.user_tbl.User_tblDTO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.profile_tbl.UpdateError;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -31,10 +25,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author PC
+ * @author dangh
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserProfile", urlPatterns = {"/UpdateUserProfile"})
+public class UpdateUserProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,51 +40,37 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        //start get sitemap
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = siteMaps.getProperty(AppContants.RegisterFeatures.ERROR_PAGE);
-        RegisterError errors = new RegisterError();
+        //end get sitemap
+
+        String url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
+//        String url = "single-author.jsp";
+        UpdateError errors = new UpdateError();
         boolean foundErr = false;
+        boolean result = false;
+        String userId = request.getParameter("txtUserId");
+        String recipeId = request.getParameter("");
         String username = request.getParameter("txtUsername");
-        String email = request.getParameter("txtEmail");
         String password = request.getParameter("txtPassword");
-        String fullname =request.getParameter("txtFullname");
-        String confirm = request.getParameter("txtConfirm");
-        String phoneNumber = request.getParameter("txtPhonenumber");
-        Date lastModified = Date.valueOf(LocalDate.now());
-        //String register = request.getParameter("btAction");
+        String fullName = request.getParameter("txtFullName");
+        String email = request.getParameter("txtEmail");
+        String phoneNumber = request.getParameter("txtPhoneNumber");
+        String gender = request.getParameter("txtGender");
+        String biography = request.getParameter("txtBiography");
         Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
-        /*
-        Must be 8-15 characters and must start with a letter
-        May not contain special characters – only letters and numbers
-         */
         Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
-        /*
-        Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
-        Must contain at least one number (0123456789)
-        Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
-         */
         Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
                 "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
-//        String EMAIL_PATTERN
-//                = "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$";
-        /*  - Bắt đầu bằng chữ cái.
-            - Chỉ chứa chữ cái, chữ số và dấu gạch ngang (-).
-            - Chứa một ký tự @, sau @ là tên miền.
-            - Tên miền có thể là domain.xxx.yyy hoặc domain.xxx. 
-                Trong đó xxx và yyy là các chữ cái và có độ dài từ 2 trở lên.*/
         Pattern phonenumberPattern = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
-        /*
-        0388888888
-        0588888888
-        0788888888
-        0888888888
-        0988888888
-        8488888888
-         */
+        Pattern bioPattern = Pattern.compile("^.{0,10}$");
+        Pattern genderPattern = Pattern.compile("^[a-zA-Z]{1,10}$");
+
         try {
             Account_tblDAO accDAO = new Account_tblDAO();
             if (usernamePattern.matcher(username).matches() == false) {
@@ -107,16 +87,13 @@ public class RegisterServlet extends HttpServlet {
                         + "Password contain at least one lower-case letter.\n"
                         + "Must contain at least one number "
                         + "and may not contain special characters");
-            } 
-            if (!confirm.trim().equals(password)) {
-                foundErr = true;
-                errors.setConfirmNotMathched("Confirm must matches password");
             }
-            if (fullnamePattern.matcher(fullname).matches() == false) {
+
+            if (fullnamePattern.matcher(fullName).matches() == false) {
                 foundErr = true;
                 errors.setFullnameFormatErr("Fullname wrong format");
             }
-            
+
             boolean checkEmailExit = accDAO.checkEmail(email);
             if (emailPattern.matcher(email).matches() == false) {
                 foundErr = true;
@@ -128,53 +105,54 @@ public class RegisterServlet extends HttpServlet {
                 foundErr = true;
                 errors.setEmailExisted("Email existed try again!");
             }
-            
+
             boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
             if (phonenumberPattern.matcher(phoneNumber).matches() == false) {
                 foundErr = true;
                 errors.setPhonenumberFormatErr("Phonenumer must is Vietnam's phone number!");
-            } 
+            }
             if (checkPhonenumberExit == true) {
                 foundErr = true;
-                errors.setPhonenumberExisted("Phonenumber existed try again!");
+                errors.setPhonenumberExisted("Phonenumer existed try again!");
             }
-            
+            if (bioPattern.matcher(biography).matches() == false) {
+                foundErr = true;
+                errors.setBioFormatError("Bio wrong format.\n  "
+                        + "Bio contain 0-3000 characters.\n"
+                );
+            }
+            if (genderPattern.matcher(gender).matches() == false) {
+                foundErr = true;
+                errors.setGenderFormatError("Gender wrong format.\n  "
+                        + "Gender contain 1-10 characters.\n"
+                );
+            }
             if (foundErr) {
-                request.setAttribute("REGISTER_ERR", errors);
+                request.setAttribute("UPDATE_ERR", errors);
             } else {
-                //make user object
-                User_tblDTO userDto = new User_tblDTO(lastModified);
-                Account_tblDTO accDto = new Account_tblDTO(0, 0, username, password, email, phoneNumber, lastModified, true, false);
-                Profile_tblDTO proDto = new Profile_tblDTO();
-                //create a database model
-                User_tblDAO userDao = new User_tblDAO();
-                Account_tblDAO accDao = new Account_tblDAO();
-                Profile_tblDAO proDao = new Profile_tblDAO();
+                HttpSession session = request.getSession();
+                Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
+//                System.out.println("UserID to update: ***********" + user.getUserId());
 
-                boolean userResult = userDao.CreateUser_tbl();
-                int cuurentUserId = userDao.getCurrentUserId();
-                boolean accResult = accDao.saveUser(accDto, cuurentUserId);
-                boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId,fullname);
-                if (userResult && accResult && profileResult) {
-                    url = siteMaps.getProperty(AppContants.RegisterFeatures.LOGIN_PAGE);
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute(username, username);
+                //call DAO
+                Profile_tblDAO dao = new Profile_tblDAO();
+//                System.out.println("user update id" + user.getUserId());
+                result = dao.updateUserProfile(user.getUserId(), username, password, fullName, email, phoneNumber, gender, url, biography, true, result);
+                //process result 
+                if (result) {
+                    url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
 
-                    String message = "Your account has been successfully created, please login to use the website";
-                    request.getSession().setAttribute("message", message);
-                } else {
-                    errors.setUsernameExisted("Username existed try again!");
-                    request.setAttribute("REGISTER_ERR", errors);
                 }
             }
-
         } catch (SQLException ex) {
             String msg = ex.getMessage();
-            log("CreateAccountController _ SQL " + msg);
+            log("Error at DisplayUserProfile: " + ex.toString());
             if (msg.contains("duplicate")) { // trung username (key) cung la SQLException
                 errors.setUsernameExisted(username + " is existed");
-                request.setAttribute("REGISTER_ERR", errors);
+                request.setAttribute("UPDATE_ERR", errors);
             }
+        } catch (NamingException ex) {
+            log("Error at DisplayUserProfile: " + ex.toString());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
@@ -193,11 +171,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -211,11 +185,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

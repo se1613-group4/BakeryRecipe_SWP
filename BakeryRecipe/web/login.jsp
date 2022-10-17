@@ -44,7 +44,9 @@
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-
+        <c:if test="${not empty submitDone}">
+        <script>alert("your account is delete");
+        </script></c:if>
         <!-- Add your site or application content here -->
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
@@ -117,7 +119,8 @@
                                             <input id="modal-checkbox" type="checkbox">
                                             <label for="modal-checkbox">Remember Me</label>
                                         </div>
-                                        <label class="lost-password"><a href="#">Lost your password?</a></label>
+                                        <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
+                                        <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label>
                                     </div>
                                     <div class="inline-box mb-5 mt-4">
                                         <!--                                        <button class="btn-fill"  value="loginC" name="btAction">Login</button>-->

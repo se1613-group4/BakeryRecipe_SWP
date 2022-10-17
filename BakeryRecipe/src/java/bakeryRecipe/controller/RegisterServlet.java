@@ -12,7 +12,6 @@ import bakeryRecipe.user_tbl.User_tblDTO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
-import bakeryRecipe.utils.DBConnection;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -137,7 +136,7 @@ public class RegisterServlet extends HttpServlet {
             } 
             if (checkPhonenumberExit == true) {
                 foundErr = true;
-                errors.setPhonenumberExisted("Phonenumer existed try again!");
+                errors.setPhonenumberExisted("Phonenumber existed try again!");
             }
             
             if (foundErr) {

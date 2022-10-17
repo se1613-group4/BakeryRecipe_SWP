@@ -53,18 +53,19 @@ public class DisplayUserProfile extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            System.out.println(user.getUserId());
             //call dao
             Profile_tblDAO daoProfile = new Profile_tblDAO();
             Follow_tblDAO daoFollow = new Follow_tblDAO();
             //process result
             Profile_tblDTO profile = daoProfile.displayUserProfile(user.getUserId());
-            System.out.println("");
             int follower_amount = daoFollow.displayFollower(user.getUserId());
             int following_amount = daoFollow.displayFollowing(user.getUserId());
             request.setAttribute("USER_PROFILE", profile);
             request.setAttribute("USER_FOLLOWERS", follower_amount);
             request.setAttribute("USER_FOLLOWING", following_amount);
+            
+            System.out.println("user display id" + user.getUserId());
+
             //redirect webpage
             url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);
         }catch(SQLException ex){

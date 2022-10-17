@@ -73,6 +73,56 @@ public class Profile_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQL String
+                String sql = "select username, password, full_name, email, phone_number, gender, avatar_url, bio, is_actived, is_admin \n"
+                        + " from account_tbl \n"
+                        + " join profile_tbl \n"
+                        + " on account_tbl.user_id = profile_tbl.user_id\n"
+                        + " where account_tbl.user_id = ?";
+                //3. Create Statement Object
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, loginValue);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. Process result 
+                if (rs.next()) {
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    String fullName = rs.getString("full_name");
+                    String email = rs.getString("email");                    
+                    String phoneNumber = rs.getString("phone_number");                    
+                    String gender = rs.getString("gender");
+                    String avatarUrl = rs.getString("avatar_url");
+                    String biography = rs.getString("bio");
+                    Boolean isActived = rs.getBoolean("is_actived");
+                    Boolean isAdmin = rs.getBoolean("is_admin");
+                    result = new Profile_tblDTO(username, password, fullName, email, phoneNumber, gender, avatarUrl, biography, isActived, isAdmin);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
+    public Profile_tblDTO displayOtherUserProfile(int loginValue)
+            throws SQLException, NamingException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Profile_tblDTO result = null;
+        try {
+            //1. Make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Create SQL String
                 String sql = "select profile_id, user_id, full_name, gender, avatar_url, bio, last_modified \n"
                         + "from Profile_tbl \n"
                         + "Where user_id = ?";
@@ -107,5 +157,51 @@ public class Profile_tblDAO implements Serializable {
         return result;
     }
     
-    
+    public boolean updateUserProfile(int userId,  String username,  String password,  String fullName,  String email,  String  phoneNumber,  
+                                                                                    String  gender,  String  avatarUrl,  String biography,  boolean  isActived, boolean isAdmin)
+            throws SQLException, NamingException {
+        boolean result = false;
+
+        Connection connection = null;
+        PreparedStatement stm = null;
+
+        try {
+            //Make Connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //Write sql String
+                String sql = "update profile_tbl join account_tbl on account_tbl.user_id = profile_tbl.user_id\n"
+                        + "set username = ?,  password = ?, full_name = ?,  email = ?, phone_number = ?, gender = ?, avatar_url = ?, bio = ?, is_actived = ?, is_admin = ?\n"
+                        + "where profile_tbl.user_id = ?";
+
+                //Create Statement
+                stm = connection.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                stm.setString(3, fullName);
+                stm.setString(4, email);
+                stm.setString(5, phoneNumber);
+                stm.setString(6, gender);
+                stm.setString(7, avatarUrl);
+                stm.setString(8, biography);
+                stm.setBoolean(9 , isActived);                
+                stm.setBoolean(10  , isAdmin);
+                stm.setInt(11, userId);
+                //Execute stm
+                int effectedRows = stm.executeUpdate();
+                //Process result
+                if (effectedRows > 0) {
+                    result = true;
+                }
+            }//end check connection != null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
 }

@@ -5,14 +5,27 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.image_tbl.Image_tblDAO;
+import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.video_tbl.Video_tblDAO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,11 +54,77 @@ public class CreateNewRecipe extends HttpServlet {
         // End get site map
         
         // Mapping url        
-        String url = "";
+        String url = siteMaps.getProperty(AppContants.CreateRecipeFeature.ERROR_PAGE);
+        //Get parameters
+        HttpSession session = request.getSession();
+        int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
+        String recipeName = request.getParameter("txtRecipeName");
+        int categoryId = Integer.parseInt(request.getParameter("txtCategoryId"));
+        String description = request.getParameter("txtDescription");
+        int prepTime = Integer.parseInt(request.getParameter("txtPrepTime"));
+        int cookTime = Integer.parseInt(request.getParameter("txtCookTime"));
+        int serving = Integer.parseInt(request.getParameter("txtServing"));
+        String[] ingredientArr = request.getParameterValues("txtIngredient");
+        String[] steps = request.getParameterValues("txtStep");
+        String[] imgUrls = request.getParameterValues("txtImgUrl");
+        String vidUrl = request.getParameter("txtVidUrl");
+        // all validate data
         try {
+            String stepStr = " ";
+            if (!"".equals(steps[0].trim())) {
+                stepStr = steps[0];
+            }
+            for (int i=1; i<steps.length; i++) {
+                if (!"".equals(steps[i].trim())) {
+                    stepStr = stepStr + " --- " + steps[i];
+                }
+            }
+            Recipe_tblDTO recipeDto = new Recipe_tblDTO(userId, categoryId, recipeName, serving, description, prepTime, cookTime,stepStr);
+            // call reippe DAO and insert into recipe_tbl
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+            boolean resultInsertRecipe = recipeDao.insertRecipe(recipeDto);
+//            System.out.println("======RESULT INSERT RECIPE=======" + resultInsertRecipe);
             
-        } finally {
+            // call recipe_ingredientDao and indert into recipe_ingredient_tbl
+            Recipe_Ingredient_tblDAO repIngreDao = new Recipe_Ingredient_tblDAO();
+            // process ingrStr
+            Map<Integer, Double> ingredientList = new HashMap<>();
+            for (String ingredientStr : ingredientArr) {
+                String[] tokens = ingredientStr.split("-");
+                int ingreId = Integer.parseInt(tokens[0]);
+                double quantity = Double.parseDouble(tokens[1]);
+                ingredientList.put(ingreId, quantity);
+            }
+            int recipeCurrentId = recipeDao.getCurrentIdent();
+            boolean resultInsertIngre = repIngreDao.insertIngredientDetail(recipeCurrentId, ingredientList);
+//            System.out.println("======RESULT INSERT INGRE=======" + resultInsertIngre);
             
+            // call imageDao and insert into image_tbl
+            boolean resultInsertImg = true;
+            if (imgUrls != null && !"".equals(imgUrls[0])) {
+                Image_tblDAO imgDao = new Image_tblDAO();
+                resultInsertImg = false;
+                if (imgDao.removeImg(recipeCurrentId)) {
+                    resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
+                }
+//                System.out.println("======RESULT INSERT IMAGE=======" + resultInsertImg);
+            }          
+            // call videoDao and insert into video_tbl
+            boolean resultInsertVid = true;
+            if (!"".equals(vidUrl)) {
+                Video_tblDAO vidDao = new Video_tblDAO();
+                resultInsertVid = vidDao.insertVideo(recipeCurrentId, vidUrl);
+//                System.out.println("======RESULT INSERT VIDEO=======" + resultInsertVid);
+            }   
+            // All insert results are true -> redirect to MyRecipes Page
+            if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid) {
+                url = siteMaps.getProperty(AppContants.CreateRecipeFeature.MY_RECIPES_PAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateNewRecipe.class.getName()).log(Level.SEVERE, null, ex);
+            //            log("CreateNewRecipe Controller _ SQL " + ex.getMessage());
+        }finally {
+            response.sendRedirect(url);
         }
     }
 

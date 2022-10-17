@@ -48,7 +48,7 @@ public class DisplayHomePage extends HttpServlet {
         // End get site map
         
         // Mapping url        
-        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;        
+        String url = siteMaps.getProperty(AppContants.DisplayHomePageFeature.HOME_PAGE);    
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();

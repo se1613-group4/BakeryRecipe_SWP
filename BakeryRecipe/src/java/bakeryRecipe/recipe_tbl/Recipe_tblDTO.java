@@ -17,8 +17,8 @@ import java.sql.Date;
  */
 public class Recipe_tblDTO implements Serializable{
     private int recipeId;
-    //private int userId;
-    //private int categoryId;
+    private int userId;
+    private int categoryId;
     private String name;
     private int serving;
     private String description;
@@ -31,6 +31,7 @@ public class Recipe_tblDTO implements Serializable{
     private Date lastModified;
     private boolean isActived;
     private boolean isHidden;
+    private String Steps;
     
     private Profile_tblDTO authorInfo;
     private Category_tblDTO category;
@@ -39,6 +40,17 @@ public class Recipe_tblDTO implements Serializable{
     public Recipe_tblDTO() {
     }
 
+    public Recipe_tblDTO(int userId, int categoryId, String name, int serving, String description, int preTime, int cookTime, String steps) {
+        this.userId = userId;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.serving = serving;
+        this.description = description;
+        this.preTime = preTime;
+        this.cookTime = cookTime;
+        this.Steps = steps;
+    }
+    
     public Recipe_tblDTO(int recipeId, String name, int serving, String description, int preTime, int cookTime, int totalTime, int likedCount, int savedCount, Date createdDate, Date lastModified, boolean isActived, boolean isHidden, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image) {
         this.recipeId = recipeId;
         this.name = name;
@@ -83,6 +95,23 @@ public class Recipe_tblDTO implements Serializable{
         this.category = category;
         this.image = image;
     }
+
+    public Recipe_tblDTO(int recipeId, String name, int serving, String description, int preTime, int cookTime, int likedCount, int savedCount, Date lastModified, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image, String steps) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.serving = serving;
+        this.description = description;
+        this.preTime = preTime;
+        this.cookTime = cookTime;
+        this.likedCount = likedCount;
+        this.savedCount = savedCount;
+        this.lastModified = lastModified;
+        this.authorInfo = authorInfo;
+        this.category = category;
+        this.image = image;
+        this.Steps = steps;
+    }
+    
     public Recipe_tblDTO(int recipeId, String name, int serving,String description, int totalTime, int likedCount, Date lastModified, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image) {
         this.recipeId = recipeId;
         this.name = name;
@@ -94,6 +123,16 @@ public class Recipe_tblDTO implements Serializable{
         this.authorInfo = authorInfo;
         this.category = category;
         this.image = image;
+    }
+
+    public Recipe_tblDTO(int recipeId, String name, int likedCount,int savedCount, Date createdDate, Date lastModified, boolean isActived) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.likedCount = likedCount;
+        this.savedCount = savedCount;
+        this.createdDate = createdDate;
+        this.lastModified = lastModified;
+        this.isActived = isActived;
     }
 
     
@@ -162,6 +201,18 @@ public class Recipe_tblDTO implements Serializable{
     public String getDescription() {
         return description;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public String getSteps() {
+        return Steps;
+    }
     
         
     // Setter
@@ -229,6 +280,20 @@ public class Recipe_tblDTO implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setSteps(String Steps) {
+        this.Steps = Steps;
+    }
+    
+    
     
     
 }

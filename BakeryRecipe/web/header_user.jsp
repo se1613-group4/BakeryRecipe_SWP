@@ -76,13 +76,19 @@
                                                 <a href="displayUserProfileController">
                                                     Profile</a>
                                             </li>
-                                            <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
-                                                <li>
-                                                    <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
-                                            </li>                                            
+                                            <li>
+                                                 <a href="displayOwnRecipes">My recipes</a>
+                                            </li>  
+                                            <li>
+                                                <c:url var="Reset_url" value="resetPasswordPage"></c:url>
+                                                <a href="${Reset_url}">reset password</a>
+                                            </li>
+                                            <li>
+                                                <a href="removeAccountController" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                            </li>
+
                                         </ul>
                                     </li>
-                                    
                                     
 <!--                                    <li>
                                         <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
@@ -90,7 +96,7 @@
                                     </li>-->
                                     
                                     <li>
-                                        <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                        <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
                                     </li>
 

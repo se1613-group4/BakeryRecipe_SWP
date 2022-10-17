@@ -59,10 +59,9 @@ public class adminListAccountController extends HttpServlet {
               }
             String searchvalue = searchuseradmin == null ? "" : searchuseradmin.trim();
               
-              System.out.println("gia tri tra ve " + searchvalue);
             Account_tblDAO dao = new Account_tblDAO();
             endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
+//            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
             
             session.setAttribute("ADMIN_LIST_USER", result);
             session.setAttribute("end_account", endindex);
@@ -70,8 +69,7 @@ public class adminListAccountController extends HttpServlet {
         } catch (SQLException ex) {
             log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
         } finally {
-//           RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
+
             response.sendRedirect(url);
         }
         

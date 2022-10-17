@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import bakeryRecipe.utils.AppContants;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 
@@ -108,7 +107,9 @@ public class LoginServlet extends HttpServlet {
                     url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", user);
+                    session.setAttribute("LOGIN_USER", user);
                     session.setAttribute("LOGIN_PAGE1", user);
+                    
                 } //end if user click login
                 else {
                     errors.setAccountNotFound("Wrong username and password! Try again!");

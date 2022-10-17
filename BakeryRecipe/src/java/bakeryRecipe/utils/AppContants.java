@@ -78,4 +78,8 @@ public class AppContants { // mapping all features strings
     public class DisplaySubmitRecipeFeature{
         public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
     }
+    public class CreateRecipeFeature {
+        public static final String ERROR_PAGE = "errorPage";
+        public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
+    }
 }

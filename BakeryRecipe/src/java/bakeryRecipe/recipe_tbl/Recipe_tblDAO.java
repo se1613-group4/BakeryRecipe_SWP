@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -314,13 +315,13 @@ public class Recipe_tblDAO implements Serializable {
             if (connection != null) {
                 //2. create sql string
                 String sql = "SELECT liked_count, saved_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
-                        + "             profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, \n"
-                        + "         serving, prepare_time, cook_time, instruction, R.last_modified\n"
-                        + "FROM (select liked_count, saved_count, recipe_id, name, serving, prepare_time, cook_time, instruction, last_modified, category_id, user_id, is_actived, is_hidden\n"
-                        + "         from recipe_tbl where recipe_id = ?) as R\n"
+                        + "		profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, \n"
+                        + "        serving, prepare_time, cook_time, instruction, R.last_modified, step\n"
+                        + "FROM recipe_tbl as R\n"
                         + "	inner join category_tbl on R.category_id = category_tbl.category_id\n"
                         + "	inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
-                        + "     inner join image_tbl on R.recipe_id = image_tbl.recipe_id";
+                        + "    left join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
+                        + "where R.recipe_id = ?";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setInt(1, recipeId);
@@ -337,6 +338,7 @@ public class Recipe_tblDAO implements Serializable {
                     int likedCount = rs.getInt("liked_count");
                     int savedCount = rs.getInt("saved_count");
                     Date lastModified = rs.getDate("last_modified");
+                    String steps = rs.getString("step");
                     // get user's profile DTO info
                     int userId = rs.getInt("profile_tbl.user_id");
                     String authorName = rs.getString("profile_tbl.full_name");
@@ -348,9 +350,9 @@ public class Recipe_tblDAO implements Serializable {
                     // get image info
                     int imgId = rs.getInt("img_id");
                     String imgLink = rs.getString("img_link");
-                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
+                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);                    
                     // create recipeDTO
-                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, preTime, cookTime, likedCount, savedCount, lastModified, authorInfo, category, image);
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, preTime, cookTime, likedCount, savedCount, lastModified, authorInfo, category, image, steps);
                     result = recipeDto;
 
                 }
@@ -392,7 +394,7 @@ public class Recipe_tblDAO implements Serializable {
                 //2. create sql string
                 String sql = "SELECT liked_count, saved_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
                         + "		profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, \n"
-                        + "        serving, (prepare_time + cook_time) as total_time, instruction, R.last_modified\n"
+                        + "        serving, (prepare_time + cook_time) as total_time, instruction, R.created_date\n"
                         + "FROM recipe_tbl as R\n"
                         + "	inner join category_tbl on R.category_id = category_tbl.category_id\n"
                         + "	inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
@@ -496,13 +498,13 @@ public class Recipe_tblDAO implements Serializable {
         PreparedStatement stm = null;
         boolean result = false;
         try {
-            //1. make connection
+            //1.  make connection
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
                 String sql = "INSERT INTO `bakery_recipe`.`recipe_tbl` \n"
-                        + "	(`user_id`, `category_id`, `name`, `serving`, `instruction`, `prepare_time`, `cook_time`) \n"
-                        + "    VALUES (?, ?, ?, ?, ?, ?, ?);";
+                        + "	(`user_id`, `category_id`, `name`, `serving`, `instruction`, `prepare_time`, `cook_time`, `step`) \n"
+                        + "    VALUES (?, ?, ?, ?, ?, ?, ?,?);";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, recipeDto.getUserId());
@@ -512,6 +514,7 @@ public class Recipe_tblDAO implements Serializable {
                 stm.setString(5, recipeDto.getDescription());
                 stm.setInt(6, recipeDto.getPreTime());
                 stm.setInt(7, recipeDto.getCookTime());
+                stm.setString(8, recipeDto.getSteps());
                 //4. execute query
                 int affectedRows = stm.executeUpdate();
                 //5 process result
@@ -528,5 +531,39 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
         return result;                
+    }
+    
+    public int getCurrentIdent() throws SQLException{
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        int currentIdent = -1;
+        try {
+            //1.  make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT recipe_id as current_identity FROM recipe_tbl ORDER BY created_date DESC LIMIT 1";
+                //3. create statement obj
+                stm = con.createStatement();                
+                //4. execute query
+                rs = stm.executeQuery(sql);
+                //5 process result
+                if (rs.next()) {
+                    currentIdent = rs.getInt("current_identity");
+                }
+            }// end check con not null
+        } finally {
+            if (rs !=null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return currentIdent;
     }
 }

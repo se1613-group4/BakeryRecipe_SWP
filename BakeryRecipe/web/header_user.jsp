@@ -76,9 +76,8 @@
                                                 <a href="displayUserProfileController">
                                                     Profile</a>
                                             </li>
-                                            <c:set var="userId" value="${sessionScope.USER.userId}"></c:set>
                                                 <li>
-                                                    <a href="displayOwnRecipes?userId=${userId}">My recipes</a>
+                                                    <a href="displayOwnRecipes">My recipes</a>
                                             </li>                                            
                                         </ul>
                                     </li>

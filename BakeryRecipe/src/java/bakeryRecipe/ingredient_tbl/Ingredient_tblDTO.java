@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Ingredient_tblDTO implements Serializable{
     private int ingredientId;
     private String name;
+    private String unit;
     // Constructors
 
     public Ingredient_tblDTO() {
@@ -23,6 +24,13 @@ public class Ingredient_tblDTO implements Serializable{
         this.ingredientId = ingredientId;
         this.name = name;
     }
+
+    public Ingredient_tblDTO(int ingredientId, String name, String unit) {
+        this.ingredientId = ingredientId;
+        this.name = name;
+        this.unit = unit;
+    }
+    
     // Getters
 
     public int getIngredientId() {
@@ -32,6 +40,11 @@ public class Ingredient_tblDTO implements Serializable{
     public String getName() {
         return name;
     }
+
+    public String getUnit() {
+        return unit;
+    }
+    
     // Setters
 
     public void setIngredientId(int ingredientId) {
@@ -41,5 +54,10 @@ public class Ingredient_tblDTO implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+    
     
 }

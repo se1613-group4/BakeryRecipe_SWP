@@ -15,7 +15,7 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
     private int recipeId;
     private int ingredientId;
     private String unit;
-    private int quantity;
+    private double quantity;
     
     private String ingredientName;
     // Constructors
@@ -30,6 +30,13 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
         this.ingredientName = ingredientName;
     }
 
+    public Recipe_Ingredient_tblDTO(String unit, double quantity, String ingredientName) {
+        this.unit = unit;
+        this.quantity = quantity;
+        this.ingredientName = ingredientName;
+    }
+    
+    
     
     // Getters
 
@@ -45,9 +52,11 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
         return unit;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
+
+    
 
     public String getIngredientName() {
         return ingredientName;

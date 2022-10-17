@@ -7,6 +7,8 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import bakeryRecipe.comment_tbl.Comment_tblDTO;
+import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
+import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -56,7 +58,13 @@ public class DisplaySingleRecipe extends HttpServlet {
                 Recipe_tblDTO recipeDto = recipeDao.getRecipe(recipeId);
                 //2. Process result
                 request.setAttribute("RECIPE_INFO", recipeDto);
-                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
+                String steps = recipeDto.getSteps();
+                String[] stepArr = steps.split(" --- ");
+                request.setAttribute("STEP_LIST", stepArr);
+                Recipe_Ingredient_tblDAO ingredientDetailDao = new Recipe_Ingredient_tblDAO();
+                ingredientDetailDao.getIngredientDetail(recipeId);
+                List<Recipe_Ingredient_tblDTO> ingredientDetailDtoList = ingredientDetailDao.getRecipeIngreDtoList();
+                request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);
                 //----------------------------
                 //thongnt section
                 //DISPLAY COMMENTS FUNCTION
@@ -65,6 +73,8 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
+                
+                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
             }
         } catch (SQLException ex) {
             log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());

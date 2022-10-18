@@ -507,8 +507,6 @@
         <!-- Footer Area End Here -->
 
         <!-- Modal Start-->
-
-
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -557,7 +555,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Modal End-->
 
         <!-- Jquery Js -->

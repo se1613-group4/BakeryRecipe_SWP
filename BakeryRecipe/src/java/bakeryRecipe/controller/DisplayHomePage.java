@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +49,7 @@ public class DisplayHomePage extends HttpServlet {
         // End get site map
         
         // Mapping url        
-        String url = siteMaps.getProperty(AppContants.DisplayHomePageFeature.HOME_PAGE);    
+        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;    
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
@@ -69,6 +70,7 @@ public class DisplayHomePage extends HttpServlet {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
+//            RequestDispatcher rd = request.getRequestDispatcher(url)
         }
     }
 

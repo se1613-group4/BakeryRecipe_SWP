@@ -50,6 +50,7 @@
 
                                 <div class="content-container">
                                     <c:set var="adminDashBoard" value="${sessionScope.ADMIN_DASHBOARD}"></c:set>
+                                    <c:if test="${empty adminDashBoard}"> <H3> Lost Connection,Load file stored produce,Press Summit Button </h3></c:if>
                                         <c:if test="${not empty adminDashBoard}">
                                         <h3>  Total Account : ${adminDashBoard.get(0)} </h3> <br/>
                                         <h3>  Acctived Account :   ${adminDashBoard.get(1)}  </h3> <br/>
@@ -124,6 +125,7 @@
                             <div id="userdetail" class="main-content">
                                 <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
                                 <div class="content-container">
+                                    <c:if test="${empty usinf}"> <H3> Another Admin just delete this user,please try again later</h3></c:if>
                                         <c:if test="${not empty usinf}">
                                         <h5>
                                             Name:  ${usinf.fullName} <br/>

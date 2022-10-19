@@ -48,6 +48,7 @@ public class DisplayUserProfile extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         //end get sitemap
         
+        String editButton = request.getParameter("editBtn");
         String url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.USER_HOME_PAGE);
         
         try {
@@ -63,8 +64,7 @@ public class DisplayUserProfile extends HttpServlet {
             request.setAttribute("USER_PROFILE", profile);
             request.setAttribute("USER_FOLLOWERS", follower_amount);
             request.setAttribute("USER_FOLLOWING", following_amount);
-            
-            System.out.println("user display id" + user.getUserId());
+            request.setAttribute("EDIT_TRIGGER", editButton);
 
             //redirect webpage
             url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);

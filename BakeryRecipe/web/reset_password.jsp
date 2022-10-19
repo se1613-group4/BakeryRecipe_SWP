@@ -16,7 +16,7 @@
         <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bakery Recipe| Register</title>
+        <title>Bakery Recipe| Reset</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -62,7 +62,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumbs-area">
-                                <h1>User reset Page</h1>
+                                <h1>User Reset Password Page</h1>
                                 <ul>
                                     <li>
                                         <a href=userHomePage name="btAction" value="Home">Home</a>
@@ -83,19 +83,19 @@
                         <div class="col-lg-8">
                             <div class="login-box-layout1">
                                 <div class="section-heading heading-dark">
-                                    <h2 class="item-heading">reset FORM</h2>
+                                    <h2 class="item-heading">RESET PASSWORD FORM</h2>
                                 </div>
                                 <!--REGISTER FORM-->
                                 <c:set var="error" value="${requestScope.RESETPASSWOD_ERR}"></c:set>
                                     <form class="login-form" action="resetPasswordController"  method="post">
-                                        <input class="main-input-box" name="txtOldPassword" type="password" placeholder="Password" required
+                                        <input class="main-input-box" name="txtOldPassword" type="password" placeholder="Old Password" required
                                                oninvalid="this.setCustomValidity('Enter password Here')"
                                                oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.oldPasswordWrongErr}">
                                         <font color="red">${error.oldPasswordWrongErr}</font></br>
                                     </c:if> 
 
-                                    <input class="main-input-box" name="txtNewPassword" type="password" placeholder="Password" required
+                                    <input class="main-input-box" name="txtNewPassword" type="password" placeholder="New Password" required
                                            oninvalid="this.setCustomValidity('Enter password Here')"
                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.newPasswordFormatErr}">
@@ -118,7 +118,7 @@
 
 
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" >reset</button>
+                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Reset Password</button>
 
                                     </div>
                                 </form>

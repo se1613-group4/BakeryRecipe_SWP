@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,15 +51,15 @@ public class RemoveAccountServlet extends HttpServlet {
             boolean result=accDAO.deleteAccount(user.getUserId());
             if (result) {
                 urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.LOGIN_PAGE);
-                request.setAttribute("submitDone","done");
+                request.setAttribute("Remove_done","done");
             }
         } catch (SQLException ex) {
             log("DeleteAccountServlet _ SQL " + ex.getMessage());
         } catch (NamingException ex) {
             log("DeleteAccountServlet _ Naming " + ex.getMessage());
         } finally {
-            // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
-            response.sendRedirect(urlRewriting); // sendRedirect + urlRewriting ~ 
+            RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
+            rd.forward(request, response); 
         }
     }
 

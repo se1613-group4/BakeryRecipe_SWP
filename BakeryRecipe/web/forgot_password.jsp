@@ -37,14 +37,7 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
-        <script type="text/javascript">
-
-            function testAlertDialog() {
-
-                alert(${message});
-            }
-            <c:remove var="message" scope="session" />
-        </script>
+        
     </head>
     <body>
     <body>
@@ -134,7 +127,7 @@
 
 
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" >Update Password</button>
+                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Update Password</button>
 
                                     </div>
                                 </form>

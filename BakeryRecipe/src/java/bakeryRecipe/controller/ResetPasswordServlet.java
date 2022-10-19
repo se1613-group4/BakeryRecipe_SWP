@@ -8,10 +8,14 @@ import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.account_tbl.ResetPasswordError;
 import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.utils.SHA256;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -40,7 +44,7 @@ public class ResetPasswordServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
@@ -51,11 +55,16 @@ public class ResetPasswordServlet extends HttpServlet {
         ResetPasswordError errors = new ResetPasswordError();
         boolean foundErr = false;
         String olePassword = request.getParameter("txtOldPassword");
+        byte[] getSha= SHA256.getSHA(olePassword);
+                String oldPassSHA= SHA256.toHexString(getSha);
         String confirm = request.getParameter("txtConfirm");
         String newPassword = request.getParameter("txtNewPassword");
-        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]{6,30}");
+        Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        /*
+        Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+         */
         try  {
-            boolean checkOlePassword= accDAO.checkPasword(user.getUserId(), olePassword);
+            boolean checkOlePassword= accDAO.checkPasword(user.getUserId(), oldPassSHA);
             if (checkOlePassword==false) {
                 foundErr = true;
                 errors.setOldPasswordWrongErr("Wrong old password please check and re-enter");
@@ -67,10 +76,8 @@ public class ResetPasswordServlet extends HttpServlet {
             }
             if (passwordPattern.matcher(newPassword).matches() == false) {
                 foundErr = true;
-                errors.setNewPasswordFormatErr("password wrong format.\n  "
-                        + "Password contain at least one lower-case letter.\n"
-                        + "Must contain at least one number "
-                        + "and may not contain special characters");
+                errors.setNewPasswordFormatErr("New password wrong format.\n  "
+                        + "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
             } 
             if (!confirm.trim().equals(newPassword)) {
                 foundErr = true;
@@ -78,15 +85,15 @@ public class ResetPasswordServlet extends HttpServlet {
             }if (foundErr) {
                 request.setAttribute("RESETPASSWOD_ERR", errors);
             } else {
+                byte[] getShaNew= SHA256.getSHA(newPassword);
+                String newPassSHA= SHA256.toHexString(getShaNew);
                 Account_tblDTO accDTO = new Account_tblDTO();
                 Account_tblDAO accDao = new Account_tblDAO();
-                boolean result = accDao.uploadPassword(user.getUserId(), olePassword, newPassword);
+                boolean result = accDao.uploadPassword(user.getUserId(), oldPassSHA, newPassSHA);
                 if (result = true) {
                     urlRewriting = siteMaps.getProperty(AppContants.ResetPasswordFeartures.USER_HOME_PAGE);
                     session = request.getSession(true);
-                    //session.setAttribute(olePassword, olePassword);
-                    String message = "Your password has been successfully upload";
-                    request.getSession().setAttribute("message", message);
+                    request.getSession().setAttribute("Reset_done", "done");
                 } else {
                     errors.setOldPasswordWrongErr("Username existed try again!");
                     request.setAttribute("RESETPASSWOD_ERR", errors);
@@ -113,7 +120,11 @@ public class ResetPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -127,7 +138,11 @@ public class ResetPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

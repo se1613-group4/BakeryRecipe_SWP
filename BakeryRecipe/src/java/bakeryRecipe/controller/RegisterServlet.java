@@ -12,7 +12,9 @@ import bakeryRecipe.user_tbl.User_tblDTO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.utils.SHA256;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -46,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
@@ -56,22 +58,21 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String email = request.getParameter("txtEmail");
         String password = request.getParameter("txtPassword");
+        
         String fullname =request.getParameter("txtFullname");
         String confirm = request.getParameter("txtConfirm");
         String phoneNumber = request.getParameter("txtPhonenumber");
         Date lastModified = Date.valueOf(LocalDate.now());
         //String register = request.getParameter("btAction");
-        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
+        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{7,15}");
         /*
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
          */
 //        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
-Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$");
+        Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         /*
-        Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
-        Must contain at least one number (0123456789)
-        Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
+        Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
          */
         Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
@@ -104,8 +105,8 @@ Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*
 
             if (passwordPattern.matcher(password).matches() == false) {
                 foundErr = true;
-                errors.setPasswordFormatErr("Minimum eight characters,"
-                        + "at least one uppercase letter, one lowercase letter, one number and one special character");
+                errors.setPasswordFormatErr("Password wrong format.\n  "
+                        + "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
             } 
             if (!confirm.trim().equals(password)) {
                 foundErr = true;
@@ -142,8 +143,10 @@ Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*
                 request.setAttribute("REGISTER_ERR", errors);
             } else {
                 //make user object
+                byte[] getSha= SHA256.getSHA(password);
+                String passSHA= SHA256.toHexString(getSha);
                 User_tblDTO userDto = new User_tblDTO(lastModified);
-                Account_tblDTO accDto = new Account_tblDTO(0, 0, username, password, email, phoneNumber, lastModified, true, false);
+                Account_tblDTO accDto = new Account_tblDTO(0, 0, username, passSHA, email, phoneNumber, lastModified, true, false);
                 Profile_tblDTO proDto = new Profile_tblDTO();
                 //create a database model
                 User_tblDAO userDao = new User_tblDAO();
@@ -160,7 +163,7 @@ Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*
                     session.setAttribute(username, username);
 
                     String message = "Your account has been successfully created, please login to use the website";
-                    request.getSession().setAttribute("message", message);
+                    request.getSession().setAttribute("Register_done", message);
                 } else {
                     errors.setUsernameExisted("Username existed try again!");
                     request.setAttribute("REGISTER_ERR", errors);
@@ -196,6 +199,8 @@ Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -213,6 +218,8 @@ Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

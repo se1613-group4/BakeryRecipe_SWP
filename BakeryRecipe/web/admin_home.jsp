@@ -68,7 +68,7 @@
                                 <div class="content-container">
                                     <h5
                                         <c:forEach begin="1" end="${sessionScope.end_account}" var="i" >
-                                            <li><a href="adminListAccountController?roww=${i}&a=${a}">${i}</a></li>
+                                            <a href="adminListAccountController?roww=${i}&a=${a}">${i}</a>
                                         </c:forEach>
                                     </h5>
                                     <table id="customers">

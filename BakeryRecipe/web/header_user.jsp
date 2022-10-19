@@ -46,12 +46,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
                             <div class="site-logo-mobile">
-                                <a href="index.html" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
-                                <a href="index.html" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
+                                <a href="displayHomePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                                <a href="displayHomePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
                             </div>
                             <nav class="site-nav">
                                 <ul id="site-menu" class="site-menu">
-                                    <li><a href="homePage">Home</a>
+                                    <li><a href="displayHomePage">Home</a>
                                     </li>
                                     <li>
                                         <a href="#">Category</a>

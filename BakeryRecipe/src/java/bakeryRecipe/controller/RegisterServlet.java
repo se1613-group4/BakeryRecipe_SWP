@@ -66,7 +66,8 @@ public class RegisterServlet extends HttpServlet {
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
          */
-        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
+//        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
+Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$");
         /*
         Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
         Must contain at least one number (0123456789)
@@ -103,10 +104,8 @@ public class RegisterServlet extends HttpServlet {
 
             if (passwordPattern.matcher(password).matches() == false) {
                 foundErr = true;
-                errors.setPasswordFormatErr("password wrong format.\n  "
-                        + "Password contain at least one lower-case letter.\n"
-                        + "Must contain at least one number "
-                        + "and may not contain special characters");
+                errors.setPasswordFormatErr("Minimum eight characters,"
+                        + "at least one uppercase letter, one lowercase letter, one number and one special character");
             } 
             if (!confirm.trim().equals(password)) {
                 foundErr = true;

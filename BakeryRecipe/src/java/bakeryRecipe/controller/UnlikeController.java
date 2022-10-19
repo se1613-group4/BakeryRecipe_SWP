@@ -1,18 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +21,11 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author LamVo
+ * @author ThongNT
  */
-@WebServlet(name = "DisplayHomePage", urlPatterns = {"/DisplayHomePage"})
-public class DisplayHomePage extends HttpServlet {
-//    private final String HOME_PAGE = "home_page.jsp";
+@WebServlet(name = "UnlikeController", urlPatterns = {"/UnlikeController"})
+public class UnlikeController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,37 +38,33 @@ public class DisplayHomePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         /**
-         * Get site map (Copy this for all controller)
+         * Get site map
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
-        
-        // Mapping url        
-        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;    
+
+        // Mapping url
+        String urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.ERROR_PAGE);
         try {
             HttpSession session = request.getSession(true);
-            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            
-            recipeDao.loadTopRecipe(3);
-            List<Recipe_tblDTO> top3Recipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("TOP3_RECIPES", top3Recipes);
-            
-            recipeDao.loadTopRecipe(5);
-            List<Recipe_tblDTO> top5Recipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("TOP5_RECIPES", top5Recipes);
-            
-            recipeDao.loadRecentlyRecipe();
-            List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
-            
+            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+            if (currentUser == null) {
+                urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.LOGIN_PAGE);
+            } else {
+                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
+                int user_id = Integer.parseInt(request.getParameter("txtUserId"));
+                Like_tblDAO dao = new Like_tblDAO();
+                if (dao.unlikeRecipe(recipe_id, user_id)) {
+                    urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
+                }//end check result
+            }//end check has been login
+
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            log("Unlike Controller _ SQL " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url)
+            response.sendRedirect(urlRewriting);
         }
     }
 

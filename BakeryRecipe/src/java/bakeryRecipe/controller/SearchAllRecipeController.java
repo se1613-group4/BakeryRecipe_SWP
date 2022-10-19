@@ -23,12 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author thongnt
  */
-
 @WebServlet(name = "SearchAllRecipeController", urlPatterns = {"/SearchAllRecipeController"})
 public class SearchAllRecipeController extends HttpServlet {
 //    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_RESULT_PAGE = "search.jsp";
-    
+//    private final String SEARCH_RESULT_PAGE = "search.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,35 +40,35 @@ public class SearchAllRecipeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-         /**
+
+        /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
-        
-        // Mapping url         
-        String url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.HOME_PAGE) ;
-        
-        String searchValue = request.getParameter("txtSearchValue");
-        
-        try {
-             if (!searchValue.trim().isEmpty()) {
-            //1. Call DAO
-                 Recipe_tblDAO dao = new Recipe_tblDAO();
-            
-            //2. Process result
-                 List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue);
-            
-            //3. setAttribute to request
-                request.setAttribute("SEARCH_RESULT", result);
-                url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);
 
-             }
+        // Mapping url         
+        String url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.HOME_PAGE);
+
+        String searchValue = request.getParameter("txtSearchValue");
+
+        try {
+            if (!searchValue.trim().isEmpty()) {
+                //1. Call DAO
+                Recipe_tblDAO dao = new Recipe_tblDAO();
+
+                //2. Process result
+                List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue);
+
+                //3. setAttribute to request
+                request.setAttribute("SEARCH_RESULT", result);
+            }
+
+            url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);
         } catch (SQLException ex) {
             log("SearchAllRecipe Controller _ SQL " + ex.getMessage());
-        } finally{
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

@@ -65,7 +65,7 @@
                                 <h1>User Register Page</h1>
                                 <ul>
                                     <li>
-                                        <a href=homePage name="btAction" value="Home">Home</a>
+                                        <a href="displayHomePage">Home</a>
                                     </li>
                                     <li>Register</li>
                                 </ul>

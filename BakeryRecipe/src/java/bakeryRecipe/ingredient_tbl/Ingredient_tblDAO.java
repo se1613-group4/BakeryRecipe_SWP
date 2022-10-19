@@ -40,7 +40,7 @@ public class Ingredient_tblDAO implements Serializable{
             if (con != null) {
                 //2. create sql string
                 String sql = "SELECT ingredient_id, name as ingredient_name, unit\n"
-                        + "FROM bakery_recipe.ingredient_tbl";
+                        + "FROM ingredient_tbl";
                 //3. create statement obj
                 stm = con.createStatement();
                 //4. execute query

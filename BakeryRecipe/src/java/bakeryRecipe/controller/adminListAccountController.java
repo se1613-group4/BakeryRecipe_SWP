@@ -61,7 +61,7 @@ public class adminListAccountController extends HttpServlet {
               
             Account_tblDAO dao = new Account_tblDAO();
             endindex = dao.getEndIndexAccountListAdmin(searchvalue);
-//            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
+            result = (ArrayList<Account_tblDTO>) dao.getListAccountAdmin(searchvalue,pageindex, 10);
             
             session.setAttribute("ADMIN_LIST_USER", result);
             session.setAttribute("end_account", endindex);

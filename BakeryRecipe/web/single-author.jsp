@@ -453,85 +453,114 @@
                                 <c:set var="followers_result" value="${requestScope.USER_FOLLOWERS}"/>
                                 <c:set var="following_result" value="${requestScope.USER_FOLLOWING}"/>
                                 <c:set var="error" value="${requestScope.UPDATE_ERR}"></c:set>
-                                <c:if test="${not empty profile_result}">
-                                    <div class="author-info">
-                                        <div class="media media-none--xs">
-                                            <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
-                                            <div class="media-body">
-                                                <form action="updateUserProfileController" method="POST">
 
-                                                    <h2 class="author-title"><input type="text" name="txtFullName" value="${profile_result.fullName}"/>
-                                                    </h2>
-                                                    <c:if test="${not empty error.fullnameFormatErr}">
-                                        <font color="red">${error.fullnameFormatErr}</font></br>
-                                    </c:if>
-                                                    <p><b>${followers_result}</b> Followers <b style="margin-left: 10px">${following_result}</b> Following</p>
+                                <c:set var="update_profile_trigger" value="${requestScope.EDIT_TRIGGER}"></c:set>
 
-                                                    <h3>Username:</h3><p> 
-                                                    <input style="width: 100%" type="text" name="txtUsername" value="${profile_result.username}"/></p>
-                                                    <c:if test="${not empty error.usernameFormatErr}">
-                                                        <font color="red">${error.usernameFormatErr}</font></br>
-                                                    </c:if>
-                                                    
-                                                    
-                                                    <h3>Password: </h3><p> 
-                                                    <input style="width: 100%" type="password" name="txtPassword" value="${profile_result.password}"/></p>
+                                <c:if test="${empty update_profile_trigger}">
 
-                                                    <c:if test="${not empty error.passwordFormatErr}">
-                                        <font color="red">${error.passwordFormatErr}</font></br>
-                                    </c:if>
-                                                    
-                                                    <h3>Email:</h3><p> 
-                                                    <input style="width: 100%" type="text" name="txtEmail" value="${profile_result.email}"/></p>
+                                    <c:if test="${not empty profile_result}">
+                                        <div class="author-info">
+                                            <div class="media media-none--xs">
+                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                <div class="media-body">
+                                                    <form action="displayUserProfileController" method="POST">
 
-                                                    <c:if test="${not empty error.emailFormatErr}">
-                                        <font color="red">${error.emailFormatErr}</font></br>
-                                    </c:if>
-                                    <c:if test="${not empty error.emailExisted}">
-                                        <font color="red">${error.emailExisted}</font></br>
-                                    </c:if>
-                                                    
-                                                    <h3>Phone number: </h3><p> 
-                                                    <input style="width: 100%" type="text" name="txtPhoneNumber" value="${profile_result.phoneNumber}"/></p>
+                                                        <h2 class="author-title">${profile_result.fullName}
+                                                        </h2>
 
-                                                    <c:if test="${not empty error.phonenumberFormatErr}">
-                                        <font color="red">${error.phonenumberFormatErr}</font></br>
-                                    </c:if>  
-                                    <c:if test="${not empty error.phonenumberExisted}">
-                                        <font color="red">${error.phonenumberExisted}</font></br>
-                                    </c:if>
-                                                    
-                                                    <h3>Gender: </h3><p> 
-                                                    <input style="width: 100%" type="text" name="txtGender" value="${profile_result.gender}"/></p>
+                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 10px">${following_result}</b> Following     
+                                                            <input style="margin-left: 10px" type="submit" name="editBtn" value="Edit profile" class="btn btn-light" style="font-size: 2rem"/>
+                                                        </p>
 
-                                                    <c:if test="${not empty error.genderFormatError}">
-                                        <font color="red">${error.genderFormatError}</font></br>
-                                    </c:if>  
-                                                    
-                                                    <h3>Bio: </h3><p> 
-                                                    <input style="width: 100%" type="text" name="txtBiography" value="${profile_result.biography}"/></p>
+                                                        <h3>Username: ${profile_result.username}</h3><p> 
 
-                                                    <c:if test="${not empty error.bioFormatError}">
-                                        <font color="red">${error.bioFormatError}</font></br>
-                                    </c:if>  
-                                                    
-                                                    <!--<input type="text" name="txtUserId" value="${profile_result.userId}">-->
-                                                    
-                                                    <button type="submit" class="btn btn-danger" style="font-size: 2rem">
-                                                        Update
-                                                    </button>
-<!--                                                    <input type="submit" value="Update" name="btAction"/>-->
-                                                    <!--<input type="hidden" name="txtSearchValue" value="" />-->
+                                                        <h3>Email: ${profile_result.email}</h3><p> 
 
-                                                </form>
+                                                        <h3>Phone number: ${profile_result.phoneNumber}</h3><p> 
 
+                                                        <h3>Gender: ${profile_result.gender}</h3><p> 
+
+                                                        <h3>Bio: ${profile_result.biography}</h3><p> 
+
+                                                    </form>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${empty profile_result}">
-                                    <h1>User is not found!!</h1>
+                                <c:if test="${not empty update_profile_trigger}">
+                                    <c:if test="${not empty profile_result}">
+                                        <div class="author-info">
+                                            <div class="media media-none--xs">
+                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                <div class="media-body">
+                                                    <form action="updateUserProfileController" method="POST">
+
+                                                        <h2 class="author-title"><input type="text" name="txtFullName" value="${profile_result.fullName}"/>
+                                                        </h2>
+                                                        <c:if test="${not empty error.fullnameFormatErr}">
+                                                            <font color="red">${error.fullnameFormatErr}</font></br>
+                                                        </c:if>
+                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 10px">${following_result}</b> Following</p>
+
+                                                        <h3>Username: ${profile_result.username}</h3><p> 
+
+                                                        <h3>Password: </h3><p> 
+                                                            <input style="width: 100%" type="password" name="txtPassword" value="${profile_result.password}"/></p>
+
+                                                        <c:if test="${not empty error.passwordFormatErr}">
+                                                            <font color="red">${error.passwordFormatErr}</font></br>
+                                                        </c:if>
+
+                                                        <h3>Email:</h3><p> 
+                                                            <input style="width: 100%" type="text" name="txtEmail" value="${profile_result.email}"/></p>
+
+                                                        <c:if test="${not empty error.emailFormatErr}">
+                                                            <font color="red">${error.emailFormatErr}</font></br>
+                                                        </c:if>
+                                                        <c:if test="${not empty error.emailExisted}">
+                                                            <font color="red">${error.emailExisted}</font></br>
+                                                        </c:if>
+
+                                                        <h3>Phone number: </h3><p> 
+                                                            <input style="width: 100%" type="text" name="txtPhoneNumber" value="${profile_result.phoneNumber}"/></p>
+
+                                                        <c:if test="${not empty error.phonenumberFormatErr}">
+                                                            <font color="red">${error.phonenumberFormatErr}</font></br>
+                                                        </c:if>  
+                                                        <c:if test="${not empty error.phonenumberExisted}">
+                                                            <font color="red">${error.phonenumberExisted}</font></br>
+                                                        </c:if>
+
+                                                        <h3>Gender: </h3><p> 
+                                                            <input style="width: 100%" type="text" name="txtGender" value="${profile_result.gender}"/></p>
+
+                                                        <c:if test="${not empty error.genderFormatError}">
+                                                            <font color="red">${error.genderFormatError}</font></br>
+                                                        </c:if>  
+
+                                                        <h3>Bio: </h3><p> 
+                                                            <input style="width: 100%" type="text" name="txtBiography" value="${profile_result.biography}"/></p>
+
+                                                        <c:if test="${not empty error.bioFormatError}">
+                                                            <font color="red">${error.bioFormatError}</font></br>
+                                                        </c:if>  
+
+                                                        <button type="submit" class="btn btn-danger" style="font-size: 2rem">
+                                                            Update
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${empty profile_result}">
+                                        <h1>User is not found!!</h1>
+                                    </c:if>
                                 </c:if>
+
                             </c:if>
                             <div class="section-heading heading-dark">
                                 <h2 class="item-heading">36 RECIPES</h2>

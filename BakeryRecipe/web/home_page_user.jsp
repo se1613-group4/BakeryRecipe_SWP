@@ -52,7 +52,7 @@
         <!-- Header Area Start Here -->
         <%@include file="header_user.jsp" %>
         <!-- Header Area End Here -->                
-
+  
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
@@ -63,6 +63,10 @@
             </div>
         </div>
 
+        
+       
+        
+        
         <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
         <section class="ranna-slider-area">
             <div class="container">                
@@ -102,7 +106,7 @@
             </div>
         </section>
         <!-- Slider Area End Here -->
-
+     
         <!-- Latest Recipe Start Here -->
         <section class="padding-bottom-45">
             <div class="container">

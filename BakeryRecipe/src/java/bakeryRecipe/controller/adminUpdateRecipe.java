@@ -4,13 +4,18 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Properties;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,17 +36,30 @@ public class adminUpdateRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet adminUpdateRecipe</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet adminUpdateRecipe at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        HttpSession session = request.getSession();
+
+        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String test = request.getParameter("recid");
+        int recid = test == null ? 0 : Integer.parseInt(test);
+        try {
+
+            if (recid != 0) {
+                Recipe_tblDAO dao = new Recipe_tblDAO();
+                dao.removeRecipe(recid);
+
+            } else {
+                System.out.println("no update recipe status because recipe id = 0");
+            }
+
+        } catch (SQLException ex) {
+            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
+        } finally {
+            response.sendRedirect(urlRewriting);
         }
     }
 

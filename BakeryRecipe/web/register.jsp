@@ -142,7 +142,7 @@
                                     </c:if>
 
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn-fill" type="submit" >Register</button>
+                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Register</button>
 
                                     </div>
                                 </form>

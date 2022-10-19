@@ -36,7 +36,10 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
-        
+        <c:if test="${not empty Reset_done}">
+        <script>alert("Your password is change");
+        </script></c:if>
+        <c:remove var="Reset_done" scope="session" /> 
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->

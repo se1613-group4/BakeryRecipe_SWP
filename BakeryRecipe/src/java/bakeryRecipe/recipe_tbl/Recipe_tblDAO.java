@@ -486,7 +486,51 @@ public class Recipe_tblDAO implements Serializable {
         return result;
     }
 
-  
+    public ArrayList<Recipe_tblDTO> AdmingetRecipebyUser(int usid) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Recipe_tblDTO> result = null;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "call getlistRecipefromUser_admin(?)";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, usid);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                    if(result == null){
+                        result = new ArrayList<>();
+                    }
+                       result.add(new Recipe_tblDTO(
+                               rs.getInt("recipe_id"),
+                               rs.getString("name"),
+                               rs.getInt("liked_count"),
+                               rs.getInt("saved_count"),
+                               rs.getDate("created_date"),
+                               rs.getDate("last_modified"),
+                               rs.getBoolean("is_actived")
+                       ));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
     
     /**
      * Author LamVo
@@ -567,51 +611,5 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
         return currentIdent;
-    }
-    
-      public ArrayList<Recipe_tblDTO> AdmingetRecipebyUser(int usid) throws SQLException {
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        ArrayList<Recipe_tblDTO> result = null;
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "call getlistRecipefromUser_admin(?)";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setInt(1, usid);
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                while (rs.next()) {
-                    if(result == null){
-                        result = new ArrayList<>();
-                    }
-                       result.add(new Recipe_tblDTO(
-                               rs.getInt("recipe_id"),
-                               rs.getString("name"),
-                               rs.getInt("liked_count"),
-                               rs.getInt("saved_count"),
-                               rs.getDate("created_date"),
-                               rs.getDate("last_modified"),
-                               rs.getBoolean("is_actived")
-                       ));
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return result;
     }
 }

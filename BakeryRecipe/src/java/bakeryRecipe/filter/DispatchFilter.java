@@ -59,7 +59,6 @@ public class DispatchFilter implements Filter {
             // Get site mapping
             url = siteMaps.getProperty(resource);
             if (url != null) {
-                
                 RequestDispatcher rd = req.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else {

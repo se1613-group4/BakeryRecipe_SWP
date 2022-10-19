@@ -5,13 +5,14 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.account_tbl.Account_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,9 +26,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author LamVo
  */
-@WebServlet(name = "DisplayHomePage", urlPatterns = {"/DisplayHomePage"})
-public class DisplayHomePage extends HttpServlet {
-//    private final String HOME_PAGE = "home_page.jsp";
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
+public class LoginController extends HttpServlet {
+    private final String ERROR = "tmp_error.html";
+    private final String USER_PAGE = "home_page_user.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,42 +41,42 @@ public class DisplayHomePage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
+        response.setContentType("text/html;charset=UTF-8");        
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
-        
+        // End get site map        
         // Mapping url        
-        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;    
+        String url = ERROR;
+
         try {
-            HttpSession session = request.getSession(true);
-            Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            
-            recipeDao.loadTopRecipe(3);
-            List<Recipe_tblDTO> top3Recipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("TOP3_RECIPES", top3Recipes);
-            
-            recipeDao.loadTopRecipe(5);
-            List<Recipe_tblDTO> top5Recipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("TOP5_RECIPES", top5Recipes);
-            
-            recipeDao.loadRecentlyRecipe();
-            List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
-            session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
-            
+            String username = request.getParameter("txtUsername").trim();
+            String password = request.getParameter("txtPassword");
+            //1. call model/DAO
+            //- new DAO obj, then call method on DAO object
+            Account_tblDAO dao = new Account_tblDAO();
+            Account_tblDTO result = dao.checkLogin(username, password);
+            //2. process result
+            if (result != null) {
+                url = USER_PAGE;
+                HttpSession session = request.getSession(true);
+                session.setAttribute("USER", result);
+            } //end if user click login
+            else {
+
+            }
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            log("LoginController _ SQL " + ex.getMessage());        
         } finally {
-            response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url)
+//            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

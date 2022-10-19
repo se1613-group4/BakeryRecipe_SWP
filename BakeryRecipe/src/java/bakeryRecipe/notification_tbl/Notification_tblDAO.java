@@ -58,7 +58,7 @@ public class Notification_tblDAO implements Serializable{
         }
           return ls ;
     }
-    public int setNoti(int usId,String sms) throws SQLException {
-       ArrayList<Notification_tblDTO> ls = null;
-    }
+  //  public int setNoti(int usId,String sms) throws SQLException {
+  //     ArrayList<Notification_tblDTO> ls = null;
+ //   }
 }

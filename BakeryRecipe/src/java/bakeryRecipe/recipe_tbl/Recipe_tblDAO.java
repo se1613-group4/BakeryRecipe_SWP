@@ -548,7 +548,7 @@ public class Recipe_tblDAO implements Serializable {
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
-                String sql = "INSERT INTO `bakery_recipe`.`recipe_tbl` \n"
+                String sql = "INSERT INTO recipe_tbl \n"
                         + "	(`user_id`, `category_id`, `name`, `serving`, `instruction`, `prepare_time`, `cook_time`, `step`) \n"
                         + "    VALUES (?, ?, ?, ?, ?, ?, ?,?);";
                 //3. create statement obj

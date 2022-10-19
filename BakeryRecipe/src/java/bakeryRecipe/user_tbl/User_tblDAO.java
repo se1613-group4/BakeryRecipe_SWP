@@ -5,10 +5,8 @@
  */
 package bakeryRecipe.user_tbl;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
-import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

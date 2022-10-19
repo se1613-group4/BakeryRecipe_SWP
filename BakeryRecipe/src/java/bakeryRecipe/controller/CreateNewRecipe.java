@@ -97,7 +97,7 @@ public class CreateNewRecipe extends HttpServlet {
             }
             int recipeCurrentId = recipeDao.getCurrentIdent();
             boolean resultInsertIngre = repIngreDao.insertIngredientDetail(recipeCurrentId, ingredientList);
-//            System.out.println("======RESULT INSERT INGRE=======" + resultInsertIngre);
+            System.out.println("======RESULT INSERT INGRE=======" + resultInsertIngre);
             
             // call imageDao and insert into image_tbl
             boolean resultInsertImg = true;
@@ -107,14 +107,14 @@ public class CreateNewRecipe extends HttpServlet {
                 if (imgDao.removeImg(recipeCurrentId)) {
                     resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
                 }
-//                System.out.println("======RESULT INSERT IMAGE=======" + resultInsertImg);
+                System.out.println("======RESULT INSERT IMAGE=======" + resultInsertImg);
             }          
             // call videoDao and insert into video_tbl
             boolean resultInsertVid = true;
             if (!"".equals(vidUrl)) {
                 Video_tblDAO vidDao = new Video_tblDAO();
                 resultInsertVid = vidDao.insertVideo(recipeCurrentId, vidUrl);
-//                System.out.println("======RESULT INSERT VIDEO=======" + resultInsertVid);
+                System.out.println("======RESULT INSERT VIDEO=======" + resultInsertVid);
             }   
             // All insert results are true -> redirect to MyRecipes Page
             if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid) {

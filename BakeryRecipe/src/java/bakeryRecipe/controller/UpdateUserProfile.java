@@ -55,7 +55,6 @@ public class UpdateUserProfile extends HttpServlet {
         boolean result = false;
         String userId = request.getParameter("txtUserId");
         String recipeId = request.getParameter("");
-        String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
         String fullName = request.getParameter("txtFullName");
         String email = request.getParameter("txtEmail");
@@ -73,13 +72,8 @@ public class UpdateUserProfile extends HttpServlet {
 
         try {
             Account_tblDAO accDAO = new Account_tblDAO();
-            if (usernamePattern.matcher(username).matches() == false) {
-                foundErr = true;
-                errors.setUsernameFormatErr("Username wrong format.\n "
-                        + "Username must be 8-15 characters.\n "
-                        + "Must start with a letter.\n "
-                        + "May not contain special characters");
-            }
+            
+            System.out.println("________________ "+biography);
 
             if (passwordPattern.matcher(password).matches() == false) {
                 foundErr = true;
@@ -137,7 +131,7 @@ public class UpdateUserProfile extends HttpServlet {
                 //call DAO
                 Profile_tblDAO dao = new Profile_tblDAO();
 //                System.out.println("user update id" + user.getUserId());
-                result = dao.updateUserProfile(user.getUserId(), username, password, fullName, email, phoneNumber, gender, url, biography, true, result);
+                result = dao.updateUserProfile(user.getUserId(), password, fullName, email, phoneNumber, gender, url, biography, true, result);
                 //process result 
                 if (result) {
                     url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
@@ -147,10 +141,6 @@ public class UpdateUserProfile extends HttpServlet {
         } catch (SQLException ex) {
             String msg = ex.getMessage();
             log("Error at DisplayUserProfile: " + ex.toString());
-            if (msg.contains("duplicate")) { // trung username (key) cung la SQLException
-                errors.setUsernameExisted(username + " is existed");
-                request.setAttribute("UPDATE_ERR", errors);
-            }
         } catch (NamingException ex) {
             log("Error at DisplayUserProfile: " + ex.toString());
         } finally {

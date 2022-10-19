@@ -37,7 +37,7 @@ public class Image_tblDAO implements Serializable{
                 //1. get connection
                 con.setAutoCommit(false);
                 //2. write sql string
-                String sql = "INSERT INTO `bakery_recipe`.`image_tbl` (`recipe_id`, `img_link`) \n"
+                String sql = "INSERT INTO image_tbl (`recipe_id`, `img_link`) \n"
                         + "VALUES (?, ?);";
                 //3. create stm obj and pass value to sql
                 stm = con.prepareStatement(sql);
@@ -94,7 +94,7 @@ public class Image_tblDAO implements Serializable{
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
-                String sql = "DELETE FROM `bakery_recipe`.`image_tbl`\n"
+                String sql = "DELETE FROM image_tbl\n"
                         + "WHERE (`recipe_id` = ?);";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);

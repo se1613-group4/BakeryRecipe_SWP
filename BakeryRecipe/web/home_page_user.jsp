@@ -51,6 +51,8 @@
         <!-- Header Area End Here -->                
 
         <!-- Search input -->
+         <!--tra ve is me mario-->
+        <h1>${NOTIFIII.toString()}</h1>  
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
                 <form class="search-form" action="SearchAllRecipeController">
@@ -59,7 +61,7 @@
                 </form>
             </div>
         </div>
-
+        
         <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
         <section class="ranna-slider-area">
             <div class="container">                

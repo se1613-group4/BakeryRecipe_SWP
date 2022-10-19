@@ -4,58 +4,44 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jexk
  */
- @WebServlet(name = "adminUsdetail", urlPatterns = {"/adminUsdetail"})
- public class adminUsdetail extends HttpServlet {
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "adminSendNoti", urlPatterns = {"/adminSendNoti"})
+public class adminSendNoti extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        HttpSession session = request.getSession();
-
-        String urlRewriting = AppContants.Admin.ADMIN_USDETAIL;
-        String test = request.getParameter("usid");
-        int  usid = test==null? 1 :  Integer.parseInt(test);
-        try {
-            Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayUserProfile(usid);
-            
-            if (dto != null) {
-                    session.setAttribute( "usinf", dto);
-                    urlRewriting ="adminHome";
-            }
-            
-            
-        } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-          Logger.getLogger(adminUsdetail.class.getName()).log(Level.SEVERE, null, ex);
-      } finally {
-            response.sendRedirect(urlRewriting);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet adminSendNoti</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet adminSendNoti at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

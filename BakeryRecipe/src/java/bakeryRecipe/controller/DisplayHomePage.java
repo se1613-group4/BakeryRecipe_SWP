@@ -5,11 +5,16 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
@@ -53,7 +58,7 @@ public class DisplayHomePage extends HttpServlet {
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            
+           
             recipeDao.loadTopRecipe(3);
             List<Recipe_tblDTO> top3Recipes = recipeDao.getRecipeDtoList();
             session.setAttribute("TOP3_RECIPES", top3Recipes);
@@ -66,9 +71,37 @@ public class DisplayHomePage extends HttpServlet {
             List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
             
+            
+            
+             
+           //  Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
+
+             Account_tblDTO account = new Account_tblDTO(1,"***","****"); // test vi ben login chua lam xong
+             if(account != null)
+             {
+              Notification_tblDAO notidao = new Notification_tblDAO();
+              ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
+              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(0);
+              if(lsNoti == null ){
+                  lsNoti = new ArrayList<>();
+                  lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
+              }else{
+                  lsNoti = dao==null ? lsNoti : dao;
+              }
+              
+                   session.setAttribute("NOTIFIII",lsNoti);
+            
+             }
+            // --- NOTIFII FROM SĂM OĂN ---- 
+            
+            
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
+            
+            
+            
+            
             response.sendRedirect(url);
 //            RequestDispatcher rd = request.getRequestDispatcher(url)
         }

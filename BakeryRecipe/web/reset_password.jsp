@@ -40,112 +40,123 @@
 
     </head>
     <body>
-    <body>
-        <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+        <c:url var="login_url" value="loginPage"></c:url>
+        <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
+            <h5> Please to login</h5>
+            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+            <script>
+                function dieu_huong_login() {
+                    location.assign("${login_url}");
+                }
+            </script>
+        </c:if>
+        <c:if test="${sessionScope.LOGIN_USER!=null  || sessionScope.LOGIN_USER.isActived==false }">
 
-        <!-- Add your site or application content here -->
-        <!-- Preloader Start Here -->
-        <div id="preloader"></div>
-        <!-- Preloader End Here -->
-        <!-- ScrollUp Start Here -->
-        <a href="#wrapper" data-type="section-switch" class="scrollup">
-            <i class="fas fa-angle-double-up"></i>
-        </a>
-        <!-- ScrollUp End Here -->
-        <div id="wrapper" class="wrapper">
+            <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+            <![endif]-->
 
-            <!-- Inne Page Banner Area Start Here -->
-            <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="breadcrumbs-area">
-                                <h1>User Reset Password Page</h1>
-                                <ul>
-                                    <li>
-                                        <a href=userHomePage name="btAction" value="Home">Home</a>
-                                    </li>
-                                    <li>reset</li>
-                                </ul>
+            <!-- Add your site or application content here -->
+            <!-- Preloader Start Here -->
+            <div id="preloader"></div>
+            <!-- Preloader End Here -->
+            <!-- ScrollUp Start Here -->
+            <a href="#wrapper" data-type="section-switch" class="scrollup">
+                <i class="fas fa-angle-double-up"></i>
+            </a>
+            <!-- ScrollUp End Here -->
+            <div id="wrapper" class="wrapper">
+
+                <!-- Inne Page Banner Area Start Here -->
+                <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumbs-area">
+                                    <h1>User Reset Password Page</h1>
+                                    <ul>
+                                        <li>
+                                            <a href=userHomePage name="btAction" value="Home">Home</a>
+                                        </li>
+                                        <li>reset</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <!-- Inne Page Banner Area End Here -->
+                </section>
+                <!-- Inne Page Banner Area End Here -->
 
-            <!-- Login Area Start Here -->
-            <section class="login-page-wrap padding-top-80 padding-bottom-50">
-                <div class="container">
-                    <div class="row gutters-60">
-                        <div class="col-lg-8">
-                            <div class="login-box-layout1">
-                                <div class="section-heading heading-dark">
-                                    <h2 class="item-heading">RESET PASSWORD FORM</h2>
-                                </div>
-                                <!--REGISTER FORM-->
-                                <c:set var="error" value="${requestScope.RESETPASSWOD_ERR}"></c:set>
-                                    <form class="login-form" action="resetPasswordController"  method="post">
-                                        <input class="main-input-box" name="txtOldPassword" type="password" placeholder="Old Password" required
+                <!-- Login Area Start Here -->
+                <section class="login-page-wrap padding-top-80 padding-bottom-50">
+                    <div class="container">
+                        <div class="row gutters-60">
+                            <div class="col-lg-8">
+                                <div class="login-box-layout1">
+                                    <div class="section-heading heading-dark">
+                                        <h2 class="item-heading">RESET PASSWORD FORM</h2>
+                                    </div>
+                                    <!--REGISTER FORM-->
+                                    <c:set var="error" value="${requestScope.RESETPASSWOD_ERR}"></c:set>
+                                        <form class="login-form" action="resetPasswordController"  method="post">
+                                            <input class="main-input-box" name="txtOldPassword" type="password" placeholder="Old Password" required
+                                                   oninvalid="this.setCustomValidity('Enter password Here')"
+                                                   oninput="this.setCustomValidity('')"/>
+                                        <c:if test="${not empty error.oldPasswordWrongErr}">
+                                            <font color="red">${error.oldPasswordWrongErr}</font></br>
+                                        </c:if> 
+
+                                        <input class="main-input-box" name="txtNewPassword" type="password" placeholder="New Password" required
                                                oninvalid="this.setCustomValidity('Enter password Here')"
                                                oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.oldPasswordWrongErr}">
-                                        <font color="red">${error.oldPasswordWrongErr}</font></br>
-                                    </c:if> 
+                                        <c:if test="${not empty error.newPasswordFormatErr}">
+                                            <font color="red">${error.newPasswordFormatErr}</font></br>
+                                        </c:if> 
+                                        <c:if test="${not empty error.newPasswordSameAsErr}">
+                                            <font color="red">${error.newPasswordSameAsErr}</font></br>
+                                        </c:if> 
 
-                                    <input class="main-input-box" name="txtNewPassword" type="password" placeholder="New Password" required
-                                           oninvalid="this.setCustomValidity('Enter password Here')"
-                                           oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.newPasswordFormatErr}">
-                                        <font color="red">${error.newPasswordFormatErr}</font></br>
-                                    </c:if> 
-                                    <c:if test="${not empty error.newPasswordSameAsErr}">
-                                        <font color="red">${error.newPasswordSameAsErr}</font></br>
-                                    </c:if> 
-
-                                    <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
-                                           oninvalid="this.setCustomValidity('Enter Confirm password Here')"
-                                           oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.confirmNotMathched}">
-                                        <font color="red">${error.confirmNotMathched}</font></br>
-                                    </c:if>   
+                                        <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
+                                               oninvalid="this.setCustomValidity('Enter Confirm password Here')"
+                                               oninput="this.setCustomValidity('')"/>
+                                        <c:if test="${not empty error.confirmNotMathched}">
+                                            <font color="red">${error.confirmNotMathched}</font></br>
+                                        </c:if>   
 
 
 
 
 
 
-                                    <div class="inline-box mb-5 mt-4">
-                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Reset Password</button>
+                                        <div class="inline-box mb-5 mt-4">
+                                            <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Reset Password</button>
 
-                                    </div>
-                                </form>
+                                        </div>
+                                    </form>
 
+                                </div>
                             </div>
+
+
                         </div>
-
-
                     </div>
-                </div>
-            </section>
-            <!-- Login Area End Here -->
+                </section>
+                <!-- Login Area End Here -->
 
-        </div>
+            </div>
 
-        <!-- Jquery Js -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/popper.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Plugins Js -->
-        <script src="js/plugins.js"></script>
-        <!-- Smoothscroll Js -->
-        <script src="js/smoothscroll.min.js"></script>
-        <!-- Custom Js -->
-        <script src="js/main.js"></script>
+            <!-- Jquery Js -->
+            <script src="js/jquery-3.3.1.min.js"></script>
+            <!-- Bootstrap Js -->
+            <script src="js/popper.min.js"></script>
+            <!-- Bootstrap Js -->
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Plugins Js -->
+            <script src="js/plugins.js"></script>
+            <!-- Smoothscroll Js -->
+            <script src="js/smoothscroll.min.js"></script>
+            <!-- Custom Js -->
+            <script src="js/main.js"></script>
+        </c:if>
     </body>
-</body>
 </html>

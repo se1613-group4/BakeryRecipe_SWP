@@ -7,10 +7,14 @@ package bakeryRecipe.controller;
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.ForgotPasswordError;
 import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.utils.SHA256;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -38,7 +42,7 @@ public class ForgotPasswordServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
@@ -51,7 +55,12 @@ public class ForgotPasswordServlet extends HttpServlet {
         String phoneNumber = request.getParameter("txtPhonenumber");
         String confirm = request.getParameter("txtConfirm");
         String newPassword = request.getParameter("txtNewPassword");
-        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]{6,30}");
+        byte[] getShaNew= SHA256.getSHA(newPassword);
+                String newPassSHA= SHA256.toHexString(getShaNew);
+        Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        /*
+        Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+         */
         try {
             /* TODO output your page here. You may use following sample code. */
             boolean checkEmailExit = accDAO.checkEmail(email);
@@ -69,17 +78,15 @@ public class ForgotPasswordServlet extends HttpServlet {
                 foundErr = true;
                 errors.setEmailAndPhonenumberNotMathErr("Phone number and email must be from the same account! Please try again!");
             }
-            boolean checkNewPassword= accDAO.checkPasswordEP(email, phoneNumber, newPassword);
+            boolean checkNewPassword= accDAO.checkPasswordEP(email, phoneNumber, newPassSHA);
             if (checkNewPassword==true) {
                 foundErr = true;
                 errors.setNewPasswordSameAsErr("The new password must not be the same as the old password");
             }
             if (passwordPattern.matcher(newPassword).matches() == false) {
                 foundErr = true;
-                errors.setNewPasswordFormatErr("password wrong format.\n  "
-                        + "Password contain at least one lower-case letter.\n"
-                        + "Must contain at least one number "
-                        + "and may not contain special characters");
+                errors.setNewPasswordFormatErr("New password wrong format.\n  "
+                        + "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
             } 
             if (!confirm.trim().equals(newPassword)) {
                 foundErr = true;
@@ -87,13 +94,12 @@ public class ForgotPasswordServlet extends HttpServlet {
             }if (foundErr) {
                 request.setAttribute("FORGOTPASSWOD_ERR", errors);
             }else{
-                boolean result= accDAO.uploadPasswordEP(email, phoneNumber, newPassword);
+                boolean result= accDAO.uploadPasswordEP(email, phoneNumber, newPassSHA);
                 if (result = true) {
                     urlRewriting = siteMaps.getProperty(AppContants.ForgotPaswordFeartures.LOGIN_PAGE);
                     session = request.getSession(true);
                     //session.setAttribute(olePassword, olePassword);
-                    String message = "Your password has been successfully upload";
-                    request.getSession().setAttribute("message", message);
+                    request.setAttribute("Forgot_done","done");
                 } 
             }
             
@@ -118,7 +124,11 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ForgotPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -132,7 +142,11 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ForgotPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

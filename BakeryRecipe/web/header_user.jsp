@@ -81,10 +81,10 @@
                                             </li>  
                                             <li>
                                                 <c:url var="Reset_url" value="resetPasswordPage"></c:url>
-                                                <a href="${Reset_url}">reset password</a>
+                                                <a href="${Reset_url}">Reset Password</a>
                                             </li>
                                             <li>
-                                                <a href="removeAccountController" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                                <a href="removeAccountController" onclick="return confirm('Are you sure? Do you want to delete this item?');">Delete</a>
                                             </li>
 
                                         </ul>
@@ -135,6 +135,13 @@
                 </div>
             </div>
         </header>
+                                                <!--notification-->
+                                                <c:forEach var="noti" items="${NOTIFIII}">
+                                                    <p>${noti.getDetail()}</p>
+                                                </c:forEach>      
+                                                     <!--notification-->
+                                            
+                                               
         <!-- Header end here -->
 
         <!-- Jquery Js -->

@@ -44,9 +44,20 @@
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-        <c:if test="${not empty submitDone}">
-        <script>alert("your account is delete");
+        <c:if test="${not empty Remove_done}">
+        <script>alert("Your account is delete");
         </script></c:if>
+        <c:remove var="Remove_done" scope="session" /> 
+        
+        <c:if test="${not empty Register_done}">
+        <script>alert("Your account is Register. Please login!");
+        </script></c:if>
+        <c:remove var="Register_done" scope="session" /> 
+        
+        <c:if test="${not empty Forgot_done}">
+        <script>alert("Your password is change. Please Login!");
+        </script></c:if>
+        <c:remove var="Forgot_done" scope="session" /> 
         <!-- Add your site or application content here -->
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
@@ -96,7 +107,7 @@
                                 
                                 <form class="login-form" action="loginController"  method="post">
 
-                                    <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" required
+                                    <input class="main-input-box" value="${param.txtUsername}" name="txtUsername" type="text" placeholder="User Name" required
                                            oninvalid="this.setCustomValidity('Enter User Name Here')"
                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.userameEmptyErr}">
@@ -115,16 +126,16 @@
                                         <font color="red">${error.accountNotFound}</font></br>
                                     </c:if>
                                     <div class="inline-box mb-5 mt-4">
-                                        <div class="checkbox checkbox-primary">
+<!--                                        <div class="checkbox checkbox-primary">
                                             <input id="modal-checkbox" type="checkbox">
                                             <label for="modal-checkbox">Remember Me</label>
-                                        </div>
+                                        </div>-->
                                         <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
                                         <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label>
                                     </div>
                                     <div class="inline-box mb-5 mt-4">
                                         <!--                                        <button class="btn-fill"  value="loginC" name="btAction">Login</button>-->
-                                        <button class="btn-fill" type="submit" >Login</button>
+                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Login</button>
                                         <c:url var="register_url" value="registerPage"></c:url>
                                         <a href="${register_url}">Register</a>
                                     </div>

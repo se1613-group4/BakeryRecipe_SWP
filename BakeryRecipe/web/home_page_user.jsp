@@ -36,7 +36,10 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
-        
+        <c:if test="${not empty Reset_done}">
+        <script>alert("Your password is change");
+        </script></c:if>
+        <c:remove var="Reset_done" scope="session" /> 
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->
@@ -49,7 +52,7 @@
         <!-- Header Area Start Here -->
         <%@include file="header_user.jsp" %>
         <!-- Header Area End Here -->                
-
+  
         <!-- Search input -->
         <div class="col-lg-4">
             <div class="nav-action-elements-layout3">
@@ -60,6 +63,10 @@
             </div>
         </div>
 
+        
+       
+        
+        
         <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
         <section class="ranna-slider-area">
             <div class="container">                
@@ -99,7 +106,7 @@
             </div>
         </section>
         <!-- Slider Area End Here -->
-
+     
         <!-- Latest Recipe Start Here -->
         <section class="padding-bottom-45">
             <div class="container">

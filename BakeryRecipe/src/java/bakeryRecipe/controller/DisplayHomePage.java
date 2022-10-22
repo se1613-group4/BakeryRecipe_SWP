@@ -79,7 +79,7 @@ public class DisplayHomePage extends HttpServlet {
               Notification_tblDAO notidao = new Notification_tblDAO();
               ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
               ArrayList<Notification_tblDTO> dao = notidao.getListNoti(account.getUserId());
-              if(lsNoti.isEmpty() ){
+              if(lsNoti == null){
                   lsNoti = new ArrayList<>();
                   lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
               }else{

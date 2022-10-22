@@ -154,13 +154,17 @@
                 </div>
             </div>
         </header>
+
         <!--notification-->
         <c:forEach var="noti" items="${NOTIFIII}">
             <p>${noti.getDetail()}</p>
         </c:forEach>      
         <!--notification-->
-
-
+        <!--notification-->
+        <c:forEach var="noti" items="${NOTIFIII}">
+            <p>${noti.getDetail()}</p>
+        </c:forEach>      
+        <!--notification-->
         <!-- Header end here -->
 
         <!-- Jquery Js -->

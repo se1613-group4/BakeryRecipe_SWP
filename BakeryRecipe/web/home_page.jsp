@@ -35,7 +35,11 @@
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
-    <body>    
+    <body>   
+        <c:if test="${not empty Must_login}">
+        <script>alert("Your must too login");
+        </script></c:if>
+        <c:remove var="Must_login" scope="session" /> 
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->

@@ -36,7 +36,10 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
-
+        <!--Notification--> 
+        <link rel="stylesheet" href="css/notification.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="js/notification.js"></script>
     </head>
     <body>
         <c:url var="login_url" value="loginPage"></c:url>
@@ -77,42 +80,71 @@
                                 </nav>
                             </div>
 
-                            <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
-                                <div class="nav-action-elements-layout1">
-                                    <ul class="site-menu">                                     
-                                        <!--profile user-->
-                                        <li>
-                                            <a href="#">
-                                                <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
-                                            <ul class="dropdown-menu-col-1" id="dropdown-user">
-                                                <li>
-                                                    <a href="displayUserProfileController">
-                                                        Profile</a>
-                                                </li>
-                                                <li>
-                                                    <a href="displayOwnRecipes">My recipes</a>
-                                                </li>  
-                                                <li>
-                                                    <c:url var="Reset_url" value="resetPasswordPage"></c:url>
-                                                    <a href="${Reset_url}" onclick="getConfirmation">Reset Password</a>
-                                                </li>
-                                                <li>
-                                                    <a href="removeAccountController" onclick="return confirm('Are you sure? Do you want to delete this item?');">Delete</a>
-                                                </li>
+                            <nav class="site-nav">
+                                <ul id="site-menu" class="site-menu">
+                                    <li><a href="displayHomePage">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Category</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">All Recipes</a>
+                                    </li>
 
-                                            </ul>
-                                        </li>
+                                </ul>
+                            </nav>
+                        </div>
 
-                                        <!--                                    <li>
-                                                                                <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
-                                                                                    PROFILE</a>
-                                                                            </li>-->
+                        <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                            <div class="nav-action-elements-layout1">
+                                <ul class="site-menu">                                     
+                                    <!--profile user-->
+                                    <li>
+                                        <a href="#">
+                                            <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
+                                        <ul class="dropdown-menu-col-1" id="dropdown-user">
+                                            <li>
+                                                <a href="displayUserProfileController">
+                                                    Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="displayOwnRecipes">My recipes</a>
+                                            </li>  
+                                            <li>
+                                                <c:url var="Reset_url" value="resetPasswordPage"></c:url>
+                                                <a href="${Reset_url}">Reset Password</a>
+                                            </li>
+                                            <li>
+                                                <a href="removeAccountController" onclick="return confirm('Are you sure? Do you want to delete this item?');">Delete</a>
+                                            </li>
 
-                                        <li>
-                                            <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
-                                                CREATE RECIPE</a>
-                                        </li>
+                                        </ul>
+                                    </li>
 
+                                    <!--Notification-->
+                                    <li  id="noti_Container">
+                                        <div id="noti_Counter" ></div>   <!--SHOW NOTIFICATIONS COUNT.-->
+
+                                        <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
+                                        <div id="noti_Button"><i style="color: #FFF" class="fa fa-bell" ></i></div>    
+
+                                        <!--THE NOTIFICAIONS DROPDOWN BOX.-->
+                                        <div id="notifications">
+                                            <h3>Notifications</h3>
+                                            <div style="height:300px;"></div>
+                                            <div class="seeAll"><a href="#">See All</a></div>
+                                        </div>
+                                    </li>
+
+                                    <!--                                    <li>
+                                                                            <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                                                                PROFILE</a>
+                                                                        </li>-->
+
+                                    <li>
+                                        <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                            CREATE RECIPE</a>
+                                    </li>
                                         <!-- Logout Button-->
                                         <li>
                                             <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
@@ -154,19 +186,24 @@
                                     <a href="index.html" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </header>
-            <!--notification-->
-            <c:forEach var="noti" items="${NOTIFIII}">
-                <p>${noti.getDetail()}</p>
-            </c:forEach>      
-            <!--notification-->
+                
+            </div>
+        </header>
 
-
-            <!-- Header end here -->
+        <!--notification-->
+        <c:forEach var="noti" items="${NOTIFIII}">
+            <p>${noti.getDetail()}</p>
+        </c:forEach>      
+        <!--notification-->
+        <!--notification-->
+        <c:forEach var="noti" items="${NOTIFIII}">
+            <p>${noti.getDetail()}</p>
+        </c:forEach>      
+        <!--notification-->
+        <!-- Header end here -->
 
             <!-- Jquery Js -->
             <script src="js/jquery-3.3.1.min.js"></script>

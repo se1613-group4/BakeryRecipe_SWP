@@ -53,16 +53,17 @@ public class UpdateUserProfile extends HttpServlet {
         UpdateError errors = new UpdateError();
         boolean foundErr = false;
         boolean result = false;
-        String userId = request.getParameter("txtUserId");
-        String recipeId = request.getParameter("");
-        String password = request.getParameter("txtPassword");
+//        String userId = request.getParameter("txtUserId");
+//        String recipeId = request.getParameter("");
+//        String password = request.getParameter("txtPassword");
         String fullName = request.getParameter("txtFullName");
         String email = request.getParameter("txtEmail");
         String phoneNumber = request.getParameter("txtPhoneNumber");
         String gender = request.getParameter("txtGender");
         String biography = request.getParameter("txtBiography");
-        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
-        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
+
+//        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{8,15}");
+//        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
         Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
                 "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
@@ -72,23 +73,23 @@ public class UpdateUserProfile extends HttpServlet {
 
         try {
             Account_tblDAO accDAO = new Account_tblDAO();
-            
-            System.out.println("________________ "+biography);
+            HttpSession session = request.getSession();
+            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
 
-            if (passwordPattern.matcher(password).matches() == false) {
-                foundErr = true;
-                errors.setPasswordFormatErr("password wrong format.\n  "
-                        + "Password contain at least one lower-case letter.\n"
-                        + "Must contain at least one number "
-                        + "and may not contain special characters");
-            }
+//            if (passwordPattern.matcher(password).matches() == false) {
+//                foundErr = true;
+//                errors.setPasswordFormatErr("password wrong format.\n  "
+//                        + "Password contain at least one lower-case letter.\n"
+//                        + "Must contain at least one number "
+//                        + "and may not contain special characters");
+//            }
 
             if (fullnamePattern.matcher(fullName).matches() == false) {
                 foundErr = true;
                 errors.setFullnameFormatErr("Fullname wrong format");
             }
 
-            boolean checkEmailExit = accDAO.checkEmail(email);
+            boolean checkEmailExit = accDAO.checkUpdateEmail(email, user.getUserId());
             if (emailPattern.matcher(email).matches() == false) {
                 foundErr = true;
                 errors.setEmailFormatErr("Email Start with a letter.\n"
@@ -100,7 +101,7 @@ public class UpdateUserProfile extends HttpServlet {
                 errors.setEmailExisted("Email existed try again!");
             }
 
-            boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
+            boolean checkPhonenumberExit = accDAO.checkUpdatePhonenumber(phoneNumber, user.getUserId());
             if (phonenumberPattern.matcher(phoneNumber).matches() == false) {
                 foundErr = true;
                 errors.setPhonenumberFormatErr("Phonenumer must is Vietnam's phone number!");
@@ -124,18 +125,12 @@ public class UpdateUserProfile extends HttpServlet {
             if (foundErr) {
                 request.setAttribute("UPDATE_ERR", errors);
             } else {
-                HttpSession session = request.getSession();
-                Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-//                System.out.println("UserID to update: ***********" + user.getUserId());
-
                 //call DAO
                 Profile_tblDAO dao = new Profile_tblDAO();
-//                System.out.println("user update id" + user.getUserId());
-                result = dao.updateUserProfile(user.getUserId(), password, fullName, email, phoneNumber, gender, url, biography, true, result);
+                result = dao.updateUserProfile(user.getUserId(), fullName, email, phoneNumber, gender, url, biography, true, result);
                 //process result 
                 if (result) {
                     url = siteMaps.getProperty(AppContants.UpdateUserProfile.DISPLAY_USER_PROFILE_CONTROLLER);
-
                 }
             }
         } catch (SQLException ex) {
@@ -146,6 +141,7 @@ public class UpdateUserProfile extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+//            response.sendRedirect(url);
         }
     }
 

@@ -157,7 +157,7 @@ public class Profile_tblDAO implements Serializable {
         return result;
     }
     
-    public boolean updateUserProfile(int userId, String password,  String fullName,  String email,  String  phoneNumber,  
+    public boolean updateUserProfile(int userId, String fullName,  String email,  String  phoneNumber,  
                                                                                     String  gender,  String  avatarUrl,  String biography,  boolean  isActived, boolean isAdmin)
             throws SQLException, NamingException {
         boolean result = false;
@@ -171,22 +171,20 @@ public class Profile_tblDAO implements Serializable {
             if (connection != null) {
                 //Write sql String
                 String sql = "update profile_tbl join account_tbl on account_tbl.user_id = profile_tbl.user_id\n"
-                        + "set password = ?, full_name = ?,  email = ?, phone_number = ?, gender = ?, avatar_url = ?, bio = ?, is_actived = ?, is_admin = ?\n"
+                        + "set full_name = ?,  email = ?, phone_number = ?, gender = ?, avatar_url = ?, bio = ?, is_actived = ?, is_admin = ?\n"
                         + "where profile_tbl.user_id = ?";
 
                 //Create Statement
                 stm = connection.prepareStatement(sql);
-                stm.setString(1, password);
-                stm.setString(2, fullName);
-                stm.setString(3, email);
-                stm.setString(4, phoneNumber);
-                stm.setString(5, gender);
-                stm.setString(6, avatarUrl);
-                stm.setString(7, biography);
-                System.out.println("++++++++++++" + biography);
-                stm.setBoolean(8 , isActived);                
-                stm.setBoolean(9  , isAdmin);
-                stm.setInt(10, userId);
+               stm.setString(1, fullName);
+                stm.setString(2, email);
+                stm.setString(3, phoneNumber);
+                stm.setString(4, gender);
+                stm.setString(5, avatarUrl);
+                stm.setString(6, biography);
+                stm.setBoolean(7, isActived);                
+                stm.setBoolean(8, isAdmin);
+                stm.setInt(9, userId);
                 //Execute stm
                 int effectedRows = stm.executeUpdate();
                 //Process result

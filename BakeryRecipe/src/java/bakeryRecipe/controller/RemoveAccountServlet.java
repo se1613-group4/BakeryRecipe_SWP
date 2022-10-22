@@ -50,6 +50,11 @@ public class RemoveAccountServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             boolean result=accDAO.deleteAccount(user.getUserId());
             if (result) {
+                session = request.getSession(false);
+                if (session != null) {
+                    session.removeAttribute("USER");
+                    session.invalidate();
+                }
                 urlRewriting = siteMaps.getProperty(AppContants.RemoveAccountFeartures.LOGIN_PAGE);
                 request.setAttribute("Remove_done","done");
             }

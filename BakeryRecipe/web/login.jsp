@@ -44,6 +44,12 @@
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
+        
+        <c:if test="${not empty Must_login}">
+        <script>alert("Your must too login");
+        </script></c:if>
+        <c:remove var="Must_login" scope="session" /> 
+        
         <c:if test="${not empty Remove_done}">
         <script>alert("Your account is delete");
         </script></c:if>

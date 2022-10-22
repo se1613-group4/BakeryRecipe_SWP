@@ -68,11 +68,15 @@ public class LoginServlet extends HttpServlet {
                 Account_tblDTO user = dao.login(username, passSHA);
                 //2. process result
                 if (user != null) {
-                    url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
+                    //url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", user);
                     session.setAttribute("LOGIN_USER", user);
-                    session.setAttribute("LOGIN_PAGE1", user);
+                    if (user.isIsAdmin() == true) {
+                        url = siteMaps.getProperty(AppContants.LoginFeatures.LOGIN_PAGE);
+                    } else {
+                        url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
+                    }
                     
                 } //end if user click login
                 else {

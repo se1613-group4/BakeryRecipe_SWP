@@ -71,17 +71,15 @@ public class DisplayHomePage extends HttpServlet {
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
             
             
-            
+            //--- Listen to new NOTIFICATION //
              
-           //  Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
-
-             Account_tblDTO account = new Account_tblDTO(1,"***","****"); // test vi ben login chua lam xong
+             Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
              if(account != null)
              {
               Notification_tblDAO notidao = new Notification_tblDAO();
               ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
-              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(0);
-              if(lsNoti == null ){
+              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(account.getUserId());
+              if(lsNoti.isEmpty() ){
                   lsNoti = new ArrayList<>();
                   lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
               }else{
@@ -91,8 +89,7 @@ public class DisplayHomePage extends HttpServlet {
                    session.setAttribute("NOTIFIII",lsNoti);
             
              }
-            // --- NOTIFII FROM SĂM OĂN ---- 
-            
+              //--- Listen to new NOTIFICATION //
             
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());

@@ -5,11 +5,15 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
@@ -37,7 +41,7 @@ public class DisplayHomePage extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
@@ -53,7 +57,7 @@ public class DisplayHomePage extends HttpServlet {
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            
+           
             recipeDao.loadTopRecipe(3);
             List<Recipe_tblDTO> top3Recipes = recipeDao.getRecipeDtoList();
             session.setAttribute("TOP3_RECIPES", top3Recipes);
@@ -66,9 +70,34 @@ public class DisplayHomePage extends HttpServlet {
             List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
             
+            
+            //--- Listen to new NOTIFICATION //
+             
+             Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
+             if(account != null)
+             {
+              Notification_tblDAO notidao = new Notification_tblDAO();
+              ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
+              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(account.getUserId());
+              if(lsNoti.isEmpty() ){
+                  lsNoti = new ArrayList<>();
+                  lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
+              }else{
+                  lsNoti = dao==null ? lsNoti : dao;
+              }
+              
+                   session.setAttribute("NOTIFIII",lsNoti);
+            
+             }
+              //--- Listen to new NOTIFICATION //
+            
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
+            
+            
+            
+            
             response.sendRedirect(url);
 //            RequestDispatcher rd = request.getRequestDispatcher(url)
         }

@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import bakeryRecipe.utils.AppContants;
 import java.util.regex.Pattern;
+import bakeryRecipe.utils.SHA256;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -42,7 +44,7 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
 
         ServletContext context = getServletContext();
@@ -55,53 +57,15 @@ public class LoginServlet extends HttpServlet {
             //feth data from login form            
             String username = request.getParameter("txtUsername").trim();
             String password = request.getParameter("txtPassword");
-
-//            pattern = Pattern.compile(USERNAME_PATTERN); 
-            Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{6,20}");
-            /*
-            Must be 8-15 characters and must start with a letter
-            May not contain special characters – only letters and numbers
-            */
-            Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]{6,30}");
-            /*
-            Must be 8-15 characters and must start with a letter
-            Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)
-            Must contain at least one number (0123456789)
-            Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.
-            */
-//            if (username.isEmpty()) {
-//                foundErr = true;
-//                errors.setUserameEmptyErr("Username must be not empty!");
-//            }
-//            if (usernamePattern.matcher(username).matches() == false) {
-//                foundErr = true;
-//                errors.setUserameFormatErr("Username wrong format, username "
-//                        + "must be 8-15 characters and must start with a letter "
-//                        + "and may not contain special characters");
-//            }
-
-//            if (password.isEmpty()) {
-//                foundErr = true;
-//                errors.setPasswordEmptyErr("Password must be not empty!");
-//            }
-//            if (passwordPattern.matcher(password).matches() == false) {
-//                foundErr = true;
-//                errors.setPasswordFormatErr("password wrong format, password "
-//                        + "contain at least one lower-case letter, Must contain at least one number "
-//                        + "and may not contain special characters");
-//            }
-
-//            if (pattern.matcher(username).matches()) {
-//                foundErr = true;
-//                errors.setUserameFormatErr("Username must có từ 3 - 15 kí tự!");
-//            }
+            byte[] getSha= SHA256.getSHA(password);
+            String passSHA= SHA256.toHexString(getSha);
             if (foundErr) {
                 request.setAttribute("LOGIN_ERR", errors);
             } else {
                 //1. call model/DAO
                 //- new DAO obj, then call method on DAO object
                 Account_tblDAO dao = new Account_tblDAO();
-                Account_tblDTO user = dao.login(username, password);
+                Account_tblDTO user = dao.login(username, passSHA);
                 //2. process result
                 if (user != null) {
                     url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
@@ -142,6 +106,8 @@ public class LoginServlet extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -159,6 +125,8 @@ public class LoginServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

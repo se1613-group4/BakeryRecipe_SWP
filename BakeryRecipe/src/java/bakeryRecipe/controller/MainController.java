@@ -4,30 +4,30 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author dangh
+ * @author LamVo
  */
-@WebServlet(name = "DisplayUserProfile", urlPatterns = {"/DisplayUserProfile"})
-public class DisplayUserProfile extends HttpServlet {
+@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
+public class MainController extends HttpServlet {
+
+//    private final String HOME_PAGE = "index.jsp";
+    private final String SEARCH_PAGE = "search.jsp";
+    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
+    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
+    private final String REGISTER_CONTROLLER = "RegisterServlet";
+    private final String LOGIN_CONTROLLER = "LoginController";
+    private final String CREATE_RECIPE_CONTROLLER = "CreateNewRecipe";
+    private final String DISPLAY_USER_PROFILE_CONTROLLER = "DisplayUserProfile";
+    private final String UPDATE_USER_PROFIE_CONTROLLER = "UpdateUserProfile";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,41 +41,31 @@ public class DisplayUserProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //start get sitemap
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        //end get sitemap
-
-        String editButton = request.getParameter("editBtn");
-        String url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.USER_HOME_PAGE);
-
+        /* TODO output your page here. You may use following sample code. */
+        //String url = HOME_PAGE;
+        String url = HOME_PAGE_CONTROLLER;
+        String action = request.getParameter("btAction");
         try {
-            HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            //call dao
-            Profile_tblDAO daoProfile = new Profile_tblDAO();
-            Follow_tblDAO daoFollow = new Follow_tblDAO();
-            //process result
-            Profile_tblDTO profile = daoProfile.displayUserProfile(user.getUserId());
-            int follower_amount = daoFollow.displayFollower(user.getUserId());
-            int following_amount = daoFollow.displayFollowing(user.getUserId());
-            request.setAttribute("USER_PROFILE", profile);
-            request.setAttribute("USER_FOLLOWERS", follower_amount);
-            request.setAttribute("USER_FOLLOWING", following_amount);
-            request.setAttribute("EDIT_TRIGGER", editButton);
-
-            //redirect webpage
-            url = siteMaps.getProperty(AppContants.DisplayUserProfileFeartures.PROFILE_PAGE);
-        } catch (SQLException ex) {
-            log("Error at DisplayUserProfile: " + ex.toString());
-        } catch (NamingException ex) {
-            log("Error at DisplayUserProfile: " + ex.toString());
+            if (action == null) {
+                // do nothing
+            } else if (action.equals("Search")) {
+                url = SEARCH_CONTROLER;
+            } else if (action.equals("Register")) {
+                url = REGISTER_CONTROLLER;
+            } else if (action.equals("Login")) {
+                url = LOGIN_CONTROLLER;
+            } else if (action.equals("createRecipe")) {
+                url = CREATE_RECIPE_CONTROLLER;
+            } else if (action.equals("DisplayProfile")) {
+                url = DISPLAY_USER_PROFILE_CONTROLLER;
+            } else if (action.equals("Update")){
+                url = UPDATE_USER_PROFIE_CONTROLLER;
+            }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-//            response.sendRedirect(url);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

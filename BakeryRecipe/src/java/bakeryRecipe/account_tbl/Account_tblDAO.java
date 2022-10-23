@@ -32,7 +32,6 @@ public class Account_tblDAO implements Serializable {
      * @return
      * @throws SQLException
      */
- 
     public boolean saveUser(Account_tblDTO acc, int currentUserId) throws SQLException {
         Connection con = null;
         Statement stm = null;
@@ -94,7 +93,7 @@ public class Account_tblDAO implements Serializable {
             if (rs.next()) {
                 int userId = rs.getInt("user_id");
                 boolean isadmin = rs.getBoolean("is_admin");
-                acc = new Account_tblDTO(userId, username, pass,isadmin);
+                acc = new Account_tblDTO(userId, username, pass, isadmin);
 
             }
 
@@ -159,7 +158,7 @@ public class Account_tblDAO implements Serializable {
         return set;
 
     }
-    
+
     //check phonenumber alredy exist
     public boolean checkPhonenumber(String phonenumber) throws SQLException {
         Connection connection = null;
@@ -238,7 +237,7 @@ public class Account_tblDAO implements Serializable {
         return set;
 
     }
-    
+
     //check Email alredy exist
     public boolean checkEmail(String email) throws SQLException {
         Connection connection = null;
@@ -278,8 +277,7 @@ public class Account_tblDAO implements Serializable {
 
     }
 
-    
-   //check password alredy exist
+    //check password alredy exist
     public boolean checkPasword(int userId, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
@@ -300,9 +298,9 @@ public class Account_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 if (rs.next()) {
-                    set= true;
+                    set = true;
                 } else {
-                    set= false;
+                    set = false;
                 }
             }
         } finally {
@@ -316,12 +314,12 @@ public class Account_tblDAO implements Serializable {
                 connection.close();
             }
         }
-        return set ;
+        return set;
 
     }
-    
-   //update password when logged
-   public boolean uploadPassword(int userId, String oldPassword, String newPassword) 
+
+    //update password when logged
+    public boolean uploadPassword(int userId, String oldPassword, String newPassword)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -336,10 +334,10 @@ public class Account_tblDAO implements Serializable {
                         + "where user_id=? and password=?";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
-                stm.setString(1, newPassword );
+                stm.setString(1, newPassword);
                 stm.setDate(2, now);
-                stm.setInt(3, userId );
-                stm.setString(4, oldPassword );
+                stm.setInt(3, userId);
+                stm.setString(4, oldPassword);
                 //4. execute query
                 int affectedRows = stm.executeUpdate();
                 //5 process result
@@ -355,10 +353,10 @@ public class Account_tblDAO implements Serializable {
                 con.close();
             }
         }
-        return result;                
+        return result;
     }
-   
-   public boolean deleteAccount(int userID)
+
+    public boolean deleteAccount(int userID)
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -389,9 +387,9 @@ public class Account_tblDAO implements Serializable {
         }
         return result;
     }
-   
-   //check email and phonenumber when you are not logged in to the system
-   public boolean checkEmailAndPhonenumber(String email, String phonenumber) throws SQLException {
+
+    //check email and phonenumber when you are not logged in to the system
+    public boolean checkEmailAndPhonenumber(String email, String phonenumber) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -410,9 +408,9 @@ public class Account_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 if (rs.next()) {
-                    set= true;
+                    set = true;
                 } else {
-                    set= false;
+                    set = false;
                 }
             }
         } finally {
@@ -426,12 +424,12 @@ public class Account_tblDAO implements Serializable {
                 connection.close();
             }
         }
-        return set ;
+        return set;
 
     }
-   
-   //check new password is the same old password when have email and phonenumber
-   public boolean checkPasswordEP(String email, String phonenumber, String newPassword) throws SQLException {
+
+    //check new password is the same old password when have email and phonenumber
+    public boolean checkPasswordEP(String email, String phonenumber, String newPassword) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -451,9 +449,9 @@ public class Account_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 if (rs.next()) {
-                    set= true;
+                    set = true;
                 } else {
-                    set= false;
+                    set = false;
                 }
             }
         } finally {
@@ -467,12 +465,12 @@ public class Account_tblDAO implements Serializable {
                 connection.close();
             }
         }
-        return set ;
+        return set;
 
     }
-   
-   //update password when have email and phonenumber
-   public boolean uploadPasswordEP(String email, String phonenumber, String newPassword) 
+
+    //update password when have email and phonenumber
+    public boolean uploadPasswordEP(String email, String phonenumber, String newPassword)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -487,11 +485,11 @@ public class Account_tblDAO implements Serializable {
                         + "where email=? and phone_number=? ";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
-                stm.setString(1, newPassword );
+                stm.setString(1, newPassword);
                 stm.setDate(2, now);
-                stm.setString(3, email );
-                stm.setString(4, phonenumber );
-                
+                stm.setString(3, email);
+                stm.setString(4, phonenumber);
+
                 //4. execute query
                 int affectedRows = stm.executeUpdate();
                 //5 process result
@@ -507,9 +505,48 @@ public class Account_tblDAO implements Serializable {
                 con.close();
             }
         }
-        return result;                
+        return result;
     }
 
+    //check account is active
+    public boolean checkAccountIsActive(String username, String password) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select is_actived from account_tbl where username=? and password=? and is_actived=true ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, username);
+                stm.setString(2, password);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
 
 // -------- ADMIN SITE --------
     public List<Integer> getDashBoardInfoAdmin() throws SQLException {
@@ -565,8 +602,8 @@ public class Account_tblDAO implements Serializable {
                         + " where acc.is_admin=false and acc.username like ? or acc.phone_number like ? ";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setString(1, "%"+searchvalue+"%");
-                stm.setString(2, "%"+searchvalue+"%");
+                stm.setString(1, "%" + searchvalue + "%");
+                stm.setString(2, "%" + searchvalue + "%");
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result

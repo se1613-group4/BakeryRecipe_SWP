@@ -46,7 +46,7 @@
         <![endif]-->
         
         <c:if test="${not empty Must_login}">
-        <script>alert("Your must too login");
+        <script>alert("Your account is delete");
         </script></c:if>
         <c:remove var="Must_login" scope="session" /> 
         
@@ -126,10 +126,14 @@
                                     <c:if test="${not empty error.passwordEmptyErr}">
                                         <font color="red">${error.passwordEmptyErr}</font></br>
                                     </c:if>
-
+                                        
 
                                     <c:if test="${not empty error.accountNotFound}">
                                         <font color="red">${error.accountNotFound}</font></br>
+                                    </c:if>
+                                        
+                                    <c:if test="${not empty error.accIsactive}">
+                                        <font color="red">${error.accIsactive}</font></br>
                                     </c:if>
                                     <div class="inline-box mb-5 mt-4">
 <!--                                        <div class="checkbox checkbox-primary">

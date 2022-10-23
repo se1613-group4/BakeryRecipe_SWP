@@ -52,7 +52,7 @@ public class Account_tblDAO implements Serializable {
             pt.setString(4, acc.getEmail());
             pt.setString(5, acc.getPhoneNumber());
             pt.setDate(6, now);
-            pt.setBoolean(7, true);
+            pt.setBoolean(7, false);
             pt.setBoolean(8, false);
             pt.executeUpdate();
             set = true;
@@ -546,6 +546,110 @@ public class Account_tblDAO implements Serializable {
         }
         return set;
 
+    }
+    public boolean checkEmailIsActive(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select is_actived from account_tbl where email=? and is_actived=true ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
+    
+    public int checkUserIdWithEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int result = 0;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select user_id from account_tbl where email=? ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, email);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    result = rs.getInt("user_id");
+                } 
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+
+    }
+    public boolean verifyEmail(int userID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "update account_tbl set is_actived=true where user_id=?";
+                //3. create statement obj
+                stm = con.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, userID);
+                //4. execute query
+                int affactedRows = stm.executeUpdate();
+                //5 process result
+                if (affactedRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 
 // -------- ADMIN SITE --------

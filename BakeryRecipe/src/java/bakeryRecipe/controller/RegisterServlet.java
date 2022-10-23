@@ -159,7 +159,7 @@ public class RegisterServlet extends HttpServlet {
                 boolean accResult = accDao.saveUser(accDto, cuurentUserId);
                 boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId,fullname);
                 if (userResult && accResult && profileResult) {
-                    url = siteMaps.getProperty(AppContants.RegisterFeatures.LOGIN_PAGE);
+                    url = siteMaps.getProperty(AppContants.RegisterFeatures.VERIFY_EMAIL_PAGE);
                     HttpSession session = request.getSession(true);
                     session.setAttribute(username, username);
 

@@ -60,7 +60,8 @@ public class AppContants { // mapping all features strings
     public class RegisterFeatures {
 
         public static final String ERROR_PAGE = "registerPage";
-        public static final String LOGIN_PAGE = "loginPage";
+//        public static final String LOGIN_PAGE = "loginPage";
+        public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
     }
 
     public class Admin {
@@ -113,6 +114,17 @@ public class AppContants { // mapping all features strings
 
         public static final String USER_PROFILE_PAGE = "userProfilePage";
         public static final String DISPLAY_USER_PROFILE_CONTROLLER = "displayUserProfileController";
+    }
+    
+    public class EmailFeatures {
+
+        public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
+       public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+    }
+    
+    public class VerifyCodeFeatures {
+       public static final String LOGIN_PAGE = "loginPage";
+       public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
 
 }

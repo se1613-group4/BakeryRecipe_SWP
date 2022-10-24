@@ -612,4 +612,33 @@ public class Recipe_tblDAO implements Serializable {
         }
         return currentIdent;
     }
+
+    public void activeRecipe(int recipeId) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "UPDATE recipe_tbl \n"
+                        + "SET is_actived = 1 \n"
+                        + "WHERE (recipe_id = ?)";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, recipeId);
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+              
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

@@ -4,11 +4,13 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "adminUpdateRecipe", urlPatterns = {"/adminUpdateRecipe"})
-public class adminUpdateRecipe extends HttpServlet {
+@WebServlet(name = "sendNotificationAdmin", urlPatterns = {"/sendNotificationAdmin"})
+public class sendNotificationAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,36 +38,21 @@ public class adminUpdateRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        // Mapping url
+        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_HOME);
+        // get userID from Session scope
         HttpSession session = request.getSession();
-
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("recid");
-        boolean sttRec = (request.getParameter("sttRec")).equals("true");
-        int recid = test == null ? 0 : Integer.parseInt(test);
-        try {
-
-            if (recid != 0) {
-                Recipe_tblDAO dao = new Recipe_tblDAO();
-               if(sttRec){
-                  dao.removeRecipe(recid);
-               }else{
-                   dao.activeRecipe(recid);
-               }
-
-            } else {
-                System.out.println("no update recipe status because recipe id = 0");
-            }
-
-        } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } finally {
-            response.sendRedirect(urlRewriting);
-        }
+        String sms= ""+session.getAttribute("sms");
+        System.out.println(sms);
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

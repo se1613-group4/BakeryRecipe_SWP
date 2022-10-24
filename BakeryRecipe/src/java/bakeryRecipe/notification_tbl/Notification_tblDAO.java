@@ -53,7 +53,35 @@ public class Notification_tblDAO implements Serializable{
         }
           return ls ;
     }
-  //  public int setNoti(int usId,String sms) throws SQLException {
-  //     ArrayList<Notification_tblDTO> ls = null;
- //   }
+    public int setNoti(int usId,String sms) throws SQLException {
+        int rslt = 0;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "INSERT INTO `bakery_recipe`.`notification_tbl` (`user_id`, `detail`, `created_date`) VALUES (?, ?, curdate()); ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, usId);
+                stm.setString(2, sms);
+                //4. execute query
+                rslt = stm.executeUpdate();
+                //5 process result
+              
+            }
+        } finally {
+           
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+       return rslt;
+    }
 }

@@ -6,7 +6,6 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,7 +42,7 @@ import javax.servlet.http.HttpSession;
         int  usid = test==null? 1 :  Integer.parseInt(test);
         try {
             Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayUserProfile(usid);
+            Profile_tblDTO  dto =dao.displayOtherUserProfile(usid);
             
             if (dto != null) {
                     session.setAttribute( "usinf", dto);

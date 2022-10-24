@@ -124,9 +124,11 @@
                             <!--session 3-->
                             <div id="userdetail" class="main-content">
                                 <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
+                                
                                 <div class="content-container">
                                     <c:if test="${empty usinf}"> <H3> Another Admin just delete this user,please try again later</h3></c:if>
                                         <c:if test="${not empty usinf}">
+                                         Action :
                                         <h5>
                                             Name:  ${usinf.fullName} <br/>
                                             Gender: ${usinf.gender} <br/>
@@ -134,21 +136,28 @@
                                             Last Modified: ${usinf.lastModified} <br/>
 
                                         </h5>
-                                        Action :
-                                        <a href="listRecipeAdmin?usrecid=${usinf.userId}"> Show List Recipe This User </a>
+                                       
 
+                                        <!--notification-->
+                                        <br/>
+                                        <from action="sendNotificationAdmin">
+                                            <p><strong>Tip:</strong> Use the resize property to prevent textareas from being resized:</p>
+                                            <textarea class="search-form" type="text" name="sms" placeholder="Some text..." size="15" required ></textarea>
+                                            <button class="mybutton" type="submit" value="${usinf.userId}" name="summitNotiId"> clieck me</button>
+                                        </from>
+                                        
                                     </c:if>
                                 </div>
                             </div>
                             <!--session4-->
                             <div id="listrecipe" class="main-content">
-                                <h2><i class="fa fa-upload"></i> ${usinf.fullName} 's List Recipe: </h2>
+                                <h2><i class="fa fa-upload"></i> User List Recipe: </h2>
+                                        <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Show List Recipe This User </a></h5>
+
                                 <div class="content-container">
                                     <c:if test="${ empty sessionScope.ADMIN_LIST_RECIPE}">
                                         <H3> User have not create any recipe!  </h3>
                                         </c:if>
-
-
 
                                     <c:if test="${ not empty sessionScope.ADMIN_LIST_RECIPE}">
 
@@ -175,15 +184,15 @@
                                                         <td>
                                                             ${rec.likedCount}
                                                         </td>
-                                                       
+
                                                         <td>
                                                             ${rec.savedCount}
                                                         </td>
-                                                        
+
                                                         <td>
                                                             ${rec.createdDate}
                                                         </td>
-                                                         <td>
+                                                        <td>
                                                             ${rec.lastModified}
                                                         </td>
                                                         <td>
@@ -195,7 +204,8 @@
                                                             </c:if>
                                                         </td>
                                                         <td>
-                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}">Update status this Recipe</a>
+                                                            
+                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}">Update status this Recipe</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

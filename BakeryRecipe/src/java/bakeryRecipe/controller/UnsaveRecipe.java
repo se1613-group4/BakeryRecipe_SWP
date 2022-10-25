@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author dangh
  */
-@WebServlet(name = "SaveRecipe", urlPatterns = {"/SaveRecipe"})
-public class SaveRecipe extends HttpServlet {
+@WebServlet(name = "UnsaveRecipe", urlPatterns = {"/UnsaveRecipe"})
+public class UnsaveRecipe extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,14 +39,14 @@ public class SaveRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         //Get site map 
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
         String url = siteMaps.getProperty(AppContants.SaveRecipe.SINGLE_RECIPE_PAGE);
         int recipeId = Integer.parseInt(request.getParameter("txtRecipeId"));
-
+        
         try {
             //call dao 
             Save_tblDAO saveDao = new Save_tblDAO();
@@ -55,7 +54,7 @@ public class SaveRecipe extends HttpServlet {
             HttpSession session = request.getSession();
             Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
             if (user != null) {
-                boolean result = saveDao.SaveRecipe(user.getUserId(), recipeId);
+                boolean result = saveDao.UnsaveRecipe(user.getUserId(), recipeId);
                 if (result) {
                     url = siteMaps.getProperty(AppContants.SaveRecipe.DISPLAY_SINGLE_REICPE_CONTROLLER) + "?recipeId=" + recipeId;
                 }

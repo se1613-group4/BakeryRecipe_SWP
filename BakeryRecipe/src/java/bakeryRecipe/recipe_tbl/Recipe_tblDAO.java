@@ -628,7 +628,7 @@ public class Recipe_tblDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, recipeId);
                 //4. execute query
-                int affectedRows = stm.executeUpdate();
+                 stm.executeUpdate();
                 //5 process result
               
             }// end check con not null

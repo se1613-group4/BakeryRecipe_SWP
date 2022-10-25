@@ -82,6 +82,7 @@
                                             <th>Phone </th>
                                             <th>Last Modified </th> 
                                             <th>Status  </th>  
+                                            <th>Action </th>
                                         </tr>
                                         <c:if test="${ empty sessionScope.ADMIN_LIST_USER}">
                                             <H3> No Result Found!  </h3>
@@ -114,6 +115,9 @@
                                                                 Banned
                                                             </c:if>
                                                         </td>
+                                                         <td>
+                                                            <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}">Update status</a>
+                                                        </td>
                                                     </tr>
                                                 </c:forEach>
                                             </form>
@@ -143,15 +147,11 @@
 
                                         <!--notification-->
                                         <br/>
-                                      <p><strong>[!]</strong>send notification to this user:</p>
-
-                                        <from action="sendNotificationAdmin">
-                                            <p><strong>Tip:</strong> Use the resize property to prevent textareas from being resized:</p>
-                                            <textarea class="search-form" type="text" name="sms" placeholder="Some text..." size="15" required ></textarea>
-                                            <button class="mybutton" type="Submit" value="${usinf.userId}" name="summitNotiId"> clieck me</button>
-                                            <a type="Submit">Click me </a>
-                                        </from>
-                                        
+                                        <p>[!] send notification to this user:  <strong style="color:green">${REPORTSMS}</strong> </p> 
+                                     <form action="sendNotificationAdmin">
+                                          <input  type="hidden" value="${usinf.userId}" name="summitNotiId"/> 
+                                          <input class="search-form" type="text" name="sms" placeholder="Write notification here...." size="50" required /> 
+                                     </form>
                                     </c:if>
                                 </div>
                             </div>

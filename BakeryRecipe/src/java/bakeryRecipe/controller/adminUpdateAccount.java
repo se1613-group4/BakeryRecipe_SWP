@@ -4,12 +4,10 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -24,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "sendNotificationAdmin", urlPatterns = {"/sendNotificationAdmin"})
-public class sendNotificationAdmin extends HttpServlet {
+@WebServlet(name = "adminUpdateAccount", urlPatterns = {"/adminUpdateAccount"})
+public class adminUpdateAccount extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,33 +37,28 @@ public class sendNotificationAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
-        // Mapping url
-        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_HOME);
-        // get userID from Session scope
-        String sms= ""+request.getParameter("sms");
-        int id = Integer.parseInt(""+request.getParameter("summitNotiId")) ;
-       try {
-            HttpSession session = request.getSession();
-            Notification_tblDAO dao = new Notification_tblDAO();
-           int rslt = dao.setNoti(id, sms);
-           
-           
-           request.setAttribute("REPORTSMS", rslt > 0 ? "successful" : "fail"); 
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        HttpSession session = request.getSession();
+
+        String url = AppContants.Admin.ADMIN_LISTUSER;
+        int usupid = Integer.parseInt(request.getParameter("usupid"));
+        boolean usupstt = (""+request.getParameter("usupstt")).equals("true");
+        try {
+
+                Account_tblDAO dao = new Account_tblDAO();
+          dao.updateAccount(usupid,!usupstt);
            
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            log("AdminUpdateAccount Controller _ SQL " + ex.getMessage());
         } finally {
-           RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//             RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
         }
-       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

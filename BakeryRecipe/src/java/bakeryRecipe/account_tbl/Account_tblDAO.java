@@ -781,4 +781,36 @@ public class Account_tblDAO implements Serializable {
         }
         return result;
     }
-}
+
+    public int updateAccount(int usupid, boolean usupstt) throws SQLException {
+         Connection con = null;
+        PreparedStatement stm = null;
+        int affectedRows=0;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "UPDATE account_tbl \n"
+                        + "SET is_actived = ? \n"
+                        + "WHERE (user_id = ?)";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, usupstt);
+                stm.setInt(2, usupid);
+                //4. execute query
+                 affectedRows = stm.executeUpdate();
+                //5 process result
+              
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return affectedRows;
+    }
+    }

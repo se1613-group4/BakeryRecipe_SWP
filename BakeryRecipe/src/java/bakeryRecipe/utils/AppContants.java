@@ -69,7 +69,7 @@ public class AppContants { // mapping all features strings
         public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
-        public static final String ADMIN_LISTUSER = "adminListUserController";
+        public static final String ADMIN_LISTUSER = "adminListAccountController";
         public static final String ADMIN_USDETAIL = "adminUsdetail";
         public static final String ADMIN_LISTRECIPE = "listRecipeAdmin";
 

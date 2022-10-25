@@ -13,13 +13,11 @@ import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
-import bakeryRecipe.save_tbl.Save_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -69,7 +67,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 Recipe_Ingredient_tblDAO ingredientDetailDao = new Recipe_Ingredient_tblDAO();
                 ingredientDetailDao.getIngredientDetail(recipeId);
                 List<Recipe_Ingredient_tblDTO> ingredientDetailDtoList = ingredientDetailDao.getRecipeIngreDtoList();
-                request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);            
+                request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);
                 //----------------------------
                 //thongnt section
                 //DISPLAY COMMENTS FUNCTION
@@ -98,8 +96,9 @@ public class DisplaySingleRecipe extends HttpServlet {
                 }//end check if user has login
 
                 request.setAttribute("ISLIKED", isLiked);
-
-                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SEARCH_SAVED_RECIPE_CONTROLLER);
+                System.out.println("ISLIKED ======= " + isLiked);
+                
+                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
 
             }
         } catch (SQLException ex) {

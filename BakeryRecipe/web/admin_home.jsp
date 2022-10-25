@@ -53,8 +53,8 @@
                                     <c:if test="${empty adminDashBoard}"> <H3> Lost Connection,Load file stored produce,Press Summit Button </h3></c:if>
                                         <c:if test="${not empty adminDashBoard}">
                                         <h3>  Total Account : ${adminDashBoard.get(0)} </h3> <br/>
-                                        <h3>  Acctived Account :   ${adminDashBoard.get(1)}  </h3> <br/>
-                                        <h3>  Banned Account :  ${adminDashBoard.get(2)} </h3> <br/>
+                                        <h3>  Banned Account :   ${adminDashBoard.get(1)}  </h3> <br/>
+                                        <h3>  Active Account :  ${adminDashBoard.get(2)} </h3> <br/>
                                     </c:if>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
                                 
                                 <div class="content-container">
-                                    <c:if test="${empty usinf}"> <H3> Another Admin just delete this user,please try again later</h3></c:if>
+                                    <c:if test="${empty usinf}"> <H3>Please choose account you want !</h3></c:if>
                                         <c:if test="${not empty usinf}">
                                          Action :
                                         <h5>
@@ -159,11 +159,11 @@
                             <div id="listrecipe" class="main-content">
                                 <h2><i class="fa fa-upload"></i> User List Recipe: </h2>
                             <c:if test="${ not empty usinf.userId}">
-                                  <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Show List Recipe This User </a></h5>
+                                  <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Reload </a></h5>
                             </c:if>
 
                                 <div class="content-container">
-                                    <c:if test="${ empty sessionScope.ADMIN_LIST_RECIPE}">
+                                    <c:if test="${ empty sessionScope.ADMIN_LIST_RECIPE && not empty usinf}">
                                         <H3> User have not create any recipe!  </h3>
                                         </c:if>
 

@@ -37,7 +37,7 @@ import javax.servlet.http.HttpSession;
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_USDETAIL;
+        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
         String test = request.getParameter("usid");
         int  usid = test==null? 1 :  Integer.parseInt(test);
         try {

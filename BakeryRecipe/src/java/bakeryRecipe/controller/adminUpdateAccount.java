@@ -44,7 +44,7 @@ public class adminUpdateAccount extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         HttpSession session = request.getSession();
 
-        String url = AppContants.Admin.ADMIN_LISTUSER;
+        String url = AppContants.Admin.ADMIN_DASHBOARD;
         int usupid = Integer.parseInt(request.getParameter("usupid"));
         boolean usupstt = (""+request.getParameter("usupstt")).equals("true");
         try {

@@ -665,18 +665,30 @@ public class Account_tblDAO implements Serializable {
             if (connection != null) {
                 //2. create sql string
                 String sql = "call getdashboardInfo_Admin";
+                String sqlgetActive = "  select count(acc.is_actived) as num\n"
+                        + "  from account_tbl acc\n"
+                        + "  where acc.is_admin=false and is_actived=false ";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
 
                 //4. execute query
-                rs = stm.executeQuery();
+                rs = stm.executeQuery();    
+                result = new ArrayList<>();
+
                 //5 process result
                 if (rs.next()) {
-                    result = new ArrayList<>();
                     result.add(rs.getInt("total_account"));   // total 
-                    result.add(rs.getInt("actived_account"));  // active 
-                    result.add(result.get(0) - result.get(1));  // ban 
+                    result.add(rs.getInt("actived_account"));  // Active 
+               
                 }
+                result.remove(1); // delete actived_account 
+                stm = connection.prepareStatement(sqlgetActive);
+                rs = stm.executeQuery();
+                 if (rs.next()) {
+                    result.add(rs.getInt("num"));   // Active 
+               
+                }
+                result.add(result.get(0)-result.get(1)); // ban
             }
         } finally {
             if (rs != null) {

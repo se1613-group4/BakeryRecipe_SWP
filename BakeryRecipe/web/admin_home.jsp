@@ -62,7 +62,10 @@
                             <!--session 2-->
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>
+                                     <p><strong>[&] </strong>Search:</p>
+
                                 <form action="adminListAccountController">
+                                    
                                     <input class="search-form" type="text" name="a" placeholder="username,phonenumber,.." size="15" required /> 
                                 </form>
                                 <div class="content-container">
@@ -140,10 +143,11 @@
 
                                         <!--notification-->
                                         <br/>
+                                      <p><strong>[!]</strong>send notification to this user:</p>
+
                                         <from action="sendNotificationAdmin">
-                                            <p><strong>Tip:</strong> Use the resize property to prevent textareas from being resized:</p>
-                                            <textarea class="search-form" type="text" name="sms" placeholder="Some text..." size="15" required ></textarea>
-                                            <button class="mybutton" type="submit" value="${usinf.userId}" name="summitNotiId"> clieck me</button>
+                                            <input class="search-form" type="text" name="sms" placeholder="some text here,.." size="350" required /> 
+                                            <input type="Submit" name="usnotiId" value="${usinf.userId}"/>
                                         </from>
                                         
                                     </c:if>
@@ -152,7 +156,9 @@
                             <!--session4-->
                             <div id="listrecipe" class="main-content">
                                 <h2><i class="fa fa-upload"></i> User List Recipe: </h2>
-                                        <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Show List Recipe This User </a></h5>
+                            <c:if test="${ not empty usinf.userId}">
+                                  <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Show List Recipe This User </a></h5>
+                            </c:if>
 
                                 <div class="content-container">
                                     <c:if test="${ empty sessionScope.ADMIN_LIST_RECIPE}">

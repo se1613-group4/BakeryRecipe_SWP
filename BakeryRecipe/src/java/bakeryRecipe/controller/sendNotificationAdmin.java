@@ -50,6 +50,8 @@ public class sendNotificationAdmin extends HttpServlet {
         // get userID from Session scope
         HttpSession session = request.getSession();
         String sms= ""+session.getAttribute("sms");
+        String id = ""+session.getAttribute("usnotiId");
+        System.out.println(id);
         System.out.println(sms);
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);

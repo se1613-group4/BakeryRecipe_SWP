@@ -23,7 +23,6 @@ public class AppContants { // mapping all features strings
     }
 
     public class AddNewCommentFeature {
-
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
         public static final String ERROR_PAGE = "addCommentErrorPage";
         public static final String LOGIN_PAGE = "loginPage";
@@ -40,7 +39,6 @@ public class AppContants { // mapping all features strings
 
         public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
-        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
     }
 
     public class DisplayOwnRecipesFeature {
@@ -106,9 +104,8 @@ public class AppContants { // mapping all features strings
         public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
 
     }
-
+    
     public class CreateRecipeFeature {
-
         public static final String ERROR_PAGE = "errorPage";
         public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
     }
@@ -130,10 +127,4 @@ public class AppContants { // mapping all features strings
        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
 
-    public class SaveRecipe {
-
-        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
-        public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
-        public static final String DISPLAY_SINGLE_REICPE_CONTROLLER = "displaySingleRecipe";
-    }
 }

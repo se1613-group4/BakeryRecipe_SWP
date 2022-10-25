@@ -146,8 +146,10 @@
                                       <p><strong>[!]</strong>send notification to this user:</p>
 
                                         <from action="sendNotificationAdmin">
-                                            <input class="search-form" type="text" name="sms" placeholder="some text here,.." size="350" required /> 
-                                            <input type="Submit" name="usnotiId" value="${usinf.userId}"/>
+                                            <p><strong>Tip:</strong> Use the resize property to prevent textareas from being resized:</p>
+                                            <textarea class="search-form" type="text" name="sms" placeholder="Some text..." size="15" required ></textarea>
+                                            <button class="mybutton" type="Submit" value="${usinf.userId}" name="summitNotiId"> clieck me</button>
+                                            <a type="Submit">Click me </a>
                                         </from>
                                         
                                     </c:if>

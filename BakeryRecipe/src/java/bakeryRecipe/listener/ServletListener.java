@@ -7,6 +7,7 @@ package bakeryRecipe.listener;
 
 import bakeryRecipe.utils.Helper;
 import java.io.IOException;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -21,15 +22,29 @@ public class ServletListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
-        try {            
-            Helper.getSiteMaps(context);
-        } catch (IOException ex) {
-            context.log("ServletListener _ IOException " + ex.getMessage());
-        }
+        String siteMapLocation = context.getInitParameter("SITEMAPS_FILE_PATH");
+        String authenticationLocation = context.getInitParameter("AUTHENTICATION_FILE_PATH");
+        Properties siteMapProperty = Helper.getProperties(context, siteMapLocation);
+        Properties authProperty = Helper.getProperties(context, authenticationLocation);
+        context.setAttribute("SITEMAPS", siteMapProperty);
+        context.setAttribute("AUTH_LIST", authProperty);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-      
     }
+//    @Override
+//    public void contextInitialized(ServletContextEvent sce) {
+//        ServletContext context = sce.getServletContext();
+//        try {            
+//            Helper.getSiteMaps(context);
+//        } catch (IOException ex) {
+//            context.log("ServletListener _ IOException " + ex.getMessage());
+//        }
+//    }
+//
+//    @Override
+//    public void contextDestroyed(ServletContextEvent sce) {
+//      
+//    }
 }

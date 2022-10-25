@@ -69,12 +69,12 @@ public class RegisterServlet extends HttpServlet {
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
          */
-//        Pattern passwordPattern = Pattern.compile("[^: \\&\\.\\~]*[a-z0-9]+[^:\\&\\.\\~]+");
-        Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        Pattern passwordPattern = Pattern.compile("[a-zA-Z0-9]{8,}$");
+        //Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         /*
         Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
          */
-        Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
+        //Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
                 "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
 //        String EMAIL_PATTERN
@@ -106,16 +106,17 @@ public class RegisterServlet extends HttpServlet {
             if (passwordPattern.matcher(password).matches() == false) {
                 foundErr = true;
                 errors.setPasswordFormatErr("Password wrong format.\n  "
-                        + "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+                        + "Minimum eight characters\n"
+                        + "May not contain special character");
             } 
             if (!confirm.trim().equals(password)) {
                 foundErr = true;
                 errors.setConfirmNotMathched("Confirm must matches password");
             }
-            if (fullnamePattern.matcher(fullname).matches() == false) {
-                foundErr = true;
-                errors.setFullnameFormatErr("Fullname wrong format");
-            }
+//            if (fullnamePattern.matcher(fullname).matches() == false) {
+//                foundErr = true;
+//                errors.setFullnameFormatErr("Fullname wrong format");
+//            }
             
             boolean checkEmailExit = accDAO.checkEmail(email);
             if (emailPattern.matcher(email).matches() == false) {
@@ -158,7 +159,7 @@ public class RegisterServlet extends HttpServlet {
                 boolean accResult = accDao.saveUser(accDto, cuurentUserId);
                 boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId,fullname);
                 if (userResult && accResult && profileResult) {
-                    url = siteMaps.getProperty(AppContants.RegisterFeatures.LOGIN_PAGE);
+                    url = siteMaps.getProperty(AppContants.RegisterFeatures.VERIFY_EMAIL_PAGE);
                     HttpSession session = request.getSession(true);
                     session.setAttribute(username, username);
 

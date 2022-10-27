@@ -195,8 +195,6 @@
                                             <c:if test="${not empty ingreList}">
                                                 <c:forEach var="ingredient" items="${ingreList}">
                                                 <div class="checkbox checkbox-primary">
-                                                    <!--<input id="checkbox1" type="checkbox">-->
-                                                    <!--<label>${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</label>-->
                                                     <p>+  ${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</p>
                                                 </div>
                                                 </c:forEach>
@@ -216,10 +214,6 @@
                                 <div class="section-heading heading-dark">
                                     <h2 class="item-heading">DIRECTIONS</h2>
                                 </div>
-<!--                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                    taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                    particular are subject. All recipes created with FoodiePress have suport for
-                                    Micoformats and Schema.org is a collaboration byo improve convallis.</p>-->
                                 <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
                                 <c:if test="${not empty stepList}">
                                     <c:forEach var="step" items="${stepList}" varStatus="counter">
@@ -231,55 +225,6 @@
                                     </div>
                                     </c:forEach>
                                 </c:if>
-<!--                                <div class="direction-box-layout1">
-                                    <div class="item-content">
-                                        <div class="serial-number">01 Step</div>
-                                        <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                            collaboration improve
-                                            the web by creat inegaera structured markupinn ocuously
-                                            side crudey mightily rigorous plot life.</p>
-                                    </div>
-                                    <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                        taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                        particular are subject. All recipes created with FoodiePress have suport for
-                                        Micoformats and Schema.org is a collaboration byo improve convallis.</p>
-                                    <div class="direction-box-layout1">
-                                        <div class="item-content">
-                                            <div class="serial-number">01 Step</div>
-                                            <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                collaboration improve
-                                                the web by creat inegaera structured markupinn ocuously
-                                                side crudey mightily rigorous plot life.</p>
-                                        </div>
-                                    </div>
-                                    <div class="direction-box-layout1">
-                                        <div class="item-content">
-                                            <div class="serial-number">02 Step</div>
-                                            <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                collaboration improve
-                                                the web by creat inegaera structured markupinn ocuously
-                                                side crudey mightily rigorous plot life.</p>
-                                        </div>
-                                    </div>
-                                    <div class="direction-box-layout1">
-                                        <div class="item-content">
-                                            <div class="serial-number">03 Step</div>
-                                            <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                collaboration improve
-                                                the web by creat inegaera structured markupinn ocuously
-                                                side crudey mightily rigorous plot life.</p>
-                                        </div>
-                                    </div>
-                                    <div class="direction-box-layout1">
-                                        <div class="item-content">
-                                            <div class="serial-number">04 Step</div>
-                                            <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                collaboration improve
-                                                the web by creat inegaera structured markupinn ocuously
-                                                side crudey mightily rigorous plot life.</p>
-                                        </div>
-                                    </div>
-                                </div>-->
                             </div>
                             
                            <!-- Tag of this Recipe-->

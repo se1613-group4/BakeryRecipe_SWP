@@ -114,5 +114,14 @@ public class AppContants { // mapping all features strings
         public static final String USER_PROFILE_PAGE = "userProfilePage";
         public static final String DISPLAY_USER_PROFILE_CONTROLLER = "displayUserProfileController";
     }
-
+    
+    public class DisplayEditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "recipeNotFoundPage";
+        public static final String EDIT_RECIPE_PAGE = "editRecipePage";
+    }
+    
+    public class EditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "errorPage";
+        //success: displaySingleRecipe
+    }
 }

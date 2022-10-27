@@ -78,24 +78,9 @@
 
                                     </ul>
                                 </nav>
-                            </div>
+                            </div>                                                    
 
-                            <nav class="site-nav">
-                                <ul id="site-menu" class="site-menu">
-                                    <li><a href="displayHomePage">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Category</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">All Recipes</a>
-                                    </li>
-
-                                </ul>
-                            </nav>
-                        </div>
-
-                        <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                            <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
                             <div class="nav-action-elements-layout1">
                                 <ul class="site-menu">                                     
                                     <!--profile user-->
@@ -165,13 +150,14 @@
                                     </ul>
                             </div>
 
-                                <div class="mob-menu-open toggle-menu">
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                </div>
+                            <div class="mob-menu-open toggle-menu">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
                             <!--</div>-->
+                            </div>
                         </div>
                     </div>
                 </div>

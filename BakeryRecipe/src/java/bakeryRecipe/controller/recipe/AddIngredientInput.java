@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bakeryRecipe.controller;
+package bakeryRecipe.controller.recipe;
 
-import bakeryRecipe.category_tbl.Category_tblDAO;
-import bakeryRecipe.category_tbl.Category_tblDTO;
 import bakeryRecipe.ingredient_tbl.Ingredient_tblDAO;
 import bakeryRecipe.ingredient_tbl.Ingredient_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Properties;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LamVo
  */
-@WebServlet(name = "DisplaySubmitRecipePage", urlPatterns = {"/DisplaySubmitRecipePage"})
-public class DisplaySubmitRecipePage extends HttpServlet {
+@WebServlet(name = "AddIngredientInput", urlPatterns = {"/AddIngredientInput"})
+public class AddIngredientInput extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,23 +39,7 @@ public class DisplaySubmitRecipePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
-        
-        // Mapping url        
-        String url = siteMaps.getProperty(AppContants.DisplaySubmitRecipeFeature.SUBMIT_RECIPE_PAGE);
-        try {
-            // Load all category recipe
-            Category_tblDAO categoryDao = new Category_tblDAO();
-            categoryDao.loadAllCategory();
-            List<Category_tblDTO> categoryList = categoryDao.getCategoryDtoList();
-            if (categoryList != null) {
-                request.setAttribute("CATRGORY_LIST", categoryList);
-            }
+        try (PrintWriter out = response.getWriter()) {
             // Load all ingredient
             Ingredient_tblDAO ingredientDao = new Ingredient_tblDAO();
             ingredientDao.loadAllIngredient();
@@ -65,11 +47,33 @@ public class DisplaySubmitRecipePage extends HttpServlet {
             if (ingredienList != null) {
                 request.setAttribute("INGREDIENT_LIST", ingredienList);
             }
+            String ingredientS = "";
+            for (Ingredient_tblDTO ingredientDto : ingredienList) {
+                ingredientS += "                                                            "
+                        + "<option value=\""+ingredientDto.getIngredientId()+"\">"+ingredientDto.getName()+" "+ingredientDto.getUnit()+")</option>\n";
+            }
+            /* Output html code*/
+            out.println("<div class=\"row no-gutters ingre-div\" id=\""+ java.time.LocalDateTime.now()+"\">\n" +
+"                                            <!--Select Ingredient-->\n" +
+"                                            <div class=\"col-7\">\n" +
+"                                                <div class=\"form-group additional-input-box icon-left\">  \n" +
+"                                                    <select class=\"select2 input-select2\" name=\"txtIngredientId\">\n" +
+"                                                        <option value=\"\" disabled=\"disabled\" selected=\"selected\">Ingredient</option>\n" +
+                                                         ingredientS +
+"                                                </select>\n" +
+"                                            </div>\n" +
+"                                        </div>\n" +
+"                                        <!--Input Quantity-->\n" +
+"                                        <div class=\"col-5\">\n" +
+"                                            <div class=\"form-group additional-input-box icon-right\">\n" +
+"                                                <input type=\"number\" step=\"0.01\" min=\"0.01\" placeholder=\"Quantity\" class=\"form-control\"\n" +
+"                                                       name=\"txtQuantity\"/>\n" +
+"                                                <i class=\"fas fa-times\" onclick=\"removeElement(this)\"></i>\n" +
+"                                            </div>\n" +
+"                                        </div>\n" +
+"                                    </div>");
         } catch (SQLException ex) {
-            log("DisplaySubmitRecipePage Controller _ SQL " + ex.getMessage());
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            Logger.getLogger(AddIngredientInput.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

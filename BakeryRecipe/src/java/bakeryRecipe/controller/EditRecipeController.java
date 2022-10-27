@@ -31,8 +31,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author LamVo
  */
-@WebServlet(name = "CreateNewRecipe", urlPatterns = {"/CreateNewRecipe"})
-public class CreateNewRecipe extends HttpServlet {
+@WebServlet(name = "EditRecipeController", urlPatterns = {"/EditRecipeController"})
+public class EditRecipeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,14 +46,13 @@ public class CreateNewRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         //Get site map
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         // End get site map
         
         // Mapping url        
-        String url = siteMaps.getProperty(AppContants.CreateRecipeFeature.ERROR_PAGE);
+        String url = siteMaps.getProperty(AppContants.EditRecipeFeature.RECIPE_NOT_FOUND);
         //Get parameters
         HttpSession session = request.getSession();
         int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
@@ -67,6 +66,7 @@ public class CreateNewRecipe extends HttpServlet {
         String[] steps = request.getParameterValues("txtStep");
         String[] imgUrls = request.getParameterValues("txtImgUrl");
         String vidUrl = request.getParameter("txtVidUrl");
+        int recipeId = Integer.parseInt(request.getParameter("txtRecipeId"));
         // all validate data
         try {
             String stepStr = " ";
@@ -79,9 +79,9 @@ public class CreateNewRecipe extends HttpServlet {
                 }
             }
             Recipe_tblDTO recipeDto = new Recipe_tblDTO(userId, categoryId, recipeName, serving, description, prepTime, cookTime,stepStr);
-            // call reippe DAO and insert into recipe_tbl
+            // call reippe DAO and update into recipe_tbl
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
-            boolean resultInsertRecipe = recipeDao.insertRecipe(recipeDto);
+            boolean resultUpdateRecipe = recipeDao.updateRecipe(recipeDto, recipeId);
 //            System.out.println("======RESULT INSERT RECIPE=======" + resultInsertRecipe);
             
             // call recipe_ingredientDao and indert into recipe_ingredient_tbl
@@ -94,31 +94,35 @@ public class CreateNewRecipe extends HttpServlet {
                 double quantity = Double.parseDouble(tokens[1]);
                 ingredientList.put(ingreId, quantity);
             }
-            int recipeCurrentId = recipeDao.getCurrentIdent();
-            boolean resultInsertIngre = repIngreDao.insertIngredientDetail(recipeCurrentId, ingredientList);
-            System.out.println("======RESULT INSERT INGRE=======" + resultInsertIngre);
+            // delete old ingredient detail
+            repIngreDao.removeIngredientDetail(recipeId);
+            // add new ingredient detail
+            boolean resultUpdateIngre = repIngreDao.insertIngredientDetail(recipeId, ingredientList);
+            System.out.println("======RESULT INSERT INGRE=======" + resultUpdateIngre);
             
             // call imageDao and insert into image_tbl
-            boolean resultInsertImg = true;
+            boolean resultUpdateImg = true;
             if (imgUrls != null && !"".equals(imgUrls[0])) {
-                Image_tblDAO imgDao = new Image_tblDAO();                
-                imgDao.removeImg(recipeCurrentId);
-                resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
+                Image_tblDAO imgDao = new Image_tblDAO();
+                // remove old img of that reicpe
+                imgDao.removeImg(recipeId);
+                // add new img(s) of that recipe
+                resultUpdateImg = imgDao.insertImg(recipeId, imgUrls);
 //                if (imgDao.removeImg(recipeCurrentId)) {
 //                    resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
 //                }
-                System.out.println("======RESULT INSERT IMAGE=======" + resultInsertImg);
+                System.out.println("======RESULT INSERT IMAGE=======" + resultUpdateImg);
             }          
             // call videoDao and insert into video_tbl
             boolean resultInsertVid = true;
             if (!"".equals(vidUrl)) {
                 Video_tblDAO vidDao = new Video_tblDAO();
-                resultInsertVid = vidDao.insertVideo(recipeCurrentId, vidUrl);
+                resultInsertVid = vidDao.insertVideo(recipeId, vidUrl);
                 System.out.println("======RESULT INSERT VIDEO=======" + resultInsertVid);
             }   
             // All insert results are true -> redirect to MyRecipes Page
-            if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid) {
-                url = siteMaps.getProperty(AppContants.CreateRecipeFeature.MY_RECIPES_PAGE);
+            if (resultUpdateRecipe && resultUpdateIngre && resultUpdateImg && resultInsertVid) {
+                url = "DisplaySingleRecipe?recipeId="+recipeId;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateNewRecipe.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,6 +130,7 @@ public class CreateNewRecipe extends HttpServlet {
         }finally {
             response.sendRedirect(url);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

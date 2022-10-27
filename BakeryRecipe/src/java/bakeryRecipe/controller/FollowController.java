@@ -5,7 +5,7 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.like_tbl.Like_tblDAO;
+import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author ThongNT
  */
-@WebServlet(name = "LikeController", urlPatterns = {"/LikeController"})
-public class LikeController extends HttpServlet {
+@WebServlet(name = "FollowController", urlPatterns = {"/FollowController"})
+public class FollowController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,27 +45,27 @@ public class LikeController extends HttpServlet {
         // End get site map
 
         // Mapping url
-        String urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.ERROR_PAGE);
+        String urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.ERROR_PAGE);
         try {
             HttpSession session = request.getSession(true);
             Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
             if (currentUser == null) {
-                urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.LOGIN_PAGE);
+                urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.LOGIN_PAGE);
             } else {
                 int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
                 int user_id = Integer.parseInt(request.getParameter("txtUserId"));
-                Like_tblDAO dao = new Like_tblDAO();
-                if (dao.likeRecipe(recipe_id, user_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
+                int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
+                Follow_tblDAO dao = new Follow_tblDAO();
+                if (dao.followRecipe(user_id, recipeAuthor_id)) {
+                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
-            log("Like Controller _ SQL " + ex.getMessage());
+            log("Follow Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

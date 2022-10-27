@@ -1,6 +1,6 @@
 <%-- 
-    Document   : like
-    Created on : Oct 13, 2022, 3:01:32 PM
+    Document   : follow
+    Created on : Oct 27, 2022, 10:24:52 PM
     Author     : ThongNT
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bakery Recipe - Like</title>
+        <title>Bakery Recipe - Follow</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -39,27 +39,30 @@
     <body>
         <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
         <c:set var="currentAccountDto" value="${sessionScope.USER}"/>
-        <c:set var="isLiked" value="${requestScope.ISLIKED}"/>
+        <c:set var="isFollowed" value="${requestScope.ISFOLLOWED}"/>
 
-       
-        <c:if test="${isLiked == -1  || isLiked == 0}">
-            <div class="like-container">
-                <form action="likeController">
+
+        <c:if test="${isFollowed == -1  || isFollowed == 0}">
+            <div class="follow-container">
+                <form action="followController">
                     <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                    <button>LIKE <i class="fa fa-heart" aria-hidden="true"></i></button>
+                    <input type="hidden" name="txtRecipeAuthorId" value="${recipeDto.authorInfo.userId}">
+                    <button>Follow <i class="fa fa-heart" aria-hidden="true"></i></button>
                 </form>
             </div>
         </c:if><!-- end check if user has not login (check here only for display suitable button) -->
-        
-        <c:if test="${isLiked == 1}">
-            <div class="like-container">
-                <form action="unlikeController">
+
+        <c:if test="${isFollowed == 1}">
+            <div class="follow-container">
+                <form action="unfollowController">
                     <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                    <button>UNLIKE <i class="fa fa-heart" aria-hidden="true"></i></button>
+                    <input type="hidden" name="txtRecipeAuthorId" value="${recipeDto.authorInfo.userId}">
+                    <button>Unfollow <i class="fa fa-heart" aria-hidden="true"></i></button>
                 </form>
             </div>
         </c:if><!-- end check if user has login (check here only for display suitable button) -->
     </body>
 </html>
+

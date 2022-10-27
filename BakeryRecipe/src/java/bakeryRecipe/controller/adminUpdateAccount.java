@@ -4,15 +4,11 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,37 +21,42 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
- @WebServlet(name = "adminUsdetail", urlPatterns = {"/adminUsdetail"})
- public class adminUsdetail extends HttpServlet {
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "adminUpdateAccount", urlPatterns = {"/adminUpdateAccount"})
+public class adminUpdateAccount extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("usid");
-        int  usid = test==null? 1 :  Integer.parseInt(test);
+        String url = AppContants.Admin.ADMIN_DASHBOARD;
+        int usupid = Integer.parseInt(request.getParameter("usupid"));
+        boolean usupstt = (""+request.getParameter("usupstt")).equals("true");
         try {
-            Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayOtherUserProfile(usid);
-            
-            if (dto != null) {
-                    session.setAttribute( "usinf", dto);
-                    urlRewriting ="adminHome";
-            }
-            
-            
+
+                Account_tblDAO dao = new Account_tblDAO();
+          dao.updateAccount(usupid,!usupstt);
+           
         } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-          Logger.getLogger(adminUsdetail.class.getName()).log(Level.SEVERE, null, ex);
-      } finally {
-            response.sendRedirect(urlRewriting);
+            log("AdminUpdateAccount Controller _ SQL " + ex.getMessage());
+        } finally {
+//             RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

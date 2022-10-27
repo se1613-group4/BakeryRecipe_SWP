@@ -4,8 +4,6 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -13,9 +11,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author jexk
  */
 @WebServlet(name = "listRecipeAdmin", urlPatterns = {"/listRecipeAdmin"})
- public class adminListRecipe extends HttpServlet {
+ public class listRecipeAdmin extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -43,7 +38,6 @@ import javax.servlet.http.HttpSession;
         String urlRewriting = AppContants.Admin.ADMIN_HOME;
         String test = request.getParameter("usrecid");
         int  usid = test==null? 0 :  Integer.parseInt(test);
-        
         try {
              Recipe_tblDAO dao = new Recipe_tblDAO();
             ArrayList<Recipe_tblDTO> rslt = dao.AdmingetRecipebyUser(usid);

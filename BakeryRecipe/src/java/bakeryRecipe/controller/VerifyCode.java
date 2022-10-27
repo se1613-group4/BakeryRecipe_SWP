@@ -4,11 +4,18 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDAO;
+import bakeryRecipe.email.Email_DTO;
+import bakeryRecipe.email.VerifyCodeErr;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +26,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author PC
  */
-@WebServlet(name = "adminUpdateRecipe", urlPatterns = {"/adminUpdateRecipe"})
-public class adminUpdateRecipe extends HttpServlet {
+@WebServlet(name = "VerifyCode", urlPatterns = {"/VerifyCode"})
+public class VerifyCode extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +41,38 @@ public class adminUpdateRecipe extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, NamingException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        String url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
         HttpSession session = request.getSession();
-
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("recid");
-        boolean sttRec = (request.getParameter("sttRec")).equals("true");
-        int recid = test == null ? 0 : Integer.parseInt(test);
+        VerifyCodeErr errors = new VerifyCodeErr();
         try {
-
-            if (recid != 0) {
-                Recipe_tblDAO dao = new Recipe_tblDAO();
-               if(sttRec){
-                  dao.removeRecipe(recid);
-               }else{
-                   dao.activeRecipe(recid);
-               }
-
-            } else {
-                System.out.println("no update recipe status because recipe id = 0");
+            Email_DTO user = (Email_DTO) session.getAttribute("authcode");
+            String code = request.getParameter("authcode");
+            //String email = request.getParameter("txtEmail");
+            if (code.equals(user.getCode())) {
+                Account_tblDAO accDAO = new Account_tblDAO();
+                int userID = accDAO.checkUserIdWithEmail(user.getEmail());
+                boolean check = accDAO.verifyEmail(userID);
+                if (check == true) {
+                    url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.LOGIN_PAGE);
+                    request.getSession().setAttribute("verifyCode_done", "done");
+                }
+            } 
+            if(code!= user.getCode()){
+                
+                //url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
+                request.setAttribute("VerifyCode_ERR", "done");
+                errors.setCodeIncorrect("This code you entered is incorrect!");
             }
-
         } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } finally {
-            response.sendRedirect(urlRewriting);
+            log("EmailServlet _ SQL " + ex.getMessage());
+        } // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
+        finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response); // sendRedirect + urlRewriting ~
         }
     }
 
@@ -80,7 +88,13 @@ public class adminUpdateRecipe extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -94,7 +108,13 @@ public class adminUpdateRecipe extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

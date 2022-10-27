@@ -36,18 +36,9 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
-        <c:url var="login_url" value="loginPage"></c:url>
-        <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
-            <h5> Please to login</h5>
-            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-            <script>
-                function dieu_huong_login() {
-                    location.assign("${login_url}");
-                }
-            </script>
-        </c:if>
+        
             
-        <c:if test="${sessionScope.LOGIN_USER!=null  || sessionScope.LOGIN_USER.isActived==false }">
+        
 
             <c:if test="${not empty Reset_done}">
                 <script>alert("Your password is change");
@@ -562,6 +553,6 @@
             <script src="js/smoothscroll.min.js"></script>
             <!-- Custom Js -->
             <script src="js/main.js"></script>
-        </c:if>
+        
     </body>
 </html>

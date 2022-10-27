@@ -48,7 +48,6 @@ public class Like_tblDAO implements Serializable {
                     //get like_count
                     result = rs.getInt("like_count");
                 }//end traverse ResultSet
-                System.out.println("-----------like_count: " + result);
             }//end check conection is not null
             return result;
         } finally {
@@ -92,8 +91,6 @@ public class Like_tblDAO implements Serializable {
                 if (tmp != 0) {
                     result = true;
                 }
-
-                System.out.println("RESULTTTT : " + result);
             }
         } finally {
             if (rs != null) {

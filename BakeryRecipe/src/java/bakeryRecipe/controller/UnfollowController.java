@@ -4,15 +4,12 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.profile_tbl.Profile_tblDAO;
-import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,38 +20,51 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author ThongNT
  */
- @WebServlet(name = "adminUsdetail", urlPatterns = {"/adminUsdetail"})
- public class adminUsdetail extends HttpServlet {
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "UnfollowController", urlPatterns = {"/UnfollowController"})
+public class UnfollowController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         /**
-         * Get site map (Copy this for all controller)
+         * Get site map
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        HttpSession session = request.getSession();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        // End get site map
 
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("usid");
-        int  usid = test==null? 1 :  Integer.parseInt(test);
+        // Mapping url
+        String urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.ERROR_PAGE);
         try {
-            Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayOtherUserProfile(usid);
-            
-            if (dto != null) {
-                    session.setAttribute( "usinf", dto);
-                    urlRewriting ="adminHome";
-            }
-            
-            
+//            System.out.println("UNFOLLOW HERE");
+            HttpSession session = request.getSession(true);
+            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+            if (currentUser == null) {
+                urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.LOGIN_PAGE);
+            } else {
+                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
+                int user_id = Integer.parseInt(request.getParameter("txtUserId"));
+                int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
+                Follow_tblDAO dao = new Follow_tblDAO();
+                if (dao.unfollowRecipe(user_id, recipeAuthor_id)) {
+                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
+                }//end check result
+            }//end check has been login
+
         } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-          Logger.getLogger(adminUsdetail.class.getName()).log(Level.SEVERE, null, ex);
-      } finally {
+            log("Unfollow Controller _ SQL " + ex.getMessage());
+        } finally {
             response.sendRedirect(urlRewriting);
         }
     }

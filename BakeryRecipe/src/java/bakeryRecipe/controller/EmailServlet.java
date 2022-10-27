@@ -4,11 +4,16 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDAO;
+import bakeryRecipe.email.Email_DTO;
+import bakeryRecipe.email.SendEmail;
+import bakeryRecipe.email.VerifyEmailErr;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +24,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author PC
  */
-@WebServlet(name = "adminUpdateRecipe", urlPatterns = {"/adminUpdateRecipe"})
-public class adminUpdateRecipe extends HttpServlet {
+@WebServlet(name = "EmailServlet", urlPatterns = {"/EmailServlet"})
+public class EmailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,35 +41,51 @@ public class adminUpdateRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
+        String email = request.getParameter("txtEmail");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        HttpSession session = request.getSession();
-
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("recid");
-        boolean sttRec = (request.getParameter("sttRec")).equals("true");
-        int recid = test == null ? 0 : Integer.parseInt(test);
+        String url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_EMAIL_PAGE);
+        VerifyEmailErr errors = new VerifyEmailErr();
+        Account_tblDAO accDAO=new Account_tblDAO();
+        boolean foundErr = false;
         try {
-
-            if (recid != 0) {
-                Recipe_tblDAO dao = new Recipe_tblDAO();
-               if(sttRec){
-                  dao.removeRecipe(recid);
-               }else{
-                   dao.activeRecipe(recid);
-               }
-
-            } else {
-                System.out.println("no update recipe status because recipe id = 0");
+            /* TODO output your page here. You may use following sample code. */
+            boolean checkEmailExit = accDAO.checkEmail(email);
+            if (checkEmailExit == false) {
+                foundErr = true;
+                errors.setEmailNotExisted("Email does not exist try again!");
             }
-
-        } catch (SQLException ex) {
-            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
+            boolean checkEmailActive= accDAO.checkEmailIsActive(email);
+            if (checkEmailActive == true) {
+                foundErr = true;
+                errors.setEmailIsActive("This email already activated!");
+            }
+            if (foundErr) {
+                request.setAttribute("VerifyMail_ERR", errors);
+            }else{
+                SendEmail sm = new SendEmail();
+                String code = sm.getRandom();
+                Email_DTO user = new Email_DTO( email, code);
+                boolean test = sm.sendEmail(user);
+                if (test==true) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("authcode", user);
+                    url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_CODE_PAGE);
+                    request.setAttribute("VerifyEmail_done","done");
+                    session.setAttribute("email_A",user);
+                } else {
+                    errors.setCannotSend("Can not send mail. Try again");
+                    request.setAttribute("VerifyMail_ERR", errors);
+                    
+                }
+            }
+            
+        }catch (SQLException ex) {
+            log("EmailServlet _ SQL " + ex.getMessage());
         } finally {
-            response.sendRedirect(urlRewriting);
+            // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response); // sendRedirect + urlRewriting ~ 
         }
     }
 

@@ -4,30 +4,28 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Properties;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author LamVo
+ * @author jexk
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
-
-//    private final String HOME_PAGE = "index.jsp";
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SEARCH_CONTROLER = "SearchAllRecipeController";
-    private final String HOME_PAGE_CONTROLLER = "DisplayHomePage";
-    private final String REGISTER_CONTROLLER = "RegisterServlet";
-    private final String LOGIN_CONTROLLER = "LoginController";
-    private final String CREATE_RECIPE_CONTROLLER = "CreateNewRecipe";
-    private final String DISPLAY_USER_PROFILE_CONTROLLER = "DisplayUserProfile";
-    private final String UPDATE_USER_PROFIE_CONTROLLER = "UpdateUserProfile";
+@WebServlet(name = "sendNotificationAdmin", urlPatterns = {"/sendNotificationAdmin"})
+public class sendNotificationAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,31 +39,33 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        //String url = HOME_PAGE;
-        String url = HOME_PAGE_CONTROLLER;
-        String action = request.getParameter("btAction");
-        try {
-            if (action == null) {
-                // do nothing
-            } else if (action.equals("Search")) {
-                url = SEARCH_CONTROLER;
-            } else if (action.equals("Register")) {
-                url = REGISTER_CONTROLLER;
-            } else if (action.equals("Login")) {
-                url = LOGIN_CONTROLLER;
-            } else if (action.equals("createRecipe")) {
-                url = CREATE_RECIPE_CONTROLLER;
-            } else if (action.equals("DisplayProfile")) {
-                url = DISPLAY_USER_PROFILE_CONTROLLER;
-            } else if (action.equals("Update")){
-                url = UPDATE_USER_PROFIE_CONTROLLER;
-            }
+        
+        /**
+         * Get site map (Copy this for all controller)
+         */
+        ServletContext context = getServletContext();
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        // End get site map
+        // Mapping url
+        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_HOME);
+        // get userID from Session scope
+        String sms= ""+request.getParameter("sms");
+        int id = Integer.parseInt(""+request.getParameter("summitNotiId")) ;
+       try {
+            HttpSession session = request.getSession();
+            Notification_tblDAO dao = new Notification_tblDAO();
+           int rslt = dao.setNoti(id, sms);
+           
+           
+           request.setAttribute("REPORTSMS", rslt > 0 ? "successful" : "fail"); 
+           
+        } catch (SQLException ex) {
+            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+           RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
-
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

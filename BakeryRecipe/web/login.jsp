@@ -46,19 +46,21 @@
         <![endif]-->
         
         <c:if test="${not empty Must_login}">
-        <script>alert("Your must too login");
+        <script>alert("Your account is delete");
         </script></c:if>
         <c:remove var="Must_login" scope="session" /> 
+        
+        <c:if test="${not empty verifyCode_done}">
+        <script>alert("Your email is verify");
+        </script></c:if>
+        <c:remove var="verifyCode_done" scope="session" /> 
         
         <c:if test="${not empty Remove_done}">
         <script>alert("Your account is delete");
         </script></c:if>
         <c:remove var="Remove_done" scope="session" /> 
         
-        <c:if test="${not empty Register_done}">
-        <script>alert("Your account is Register. Please login!");
-        </script></c:if>
-        <c:remove var="Register_done" scope="session" /> 
+        
         
         <c:if test="${not empty Forgot_done}">
         <script>alert("Your password is change. Please Login!");
@@ -126,10 +128,14 @@
                                     <c:if test="${not empty error.passwordEmptyErr}">
                                         <font color="red">${error.passwordEmptyErr}</font></br>
                                     </c:if>
-
+                                        
 
                                     <c:if test="${not empty error.accountNotFound}">
                                         <font color="red">${error.accountNotFound}</font></br>
+                                    </c:if>
+                                        
+                                    <c:if test="${not empty error.accIsactive}">
+                                        <font color="red">${error.accIsactive}</font></br>
                                     </c:if>
                                     <div class="inline-box mb-5 mt-4">
 <!--                                        <div class="checkbox checkbox-primary">
@@ -137,7 +143,9 @@
                                             <label for="modal-checkbox">Remember Me</label>
                                         </div>-->
                                         <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
-                                        <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label>
+                                        <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label></br>
+                                        <c:url var="verifyEmail_url" value="verifyEmailPage"></c:url>
+                                        <label class="lost-password"><a href="${verifyEmail_url}">Verify your email?</a></label>
                                     </div>
                                     <div class="inline-box mb-5 mt-4">
                                         <!--                                        <button class="btn-fill"  value="loginC" name="btAction">Login</button>-->

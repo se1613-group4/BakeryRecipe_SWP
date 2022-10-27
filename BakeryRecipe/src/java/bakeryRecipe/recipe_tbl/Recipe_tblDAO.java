@@ -640,4 +640,58 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }
+    
+    /**
+     * Author LamVo
+     * @param recipeDto
+     * @return
+     * @throws SQLException
+     */
+    public boolean updateRecipe(Recipe_tblDTO recipeDto, int recipeId) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1.  make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "UPDATE recipe_tbl\n"
+                        + "SET category_id= ?, \n"
+                        + "	name = ?, \n"
+                        + "	serving= ?, \n"
+                        + "	instruction = ?, \n"
+                        + "	prepare_time = ?, \n"
+                        + "	cook_time = ?, \n"
+                        + "	last_modified = now(),\n"
+                        + "     step = ?\n"
+                        + "WHERE (recipe_id = ?);";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, recipeDto.getCategoryId());
+                stm.setString(2, recipeDto.getName());
+                stm.setInt(3, recipeDto.getServing());
+                stm.setString(4, recipeDto.getDescription());
+                stm.setInt(5, recipeDto.getPreTime());
+                stm.setInt(6, recipeDto.getCookTime());
+                stm.setString(7, recipeDto.getSteps());
+                stm.setInt(8, recipeId);
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;                
+    }
 }

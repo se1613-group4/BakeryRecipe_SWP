@@ -245,7 +245,7 @@ public class Recipe_tblDAO implements Serializable {
                         + "	inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "    inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
                         + "where R.is_actived = 1 and R.is_hidden = 0\n"
-                        + "order by R.last_modified DESC";
+                        + "order by R.last_modified DESC limit 10";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
                 //4. execute query
@@ -612,7 +612,7 @@ public class Recipe_tblDAO implements Serializable {
         }
         return currentIdent;
     }
-
+    
     public void activeRecipe(int recipeId) throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -629,8 +629,7 @@ public class Recipe_tblDAO implements Serializable {
                 stm.setInt(1, recipeId);
                 //4. execute query
                  stm.executeUpdate();
-                //5 process result
-              
+                //5 process result              
             }// end check con not null
         } finally {
             if (stm != null) {

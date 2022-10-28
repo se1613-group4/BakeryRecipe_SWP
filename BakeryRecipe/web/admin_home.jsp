@@ -24,6 +24,9 @@
             <div class="hdr-inner">
                 <h1>Trang Quản Trị Bakery Recipe</h1>
             </div>
+            <button type="button" class="login-btn" >
+                <a href="logoutController" class="login-btn">Logout</a>
+            </button>  
         </div>
         <!--body-->
         <div class="div-center bdy">
@@ -128,13 +131,12 @@
 
                                 </div>
                             </div>
-                            <!--session 3-->
+                                     <c:if test="${not empty usinf }">
+                                         <!--session 3-->
                             <div id="userdetail" class="main-content">
                                 <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
 
                                 <div class="content-container">
-                                    <c:if test="${empty usinf}"> <H3>Please choose account you want !</h3></c:if>
-                                        <c:if test="${not empty usinf}">
                                         Action :
                                         <h5>
                                             Name:  ${usinf.fullName} <br/>
@@ -143,21 +145,16 @@
                                             Last Modified: ${usinf.lastModified} <br/>
 
                                         </h5>
-
-
-                                        <!--notification-->
                                         <br/>
 
-                                    </c:if>
                                 </div>
                             </div>
+                              <!--notification-->
+
                             <div id="userdetail" class="main-content">
                                 <h2><i class="fa fa-sitemap"></i> Notification :</h2>  
-
                                 <div class="content-container">
-                                    <c:if test="${empty usinf}"> <H3>Please choose account you want !</h3></c:if>
-                                        <c:if
-                                            test="${not empty usinf}">
+                                     
                                         <h4>[!] send notification to this user:  <strong style="color:green">${REPORTSMS}</strong> </h4> 
                                         <form action="sendNotificationAdmin">
                                             <input  type="hidden" value="${usinf.userId}" name="summitNotiId"/> 
@@ -169,10 +166,10 @@
                                                 <th>Create date </th>  
                                                 <th>Detail messeger </th>
                                             </tr>
-                                            <c:if test="${ empty sessionScope.NOTIFICATION_LIST_ADMIN && not empty usinf}">
+                                            <c:if test="${ empty sessionScope.NOTIFICATION_LIST_ADMIN }">
                                                 <H3> No messeger found!  </h3>
                                                 </c:if>
-                                                <c:if test="${ not empty sessionScope.NOTIFICATION_LIST_ADMIN && not empty usinf}">
+                                                <c:if test="${ not empty sessionScope.NOTIFICATION_LIST_ADMIN }">
 
                                                 <c:forEach items="${sessionScope.NOTIFICATION_LIST_ADMIN}" var="adminnotifii">
                                                     <tr>                                                                                
@@ -189,16 +186,11 @@
                                             </c:if>
                                         </table>
 
-                                    </c:if>
                                 </div>
                             </div>
                             <!--session4-->
                             <div id="listrecipe" class="main-content">
                                 <h2><i class="fa fa-upload"></i> User List Recipe: </h2>
-                                <c:if test="${ not empty usinf.userId}">
-                                    <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Display this user recipe </a></h5>
-                                </c:if>
-
                                 <div class="content-container">
                                     <c:if test="${ not empty sessionScope.ADMIN_LIST_RECIPE}">
 
@@ -213,7 +205,6 @@
                                                 <th>Status  </th> 
                                                 <th>Action </th>
                                             </tr>
-                                            <form action="listRecipeAdmin" method="post">
                                                 <c:forEach items="${sessionScope.ADMIN_LIST_RECIPE}" var="rec">
                                                     <tr>                                                                                
                                                         <td>
@@ -250,15 +241,13 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
-
-
-                                            </form>
                                         </table>
 
                                     </c:if>
 
                                 </div>
                             </div>
+                                    </c:if>
                         </div>
                     </div>
                 </div>

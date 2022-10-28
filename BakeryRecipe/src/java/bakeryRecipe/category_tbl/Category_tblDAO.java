@@ -79,8 +79,8 @@ public class Category_tblDAO implements Serializable{
             con = DBConnection.getConnection();
             if (con != null) {
                 //2. create sql string
-                String sql = "SELECT category_id, name as category_name\n"
-                        + "FROM bakery_recipe.category_tbl";
+                String sql = "SELECT category_id, name as category_name, count_num\n"
+                        + "FROM category_tbl;";
                 //3. create statement obj
                 stm = con.createStatement();
                 //4. execute query
@@ -90,7 +90,8 @@ public class Category_tblDAO implements Serializable{
                     // get category DTO info
                     int categoryId = rs.getInt("category_id");
                     String categoryName = rs.getString("category_name");
-                    Category_tblDTO categoryDto = new Category_tblDTO(categoryId, categoryName);                                                            
+                    int countNum = rs.getInt("count_num");
+                    Category_tblDTO categoryDto = new Category_tblDTO(categoryId, categoryName,countNum);                                                            
                     // check categoryDto list not null
                     if (this.categoryDtoList == null) {
                         this.categoryDtoList = new ArrayList<>();

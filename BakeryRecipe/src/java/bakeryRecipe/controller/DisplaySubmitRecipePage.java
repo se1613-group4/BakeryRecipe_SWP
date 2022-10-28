@@ -65,13 +65,6 @@ public class DisplaySubmitRecipePage extends HttpServlet {
             if (ingredienList != null) {
                 request.setAttribute("INGREDIENT_LIST", ingredienList);
             }
-            // Load all unit
-//            Unit_tblDAO unitDao = new Unit_tblDAO();
-//            unitDao.loadAllUnit();
-//            List<Unit_tblDTO> unitList = unitDao.getUnitDtoList();
-//            if (unitList != null) {
-//                request.setAttribute("UNIT_LIST", unitList);
-//            }
         } catch (SQLException ex) {
             log("DisplaySubmitRecipePage Controller _ SQL " + ex.getMessage());
         } finally {

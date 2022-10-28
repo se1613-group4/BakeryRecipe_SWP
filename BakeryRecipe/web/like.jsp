@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bakery Recipe - Comment</title>
+        <title>Bakery Recipe - Like</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -37,13 +37,11 @@
     </head>
 
     <body>
-        <h1>LIKE HERRRE</h1>
         <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
         <c:set var="currentAccountDto" value="${sessionScope.USER}"/>
         <c:set var="isLiked" value="${requestScope.ISLIKED}"/>
 
        
-        
         <c:if test="${isLiked == -1  || isLiked == 0}">
             <div class="like-container">
                 <form action="likeController">

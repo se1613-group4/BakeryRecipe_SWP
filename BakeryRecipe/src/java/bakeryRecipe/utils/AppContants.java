@@ -23,6 +23,7 @@ public class AppContants { // mapping all features strings
     }
 
     public class AddNewCommentFeature {
+
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
         public static final String ERROR_PAGE = "addCommentErrorPage";
         public static final String LOGIN_PAGE = "loginPage";
@@ -33,6 +34,14 @@ public class AppContants { // mapping all features strings
         public static final String ERROR_PAGE = "addCommentErrorPage";
         public static final String LOGIN_PAGE = "loginPage";
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+    }
+
+    public class FollowFeature {
+
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+
     }
 
     public class DisplaySingleRecipeFeature {
@@ -69,7 +78,7 @@ public class AppContants { // mapping all features strings
         public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
-        public static final String ADMIN_LISTUSER = "adminListUserController";
+        public static final String ADMIN_LISTUSER = "adminListAccountController";
         public static final String ADMIN_USDETAIL = "adminUsdetail";
         public static final String ADMIN_LISTRECIPE = "listRecipeAdmin";
 
@@ -104,8 +113,9 @@ public class AppContants { // mapping all features strings
         public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
 
     }
-    
+
     public class CreateRecipeFeature {
+
         public static final String ERROR_PAGE = "errorPage";
         public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
     }
@@ -115,16 +125,27 @@ public class AppContants { // mapping all features strings
         public static final String USER_PROFILE_PAGE = "userProfilePage";
         public static final String DISPLAY_USER_PROFILE_CONTROLLER = "displayUserProfileController";
     }
+
+    public class DisplayEditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "recipeNotFoundPage";
+        public static final String EDIT_RECIPE_PAGE = "editRecipePage";
+    }
     
+    public class EditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "errorPage";
+        //success: displaySingleRecipe
+    }
+
     public class EmailFeatures {
 
         public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
-       public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
-    
+
     public class VerifyCodeFeatures {
-       public static final String LOGIN_PAGE = "loginPage";
-       public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
     
     public class EmailFeatures1 {

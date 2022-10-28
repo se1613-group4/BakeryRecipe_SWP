@@ -40,7 +40,7 @@ public class adminDashBoardController extends HttpServlet {
         
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
+        String url = AppContants.Admin.ADMIN_LISTUSER;
         ArrayList<Integer> result = null ;
         try {
             HttpSession session = request.getSession();

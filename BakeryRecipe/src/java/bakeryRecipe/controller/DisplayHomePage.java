@@ -6,6 +6,8 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.category_tbl.Category_tblDAO;
+import bakeryRecipe.category_tbl.Category_tblDTO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
@@ -70,7 +72,10 @@ public class DisplayHomePage extends HttpServlet {
             List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
             
-            
+            Category_tblDAO categoryDao = new Category_tblDAO();
+            categoryDao.loadAllCategory();
+            List<Category_tblDTO> allCategory = categoryDao.getCategoryDtoList();
+            session.setAttribute("ALL_CATEGORY", allCategory);
             //--- Listen to new NOTIFICATION //
              
              Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");

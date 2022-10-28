@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Category_tblDTO implements Serializable{
     private int categoryId;
     private String name;
+    private int countNum;
     // Constructors
 
     public Category_tblDTO() {
@@ -23,6 +24,13 @@ public class Category_tblDTO implements Serializable{
         this.categoryId = categoryId;
         this.name = name;
     }
+
+    public Category_tblDTO(int categoryId, String name, int countNum) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.countNum = countNum;
+    }
+    
     // Getters
 
     public int getCategoryId() {
@@ -40,6 +48,14 @@ public class Category_tblDTO implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCountNum() {
+        return countNum;
+    }
+
+    public void setCountNum(int countNum) {
+        this.countNum = countNum;
     }
     
 }

@@ -8,7 +8,6 @@ import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.servlet.ServletContext;

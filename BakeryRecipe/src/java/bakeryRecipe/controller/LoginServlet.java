@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("USER", user);
                     session.setAttribute("LOGIN_USER", user);
                     if (user.isIsAdmin() == true) {
-                        url = siteMaps.getProperty(AppContants.LoginFeatures.LOGIN_PAGE);
+                        url = siteMaps.getProperty(AppContants.Admin.ADMIN_DASHBOARD);
                     } else {
                         url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
                     }

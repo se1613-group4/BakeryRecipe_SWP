@@ -2,3 +2,5 @@
 .DS_Store
 
 BakeryRecipe/src/java/bakeryRecipe/utils/DBConnection.java
+
+BakeryRecipe/nbproject/

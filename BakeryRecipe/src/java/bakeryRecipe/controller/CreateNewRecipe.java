@@ -46,9 +46,8 @@ public class CreateNewRecipe extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
+        
+        //Get site map
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         // End get site map
@@ -102,11 +101,12 @@ public class CreateNewRecipe extends HttpServlet {
             // call imageDao and insert into image_tbl
             boolean resultInsertImg = true;
             if (imgUrls != null && !"".equals(imgUrls[0])) {
-                Image_tblDAO imgDao = new Image_tblDAO();
-                resultInsertImg = false;
-                if (imgDao.removeImg(recipeCurrentId)) {
-                    resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
-                }
+                Image_tblDAO imgDao = new Image_tblDAO();                
+                imgDao.removeImg(recipeCurrentId);
+                resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
+//                if (imgDao.removeImg(recipeCurrentId)) {
+//                    resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
+//                }
                 System.out.println("======RESULT INSERT IMAGE=======" + resultInsertImg);
             }          
             // call videoDao and insert into video_tbl

@@ -142,8 +142,8 @@
                                             <input id="modal-checkbox" type="checkbox">
                                             <label for="modal-checkbox">Remember Me</label>
                                         </div>-->
-                                        <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
-                                        <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label></br>
+                                        <c:url var="verifyEmail_url1" value="verifyEmailPage1"></c:url>
+                                        <label class="lost-password"><a href="${verifyEmail_url1}">Lost your password?</a></label></br>
                                         <c:url var="verifyEmail_url" value="verifyEmailPage"></c:url>
                                         <label class="lost-password"><a href="${verifyEmail_url}">Verify your email?</a></label>
                                     </div>

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  * @author PC
  */
 @WebServlet(name = "EmailServlet", urlPatterns = {"/EmailServlet"})
-public class EmailServlet extends HttpServlet {
+public class EmailServlet1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

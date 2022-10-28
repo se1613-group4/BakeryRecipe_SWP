@@ -126,5 +126,16 @@ public class AppContants { // mapping all features strings
        public static final String LOGIN_PAGE = "loginPage";
        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
+    
+    public class EmailFeatures1 {
+
+        public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage1";
+       public static final String VERIFY_CODE_PAGE = "verifyCodePage1";
+    }
+    
+    public class VerifyCodeFeatures1 {
+       public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
+       public static final String VERIFY_CODE_PAGE = "verifyCodePage1";
+    }
 
 }

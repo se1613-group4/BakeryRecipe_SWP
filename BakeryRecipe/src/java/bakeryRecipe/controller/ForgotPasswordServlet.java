@@ -6,6 +6,7 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.ForgotPasswordError;
+import bakeryRecipe.email.Email_DTO;
 import bakeryRecipe.utils.AppContants;
 import bakeryRecipe.utils.SHA256;
 import java.io.IOException;
@@ -48,11 +49,10 @@ public class ForgotPasswordServlet extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         String urlRewriting = siteMaps.getProperty(AppContants.ForgotPaswordFeartures.FORGOT_PASSWORD_PAGE);
         Account_tblDAO accDAO = new Account_tblDAO();
+        
         HttpSession session = request.getSession();
         ForgotPasswordError errors = new ForgotPasswordError();
         boolean foundErr = false;
-        String email = request.getParameter("txtEmail");
-        String phoneNumber = request.getParameter("txtPhonenumber");
         String confirm = request.getParameter("txtConfirm");
         String newPassword = request.getParameter("txtNewPassword");
         byte[] getShaNew= SHA256.getSHA(newPassword);
@@ -64,22 +64,9 @@ public class ForgotPasswordServlet extends HttpServlet {
         Pattern passwordPattern = Pattern.compile("[a-zA-Z0-9]{8,}$");
         try {
             /* TODO output your page here. You may use following sample code. */
-            boolean checkEmailExit = accDAO.checkEmail(email);
-            if (checkEmailExit == false) {
-                foundErr = true;
-                errors.setEmailExisted("Email does not exist try again!");
-            }
-            boolean checkPhonenumberExit = accDAO.checkPhonenumber(phoneNumber);
-            if (checkPhonenumberExit == false) {
-                foundErr = true;
-                errors.setPhonenumberExisted("Phonenumer does not existed try again!");
-            }
-            boolean checkEmailAndPhonenumber = accDAO.checkEmailAndPhonenumber(email, phoneNumber);
-            if (checkEmailAndPhonenumber == false) {
-                foundErr = true;
-                errors.setEmailAndPhonenumberNotMathErr("Phone number and email must be from the same account! Please try again!");
-            }
-            boolean checkNewPassword= accDAO.checkPasswordEP(email, phoneNumber, newPassSHA);
+            Email_DTO user = (Email_DTO) session.getAttribute("authcode");
+            int userID = accDAO.checkUserIdWithEmail(user.getEmail());
+            boolean checkNewPassword= accDAO.checkPasswordEP(userID, newPassSHA);
             if (checkNewPassword==true) {
                 foundErr = true;
                 errors.setNewPasswordSameAsErr("The new password must not be the same as the old password");
@@ -96,7 +83,7 @@ public class ForgotPasswordServlet extends HttpServlet {
             }if (foundErr) {
                 request.setAttribute("FORGOTPASSWOD_ERR", errors);
             }else{
-                boolean result= accDAO.uploadPasswordEP(email, phoneNumber, newPassSHA);
+                boolean result= accDAO.uploadPasswordEP(userID, newPassSHA);
                 if (result = true) {
                     urlRewriting = siteMaps.getProperty(AppContants.ForgotPaswordFeartures.LOGIN_PAGE);
                     session = request.getSession(true);

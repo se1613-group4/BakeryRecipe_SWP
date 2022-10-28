@@ -8,18 +8,17 @@ package bakeryRecipe.controller;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import bakeryRecipe.comment_tbl.Comment_tblDTO;
+import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
-import bakeryRecipe.save_tbl.Save_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -69,9 +68,9 @@ public class DisplaySingleRecipe extends HttpServlet {
                 Recipe_Ingredient_tblDAO ingredientDetailDao = new Recipe_Ingredient_tblDAO();
                 ingredientDetailDao.getIngredientDetail(recipeId);
                 List<Recipe_Ingredient_tblDTO> ingredientDetailDtoList = ingredientDetailDao.getRecipeIngreDtoList();
-                request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);            
+                request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);
                 //----------------------------
-                //thongnt section
+                //thongnt section start
                 //DISPLAY COMMENTS FUNCTION
                 //1. Call DAO
                 Comment_tblDAO commentDao = new Comment_tblDAO();
@@ -85,21 +84,34 @@ public class DisplaySingleRecipe extends HttpServlet {
                 //2. Process result
                 request.setAttribute("LIKES_COUNT", likeCount);
 
-                //CHECK IF LIKED FUNCTION
+                //CHECK IF LIKED and FOLLOWED FUNCTION
                 HttpSession session = request.getSession(true);
+                Follow_tblDAO followDao = new Follow_tblDAO();
                 Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
-                int isLiked = 0;
+                int isLiked = 0; //have not loged in OR have not liked
+                int isfollowed = 0; //have not loged in OR have not followed
+
                 if (currentUser == null) {
-                    isLiked = -1;
+                    isLiked = -1; //have not loged in
+                    isfollowed = -1; //have not loged in
                 } else {
                     if (likeDao.isLiked(recipeId, currentUser.getUserId())) {
                         isLiked = 1;
-                    }//end check if user has liked recipe                    
+                    }//end check if user has liked recipe
+                    int recipeAuthorId = recipeDto.getAuthorInfo().getUserId();
+                    System.out.println("PAIR FOLLOW: " + currentUser.getUserId() + "-" + recipeAuthorId);
+                    System.out.println(followDao.isFollowed(1, 1));
+                    if (followDao.isFollowed(currentUser.getUserId(), recipeAuthorId)) {
+                        isfollowed = 1;
+                    }//end check if user has followed this recipe's author
                 }//end check if user has login
 
                 request.setAttribute("ISLIKED", isLiked);
+                request.setAttribute("ISFOLLOWED", isfollowed);
 
-                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SEARCH_SAVED_RECIPE_CONTROLLER);
+                //thongnt section end
+                //----------------------------
+                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
 
             }
         } catch (SQLException ex) {

@@ -4,12 +4,14 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
-import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,17 +39,19 @@ import javax.servlet.http.HttpSession;
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         HttpSession session = request.getSession();
-
-        String urlRewriting = AppContants.Admin.ADMIN_USDETAIL;
+        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
         String test = request.getParameter("usid");
         int  usid = test==null? 1 :  Integer.parseInt(test);
         try {
             Profile_tblDAO dao = new Profile_tblDAO();
-            Profile_tblDTO  dto =dao.displayUserProfile(usid);
-            
+            Profile_tblDTO  dto =dao.displayOtherUserProfile(usid);
+                
             if (dto != null) {
+                     Notification_tblDAO notidao = new Notification_tblDAO();
+                   ArrayList<Notification_tblDTO> listnotifii =   notidao.getListNoti(usid);
                     session.setAttribute( "usinf", dto);
                     urlRewriting ="adminHome";
+                    session.setAttribute("NOTIFICATION_LIST_ADMIN", listnotifii);
             }
             
             

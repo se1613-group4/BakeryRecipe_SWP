@@ -53,12 +53,18 @@ public class LoginServlet extends HttpServlet {
         LoginError errors = new LoginError();
         boolean foundErr = false;
         try {
+            Account_tblDAO accDAO = new Account_tblDAO();
             /* TODO output your page here. You may use following sample code. */
             //feth data from login form            
             String username = request.getParameter("txtUsername").trim();
             String password = request.getParameter("txtPassword");
             byte[] getSha= SHA256.getSHA(password);
             String passSHA= SHA256.toHexString(getSha);
+            boolean checkAccIsActive = accDAO.checkAccountIsActive(username, passSHA);
+            if (checkAccIsActive == false) {
+                foundErr = true;
+                errors.setAccIsactive("Account not active!");
+            }
             if (foundErr) {
                 request.setAttribute("LOGIN_ERR", errors);
             } else {
@@ -73,9 +79,9 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("USER", user);
                     session.setAttribute("LOGIN_USER", user);
                     if (user.isIsAdmin() == true) {
-                        url = siteMaps.getProperty(AppContants.LoginFeatures.LOGIN_PAGE);
+                        url = siteMaps.getProperty(AppContants.Admin.ADMIN_DASHBOARD);
                     } else {
-                        url = siteMaps.getProperty(AppContants.LoginFeatures.HOME_PAGE_USER);
+                        url = siteMaps.getProperty(AppContants.LoginFeatures.GET_NOTIFICATION_DATA_CONTROLLER);
                     }
                     
                 } //end if user click login

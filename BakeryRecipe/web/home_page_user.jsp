@@ -36,18 +36,9 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
-        <c:url var="login_url" value="loginPage"></c:url>
-        <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
-            <h5> Please to login</h5>
-            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-            <script>
-                function dieu_huong_login() {
-                    location.assign("${login_url}");
-                }
-            </script>
-        </c:if>
+        
             
-        <c:if test="${sessionScope.LOGIN_USER!=null  || sessionScope.LOGIN_USER.isActived==false }">
+        
 
             <c:if test="${not empty Reset_done}">
                 <script>alert("Your password is change");
@@ -198,45 +189,23 @@
                             </div>
 
                             <!-- Category List-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">CATEGORIES</h3>
-                                </div>
-                                <div class="widget-categories">
-                                    <ul>
-                                        <li>
-                                            <a href="#">BreakFast
-                                                <span>25</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Lunch
-                                                <span>15</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Pasta
-                                                <span>22</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dinner
-                                                <span>18</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dessert
-                                                <span>36</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Drinks
-                                                <span>12</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>                        
+                        <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
+                        <div class="widget">
+                            <div class="section-heading heading-dark">
+                                <h3 class="item-heading">CATEGORIES</h3>
+                            </div>
+                            <div class="widget-categories">
+                                <ul>
+                                <c:forEach var="categoryDto" items="${categoryList}">
+                                    <li>
+                                        <a href="#${categoryDto.categoryId}">${categoryDto.name}
+                                            <span>${categoryDto.countNum}</span>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                                </ul>
+                            </div>
+                        </div>                        
                         </div>
                     </div>
                 </div>
@@ -584,6 +553,6 @@
             <script src="js/smoothscroll.min.js"></script>
             <!-- Custom Js -->
             <script src="js/main.js"></script>
-        </c:if>
+        
     </body>
 </html>

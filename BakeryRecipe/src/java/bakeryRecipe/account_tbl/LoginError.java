@@ -16,6 +16,7 @@ public class LoginError implements Serializable {
     private String accountNotFound;
     private String userameFormatErr;
     private String passwordFormatErr;
+    private String accIsactive;
     public LoginError() {
     }
 
@@ -32,6 +33,14 @@ public class LoginError implements Serializable {
         this.accountNotFound = accountNotFound;
         this.userameFormatErr = userameFormatErr;
         this.passwordFormatErr = passwordFormatErr;
+    }
+
+    public String getAccIsactive() {
+        return accIsactive;
+    }
+
+    public void setAccIsactive(String accIsactive) {
+        this.accIsactive = accIsactive;
     }
 
     public String getUserameFormatErr() {

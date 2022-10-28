@@ -36,11 +36,18 @@ public class AppContants { // mapping all features strings
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
     }
 
+    public class FollowFeature {
+
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+
+    }
+
     public class DisplaySingleRecipeFeature {
 
         public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
-        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
     }
 
     public class DisplayOwnRecipesFeature {
@@ -55,6 +62,8 @@ public class AppContants { // mapping all features strings
 
     public class LoginFeatures {
 
+        public static final String GET_NOTIFICATION_DATA_CONTROLLER = "getNotificationDataController";
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "displayHomePage";
         public static final String LOGIN_PAGE = "loginPage";
         public static final String HOME_PAGE_USER = "homePageUser";
     }
@@ -62,7 +71,8 @@ public class AppContants { // mapping all features strings
     public class RegisterFeatures {
 
         public static final String ERROR_PAGE = "registerPage";
-        public static final String LOGIN_PAGE = "loginPage";
+//        public static final String LOGIN_PAGE = "loginPage";
+        public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
     }
 
     public class Admin {
@@ -70,7 +80,7 @@ public class AppContants { // mapping all features strings
         public static final String ADMIN_UPDATESINGLERECIPE = "adminUpdateRecipe";
         public static final String ADMIN_HOME = "adminHome";
         public static final String ADMIN_DASHBOARD = "adminDashBoardController";
-        public static final String ADMIN_LISTUSER = "adminListUserController";
+        public static final String ADMIN_LISTUSER = "adminListAccountController";
         public static final String ADMIN_USDETAIL = "adminUsdetail";
         public static final String ADMIN_LISTRECIPE = "listRecipeAdmin";
 
@@ -118,10 +128,39 @@ public class AppContants { // mapping all features strings
         public static final String DISPLAY_USER_PROFILE_CONTROLLER = "displayUserProfileController";
     }
 
+    public class DisplayEditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "recipeNotFoundPage";
+        public static final String EDIT_RECIPE_PAGE = "editRecipePage";
+    }
+    
+    public class EditRecipeFeature {
+        public static final String RECIPE_NOT_FOUND= "errorPage";
+        //success: displaySingleRecipe
+    }
+
+    public class EmailFeatures {
+
+        public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
+        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+    }
+
+    public class VerifyCodeFeatures {
+
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+    }
+    
     public class SaveRecipe {
 
         public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
         public static final String DISPLAY_SINGLE_REICPE_CONTROLLER = "displaySingleRecipe";
+    }
+
+    public class NotificationFeartures {
+        
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "displayHomePage";
+        public static final String HEADER_USER = "headerUser";
+        
     }
 }

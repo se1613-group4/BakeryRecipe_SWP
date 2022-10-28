@@ -43,14 +43,19 @@ public class adminUpdateRecipe extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
         String test = request.getParameter("recid");
+        boolean sttRec = (request.getParameter("sttRec")).equals("true");
         int recid = test == null ? 0 : Integer.parseInt(test);
         try {
 
             if (recid != 0) {
                 Recipe_tblDAO dao = new Recipe_tblDAO();
-                dao.removeRecipe(recid);
+               if(sttRec){
+                  dao.removeRecipe(recid);
+               }else{
+                   dao.activeRecipe(recid);
+               }
 
             } else {
                 System.out.println("no update recipe status because recipe id = 0");

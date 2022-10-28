@@ -466,7 +466,10 @@
                                                         </h2>
 
                                                         <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
-                                                            <input style="margin-left: 60px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
+                                                            <input style="margin-left: 40px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>                                                           
+                                                            <a href="displaySavedRecipeController" style="margin-left: 20px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
+                                                                <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Saved</span>
+                                                            </a>
                                                         </p>
 
                                                         <label>Username: </label><h2>${profile_result.username}</h2>

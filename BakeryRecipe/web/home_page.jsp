@@ -36,10 +36,6 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>   
-        <c:if test="${not empty Must_login}">
-        <script>alert("Your must too login");
-        </script></c:if>
-        <c:remove var="Must_login" scope="session" /> 
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->
@@ -150,7 +146,8 @@
                             <a href="#"><img src="img/figure/figure1.jpg" alt="ad"></a>
                         </div>
                     </div>
-
+                    <!--Right side bar-->
+                    <%--<jsp:include page="righ-side-bar.jsp"></jsp:include>--%>
                     <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
                         <!-- Top 5 Recipes-->
                         <div class="widget">                            
@@ -187,42 +184,20 @@
                         </div>
 
                         <!-- Category List-->
-                        <div class="widget">
-                            <div class="section-heading heading-dark">
-                                <h3 class="item-heading">CATEGORIES</h3>
-                            </div>
-                            <div class="widget-categories">
-                                <ul>
-                                    <li>
-                                        <a href="#">BreakFast
-                                            <span>25</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Lunch
-                                            <span>15</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Pasta
-                                            <span>22</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Dinner
-                                            <span>18</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Dessert
-                                            <span>36</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Drinks
-                                            <span>12</span>
-                                        </a>
-                                    </li>
+                        <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
+                            <div class="widget">
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">CATEGORIES</h3>
+                                </div>
+                                <div class="widget-categories">
+                                    <ul>
+                                    <c:forEach var="categoryDto" items="${categoryList}">
+                                        <li>
+                                            <a href="#${categoryDto.categoryId}">${categoryDto.name}
+                                                <span>${categoryDto.countNum}</span>
+                                            </a>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>                        
@@ -522,23 +497,23 @@
                         <c:url var="login_url" value="loginPage"></c:url>
                         <c:url var="register_url" value="registerPage"></c:url>
                             <form class="login-form" action="login_url"  method="post" id="loginform">
-<!--                                <div class="inline-box mb-5 mt-4">
-                                    <a href="${login_url}">Login</a>
-                                <a href="${register_url}">Register</a>
-                            </div>-->
+                                <!--                                <div class="inline-box mb-5 mt-4">
+                                                                    <a href="${login_url}">Login</a>
+                                                                <a href="${register_url}">Register</a>
+                                                            </div>-->
                             <div class="inline-box mb-5 mt-4">
-                            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-                            <script>
-                                function dieu_huong_login() {
-                                    location.assign("${login_url}");
-                                }
-                            </script>
-                            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
-                            <script>
-                                function dieu_huong_Register() {
-                                    location.assign("${register_url}");
-                                }
-                            </script>
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+                                <script>
+                                    function dieu_huong_login() {
+                                        location.assign("${login_url}");
+                                    }
+                                </script>
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
+                                <script>
+                                    function dieu_huong_Register() {
+                                        location.assign("${register_url}");
+                                    }
+                                </script>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>

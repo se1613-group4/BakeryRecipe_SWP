@@ -6,6 +6,8 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.category_tbl.Category_tblDAO;
+import bakeryRecipe.category_tbl.Category_tblDTO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
@@ -70,26 +72,35 @@ public class DisplayHomePage extends HttpServlet {
             List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);
             
+            Category_tblDAO categoryDao = new Category_tblDAO();
+            categoryDao.loadAllCategory();
+            List<Category_tblDTO> allCategory = categoryDao.getCategoryDtoList();
+            session.setAttribute("ALL_CATEGORY", allCategory);
             
-            //--- Listen to new NOTIFICATION //
-             
-             Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
-             if(account != null)
-             {
-              Notification_tblDAO notidao = new Notification_tblDAO();
-              ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
-              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(account.getUserId());
-              if(lsNoti == null){
-                  lsNoti = new ArrayList<>();
-                  lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
-              }else{
-                  lsNoti = dao==null ? lsNoti : dao;
-              }
-              
-                   session.setAttribute("NOTIFIII",lsNoti);
             
-             }
-              //--- Listen to new NOTIFICATION //
+            
+            
+            
+            
+//            //--- Listen to new NOTIFICATION //
+//             
+//             Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
+//             if(account != null)
+//             {
+//              Notification_tblDAO notidao = new Notification_tblDAO();
+//              ArrayList<Notification_tblDTO> lsNoti = (ArrayList<Notification_tblDTO>) session.getAttribute("NOTIFIII"); ;
+//              ArrayList<Notification_tblDTO> dao = notidao.getListNoti(account.getUserId());
+//              if(lsNoti == null){
+//                  lsNoti = new ArrayList<>();
+//                  lsNoti.add(new Notification_tblDTO(0,0,"Hello there,wellcome to Bakery Recipe...", null ));
+//              }else{
+//                  lsNoti = dao==null ? lsNoti : dao;
+//              }
+//              
+//                   session.setAttribute("NOTIFIII",lsNoti);
+//            
+//             }
+//              //--- Listen to new NOTIFICATION //
             
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());

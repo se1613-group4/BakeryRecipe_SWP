@@ -57,10 +57,11 @@ public class ForgotPasswordServlet extends HttpServlet {
         String newPassword = request.getParameter("txtNewPassword");
         byte[] getShaNew= SHA256.getSHA(newPassword);
                 String newPassSHA= SHA256.toHexString(getShaNew);
-        Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        //Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         /*
         Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
          */
+        Pattern passwordPattern = Pattern.compile("[a-zA-Z0-9]{8,}$");
         try {
             /* TODO output your page here. You may use following sample code. */
             boolean checkEmailExit = accDAO.checkEmail(email);
@@ -85,8 +86,9 @@ public class ForgotPasswordServlet extends HttpServlet {
             }
             if (passwordPattern.matcher(newPassword).matches() == false) {
                 foundErr = true;
-                errors.setNewPasswordFormatErr("New password wrong format.\n  "
-                        + "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+                errors.setNewPasswordFormatErr("Password wrong format.\n  "
+                        + "Minimum eight characters\n"
+                        + "May not contain special characte");
             } 
             if (!confirm.trim().equals(newPassword)) {
                 foundErr = true;

@@ -42,44 +42,18 @@
         <script src="js/notification.js"></script>
     </head>
     <body>
-        <c:url var="login_url" value="loginPage"></c:url>
-        <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
-            <h5> Please to login</h5>
-            <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-            <script>
-                function dieu_huong_login() {
-                    location.assign("${login_url}");
-                }
-            </script>
-        </c:if>
 
-        <c:if test="${sessionScope.LOGIN_USER!=null  || sessionScope.LOGIN_USER.isActived==false }">
-            <!-- Header start here-->
-            <header class="header-one">
-                <!-- Top Header-->    
-                <div id="header-main-menu" class="header-main-menu header-sticky">
-                    <div class="container">                    
-                        <div class="row">
-                            <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
-                                <div class="site-logo-mobile">
-                                    <a href="displayHomePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
-                                    <a href="displayHomePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
-                                </div>
-                                <nav class="site-nav">
-                                    <ul id="site-menu" class="site-menu">
-                                        <li><a href="displayHomePage">Home</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Category</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">All Recipes</a>
-                                        </li>
-
-                                    </ul>
-                                </nav>
+        <!-- Header start here-->
+        <header class="header-one">
+            <!-- Top Header-->    
+            <div id="header-main-menu" class="header-main-menu header-sticky">
+                <div class="container">                    
+                    <div class="row">
+                        <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
+                            <div class="site-logo-mobile">
+                                <a href="displayHomePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                                <a href="displayHomePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
                             </div>
-
                             <nav class="site-nav">
                                 <ul id="site-menu" class="site-menu">
                                     <li><a href="displayHomePage">Home</a>
@@ -93,7 +67,7 @@
 
                                 </ul>
                             </nav>
-                        </div>
+                        </div>                                                    
 
                         <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
                             <div class="nav-action-elements-layout1">
@@ -131,7 +105,18 @@
                                         <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                                         <div id="notifications">
                                             <h3>Notifications</h3>
-                                            <div style="height:300px;"></div>
+                                            <div style="height:300px; overflow-y: scroll;">
+                                                <c:set var="noti" value="${sessionScope.NOTIFICATION_RESULT}"/>
+                                                <c:if test="${not empty noti}">
+                                                    <c:forEach var="notiDto" items="${noti}" varStatus="counter">
+                                                        <c:set var="notiDetail" value="${notiDto.detail}"/>
+                                                            <p>${notiDetail}</p>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${empty noti}">
+                                                    <p>No notification yet</p>
+                                                </c:if>
+                                            </div>
                                             <div class="seeAll"><a href="#">See All</a></div>
                                         </div>
                                     </li>
@@ -145,52 +130,45 @@
                                         <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
                                     </li>
-                                        <!-- Logout Button-->
-                                        <li>
-                                            <c:if test="${sessionScope.LOGIN_USER==null ||  sessionScope.LOGIN_USER.isActived==true}">
-                                                <h5> Please to login</h5>
-                                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-                                                <script>
-                                                    function dieu_huong_login() {
-                                                        location.assign("${login_url}");
-                                                    }
-                                                </script>
-                                            </c:if>
-                                            <c:if test="${sessionScope.LOGIN_USER!=null  || sessionScope.LOGIN_USER.isActived==false }">
-                                                <button type="button" class="login-btn" >
-                                                    <a href="LogoutServlet" class="login-btn">Logout</a>
-                                                </button>     
-                                            </c:if>
-                                        </li>                                    
-                                    </ul>
-                                </div>
+                                    <!-- Logout Button-->
+                                    <li>
 
-                                <div class="mob-menu-open toggle-menu">
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                    <span class="bar"></span>
-                                </div>
+
+                                        <button type="button" class="login-btn" >
+                                            <a href="logoutController" class="login-btn">Logout</a>
+                                        </button>     
+
+                                    </li>                                    
+                                </ul>
                             </div>
+
+                            <div class="mob-menu-open toggle-menu">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
-
-                <!-- Bottom Header-->
-                <div class="header-bottom d-none d-lg-block">
-                    <div class="container">
-                        <div class="row">
-                            <!-- Logo -->
-                            <div class="col-lg-4 d-none d-lg-block">
-                                <div class="site-logo-desktop">
-                                    <a href="index.html" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
+
+            <!-- Bottom Header-->
+            <div class="header-bottom d-none d-lg-block">
+                <div class="container">
+                    <div class="row">
+                        <!-- Logo -->
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <div class="site-logo-desktop">
+                                <a href="index.html" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--</div>-->
         </header>
 
         <!--notification-->
@@ -205,20 +183,20 @@
         <!--notification-->
         <!-- Header end here -->
 
-            <!-- Jquery Js -->
-            <script src="js/jquery-3.3.1.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/popper.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/bootstrap.min.js"></script>
-            <!-- Plugins Js -->
-            <script src="js/plugins.js"></script>
-            <!-- Owl Carousel Js -->
-            <script src="js/owl.carousel.min.js"></script>
-            <!-- Smoothscroll Js -->
-            <script src="js/smoothscroll.min.js"></script>
-            <!-- Custom Js -->
-            <script src="js/main.js"></script>
-        </c:if>
+        <!-- Jquery Js -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="js/popper.min.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Plugins Js -->
+        <script src="js/plugins.js"></script>
+        <!-- Owl Carousel Js -->
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- Smoothscroll Js -->
+        <script src="js/smoothscroll.min.js"></script>
+        <!-- Custom Js -->
+        <script src="js/main.js"></script>
+
     </body>
 </html>

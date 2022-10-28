@@ -137,4 +137,38 @@ public class Recipe_Ingredient_tblDAO implements Serializable{
             }
         }
     }
+
+
+    public boolean removeIngredientDetail(int recipeId) 
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1.  make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "DELETE FROM recipe_ingredient_tbl\n"
+                        + "WHERE (`recipe_id` = ?);";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, recipeId);
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;                
+    }
 }

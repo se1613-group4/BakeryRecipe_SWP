@@ -428,8 +428,8 @@ public class Account_tblDAO implements Serializable {
 
     }
 
-    //check new password is the same old password when have userId
-    public boolean checkPasswordEP(int userId, String newPassword) throws SQLException {
+    //check new password is the same old password when have email and phonenumber
+    public boolean checkPasswordEP(String email, String phonenumber, String newPassword) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -439,11 +439,12 @@ public class Account_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "select user_id from account_tbl where user_id=? and password=?";
+                String sql = "select user_id from account_tbl where email=? and phone_number=? and password=?";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setInt(1, userId);
-                stm.setString(2, newPassword);
+                stm.setString(1, email);
+                stm.setString(2, phonenumber);
+                stm.setString(3, newPassword);
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result
@@ -469,7 +470,7 @@ public class Account_tblDAO implements Serializable {
     }
 
     //update password when have email and phonenumber
-    public boolean uploadPasswordEP(int userId, String newPassword)
+    public boolean uploadPasswordEP(String email, String phonenumber, String newPassword)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -481,12 +482,13 @@ public class Account_tblDAO implements Serializable {
             if (con != null) {
                 //2. create sql string
                 String sql = "update account_tbl set password=?, last_modified=? "
-                        + "where user_id=? ";
+                        + "where email=? and phone_number=? ";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, newPassword);
                 stm.setDate(2, now);
-                stm.setInt(3, userId);
+                stm.setString(3, email);
+                stm.setString(4, phonenumber);
 
                 //4. execute query
                 int affectedRows = stm.executeUpdate();

@@ -87,7 +87,26 @@
                                 </div>
                                 <!--FORGOT PASSWORD FORM-->
                                 <c:set var="error" value="${requestScope.FORGOTPASSWOD_ERR}"></c:set>
-                                    <form class="login-form" action="forgotPasswordController"  method="post">                           
+                                    <form class="login-form" action="forgotPasswordController"  method="post">
+
+                                        <input value="${param.txtEmail}" class="main-input-box" name="txtEmail" type="email" placeholder="Email" required
+                                           oninvalid="this.setCustomValidity('Enter Email Here')"
+                                           oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.emailExisted}">
+                                        <font color="red">${error.emailExisted}</font></br>
+                                    </c:if>
+
+                                    <input value="${param.txtPhonenumber}" class="main-input-box" name="txtPhonenumber" type="phonenumber" placeholder="Phonenumber" required
+                                           oninvalid="this.setCustomValidity('Enter Phonenumber Here')"
+                                           oninput="this.setCustomValidity('')"/>
+                                    <c:if test="${not empty error.phonenumberExisted}">
+                                        <font color="red">${error.phonenumberExisted}</font></br>
+                                    </c:if>  
+                                        
+                                    <c:if test="${not empty error.emailAndPhonenumberNotMathErr}">
+                                        <font color="red">${error.emailAndPhonenumberNotMathErr}</font></br>
+                                    </c:if>  
+                                        
                                     <input class="main-input-box" name="txtNewPassword" type="password" placeholder="Password" required
                                            oninvalid="this.setCustomValidity('Enter password Here')"
                                            oninput="this.setCustomValidity('')"/>

@@ -44,7 +44,7 @@ public class EmailServlet extends HttpServlet {
         String email = request.getParameter("txtEmail");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = siteMaps.getProperty(AppContants.EmailFeatures1.VERIFY_EMAIL_PAGE);
+        String url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_EMAIL_PAGE);
         VerifyEmailErr errors = new VerifyEmailErr();
         Account_tblDAO accDAO=new Account_tblDAO();
         boolean foundErr = false;
@@ -70,7 +70,7 @@ public class EmailServlet extends HttpServlet {
                 if (test==true) {
                     HttpSession session = request.getSession();
                     session.setAttribute("authcode", user);
-                    url = siteMaps.getProperty(AppContants.EmailFeatures1.VERIFY_CODE_PAGE);
+                    url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_CODE_PAGE);
                     request.setAttribute("VerifyEmail_done","done");
                     session.setAttribute("email_A",user);
                 } else {

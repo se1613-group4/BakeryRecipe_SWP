@@ -7,9 +7,7 @@ package bakeryRecipe.controller;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -47,23 +45,25 @@ public class sendNotificationAdmin extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         // End get site map
         // Mapping url
-        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_HOME);
+        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_USDETAIL);
         // get userID from Session scope
         String sms= ""+request.getParameter("sms");
         int id = Integer.parseInt(""+request.getParameter("summitNotiId")) ;
        try {
             HttpSession session = request.getSession();
+             
             Notification_tblDAO dao = new Notification_tblDAO();
            int rslt = dao.setNoti(id, sms);
            
-           
-           request.setAttribute("REPORTSMS", rslt > 0 ? "successful" : "fail"); 
+           session.setAttribute("usid", id);
+           session.setAttribute("REPORTSMS", rslt > 0 ? "successful" : "fail"); 
            
         } catch (SQLException ex) {
             log("DisplayHomePage Controller _ SQL " + ex.getMessage());
         } finally {
-           RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//           RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
         }
        
     }

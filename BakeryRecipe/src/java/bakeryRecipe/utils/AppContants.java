@@ -148,4 +148,25 @@ public class AppContants { // mapping all features strings
         public static final String VERIFY_CODE_PAGE = "verifyCodePage";
     }
 
+     public class SaveRecipe {
+
+        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
+        public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
+        public static final String DISPLAY_SINGLE_REICPE_CONTROLLER = "displaySingleRecipe";
+    }
+     
+    public class NotificationFeartures {
+        
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "displayHomePage";
+        public static final String HEADER_USER = "headerUser";
+        
+    }
+    
+    public class FollowFeatures {
+
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+
+    }
 }

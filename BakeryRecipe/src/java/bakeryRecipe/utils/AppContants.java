@@ -48,6 +48,7 @@ public class AppContants { // mapping all features strings
 
         public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
+        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
     }
 
     public class DisplayOwnRecipesFeature {
@@ -62,6 +63,8 @@ public class AppContants { // mapping all features strings
 
     public class LoginFeatures {
 
+        public static final String GET_NOTIFICATION_DATA_CONTROLLER = "getNotificationDataController";
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "displayHomePage";
         public static final String LOGIN_PAGE = "loginPage";
         public static final String HOME_PAGE_USER = "homePageUser";
     }

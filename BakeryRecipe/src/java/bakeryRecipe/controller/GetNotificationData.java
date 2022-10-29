@@ -56,6 +56,9 @@ public class GetNotificationData extends HttpServlet {
                 Notification_tblDAO dao = new Notification_tblDAO();
                 //process result 
                 List<Notification_tblDTO> result = dao.getListNoti(user.getUserId());
+                for (int i = 0; i < result.size(); i++) {
+                    System.out.println(result.get(i));
+                }
                 session.setAttribute("NOTIFICATION_RESULT", result);
                 url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
             }

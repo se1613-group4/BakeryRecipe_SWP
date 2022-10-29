@@ -82,7 +82,7 @@ public class CreateNewCommentController extends HttpServlet {
                     List<Integer> followerId = followDao.getFollowers(user_id);
                     Notification_tblDAO notiDao = new Notification_tblDAO();
                     for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has commented in a reicpe.");
+                        notiDao.setNoti(followerId.get(i), user_id + " has left a comment in a reicpe.");
                     }
                 }//end check result
             }//end check has been login

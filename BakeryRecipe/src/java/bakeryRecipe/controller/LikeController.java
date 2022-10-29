@@ -5,15 +5,11 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.like_tbl.Like_tblDAO;
-import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,18 +57,10 @@ public class LikeController extends HttpServlet {
                 Like_tblDAO dao = new Like_tblDAO();
                 if (dao.likeRecipe(recipe_id, user_id)) {
                     urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
-                    Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has like your post.");
-                    }
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
-            log("Like Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
             log("Like Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);

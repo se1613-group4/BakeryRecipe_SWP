@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -209,50 +207,6 @@ public class Follow_tblDAO implements Serializable {
                 connection.close();
             }
         }
-    }
-    
-    public List<Integer> getFollowers(int loginValue)
-            throws SQLException, NamingException {
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        int followerId;
-        List<Integer> result = null;
-        try {
-            //1. Make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. Create SQL String
-                String sql = "select user_id_followed\n"
-                        + "from follow_tbl\n"
-                        + "where user_id = ?";
-                //3. Create Statement Object
-                stm = connection.prepareStatement(sql);
-                stm.setInt(1, loginValue);
-                //4. Execute Query
-                rs = stm.executeQuery();
-                //5. Process result 
-                while (rs.next()) {
-                    followerId = rs.getInt("user_id_followed");
-                    if (result == null){
-                        result = new ArrayList<>();
-                    }
-                    result.add(followerId);
-                }
-                return result;
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return result;
     }
 
 }

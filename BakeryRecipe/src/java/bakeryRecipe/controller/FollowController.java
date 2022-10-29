@@ -6,13 +6,10 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
-import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,18 +58,10 @@ public class FollowController extends HttpServlet {
                 Follow_tblDAO dao = new Follow_tblDAO();
                 if (dao.followRecipe(user_id, recipeAuthor_id)) {
                     urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
-                    Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has followed." + recipeAuthor_id);
-                    }
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
             log("Follow Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);

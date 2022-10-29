@@ -53,7 +53,7 @@ public class Notification_tblDAO implements Serializable{
         }
           return ls ;
     }
-    public int setNoti(int usId, String sms) throws SQLException {
+    public int setNoti(int usId,String sms) throws SQLException {
         int rslt = 0;
         Connection connection = null;
         PreparedStatement stm = null;
@@ -84,5 +84,4 @@ public class Notification_tblDAO implements Serializable{
         }
        return rslt;
     }
-    
 }

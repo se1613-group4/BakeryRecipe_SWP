@@ -4,22 +4,17 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.save_tbl.Save_tblDAO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,34 +36,24 @@ public class SaveRecipe extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //Get site map 
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        // End get site map
-        String url = siteMaps.getProperty(AppContants.SaveRecipe.SINGLE_RECIPE_PAGE);
-        int recipeId = Integer.parseInt(request.getParameter("txtRecipeId"));
+        String url = "single_recipe.jsp";
+        int userId = Integer.parseInt(request.getParameter("txtRecipeId"));
 
         try {
             //call dao 
-            Save_tblDAO saveDao = new Save_tblDAO();
-            //process result
-            HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            if (user != null) {
-                boolean result = saveDao.SaveRecipe(user.getUserId(), recipeId);
-                if (result) {
-                    url = siteMaps.getProperty(AppContants.SaveRecipe.DISPLAY_SINGLE_REICPE_CONTROLLER) + "?recipeId=" + recipeId;
-                }
-            }
+            Save_tblDAO dao = new Save_tblDAO();
+            boolean result = dao.SearchSaveRecipe(userId);
+            request.setAttribute("SAVED", result);
+            //redirect webpage
+            url = "single_recipe.jsp";
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

@@ -84,7 +84,7 @@
 
                 <c:set var="recipeList" value="${requestScope.MY_RECIPE_LIST}"></c:set>
                 <c:if test="${empty recipeList}">
-                    </br><h2>You have not created any recipe yet!</h2>
+                    </br><h2>You have not saved any recipe yet!</h2>
                 </c:if>
                 <c:if test="${not empty recipeList}">
 

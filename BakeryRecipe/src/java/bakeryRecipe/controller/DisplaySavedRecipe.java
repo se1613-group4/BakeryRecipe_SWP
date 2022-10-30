@@ -60,7 +60,7 @@ public class DisplaySavedRecipe extends HttpServlet {
             // call DAO
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
             recipeDao.displaySavedRecipe(userId);
-            List<Recipe_tblDTO> recipeList = recipeDao.getRecipeDtoList();
+            List<Recipe_tblDTO> recipeList = recipeDao.displaySavedRecipe(userId);
             request.setAttribute("MY_RECIPE_LIST", recipeList);
             if (recipeList != null){
                 url = siteMaps.getProperty(AppContants.DisplaySavedRecipeFeartures.SAVED_RECIPE_PAGE);

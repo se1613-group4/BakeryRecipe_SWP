@@ -40,7 +40,7 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 50)
 public class CreateNewRecipe extends HttpServlet {
     //Save images in absolute directory path
-    private static final String SAVE_DIR = "/bakeryrecipe_images";
+    private static final String SAVE_DIR = "D:" + File.separator + "bakeryrecipe_images";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -125,8 +125,8 @@ public class CreateNewRecipe extends HttpServlet {
             for (Part part : request.getParts()) {
                 String fileName = ExtractFileName(part);
                 if (!fileName.isEmpty()) {
-                    String filePath = SAVE_DIR + "/"+ fileName;
-                    imgUrls[i++] = filePath;
+                    String filePath = SAVE_DIR + File.separator +fileName;
+                    imgUrls[i++] = "/bakeryrecipe_images/" + fileName;
                     part.write(filePath);
                 }
             }

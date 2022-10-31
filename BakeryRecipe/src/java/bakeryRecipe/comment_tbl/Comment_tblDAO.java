@@ -32,7 +32,7 @@ public class Comment_tblDAO implements Serializable {
 
     // function of DAO code here
     /**
-     * This method is used to get the list of Comment DTO objects by input
+     * This method is used to get the list of Comment DTO objects by inputting
      * Recipe ID
      *
      * Author: ThongNT
@@ -109,6 +109,19 @@ public class Comment_tblDAO implements Serializable {
         }
     } //end getCommentByRecipeId function
 
+    /**
+     * This method to insert one new comment to the database by calling DAO
+     * and return true if the insertion is successful, otherwise, return false
+     * 
+     * @param user_id
+     * @param recipe_id
+     * @param comment_detail
+     * @param created_date
+     * @param last_modified
+     * @param is_actived
+     * @return boolean
+     * @throws SQLException 
+     */
     public boolean addNewComment(int user_id, int recipe_id, String comment_detail, Date created_date, Date last_modified, boolean is_actived) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;

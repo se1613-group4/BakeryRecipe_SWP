@@ -40,7 +40,7 @@ function validateForm() {
     saveIngreString();
     saveTags();
     alert("Submit recipe successfully!");
-    return false;    
+    return true;    
 }
 
 //function addIngredient() {

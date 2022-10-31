@@ -87,7 +87,7 @@
                     </br><h2>You have not created any recipe yet!</h2>
                 </c:if>
                 <c:if test="${not empty recipeList}">
-
+                    
 
 
                 </c:if>

@@ -354,3 +354,12 @@
     }
 
 })(jQuery);
+
+//report a recipe (ThongNT)
+function displayReportContainer() {
+    document.querySelector('#leave-report-container').classList.remove('hideThis');
+}
+
+function hideReportContainer() {
+    document.querySelector('#leave-report-container').classList.add('hideThis');
+}

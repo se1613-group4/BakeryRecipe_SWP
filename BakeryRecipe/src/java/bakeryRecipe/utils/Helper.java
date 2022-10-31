@@ -41,14 +41,16 @@ public class Helper implements Serializable {
 
 //    }
     
-    public static Properties getProperties (ServletContext context, String fileRelativePath){
+    public static Properties getProperties (ServletContext context, String fileRelativePath) throws IOException{
         InputStream input=context.getResourceAsStream(fileRelativePath);
         Properties prop=null;
         try{
             prop=new Properties();
             prop.load(input);
-        }catch(IOException e){
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE,null,e);
+        }finally {
+            if (input!=null) {
+                input.close();
+            }
         }
         return prop;
     }

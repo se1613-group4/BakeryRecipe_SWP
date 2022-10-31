@@ -21,10 +21,6 @@ and open the template in the editor.
   min-height: 100vh;
   background: #5372F0;
 } */
-::selection{
-  color: #fff;
-  background: #5372F0;
-}
 /*.tag-container{
   width: 496px;
   background: #fff;

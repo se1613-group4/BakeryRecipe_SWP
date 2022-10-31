@@ -5,14 +5,14 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +23,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ThongNT
+ * @author dangh
  */
-@WebServlet(name = "FollowController", urlPatterns = {"/FollowController"})
-public class FollowController extends HttpServlet {
+@WebServlet(name = "GetNotificationData", urlPatterns = {"/GetNotificationData"})
+public class GetNotificationData extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,44 +40,33 @@ public class FollowController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map
-         */
+
+        //start get sitemap
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        // End get site map
+        //end get sitemap
 
-        // Mapping url
-        String urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.ERROR_PAGE);
+        String url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
+
         try {
-            HttpSession session = request.getSession(true);
-            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
-            if (currentUser == null) {
-                urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.LOGIN_PAGE);
-            } else {
-                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
-                int user_id = Integer.parseInt(request.getParameter("txtUserId"));
-                int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
-                Follow_tblDAO dao = new Follow_tblDAO();
-                if (dao.followRecipe(user_id, recipeAuthor_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    
-                    //Notification
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
-                    Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has followed." + recipeAuthor_id);
-                    }
-                }//end check result
-            }//end check has been login
-
+            HttpSession session = request.getSession();
+            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
+            if (user != null) {
+                //call dao 
+                Notification_tblDAO dao = new Notification_tblDAO();
+                //process result 
+                List<Notification_tblDTO> result = dao.getListNoti(user.getUserId());
+                for (int i = 0; i < result.size(); i++) {
+                    System.out.println(result.get(i));
+                }
+                session.setAttribute("NOTIFICATION_RESULT", result);
+                url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
+            }
         } catch (SQLException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
+            log("SearchController _ SQL " + ex.getMessage());
         } finally {
-            response.sendRedirect(urlRewriting);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

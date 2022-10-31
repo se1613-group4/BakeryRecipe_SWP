@@ -466,17 +466,13 @@
                                                         </h2>
 
                                                         <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
-                                                            <input style="margin-left: 40px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
-                                                            <a href="displaySavedRecipeController" style="margin-left: 20px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
-                                                                <i class="fa fa-bookmark" aria-hidden="true"><span style="margin-left: 5px">Saved</span></i>
+                                                            <input style="margin-left: 40px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>                                                           
+                                                            <a href="search_saved_recipe.jsp" style="margin-left: 20px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
+                                                                <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Saved</span>
                                                             </a>
                                                         </p>
 
                                                         <label>Username: </label><h2>${profile_result.username}</h2>
-
-                                                        <label>Email: </label><h2> ${profile_result.email}</h2>
-
-                                                        <label>Phone number: </label><h2> ${profile_result.phoneNumber}</h2>
 
                                                         <label>Gender: </label><h2> ${profile_result.gender}</h2>
 
@@ -488,76 +484,10 @@
                                             </div>
                                         </div>
                                     </c:if>
-                                </c:if>
-                                <c:if test="${not empty update_profile_trigger}">
-                                    <c:if test="${not empty profile_result}">
-                                        <div class="author-info">
-                                            <div class="media media-none--xs">
-                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
-                                                <div class="media-body">
-                                                    <form action="updateUserProfileController" method="POST">
-
-                                                        <h2 class="author-title"><input type="text" name="txtFullName" value="${profile_result.fullName}"/>
-                                                        </h2>
-                                                        <c:if test="${not empty error.fullnameFormatErr}">
-                                                            <font color="red">${error.fullnameFormatErr}</font></br>
-                                                        </c:if>
-                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 10px">${following_result}</b> Following</p>
-
-                                                        <label>Username:</label><p style="font-size: 2rem">${profile_result.username}</p>
-                                                        <!--<h3>Password: </h3><p>--> 
-                                                            <!--<input style="width: 100%" type="password" name="txtPassword" value=""/></p>-->
-
-                                                        <%--<c:if test="${not empty error.passwordFormatErr}">--%>
-                                                            <!--<font color="red">${error.passwordFormatErr}</font></br>-->
-                                                        <%--</c:if>--%>
-
-                                                        <label>Email:</label><p> 
-                                                            <input style="width: 100%" type="text" name="txtEmail" value="${profile_result.email}"/></p>
-
-                                                        <c:if test="${not empty error.emailFormatErr}">
-                                                            <font color="red">${error.emailFormatErr}</font></br>
-                                                        </c:if>
-                                                        <c:if test="${not empty error.emailExisted}">
-                                                            <font color="red">${error.emailExisted}</font></br>
-                                                        </c:if>
-
-                                                        <label>Phone number: </label><p> 
-                                                            <input style="width: 100%" type="text" name="txtPhoneNumber" value="${profile_result.phoneNumber}"/></p>
-
-                                                        <c:if test="${not empty error.phonenumberFormatErr}">
-                                                            <font color="red">${error.phonenumberFormatErr}</font></br>
-                                                        </c:if>  
-                                                        <c:if test="${not empty error.phonenumberExisted}">
-                                                            <font color="red">${error.phonenumberExisted}</font></br>
-                                                        </c:if>
-
-                                                        <label>Gender: </label><p> 
-                                                            <input style="width: 100%" type="text" name="txtGender" value="${profile_result.gender}"/></p>
-
-                                                        <c:if test="${not empty error.genderFormatError}">
-                                                            <font color="red">${error.genderFormatError}</font></br>
-                                                        </c:if>  
-
-                                                        <label>Bio: </label><p> 
-                                                            <textarea style="width: 100%; height: 100px" type="text" name="txtBiography" value="${profile_result.biography}">${profile_result.biography}</textarea>
-
-                                                        <c:if test="${not empty error.bioFormatError}">
-                                                            <font color="red">${error.bioFormatError}</font></br>
-                                                        </c:if>  
-                                                            
-                                                        <input style="background-color: #ed5c5c; color: white; float: right; width: 100px; height: 50px; font-size: 2rem" type="submit" name="editBtn" value="Update" class="btn btn-light"/> 
-
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
                                     <c:if test="${empty profile_result}">
                                         <h1>User is not found!!</h1>
                                     </c:if>
                                 </c:if>
-
                             </c:if>
                             <div class="section-heading heading-dark">
                                 <h2 class="item-heading">36 RECIPES</h2>

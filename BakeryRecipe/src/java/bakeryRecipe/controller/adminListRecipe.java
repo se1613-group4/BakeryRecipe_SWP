@@ -4,15 +4,18 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.save_tbl.Save_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,52 +26,38 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author dangh
+ * @author jexk
  */
-@WebServlet(name = "SaveRecipe", urlPatterns = {"/SaveRecipe"})
-public class SaveRecipe extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "listRecipeAdmin", urlPatterns = {"/listRecipeAdmin"})
+ public class adminListRecipe extends HttpServlet {
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //Get site map 
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        // End get site map
-        String url = siteMaps.getProperty(AppContants.SaveRecipe.SINGLE_RECIPE_PAGE);
-        int recipeId = Integer.parseInt(request.getParameter("txtRecipeId"));
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        HttpSession session = request.getSession();
 
+        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String test = request.getParameter("usrecid");
+        int  usid = test==null? 0 :  Integer.parseInt(test);
+        
         try {
-            //call dao 
-            Save_tblDAO saveDao = new Save_tblDAO();
-            //process result
-            HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            if (user != null) {
-                boolean result = saveDao.SaveRecipe(user.getUserId(), recipeId);
-                if (result) {
-                    url = siteMaps.getProperty(AppContants.SaveRecipe.DISPLAY_SINGLE_REICPE_CONTROLLER) + "?recipeId=" + recipeId;
-                }
+             Recipe_tblDAO dao = new Recipe_tblDAO();
+            ArrayList<Recipe_tblDTO> rslt = dao.AdmingetRecipebyUser(usid);
+            
+            
+            if (rslt != null) {
+                    session.setAttribute( "ADMIN_LIST_RECIPE", rslt);
             }
-
+            
+            
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
+            log("RemoveRecipe Controller _ SQL " + ex.getMessage());
         } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+            response.sendRedirect(urlRewriting);
         }
     }
 

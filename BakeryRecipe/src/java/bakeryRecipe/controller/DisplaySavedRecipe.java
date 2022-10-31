@@ -5,14 +5,14 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
-import bakeryRecipe.follow_tbl.Follow_tblDAO;
-import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +23,12 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ThongNT
+ * @author thongnt
  */
-@WebServlet(name = "FollowController", urlPatterns = {"/FollowController"})
-public class FollowController extends HttpServlet {
+@WebServlet(name = "DisplaySavedRecipe", urlPatterns = {"/DisplaySavedRecipe"})
+public class DisplaySavedRecipe extends HttpServlet {
+//    private final String HOME_PAGE = "index.jsp";
+//    private final String SEARCH_RESULT_PAGE = "search.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,44 +42,34 @@ public class FollowController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         /**
-         * Get site map
+         * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
 
-        // Mapping url
-        String urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.ERROR_PAGE);
-        try {
-            HttpSession session = request.getSession(true);
-            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
-            if (currentUser == null) {
-                urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.LOGIN_PAGE);
-            } else {
-                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
-                int user_id = Integer.parseInt(request.getParameter("txtUserId"));
-                int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
-                Follow_tblDAO dao = new Follow_tblDAO();
-                if (dao.followRecipe(user_id, recipeAuthor_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    
-                    //Notification
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
-                    Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has followed." + recipeAuthor_id);
-                    }
-                }//end check result
-            }//end check has been login
+        // Mapping url         
+        String url = siteMaps.getProperty(AppContants.DisplaySavedRecipeFeartures.USER_PROFILE_PAGE);
 
+        try {
+           // get userID from Session scope
+            HttpSession session = request.getSession();
+            int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
+            // call DAO
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
+            recipeDao.displaySavedRecipe(userId);
+            List<Recipe_tblDTO> recipeList = recipeDao.displaySavedRecipe(userId);
+            request.setAttribute("MY_RECIPE_LIST", recipeList);
+            if (recipeList != null){
+                url = siteMaps.getProperty(AppContants.DisplaySavedRecipeFeartures.SAVED_RECIPE_PAGE);
+            }
         } catch (SQLException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
+            log("DisplaySavedRecipe Controller _ SQL " + ex.getMessage());
         } finally {
-            response.sendRedirect(urlRewriting);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

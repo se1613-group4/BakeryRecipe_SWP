@@ -87,6 +87,8 @@
             </c:url>
             <c:set var="save_result" value="${requestScope.SAVED}"/>
 
+            <c:set var="loginValue" value="${sessionScope.USER}"/>
+            
             <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
                 <div class="container">
                     <div class="row gutters-60">
@@ -104,24 +106,27 @@
                                             </li>
                                             <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                     Likes</a><jsp:include page="like.jsp" /></li>
-                                                    <c:if test="${save_result == false || empty save_result}">
-                                                <li class="single-meta">
-                                                    <form action="saveRecipeController">      
-                                                        <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                        <input type="submit" name="saveRecipeController" value="Save">        
-                                                        <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
-                                                    </form> 
-                                                </li>
+                                                    <!--Save-->
+                                            <c:if test="${not empty loginValue}">
+                                                <c:if test="${empty save_result}">
+                                                    <li class="single-meta">
+                                                        <form action="saveRecipeController" method="POST">      
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
+                                                            <input type="submit" name="saveRecipeController" value="Save">        
+                                                            <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
+                                                        </form> 
+                                                    </li>
+                                                </c:if>
+                                                <c:if test="${not empty save_result}">
+                                                    <li class="single-meta">
+                                                        <form action="unsaveRecipeController" method="POST">      
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
+                                                            <input type="submit" name="saveRecipeController" value="Unsaved">        
+                                                            <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
+                                                        </form> 
+                                                    </li>
+                                                </c:if> 
                                             </c:if>
-                                            <c:if test="${save_result == true}">
-                                                <li class="single-meta">
-                                                    <!--<form action="SaveRecipe">-->      
-                                                    <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                    <input type="submit" name="saveRecipeController" value="Unsaved">        
-                                                    <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
-                                                    <!--</form>--> 
-                                                </li>
-                                            </c:if> 
                                             <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
                                                     Saves</a></li>-->
                                                 <jsp:include page="report.jsp" />

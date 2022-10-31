@@ -105,7 +105,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                         isfollowed = 1;
                     }//end check if user has followed this recipe's author
                 }//end check if user has login
-
+                
                 request.setAttribute("ISLIKED", isLiked);
                 request.setAttribute("ISFOLLOWED", isfollowed);
 

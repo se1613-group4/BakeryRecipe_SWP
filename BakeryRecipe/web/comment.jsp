@@ -41,7 +41,7 @@
         <c:set var="commentsList" value="${requestScope.COMMENTS_LIST}"/>
         <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
         <c:if test="${not empty commentsList}">
-            <div class="recipe-reviews">
+            <div class="hideThis recipe-reviews">
                 <div class="section-heading heading-dark">
                     <h2 class="item-heading">RECIPE COMMENTS</h2>
                 </div>

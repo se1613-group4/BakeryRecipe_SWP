@@ -25,6 +25,7 @@
 17. 404 Error Page Css --Lam added
 18. Search Page customise Css --Thong added
 20. Submit recipe customise Css -- Lam added
+21. Report recipe customise CSS - Thong added
 /*=======================================================================
 1. Typography 
 =========================================================================*/
@@ -12345,3 +12346,36 @@ lam edit user dropdown (in header)
 /* .ingredient-sample {
 	visibility: hidden;
 } */
+
+/*
+21. --Thong added
+*/
+.hideThis {
+    display: none !important;
+}
+
+.displayThis {
+    display: flex !important;
+}
+
+#leave-report-container{
+    background-color: rgba(0, 0, 0, 0.399);
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 1111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-report-container{
+    background-color: #ff5057;
+    border: solid 1px white;
+    border-radius: 50px;
+    padding: 3rem;
+    height: 50%;
+    width: 50%;
+    color: white;
+}

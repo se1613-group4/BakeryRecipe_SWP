@@ -42,7 +42,7 @@ public class Image_tblDAO implements Serializable{
                 //3. create stm obj and pass value to sql
                 stm = con.prepareStatement(sql);
                 for (String url : urls) {
-                    if (!"".equals(url)) {
+                    if (url!= null && !url.isEmpty()) {
                         stm.setInt(1, recipeId);
                         stm.setString(2, url);
                         stm.addBatch();

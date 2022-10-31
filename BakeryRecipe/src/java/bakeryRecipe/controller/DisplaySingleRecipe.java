@@ -77,6 +77,8 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
+                
+                
                 //DISPLAY LIKES OF RECIPE FUNCTION
                 //1. Call DAO
                 Like_tblDAO likeDao = new Like_tblDAO();
@@ -105,7 +107,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                         isfollowed = 1;
                     }//end check if user has followed this recipe's author
                 }//end check if user has login
-
+                
                 request.setAttribute("ISLIKED", isLiked);
                 request.setAttribute("ISFOLLOWED", isfollowed);
 

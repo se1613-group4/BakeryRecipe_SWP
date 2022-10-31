@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="css/animate.min.css">
         <!-- Fontawesome CSS -->
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <script src="https://kit.fontawesome.com/6166015301.js" crossorigin="anonymous"></script>
         <!-- Flaticon CSS -->
         <link rel="stylesheet" href="fonts/flaticon.css">
         <!-- Summernote CSS -->
@@ -42,6 +43,8 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
         <!--Css file for tag-->
         <link rel="stylesheet" href="css/tagStyle.css">
+        <!--Css file for upload image dialog-->
+        <link rel="stylesheet" href="css/dialog.css"/>
         <!-- Lam custom css -->
         <style type="text/css">
             .small-label {
@@ -73,10 +76,11 @@
                                 margin-top: 5px !IMPORTANT;*/
                 /*                top: 350px !IMPORTANT;*/
             }
-            /*            .div-upload {
-                            height: 40.39px;
-                            margin-bottom: 5px;
-                        }*/
+            .uploaded-img {
+                height: 15%;
+                width: 15%;
+                margin: 2px;
+            }
             .btn-upload:hover {
                 background: #ff4a52f7 !IMPORTANT;
             }
@@ -117,7 +121,7 @@
                     </div>
                 </section>
                 <!-- Inne Page Banner Area End Here -->
-
+                
                 <!-- Submit Recipe Area Start Here -->                                        
                 <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">
                     <div class="container">
@@ -125,8 +129,8 @@
                             <!--Input recipe form-->
                             <div class="col-lg-8">
                                 <!--Create Recipe Form-->
-                                <form id="submitForm" class="submit-recipe-form" action="createRecipeController" 
-                                      onsubmit="return validateForm()" method="post">
+                                <form id="submitForm" class="submit-recipe-form" action="CreateNewRecipe" 
+                                      onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
 
                                     <!--Input recipe name-->
                                     <div class="form-group">
@@ -177,29 +181,22 @@
                                 <!--Upload photos-->
                                 <div class="additional-input-wrap">
                                     <label>Your photos</label>
-                                    <div class="form-group">                                        
-                                        <div class="row no-gutters img-div no-remove" id="img-sample">                                    
-                                            <!--Input image url-->
-                                            <div class="col-12">
-                                                <div class="form-group additional-input-box icon-right">
-                                                    <input type="text" placeholder="Paste your image url here" class="form-control"
-                                                           name="txtImgUrl" value=""/>
-                                                    <i class="fas fa-times" onclick="removeElement(this)"></i>
-                                                </div>
-                                            </div>
+                                    <div class="form-group">                             
+                                        <!--Input image url-->
+                                        <div id="uploaded-image-grid">            
                                         </div>
-                                        <!--<div class="div-upload">-->
-                                        <button type="button" id="add-img-btn" class="btn-upload" onclick="addImg()">
-                                            <!--<i class="flaticon-add-plus-button"></i>-->
-                                            Add Image</button>
-                                        <!--</div>-->
+                                        <input type="file" name="file" id="file-uploader" accept=".jpg, .jpeg, .png" 
+                                               style="margin-top: 5px;"/>
+                                        <!--<p style="font-size: 12px; margin-top: 3px;">Maximum 5 images</p>-->
+                                        <!--<a type="button" id="add-img-btn" class="btn-upload upload-window button" href="#login-box">Upload image</a>-->
                                     </div>
                                 </div>
                                 <!--Upload videos-->
                                 <div class="additional-input-wrap">
                                     <label>Your video</label>
                                     <div class="form-group">                                    
-                                        <input type="text" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value=""/>                                                                  
+                                        <input type="text" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value=""/>
+                                        <button type="button" id="add-vid-btn" class="btn-upload" onclick="#">Check URL</button>
                                     </div>
                                 </div>
 
@@ -371,38 +368,56 @@
             <%@include file="footer.html" %>
             <!-- Footer Area End Here -->
         </div>
+         
+    <!--Upload image dialog start here-->
+    <div class="login" id="login-box">
+        <h3 style="font-family: 'Poppins', sans-serif;">Upload image</h3>
+        <a class="close" href="#">
+            <img class="img-close" title="Close Window" alt="Close" src="img/figure/close.png" 
+                 style="width: 5%; height: 5%"/>
+        </a>
+        <form id="upload-from" class="upload-content" action="UploadImageServlet" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="file-uploader" accept=".jpg, .jpeg, .png" multiple
+                   style="margin-top: 5px;"/>
+            <p style="font-size: 12px; margin-top: 3px;">Maximum 5 images</p>
+            <div id="image-grid">            
+            </div>
+            <button class="button btn-upload submit-button" type="button" onclick="submitImage()">Upload</button>
+        </form>
+    </div>
+    <!--Upload image dialog end here-->    
 
-        
-        <!--Ajax start-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>        
-        <!--Ajax end-->
-        <!-- Jquery Js -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/popper.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Plugins Js -->
-        <script src="js/plugins.js"></script>
-        <!-- Owl Carousel Js -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- Summernote JS -->
-        <script src="js/summernote.min.js"></script>
-        <!-- Select 2 Js -->
-        <script src="js/select2.full.min.js"></script>
-        <!-- Smoothscroll Js -->
-        <script src="js/smoothscroll.min.js"></script>
-        <!-- Custom Js -->
-        <!--<script src="js/main.js"></script>-->
-        <script>
-        <!--Chặn gửi form bằng Enter-->
-            $("#submitForm").keypress(function (e) {
-                if (e.which == 13) {
-                    return false;
-                }
-            });            
-        </script>
-        <script src="js/submit_recipe.js"></script>
-        <script src="js/tagStyle.js"></script>
-    </body>
+    <!--Ajax-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>            
+    <!-- Jquery Js -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugins Js -->
+    <script src="js/plugins.js"></script>
+    <!-- Owl Carousel Js -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- Summernote JS -->
+    <script src="js/summernote.min.js"></script>
+    <!-- Select 2 Js -->
+    <script src="js/select2.full.min.js"></script>
+    <!-- Smoothscroll Js -->
+    <script src="js/smoothscroll.min.js"></script>
+    <!-- Custom Js -->
+    <!--<script src="js/main.js"></script>-->
+    <script>
+    <!--Chặn gửi form bằng Enter-->
+        $("#submitForm").keypress(function (e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+    </script>
+    <script src="./js/upload-image.js"></script>
+    <script src="js/submit_recipe.js"></script>
+    <script src="js/tagStyle.js"></script>
+    <script src="js/dialog.js"></script>
+</body>
 </html>

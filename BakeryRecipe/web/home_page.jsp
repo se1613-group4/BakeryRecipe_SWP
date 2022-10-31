@@ -34,6 +34,13 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
+        <!--Lam custom css-->
+        <style>
+/*            .img-banner {
+                height: 238px !IMPORTANT;
+                width: 510px !IMPORTANT;
+            }*/
+        </style>
     </head>
     <body>   
         <!-- Preloader Start Here -->
@@ -87,7 +94,7 @@
                         </c:url>
 
                         <div class="ranna-slider-content-layout1">
-                            <figure class="item-figure"><a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a></figure>
+                            <figure class="item-figure"><a href="${single_recipe_url}"><img class="img-banner" src="${image.imgLink}" alt="Post"></a></figure>
                             <div class="item-content">
                                 <span class="sub-title">${category.name}</span>
                                 <h2 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h2>                            

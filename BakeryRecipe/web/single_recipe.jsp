@@ -86,7 +86,9 @@
                 <c:param name="recipeId" value="${recipeDto.recipeId}"/>
             </c:url>
             <c:set var="save_result" value="${requestScope.SAVED}"/>
+
             <c:set var="loginValue" value="${sessionScope.USER}"/>
+            
             <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
                 <div class="container">
                     <div class="row gutters-60">
@@ -127,6 +129,7 @@
                                             </c:if>
                                             <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
                                                     Saves</a></li>-->
+                                                <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
                                 </div>
@@ -197,6 +200,25 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="ingridients-wrap">
                                                 <h3 class="item-title"><i class="fas fa-list-ul"></i>Ingridients</h3>
+                                                <!--Adjust servings-->
+                                                <div class="adjust-servings">
+                                                    <div class="servings-title">Adjust Servings</div>
+                                                    <form class="servings-quantity" action="">
+                                                        <div class="input-group quantity-holder" id="quantity-holder">
+                                                            <input type="text" name='quantity' class="form-control quantity-input"
+                                                                   value="1" placeholder="1">
+                                                            <div class="btn-quantity-select">
+                                                                <button class="quantity-plus" type="button">
+                                                                    <i class="fas fa-plus"></i>
+                                                                </button>
+                                                                <button class="quantity-minus" type="button">
+                                                                    <i class="fas fa-minus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--Display Ingredient List-->
                                                 <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
                                                 <c:if test="${not empty ingreList}">
                                                     <c:forEach var="ingredient" items="${ingreList}">

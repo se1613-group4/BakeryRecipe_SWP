@@ -124,6 +124,7 @@
                                             </c:if> 
                                             <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
                                                     Saves</a></li>-->
+                                                <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
                                 </div>

@@ -24,6 +24,9 @@
             <div class="hdr-inner">
                 <h1>Trang Quản Trị Bakery Recipe</h1>
             </div>
+            <button type="button" class="login-btn" >
+                <a href="logoutController" class="login-btn">Logout</a>
+            </button>  
         </div>
         <!--body-->
         <div class="div-center bdy">
@@ -62,10 +65,10 @@
                             <!--session 2-->
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>
-                                     <p><strong>[&] </strong>Search:</p>
+                                <p><strong>[&] </strong>Search:</p>
 
                                 <form action="adminListAccountController">
-                                    
+
                                     <input class="search-form" type="text" name="a" placeholder="username,phonenumber,.." size="15" required /> 
                                 </form>
                                 <div class="content-container">
@@ -115,7 +118,7 @@
                                                                 Banned
                                                             </c:if>
                                                         </td>
-                                                         <td>
+                                                        <td>
                                                             <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}">Update status</a>
                                                         </td>
                                                     </tr>
@@ -128,14 +131,13 @@
 
                                 </div>
                             </div>
-                            <!--session 3-->
+                                     <c:if test="${not empty usinf }">
+                                         <!--session 3-->
                             <div id="userdetail" class="main-content">
                                 <h2><i class="fa fa-sitemap"></i> User Detail :</h2>  
-                                
+
                                 <div class="content-container">
-                                    <c:if test="${empty usinf}"> <H3>Please choose account you want !</h3></c:if>
-                                        <c:if test="${not empty usinf}">
-                                         Action :
+                                        Action :
                                         <h5>
                                             Name:  ${usinf.fullName} <br/>
                                             Gender: ${usinf.gender} <br/>
@@ -143,30 +145,53 @@
                                             Last Modified: ${usinf.lastModified} <br/>
 
                                         </h5>
-                                       
-
-                                        <!--notification-->
                                         <br/>
-                                        <p>[!] send notification to this user:  <strong style="color:green">${REPORTSMS}</strong> </p> 
-                                     <form action="sendNotificationAdmin">
-                                          <input  type="hidden" value="${usinf.userId}" name="summitNotiId"/> 
-                                          <input class="search-form" type="text" name="sms" placeholder="Write notification here...." size="50" required /> 
-                                     </form>
-                                    </c:if>
+
+                                </div>
+                            </div>
+                              <!--notification-->
+
+                            <div id="userdetail" class="main-content">
+                                <h2><i class="fa fa-sitemap"></i> Notification :</h2>  
+                                <div class="content-container">
+                                     
+                                        <h4>[!] send notification to this user:  <strong style="color:green">${REPORTSMS}</strong> </h4> 
+                                        <form action="sendNotificationAdmin">
+                                            <input  type="hidden" value="${usinf.userId}" name="summitNotiId"/> 
+                                            <input class="search-form" type="text" name="sms" placeholder="Write notification here...." size="50" required /> 
+                                        </form>
+                                            <br/>
+                                        <table id="customers">
+                                            <tr>
+                                                <th>Create date </th>  
+                                                <th>Detail messeger </th>
+                                            </tr>
+                                            <c:if test="${ empty sessionScope.NOTIFICATION_LIST_ADMIN }">
+                                                <H3> No messeger found!  </h3>
+                                                </c:if>
+                                                <c:if test="${ not empty sessionScope.NOTIFICATION_LIST_ADMIN }">
+
+                                                <c:forEach items="${sessionScope.NOTIFICATION_LIST_ADMIN}" var="adminnotifii">
+                                                    <tr>                                                                                
+                                                        <td>
+                                                            ${adminnotifii.createdDate}
+                                                        </td>
+                                                        <td>
+                                                            ${adminnotifii.detail}
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </form>
+
+                                            </c:if>
+                                        </table>
+
                                 </div>
                             </div>
                             <!--session4-->
                             <div id="listrecipe" class="main-content">
                                 <h2><i class="fa fa-upload"></i> User List Recipe: </h2>
-                            <c:if test="${ not empty usinf.userId}">
-                                  <h5><a href="listRecipeAdmin?usrecid=${usinf.userId}" type="submit"> Reload </a></h5>
-                            </c:if>
-
                                 <div class="content-container">
-                                    <c:if test="${ empty sessionScope.ADMIN_LIST_RECIPE && not empty usinf}">
-                                        <H3> User have not create any recipe!  </h3>
-                                        </c:if>
-
                                     <c:if test="${ not empty sessionScope.ADMIN_LIST_RECIPE}">
 
                                         <table id="customers">
@@ -180,7 +205,6 @@
                                                 <th>Status  </th> 
                                                 <th>Action </th>
                                             </tr>
-                                            <form action="listRecipeAdmin" method="post">
                                                 <c:forEach items="${sessionScope.ADMIN_LIST_RECIPE}" var="rec">
                                                     <tr>                                                                                
                                                         <td>
@@ -212,20 +236,18 @@
                                                             </c:if>
                                                         </td>
                                                         <td>
-                                                            
+
                                                             <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}">Update status this Recipe</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
-
-
-                                            </form>
                                         </table>
 
                                     </c:if>
 
                                 </div>
                             </div>
+                                    </c:if>
                         </div>
                     </div>
                 </div>

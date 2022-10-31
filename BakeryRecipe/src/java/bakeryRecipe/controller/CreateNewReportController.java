@@ -4,12 +4,14 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.report_tbl.Report_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Properties;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,10 +22,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author jexk
+ * @author ThongNT
  */
-@WebServlet(name = "sendNotificationAdmin", urlPatterns = {"/sendNotificationAdmin"})
-public class sendNotificationAdmin extends HttpServlet {
+@WebServlet(name = "CreateNewReportController", urlPatterns = {"/CreateNewReportController"})
+public class CreateNewReportController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,35 +39,44 @@ public class sendNotificationAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
-        // Mapping url
-        String url = siteMaps.getProperty(AppContants.Admin.ADMIN_USDETAIL);
-        // get userID from Session scope
-        String sms= ""+request.getParameter("sms");
-        int id = Integer.parseInt(""+request.getParameter("summitNotiId")) ;
-       try {
-            HttpSession session = request.getSession();
-             
-            Notification_tblDAO dao = new Notification_tblDAO();
-           int rslt = dao.setNoti(id, sms);
-           
-           session.setAttribute("usid", id);
-           session.setAttribute("REPORTSMS", rslt > 0 ? "successful" : "fail"); 
-           
+
+        // Mapping url        
+        String urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.ERROR_PAGE);
+        //user_id       int(11)
+        //recipe_id     int(11)
+        //report_detail text
+        //created_date
+
+        int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
+        try {
+            HttpSession session = request.getSession(true);
+            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+            if (currentUser == null) {
+                urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.LOGIN_PAGE);
+            } else {
+                int user_id = currentUser.getUserId();
+                String report_detail = request.getParameter("txtReportContent");
+                Date created_date = new Date(Calendar.getInstance().getTime().getTime());
+//            System.out.println("UnitTest REPORT: " + user_id + recipe_id + report_detail + created_date + last_modified + is_actived);
+                Report_tblDAO dao = new Report_tblDAO();
+                if (dao.addNewReport(user_id, recipe_id, report_detail, created_date)) {
+                    urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=success";
+                }//end check result
+            }//end check has been login
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            if (ex.getMessage().contains("Duplicate entry")) {
+                urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=duplicate";
+            }
+            log("CreateNewReport Controller _ SQL " + ex.getMessage());
         } finally {
-//           RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+            response.sendRedirect(urlRewriting);
         }
-       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -41,7 +41,7 @@ public class adminListAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = AppContants.Admin.ADMIN_HOME;
+        String url = AppContants.Admin.ADMIN_LISTRECIPE;
         int pageindex;  //  trang đang đứng 
         int endindex;    /// trang cuoi cung 
         ArrayList<Account_tblDTO> result = null;

@@ -113,7 +113,7 @@ public class DisplaySingleRecipe extends HttpServlet {
 
                 //thongnt section end
                 //----------------------------
-                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SEARCH_SAVED_RECIPE_CONTROLLER);
+                url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.SINGLE_RECIPE_PAGE);
 
             }
         } catch (SQLException ex) {

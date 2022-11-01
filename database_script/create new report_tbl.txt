@@ -1,0 +1,20 @@
+CREATE TABLE `bakery_recipe`.`report_tbl` (
+  `report_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
+  `recipe_id` INT NULL,
+  `report_detail` VARCHAR(45) NULL,
+  `created_date` DATE NULL,
+  PRIMARY KEY (`report_id`),
+  UNIQUE INDEX `report_id_UNIQUE` (`report_id` ASC) VISIBLE,
+  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  INDEX `recipe_id_idx` (`recipe_id` ASC) VISIBLE,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `bakery_recipe`.`user_tbl` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `recipe_id`
+    FOREIGN KEY (`recipe_id`)
+    REFERENCES `bakery_recipe`.`recipe_tbl` (`recipe_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

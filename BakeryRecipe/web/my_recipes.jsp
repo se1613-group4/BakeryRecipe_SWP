@@ -71,7 +71,7 @@
                                         <h1>Manage my Recipes</h1>
                                         <ul>
                                             <li>
-                                                <a href="userHomePage">Home</a>
+                                                <a href="homePage">Home</a>
                                             </li>
                                             <li>My Recipes</li>
                                         </ul>

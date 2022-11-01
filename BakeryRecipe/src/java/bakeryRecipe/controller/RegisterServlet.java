@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
         String phoneNumber = request.getParameter("txtPhonenumber");
         Date lastModified = Date.valueOf(LocalDate.now());
         //String register = request.getParameter("btAction");
-        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{7,15}");
+        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{5,15}");
         /*
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
@@ -76,7 +76,7 @@ public class RegisterServlet extends HttpServlet {
          */
         //Pattern fullnamePattern = Pattern.compile("^([a-zA-Z0-9]+|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{1,}|[a-zA-Z0-9]+\\s{1}[a-zA-Z0-9]{3,}\\s{1}[a-zA-Z0-9]{1,})$");
         Pattern emailPattern = Pattern.compile(
-                "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
+                "^[a-zA-Z][\\w-.]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
 //        String EMAIL_PATTERN
 //                = "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$";
         /*  - Bắt đầu bằng chữ cái.
@@ -98,7 +98,7 @@ public class RegisterServlet extends HttpServlet {
             if (usernamePattern.matcher(username).matches() == false) {
                 foundErr = true;
                 errors.setUsernameFormatErr("Username wrong format.\n "
-                        + "Username must be 8-15 characters.\n "
+                        + "Username must be 6-15 characters.\n "
                         + "Must start with a letter.\n "
                         + "May not contain special characters");
             }
@@ -122,7 +122,7 @@ public class RegisterServlet extends HttpServlet {
             if (emailPattern.matcher(email).matches() == false) {
                 foundErr = true;
                 errors.setEmailFormatErr("Email Start with a letter.\n"
-                        + "              - Contains only letters, numbers and dashes (-).\n"
+                        + "              - Contains only letters, numbers and dashes (-), doc (.)\n"
                         + "              - Contains an @ character, after @ is the domain name.");
             }
             if (checkEmailExit == true) {

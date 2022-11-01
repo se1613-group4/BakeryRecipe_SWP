@@ -75,7 +75,7 @@
         var $target = $holder.find('input.quantity-input');
         var $quantity = parseInt($target.val(), 10);
         if ($.isNumeric($quantity) && $quantity > 0) {
-            $quantity = $quantity + 1;
+            $quantity = $quantity +1;
             $target.val($quantity);
         } else {
             $target.val($quantity);

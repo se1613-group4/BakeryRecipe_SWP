@@ -65,7 +65,7 @@
                                 <h1>User Register Page</h1>
                                 <ul>
                                     <li>
-                                        <a href="displayHomePage">Home</a>
+                                        <a href="homePage">Home</a>
                                     </li>
                                     <li>Register</li>
                                 </ul>

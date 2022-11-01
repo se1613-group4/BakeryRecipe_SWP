@@ -6,7 +6,9 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.image_tbl.Image_tblDAO;
+import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
@@ -16,10 +18,12 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -151,11 +155,22 @@ public class CreateNewRecipe extends HttpServlet {
             // All insert results are true -> redirect to MyRecipes Page
             if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid) {
                 url = siteMaps.getProperty(AppContants.CreateRecipeFeature.MY_RECIPES_PAGE);
+                
+                //Notification
+                Follow_tblDAO followDao = new Follow_tblDAO();
+                List<Integer> followerId = followDao.getFollowers(userId);
+                Notification_tblDAO notiDao = new Notification_tblDAO();
+                for (int j = 0; j < followerId.size(); i++) {
+                    notiDao.setNoti(followerId.get(i), userId + " has created a reicpe.");
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateNewRecipe.class.getName()).log(Level.SEVERE, null, ex);
             //            log("CreateNewRecipe Controller _ SQL " + ex.getMessage());
-        }finally {
+        } catch (NamingException ex) {
+            Logger.getLogger(CreateNewRecipe.class.getName()).log(Level.SEVERE, null, ex);
+            //            log("CreateNewRecipe Controller _ SQL " + ex.getMessage());
+        } finally {
             response.sendRedirect(url);
         }
     }

@@ -105,7 +105,18 @@
                                         <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                                         <div id="notifications">
                                             <h3>Notifications</h3>
-                                            <div style="height:300px;"></div>
+                                            <div style="height:300px; overflow-y: scroll;">
+                                                <c:set var="noti" value="${sessionScope.NOTIFICATION_RESULT}"/>
+                                                <c:if test="${not empty noti}">
+                                                    <c:forEach var="notiDto" items="${noti}" varStatus="counter">
+                                                        <c:set var="notiDetail" value="${notiDto.detail}"/>
+                                                            <p>${notiDetail}</p>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${empty noti}">
+                                                    <p>No notification yet</p>
+                                                </c:if>
+                                            </div>
                                             <div class="seeAll"><a href="#">See All</a></div>
                                         </div>
                                     </li>

@@ -26,6 +26,10 @@ public class Image_tblDTO implements Serializable{
         this.imgLink = imgLink;
     }
     
+    public Image_tblDTO(String imgLink) {
+        this.imgLink = imgLink;
+    }
+    
     public Image_tblDTO(int imgId, String imgLink) {
         this.imgId = imgId;
         this.imgLink = imgLink;

@@ -81,7 +81,15 @@
                         </div>
                     </section>
                     <!-- Inne Page Banner Area End Here -->
-
+                    <!-- Search input -->
+                    <div class="col-lg-4">
+                        <div class="nav-action-elements-layout3">
+                            <form class="search-form" action="searchSavedRecipeController">
+                                <input type="text" id="ooooo" value="" placeholder="Type here........" name="txtSearchValue"/>
+                                <button type="submit" class="search-btn" value="Search" name="btAction"><i class="flaticon-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 <c:set var="recipeList" value="${requestScope.MY_RECIPE_LIST}"></c:set>
                 <c:if test="${empty recipeList}">
                     </br><h2>You have not saved any recipe yet!</h2>
@@ -108,12 +116,12 @@
                                 </c:url>
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="product-box-layout1">
-<!--                                         Remove Link 
-                                        <i class="fa-solid fa-trash-can"></i>
-                                        <a href="${remove_recipe_url}">Remove</a>
-                                         Edit Link
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                        <a href="#editRecipe?recipeId=recipeId">Edit</a>-->
+                                        <!--                                         Remove Link 
+                                                                                <i class="fa-solid fa-trash-can"></i>
+                                                                                <a href="${remove_recipe_url}">Remove</a>
+                                                                                 Edit Link
+                                                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                                                <a href="#editRecipe?recipeId=recipeId">Edit</a>-->
 
                                         <figure class="item-figure"><a href="${single_recipe_url}">
                                                 <img src="${image.imgLink}"
@@ -157,5 +165,5 @@
             <!-- Custom Js -->
             <script src="js/main.js"></script>
         </c:if>
-        </body>
-    </html>
+    </body>
+</html>

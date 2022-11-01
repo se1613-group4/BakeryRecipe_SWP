@@ -5,10 +5,14 @@
 package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.save_tbl.Save_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -40,33 +44,33 @@ public class SearchSavedRecipe extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //Get site map 
+        /**
+         * Get site map (Copy this for all controller)
+         */
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         // End get site map
 
-        String url = siteMaps.getProperty(AppContants.SaveRecipe.DISPLAY_SINGLE_REICPE_CONTROLLER);
+        // Mapping url         
+        String url = siteMaps.getProperty(AppContants.SearchSavedRecipeFeartures.SEARCH_SAVED_RECIPE_PAGE);
+
+        String searchValue = request.getParameter("txtSearchValue");
 
         try {
-            //Search saved recipe 
-            int recipeId = Integer.parseInt(request.getParameter("recipeId"));
-//            System.out.println("-----------------search saved recipe: " + recipeId);
-            Save_tblDAO saveDao = new Save_tblDAO();
-            boolean searchSavedRecipeResult = false;
             HttpSession session = request.getSession();
-            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
-            if (user != null) {
-                searchSavedRecipeResult = saveDao.SearchSaveRecipe(user.getUserId(), recipeId);
-                if (searchSavedRecipeResult) {
-                    request.setAttribute("SAVED", searchSavedRecipeResult);
-                }
+            int userId = ((Account_tblDTO)session.getAttribute("USER")).getUserId();
+            // call DAO
+            Recipe_tblDAO recipeDao = new Recipe_tblDAO();            
+//            recipeDao.searchSavedRecipe(userId, searchValue);
+            List<Recipe_tblDTO> recipeList = new ArrayList<>();
+            recipeList = recipeDao.searchSavedRecipe(userId, searchValue);
+            request.setAttribute("SEARCH_RESULT", recipeList);
+            if (recipeList == null){
+                System.out.println("---------------------------Search Saved Recipe List Existed------------------------");
             }
-            url = siteMaps.getProperty(AppContants.SaveRecipe.SINGLE_RECIPE_PAGE);
-
         } catch (SQLException ex) {
-//            log("DisplaySingleRecipe Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-
+//            log("SearchAllRecipe Controller _ SQL " + ex.getMessage());
+              ex.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

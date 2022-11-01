@@ -186,4 +186,12 @@ public class AppContants { // mapping all features strings
         public static final String SAVED_RECIPE_PAGE = "savedRecipePage";
         public static final String DISPLAY_SAVED_RECIPE_CONTROLLER = "displaySavedRecipeController";
     }
+     
+    public class SearchSavedRecipeFeartures {
+        
+        public static final String SAVED_RECIPE_PAGE = "savedRecipePage";
+        public static final String SEARCH_SAVED_RECIPE_PAGE = "searchSavedResultPage";
+        public static final String DISPLAY_SAVED_RECIPE_CONTROLLER = "displaySavedRecipeController";
+        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
+    }
 }

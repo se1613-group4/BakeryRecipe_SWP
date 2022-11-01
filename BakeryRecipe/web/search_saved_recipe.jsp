@@ -61,7 +61,7 @@
                 <jsp:include page="header_user.jsp"></jsp:include>
             </c:if>
             <!-- Header end here-->
-            
+
             <!-- Inne Page Banner Area Start Here -->
             <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
                 <div class="container">
@@ -87,7 +87,7 @@
                 <div class="container">
                     <div class="adv-search-wrap">
                         <div class="input-group">
-                            <form action="GetAllSavedRecipe" style="width: 100% !important;    display: flex !important;    justify-content: center !important;">
+                            <form action="searchSavedRecipeController" style="width: 100% !important;    display: flex !important;    justify-content: center !important;">
                                 <input type="text" class="form-control" placeholder="Author Name or Recipe Search . . ." name="txtSearchValue" value="${searchValue}"/>
 
                                 <div class="btn-group" style="display: inline-block">                            
@@ -106,43 +106,87 @@
                             </p>
                         </c:if>
                         <c:if test="${not empty searchValue}">
-                            <c:set var="searchResult" value="${requestScope.SEARCH_RESULT}"/>
-                            <c:if test="${not empty searchResult}">              
-                                <c:forEach var="recipeDto" items="${searchResult}" varStatus="counter">
-                                    <c:set var="recipeName" value="${recipeDto.name}"/>
-                                    <c:set var="description" value="${recipeDto.description}"/>
-                                    <c:set var="author" value="${recipeDto.authorInfo}"/>
+                            <%--<c:set var="searchResult" value="${requestScope.SEARCH_RESULT}"/>--%>
+                            <c:set var="recipeList" value="${requestScope.SEARCH_RESULT}"></c:set>
+                            <c:if test="${empty recipeList}">
+                                </br><h2>No record is matched!</h2>
+                            </c:if>
+                            <c:if test="${not empty recipeList}">
+                                <c:forEach var="recipeDto" items="${recipeList}">
                                     <c:set var="category" value="${recipeDto.category}"/>
-                                    <c:set var="image" value="${recipeDto.image.imgLink}"/>                                    
-                                    <c:set var="totalTime" value="${recipeDto.totalTime}"/>
-                                    <c:set var="likedCount" value="${recipeDto.likedCount}"/>                                    
-                                    <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                    <c:set var="image" value="${recipeDto.image}"/>
+                                    <c:url var="single_recipe_url" value="displaySingleRecipe">
                                         <c:param name="recipeId" value="${recipeDto.recipeId}"/>
                                     </c:url>
-
+                                    <%--<c:url var="remove_recipe_url" value="removeRecipeController">--%>
+                                    <%--<c:param name="recipeId" value="${recipeDto.recipeId}"/>--%>
+                                    <%--<c:param name="userId" value="${sessionScope.USER.userId}"/>--%>
+                                    <%--</c:url>--%>
                                     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="product-box-layout1">
-                                            <figure class="item-figure">
-                                                <a href=${single_recipe_url}>
-                                                    <img src=${image} alt="Recipe"></a>
-                                            </figure>
+                                            <!--                                         Remove Link 
+                                                                                    <i class="fa-solid fa-trash-can"></i>
+                                                                                    <a href="${remove_recipe_url}">Remove</a>
+                                                                                     Edit Link
+                                                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                                                    <a href="#editRecipe?recipeId=recipeId">Edit</a>-->
+
+                                            <figure class="item-figure"><a href="${single_recipe_url}">
+                                                    <img src="${image.imgLink}"
+                                                         alt="Product"></a></figure>
                                             <div class="item-content">
                                                 <span class="sub-title">${category.name}</span>
-                                                <h3 class="item-title">
-                                                    <a href="single-recipe1.html">${recipeName}</a>
-                                                </h3>
-
-                                                <p>${description} </p>
+                                                <h3 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h3>
+                                                <div class="item-rating">
+                                                    <span>${recipeDto.createdDate}</span>
+                                                </div>
+                                                <p>${recipeDto.description}</p>
                                                 <ul class="entry-meta">
-                                                    <li><a href="#"><i class="fas fa-clock"></i>${totalTime} minute</a></li>
-                                                    <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
-                                                    <li><a href="#"><i class="fas fa-heart"></i>${likedCount} Likes</a></li>
+                                                    <li><a href="#"><i class="fas fa-clock"></i>${recipeDto.totalTime} Mins</a></li>                                    
+                                                    <li><a href="#"><i class="fas fa-heart"></i><span>${recipeDto.likedCount}</span> Likes</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </c:forEach>
                             </c:if>
+                            <%--<c:if test="${not empty searchResult}">--%>              
+                            <%--<c:forEach var="recipeDto" items="${searchResult}" varStatus="counter">--%>
+                            <%--<c:set var="recipeName" value="${recipeDto.name}"/>--%>
+                            <%--<c:set var="description" value="${recipeDto.description}"/>--%>
+                            <%--<c:set var="author" value="${recipeDto.authorInfo}"/>--%>
+                            <%--<c:set var="category" value="${recipeDto.category}"/>--%>
+                            <%--<c:set var="image" value="${recipeDto.image.imgLink}"/>--%>                                    
+                            <%--<c:set var="totalTime" value="${recipeDto.totalTime}"/>--%>
+                            <%--<c:set var="likedCount" value="${recipeDto.likedCount}"/>--%>                                    
+                            <%--<c:url var="single_recipe_url" value="DisplaySingleRecipe">--%>
+                            <%--<c:param name="recipeId" value="${recipeDto.recipeId}"/>--%>
+                            <%--</c:url>--%>
+
+                            <!--                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                                                    <div class="product-box-layout1">
+                                                                        <figure class="item-figure">
+                                                                            <a href=${single_recipe_url}>
+                                                                                <img src=${image} alt="Recipe"></a>
+                                                                        </figure>
+                                                                        <div class="item-content">
+                                                                            <span class="sub-title">${category.name}</span>
+                                                                            <h3 class="item-title">
+                                                                                <a href="single-recipe1.html">${recipeName}</a>
+                                                                            </h3>
+                            
+                                                                            <p>${description} </p>
+                                                                            <ul class="entry-meta">
+                                                                                <li><a href="#"><i class="fas fa-clock"></i>${totalTime} minute</a></li>
+                                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                                                                <li><a href="#"><i class="fas fa-heart"></i>${likedCount} Likes</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                            <%--</c:forEach>--%>
+
+                            <%--</c:if>--%>
 
 
                         </c:if>
@@ -157,7 +201,7 @@
             <%@include file="footer.html" %>
             <!-- Footer Area End Here -->
         </div>
-         <!-- Modal Start-->
+        <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -168,20 +212,20 @@
                     <div class="modal-body">
                         <c:url var="login_url" value="loginPage"></c:url>
                         <c:url var="register_url" value="registerPage"></c:url>
-                        <form class="login-form" action="login_url"  method="post" id="loginform">
-                            <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
+                            <form class="login-form" action="login_url"  method="post" id="loginform">
+                                <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
 
-                            <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
+                                <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
 
-                            <div class="inline-box mb-5 mt-4">
-                                <!--                                <div class="checkbox checkbox-primary">
-                                                                    <input id="modal-checkbox" type="checkbox">
-                                                                    <label for="modal-checkbox">Remember Me</label>
-                                                                </div>-->
-                                <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
-                            </div>
-                            <div class="inline-box mb-5 mt-4">
-                                <a href="${login_url}">Login</a>
+                                <div class="inline-box mb-5 mt-4">
+                                    <!--                                <div class="checkbox checkbox-primary">
+                                                                        <input id="modal-checkbox" type="checkbox">
+                                                                        <label for="modal-checkbox">Remember Me</label>
+                                                                    </div>-->
+                                    <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
+                                </div>
+                                <div class="inline-box mb-5 mt-4">
+                                    <a href="${login_url}">Login</a>
                                 <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
                                 <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
                                                                     <i class="flaticon-profile"></i>register here

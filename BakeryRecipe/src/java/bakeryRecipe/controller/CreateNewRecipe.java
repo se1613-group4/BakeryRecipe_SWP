@@ -160,7 +160,7 @@ public class CreateNewRecipe extends HttpServlet {
                 Follow_tblDAO followDao = new Follow_tblDAO();
                 List<Integer> followerId = followDao.getFollowers(userId);
                 Notification_tblDAO notiDao = new Notification_tblDAO();
-                for (int i = 0; i < followerId.size(); i++) {
+                for (int j = 0; j < followerId.size(); i++) {
                     notiDao.setNoti(followerId.get(i), userId + " has created a reicpe.");
                 }
             }

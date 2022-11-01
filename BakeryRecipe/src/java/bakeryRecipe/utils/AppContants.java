@@ -18,7 +18,7 @@ public class AppContants { // mapping all features strings
 
     public class SearchAllRecipesFeature {
 
-        public static final String HOME_PAGE = "homePageJsp";
+        public static final String HOME_PAGE = "homePage";
         public static final String SEARCH_RESULT_PAGE = "searchResultPage";
     }
 
@@ -70,7 +70,7 @@ public class AppContants { // mapping all features strings
     public class LoginFeatures {
 
         public static final String LOGIN_PAGE = "loginPage";
-        public static final String HOME_PAGE_USER = "homePageUser";
+        public static final String HOME_PAGE_USER = "homePage";
     }
 
     public class RegisterFeatures {
@@ -94,18 +94,18 @@ public class AppContants { // mapping all features strings
     public class DisplayUserProfileFeartures {
 
         public static final String PROFILE_PAGE = "userProfilePage";
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
     }
 
     public class ResetPasswordFeartures {
 
         public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
     }
 
     public class RemoveAccountFeartures {
 
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
         public static final String LOGIN_PAGE = "loginPage";
     }
 

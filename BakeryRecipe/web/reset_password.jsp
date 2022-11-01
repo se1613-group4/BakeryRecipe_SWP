@@ -66,7 +66,7 @@
                                     <h1>User Reset Password Page</h1>
                                     <ul>
                                         <li>
-                                            <a href=userHomePage name="btAction" value="Home">Home</a>
+                                            <a href=homePage name="btAction" value="Home">Home</a>
                                         </li>
                                         <li>reset</li>
                                     </ul>

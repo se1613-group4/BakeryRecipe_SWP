@@ -198,7 +198,7 @@
                                                 <!--Adjust servings-->
                                                 <div class="adjust-servings">
                                                     <div class="servings-title">Adjust Servings</div>
-                                                    <form class="servings-quantity" action="">
+                                                    <form class="servings-quantity" action="#">
                                                         <div class="input-group quantity-holder" id="quantity-holder">
                                                             <input type="text" name='quantity' class="form-control quantity-input"
                                                                    value="1" placeholder="1">
@@ -441,12 +441,15 @@
                                 </div>
                             </div>
                         </div> 
+                        
+                                    
                         <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
                             <!-- Top 5 Recipes-->
                             <div class="widget">                            
                                 <div class="section-heading heading-dark">
                                     <h3 class="item-heading">TOP RECIPES</h3>
                                 </div>
+                                <c:import url="LoadHomePageController"></c:import>
                                 <div class="widget-latest">
                                     <ul class="block-list">
                                         <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
@@ -482,62 +485,7 @@
                                     <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
                                 </div>
                             </div>
-
-                            <!--Featured Article-->                           
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">FEATURED ARTICLE</h3>
-                                </div>
-                                <div class="widget-featured-feed">
-                                    <div class="rc-carousel nav-control-layout1" data-loop="true" data-items="3"
-                                         data-margin="5" data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700"
-                                         data-dots="false" data-nav="true" data-nav-speed="false" data-r-x-small="1"
-                                         data-r-x-small-nav="true" data-r-x-small-dots="false" data-r-x-medium="1"
-                                         data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
-                                         data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
-                                         data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1"
-                                         data-r-large-nav="true" data-r-large-dots="false" data-r-extra-large="1"
-                                         data-r-extra-large-nav="true" data-r-extra-large-dots="false">
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product17.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">BREAKFAST</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product18.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">DINNER</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product19.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">SALAD</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            
                             <!-- Category List-->
                             <div class="widget">
                                 <div class="section-heading heading-dark">
@@ -637,7 +585,8 @@
             </form>
         </div>    
         <!-- Search Box End Here -->
-        <!-- Modal Start-->
+        
+         <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -649,28 +598,23 @@
                         <c:url var="login_url" value="loginPage"></c:url>
                         <c:url var="register_url" value="registerPage"></c:url>
                             <form class="login-form" action="login_url"  method="post" id="loginform">
-                                <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
-
-                                <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
-
-
-                                <div class="inline-box mb-5 mt-4">
-                                    <!--                                <div class="checkbox checkbox-primary">
-                                                                        <input id="modal-checkbox" type="checkbox">
-                                                                        <label for="modal-checkbox">Remember Me</label>
-                                                                    </div>-->
-                                    <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
-                                </div>
-                                <div class="inline-box mb-5 mt-4">
-                                    <a href="${login_url}">Login</a>
-                                <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
-                                <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
-                                                                    <i class="flaticon-profile"></i>register here
-                                                                </button>-->
                                 <!--                                <div class="inline-box mb-5 mt-4">
-                                                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
-                                                                </div>-->
-                                <a href="${register_url}">Register</a>
+                                                                    <a href="${login_url}">Login</a>
+                                                                <a href="${register_url}">Register</a>
+                                                            </div>-->
+                            <div class="inline-box mb-5 mt-4">
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+                                <script>
+                                    function dieu_huong_login() {
+                                        location.assign("${login_url}");
+                                    }
+                                </script>
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
+                                <script>
+                                    function dieu_huong_Register() {
+                                        location.assign("${register_url}");
+                                    }
+                                </script>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>
@@ -686,7 +630,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal End-->
+        <!-- Modal End-->  
 
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>

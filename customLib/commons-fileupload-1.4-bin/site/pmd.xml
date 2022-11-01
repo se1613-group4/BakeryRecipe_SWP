@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<pmd version="4.3" timestamp="2018-12-24T02:06:58.472">
-<file name="/Users/chtompki/Desktop/commons-fileupload/src/main/java/org/apache/commons/fileupload/FileUploadBase.java">
-<violation beginline="768" endline="778" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.apache.commons.fileupload" class="FileUploadBase$FileItemIteratorImpl$FileItemStreamImpl" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
-</violation>
-</file>
-</pmd>

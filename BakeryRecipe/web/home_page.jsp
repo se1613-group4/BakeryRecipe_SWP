@@ -42,7 +42,9 @@
             }*/
         </style>
     </head>
-    <body>   
+    <body>
+        <c:import url="LoadHomePageController"></c:import>
+        
         <!-- Preloader Start Here -->
         <div id="preloader"></div>
         <!-- Preloader End Here -->
@@ -71,7 +73,7 @@
                 </form>
             </div>
         </div>
-
+        
         <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
         <section class="ranna-slider-area">
             <div class="container">                
@@ -153,345 +155,20 @@
                             <a href="#"><img src="img/figure/figure1.jpg" alt="ad"></a>
                         </div>
                     </div>
-                    <!--Right side bar-->
-                    <%--<jsp:include page="righ-side-bar.jsp"></jsp:include>--%>
-                    <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
-                        <!-- Top 5 Recipes-->
-                        <div class="widget">                            
-                            <div class="section-heading heading-dark">
-                                <h3 class="item-heading">TOP RECIPES</h3>
-                            </div>
-                            <div class="widget-latest">
-                                <ul class="block-list">
-                                    <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
-                                    <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
-                                        <c:set var="author" value="${recipeDto.authorInfo}"/>
-                                        <c:set var="category" value="${recipeDto.category}"/>
-                                        <c:set var="image" value="${recipeDto.image}"/>
-                                        <c:url var="single_recipe_url" value="DisplaySingleRecipe">
-                                            <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-                                        </c:url>                                        
-                                        <li class="single-item">
-                                            <div class="item-img">
-                                                <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
-                                                <div class="count-number">${counter.count}</div>
-                                            </div>
-                                            <div class="item-content">
-                                                <div class="item-ctg">${category.name}</div>
-                                                <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
-                                                <div class="item-post-by">
-                                                    <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
-                                                        ${author.fullName}</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Category List-->
-                        <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">CATEGORIES</h3>
-                                </div>
-                                <div class="widget-categories">
-                                    <ul>
-                                    <c:forEach var="categoryDto" items="${categoryList}">
-                                        <li>
-                                            <a href="#${categoryDto.categoryId}">${categoryDto.name}
-                                                <span>${categoryDto.countNum}</span>
-                                            </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>                        
-                    </div>
+                    <!--Right side bar start here-->
+                    <%@include file="righ-side-bar.jsp" %>
+                    <!--Right side bar end here-->
                 </div>
             </div>
         </section>
         <!-- Trending Recipe End Here -->
-
-        <!-- Editor’s Choice Start Here -->
-        <section class="padding-bottom-45">
-            <div class="container">
-                <div class="section-heading heading-dark">
-                    <h2 class="item-heading">EDITOR'S CHOICE</h2>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div class="product-box-layout2">
-                            <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product11.jpg"
-                                                                                           alt="Product"></a></figure>
-                            <div class="item-content">
-                                <span class="sub-title">BREAKFAST</span>
-                                <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
-                                        Chanterelles</a></h3>
-                                <ul class="entry-meta">
-                                    <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                    <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                    <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div class="product-box-layout2">
-                            <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product12.jpg"
-                                                                                           alt="Product"></a></figure>
-                            <div class="item-content">
-                                <span class="sub-title">DESERT</span>
-                                <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
-                                        GingersnapCrust</a></h3>
-                                <ul class="entry-meta">
-                                    <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                    <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                    <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-block d-md-none d-lg-block col-sm-12 col-12">
-                        <div class="product-box-layout2">
-                            <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product13.jpg"
-                                                                                           alt="Product"></a></figure>
-                            <div class="item-content">
-                                <span class="sub-title">JUICE</span>
-                                <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>                                
-                                <ul class="entry-meta">
-                                    <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                    <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                    <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Editor’s Choice End Here -->
-
-        <!-- Popular Recipe Start Here -->
-        <section class="padding-bottom-45">
-            <div class="container">
-                <div class="row gutters-60">
-                    <div class="col-lg-8">
-                        <div class="section-heading heading-dark">
-                            <h2 class="item-heading">POPULAR RECIPES</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="product-box-layout3">
-                                    <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product14.jpg"
-                                                                                                   alt="Product"></a></figure>
-                                    <div class="item-content">
-                                        <span class="sub-title">BREAKFAST</span>
-                                        <h3 class="item-title"><a href="single-recipe1.html">Asian Chicken Noodles</a></h3>
-                                        <ul class="item-rating">
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-empty"><i class="fas fa-star"></i></li>
-                                            <li><span>9<span> / 10</span></span> </li>
-                                        </ul>
-                                        <p>Pro sint falli definitiones noel ei verear intellegatpri civibus
-                                            consequat efficiantue.Vestibulum ante ipsum primis in fau
-                                            cibus orci luctus et ultrices posuere cubilia Curae; Nunc
-                                            mattis turpis id aliquet.</p>
-                                        <ul class="entry-meta">
-                                            <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                            <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="product-box-layout3">
-                                    <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product15.jpg"
-                                                                                                   alt="Product"></a></figure>
-                                    <div class="item-content">
-                                        <span class="sub-title">SEA FOOD</span>
-                                        <h3 class="item-title"><a href="single-recipe1.html">Italiano Salad Mixed</a></h3>
-                                        <ul class="item-rating">
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-empty"><i class="fas fa-star"></i></li>
-                                            <li><span>9<span> / 10</span></span> </li>
-                                        </ul>
-                                        <p>Pro sint falli definitiones noel ei verear intellegatpri civibus
-                                            consequat efficiantue.Vestibulum ante ipsum primis in fau
-                                            cibus orci luctus et ultrices posuere cubilia Curae; Nunc
-                                            mattis turpis id aliquet.</p>
-                                        <ul class="entry-meta">
-                                            <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                            <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="product-box-layout3">
-                                    <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product16.jpg"
-                                                                                                   alt="Product"></a></figure>
-                                    <div class="item-content">
-                                        <span class="sub-title">SALAD</span>
-                                        <h3 class="item-title"><a href="single-recipe1.html">Maxican Dessert</a></h3>
-                                        <ul class="item-rating">
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-empty"><i class="fas fa-star"></i></li>
-                                            <li><span>9<span> / 10</span></span> </li>
-                                        </ul>
-                                        <p>Pro sint falli definitiones noel ei verear intellegatpri civibus
-                                            consequat efficiantue.Vestibulum ante ipsum primis in fau
-                                            cibus orci luctus et ultrices posuere cubilia Curae; Nunc
-                                            mattis turpis id aliquet.</p>
-                                        <ul class="entry-meta">
-                                            <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                            <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-block d-xl-none col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="product-box-layout3">
-                                    <figure class="item-figure"><a href="single-recipe1.html"><img src="img/product/product14.jpg"
-                                                                                                   alt="Product"></a></figure>
-                                    <div class="item-content">
-                                        <span class="sub-title">BREAKFAST</span>
-                                        <h3 class="item-title"><a href="single-recipe1.html">Asian Chicken Noodles</a></h3>
-                                        <ul class="item-rating">
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-fill"><i class="fas fa-star"></i></li>
-                                            <li class="star-empty"><i class="fas fa-star"></i></li>
-                                            <li><span>9<span> / 10</span></span> </li>
-                                        </ul>
-                                        <p>Pro sint falli definitiones noel ei verear intellegatpri civibus
-                                            consequat efficiantue.Vestibulum ante ipsum primis in fau
-                                            cibus orci luctus et ultrices posuere cubilia Curae; Nunc
-                                            mattis turpis id aliquet.</p>
-                                        <ul class="entry-meta">
-                                            <li><a href="#"><i class="fas fa-clock"></i>15 Mins</a></li>
-                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                            <li><a href="#"><i class="fas fa-heart"></i><span>02</span> Likes</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
-                        <div class="widget">
-                            <div class="section-heading heading-dark">
-                                <h3 class="item-heading">FEATURED ARTICLE</h3>
-                            </div>
-                            <div class="widget-featured-feed">
-                                <div class="rc-carousel nav-control-layout1" data-loop="true" data-items="3"
-                                     data-margin="5" data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700"
-                                     data-dots="false" data-nav="true" data-nav-speed="false" data-r-x-small="1"
-                                     data-r-x-small-nav="true" data-r-x-small-dots="false" data-r-x-medium="1"
-                                     data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
-                                     data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
-                                     data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1"
-                                     data-r-large-nav="true" data-r-large-dots="false" data-r-extra-large="1"
-                                     data-r-extra-large-nav="true" data-r-extra-large-dots="false">
-                                    <div class="featured-box-layout1">
-                                        <div class="item-img">
-                                            <img src="img/product/product17.jpg" alt="Brand" class="img-fluid">
-                                        </div>
-                                        <div class="item-content">
-                                            <span class="ctg-name">BREAKFAST</span>
-                                            <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                            <p>Definitiones noel ei verear intelle
-                                                gatpri civibus consequat area
-                                                refund efficiantue.</p>
-                                        </div>
-                                    </div>
-                                    <div class="featured-box-layout1">
-                                        <div class="item-img">
-                                            <img src="img/product/product18.jpg" alt="Brand" class="img-fluid">
-                                        </div>
-                                        <div class="item-content">
-                                            <span class="ctg-name">DINNER</span>
-                                            <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                            <p>Definitiones noel ei verear intelle
-                                                gatpri civibus consequat area
-                                                refund efficiantue.</p>
-                                        </div>
-                                    </div>
-                                    <div class="featured-box-layout1">
-                                        <div class="item-img">
-                                            <img src="img/product/product19.jpg" alt="Brand" class="img-fluid">
-                                        </div>
-                                        <div class="item-content">
-                                            <span class="ctg-name">SALAD</span>
-                                            <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                            <p>Definitiones noel ei verear intelle
-                                                gatpri civibus consequat area
-                                                refund efficiantue.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="widget">
-                            <div class="section-heading heading-dark">
-                                <h3 class="item-heading">POPULAR TAGS</h3>
-                            </div>
-                            <div class="widget-tag">
-                                <ul>
-                                    <li>
-                                        <a href="#">DESERT</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">CAKE</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">BREAKFAST</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">BURGER</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">DINNER</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">PIZZA</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">SEA FOOD</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">SALAD</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">JUICE</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Popular Recipe End Here -->
+        <a href="#">See all</a> <!--Update later->
 
         <!-- Footer Area Start Here -->
         <%@include file="footer.html" %>
         <!-- Footer Area End Here -->
-
+        
+        
         <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -536,8 +213,8 @@
                 </div>
             </div>
         </div>
-        <!-- Modal End-->
-
+        <!-- Modal End-->        
+        
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <!-- Bootstrap Js -->

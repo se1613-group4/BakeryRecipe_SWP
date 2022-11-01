@@ -84,7 +84,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 Like_tblDAO likeDao = new Like_tblDAO();
                 int likeCount = likeDao.getLikesNums(recipeId);
                 //2. Process result
-                request.setAttribute("LIKES_COUNT", likeCount);
+                request.setAttribute("LIKES_COUNT", recipeDto.getLikedCount());
 
                 //CHECK IF LIKED and FOLLOWED FUNCTION
                 HttpSession session = request.getSession(true);

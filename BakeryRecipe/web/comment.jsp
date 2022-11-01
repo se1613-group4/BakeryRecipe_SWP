@@ -37,11 +37,11 @@
     </head>
 
     <body>
-
+        <c:set var="currentUser" value="${sessionScope.USER}"></c:set>
         <c:set var="commentsList" value="${requestScope.COMMENTS_LIST}"/>
         <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
         <c:if test="${not empty commentsList}">
-            <div class="hideThis recipe-reviews">
+            <div class="recipe-reviews">
                 <div class="section-heading heading-dark">
                     <h2 class="item-heading">RECIPE COMMENTS</h2>
                 </div>
@@ -62,6 +62,15 @@
                                 <img src="${avtUrl}" alt="commenter-avatar" class="media-img-auto">
                                 <div class="media-body">
                                     <h4 class="comment-title">${fullName}</h4>
+                                    
+                                    <c:if test="${userId == currentUser.userId}">
+                                        <form action="dddd">
+                                            <button class="quantity-plus" type="submit">Edit</button>
+                                        </form>
+                                        <form action="dddd">
+                                            <button class="quantity-plus" type="submit">Delete</button>
+                                        </form>
+                                    </c:if>
                                     <span class="post-date">${createdDate}</span>
                                     <p>${commentDetail}</p>
                                     <ul class="item-rating">
@@ -89,12 +98,12 @@
             <div class="section-heading heading-dark">
                 <h2 class="item-heading">LEAVE A REVIEW</h2>
             </div>
-<!--            <div class="rate-wrapper">
-                <div class="rate-label">Like</div>
-                <div class="rate">
-                    <div class="rate-item"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                </div>
-            </div>-->
+            <!--            <div class="rate-wrapper">
+                            <div class="rate-label">Like</div>
+                            <div class="rate">
+                                <div class="rate-item"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            </div>
+                        </div>-->
             <form action="CreateNewComment" class="leave-form-box">
                 <div class="row">
                     <div class="col-12 form-group">

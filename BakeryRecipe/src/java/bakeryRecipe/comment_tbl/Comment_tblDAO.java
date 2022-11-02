@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,9 @@ public class Comment_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQl String
-                String sql = "SELECT R.recipe_id, \n"
+                String sql = "SELECT \n"
+                        + "comment_tbl.comment_id,\n"
+                        + "R.recipe_id, \n"
                         + "comment_tbl.user_id, \n"
                         + "profile_tbl.full_name,\n"
                         + "profile_tbl.avatar_url,\n"
@@ -79,6 +82,7 @@ public class Comment_tblDAO implements Serializable {
                 //5. Process result
                 while (rs.next()) {
                     //get comment DTO info
+                    int commentId = rs.getInt("comment_tbl.comment_id");
                     int userId = rs.getInt("comment_tbl.user_id");
                     String fullName = rs.getString("profile_tbl.full_name");
                     String avtUrl = rs.getString("profile_tbl.avatar_url");
@@ -87,7 +91,7 @@ public class Comment_tblDAO implements Serializable {
                     Date lastModified = rs.getDate("comment_tbl.last_modified");
                     boolean isActived = rs.getBoolean("comment_tbl.is_actived");
                     //create comment DTO
-                    Comment_tblDTO comment = new Comment_tblDTO(userId, recipeId, fullName, avtUrl, commentDetail, created_date, lastModified, isActived);
+                    Comment_tblDTO comment = new Comment_tblDTO(commentId, userId, recipeId, fullName, avtUrl, commentDetail, created_date, lastModified, isActived);
                     // check recipe dto list not null
                     if (commentsList == null) {
                         commentsList = new ArrayList<>();
@@ -161,4 +165,39 @@ public class Comment_tblDAO implements Serializable {
             }
         }
     } //end addNewComment function
+
+    public boolean deleteCommentByCommentId(int commentId) throws SQLException {
+        boolean result = false;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        try {
+            //1. Make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Create SQl String
+                String sql = "DELETE FROM `bakery_recipe`.`comment_tbl` "
+                        + "WHERE (`comment_id` = ?);";
+                
+                //3. Create statement obj
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, commentId);
+                
+                //4. Execute query
+                int tmp = stm.executeUpdate();
+                
+                //5. Process result
+                if (tmp != 0) {
+                    result = true;
+                }
+            }//end check conection is not null            
+            return result;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }//end deleteCommentByCommentId function
 }

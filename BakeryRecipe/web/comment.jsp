@@ -32,8 +32,6 @@
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <!-- Custom Css -->
         <link rel="stylesheet" href="style.css">
-        <!-- Modernizr Js -->
-        <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
 
     <body>
@@ -111,19 +109,19 @@
             </form>
         </div>
 
-        <!-- Jquery Js -->
+<!--         Jquery Js 
         <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap Js -->
+         Bootstrap Js 
         <script src="js/popper.min.js"></script>
-        <!-- Bootstrap Js -->
+         Bootstrap Js 
         <script src="js/bootstrap.min.js"></script>
-        <!-- Plugins Js -->
+         Plugins Js 
         <script src="js/plugins.js"></script>
-        <!-- Owl Carousel Js -->
+         Owl Carousel Js 
         <script src="js/owl.carousel.min.js"></script>
-        <!-- Smoothscroll Js -->
+         Smoothscroll Js 
         <script src="js/smoothscroll.min.js"></script>
-        <!-- Custom Js -->
-        <script src="js/main.js"></script>
+         Custom Js 
+        <script src="js/main.js"></script>-->
     </body>
 </html>

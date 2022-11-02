@@ -408,7 +408,7 @@
     <!-- Custom Js -->
     <!--<script src="js/main.js"></script>-->
     <script>
-    <!--Chặn gửi form bằng Enter-->
+    <!--Chan gui form bang Enter-->
         $("#submitForm").keypress(function (e) {
             if (e.which == 13) {
                 return false;

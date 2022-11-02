@@ -34,8 +34,6 @@
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <!-- Custom Css -->
         <link rel="stylesheet" href="style.css">
-        <!-- Modernizr Js -->
-        <script src="js/modernizr-3.6.0.min.js"></script>
         <!--Notification--> 
         <link rel="stylesheet" href="css/notification.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -169,34 +167,9 @@
                 </div>
                 
             <!--</div>-->
-        </header>
-
-        <!--notification-->
-        <c:forEach var="noti" items="${NOTIFIII}">
-            <p>${noti.getDetail()}</p>
-        </c:forEach>      
-        <!--notification-->
-        <!--notification-->
-        <c:forEach var="noti" items="${NOTIFIII}">
-            <p>${noti.getDetail()}</p>
-        </c:forEach>      
-        <!--notification-->
+        </header>        
+        
         <!-- Header end here -->
 
-            <!-- Jquery Js -->
-            <script src="js/jquery-3.3.1.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/popper.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/bootstrap.min.js"></script>
-            <!-- Plugins Js -->
-            <script src="js/plugins.js"></script>
-            <!-- Owl Carousel Js -->
-            <script src="js/owl.carousel.min.js"></script>
-            <!-- Smoothscroll Js -->
-            <script src="js/smoothscroll.min.js"></script>
-            <!-- Custom Js -->
-            <script src="js/main.js"></script>
-        
     </body>
 </html>

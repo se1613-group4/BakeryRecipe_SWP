@@ -127,9 +127,7 @@
                                                     </li>
                                                 </c:if> 
                                             </c:if>
-                                            <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
-                                                    Saves</a></li>-->
-                                                <jsp:include page="report.jsp" />
+                                            <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
                                 </div>
@@ -205,10 +203,12 @@
                                                     <div class="servings-title">Adjust Servings</div>
                                                     <form class="servings-quantity" action="#">
                                                         <div class="input-group quantity-holder" id="quantity-holder">
-                                                            <input type="text" name='quantity' class="form-control quantity-input"
-                                                                   value="1" placeholder="1">
+                                                            <input type="text" name='numServing' class="form-control quantity-input"
+                                                                   value="${recipeDto.serving}" placeholder="1" readonly>
+                                                            <input type="hidden" name="trecipeId" id="recipeID" value="${param.recipeId}" />
+                                                            <input type="hidden" name="tserving" id="serving" value="${recipeDto.serving}" />
                                                             <div class="btn-quantity-select">
-                                                                <button class="quantity-plus" type="button">
+                                                                <button class="quantity-plus" type="button"> 
                                                                     <i class="fas fa-plus"></i>
                                                                 </button>
                                                                 <button class="quantity-minus" type="button">
@@ -218,23 +218,19 @@
                                                         </div>
                                                     </form>
                                                 </div>
+                                                <div class="testAjax">
                                                 <!--Display Ingredient List-->
                                                 <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
                                                 <c:if test="${not empty ingreList}">
                                                     <c:forEach var="ingredient" items="${ingreList}">
-                                                        <div class="checkbox checkbox-primary">
-                                                            <!--<input id="checkbox1" type="checkbox">-->
-                                                            <!--<label>${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</label>-->
-                                                            <p>+  ${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</p>
+                                                        <div class="ingredient">
+                                                            <p><b><span class="ingredient-quantity">${ingredient.quantity}</span> 
+                                                                    <c:if test="${ingredient.unit != 'none'}">${ingredient.unit}</c:if></b> 
+                                                                ${ingredient.ingredientName}</p>    
                                                         </div>
-                                                    </c:forEach>
+                                                    </c:forEach>                                                   
                                                 </c:if>
-                                                <!-- List ingredients-->
-                                                <!--                                            <div class="checkbox checkbox-primary">
-                                                                                                <input id="checkbox1" type="checkbox">
-                                                                                                <label for="checkbox1">1 cup sifted all purpose flour</label>
-                                                                                            </div>-->
-                                                <!--End of list ingredients-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -243,11 +239,7 @@
                                     <div class="direction-wrap-layout1">
                                         <div class="section-heading heading-dark">
                                             <h2 class="item-heading">DIRECTIONS</h2>
-                                        </div>
-                                        <!--                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                            taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                            particular are subject. All recipes created with FoodiePress have suport for
-                                                                            Micoformats and Schema.org is a collaboration byo improve convallis.</p>-->
+                                        </div>          
                                         <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
                                         <c:if test="${not empty stepList}">
                                             <c:forEach var="step" items="${stepList}" varStatus="counter">
@@ -258,56 +250,7 @@
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                        </c:if>
-                                        <!--                                <div class="direction-box-layout1">
-                                                                            <div class="item-content">
-                                                                                <div class="serial-number">01 Step</div>
-                                                                                <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                    collaboration improve
-                                                                                    the web by creat inegaera structured markupinn ocuously
-                                                                                    side crudey mightily rigorous plot life.</p>
-                                                                            </div>
-                                                                            <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                                taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                                particular are subject. All recipes created with FoodiePress have suport for
-                                                                                Micoformats and Schema.org is a collaboration byo improve convallis.</p>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">01 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">02 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">03 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">04 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>-->
+                                        </c:if>                                        
                                     </div>
 
                                     <!-- Tag of this Recipe-->
@@ -391,53 +334,8 @@
                                             </div>
                                         </div>
                                     </div>            
-                                    <div class="also-like-wrap">
-                                        <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product11.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">BREAKFAST</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
-                                                                Chanterelles</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- <<<<<<< thongnt  -->               <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product12.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">DESERT</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
-                                                                GingersnapCrust</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>                         
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product13.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">JUICE</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                                                                                                      
-                                    </div>
-
+                                    <!-- Suggest recipe start here -->
+                                    <!-- Suggest recipe end here -->
 
 
                                     <jsp:include page="like.jsp" />
@@ -446,135 +344,10 @@
                                 </div>
                             </div>
                         </div> 
-                        
-                                    
-                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
-                            <!-- Top 5 Recipes-->
-                            <div class="widget">                            
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">TOP RECIPES</h3>
-                                </div>
-                                <c:import url="LoadHomePageController"></c:import>
-                                <div class="widget-latest">
-                                    <ul class="block-list">
-                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
-                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
-                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
-                                            <c:set var="category" value="${recipeDto.category}"/>
-                                            <c:set var="image" value="${recipeDto.image}"/>
-                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
-                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-                                            </c:url>                                        
-                                            <li class="single-item">
-                                                <div class="item-img">
-                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
-                                                    <div class="count-number">${counter.count}</div>
-                                                </div>
-                                                <div class="item-content">
-                                                    <div class="item-ctg">${category.name}</div>
-                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
-                                                    <div class="item-post-by">
-                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
-                                                            ${author.fullName}</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                            <div class="widget">
-                                <div class="widget-ad">
-                                    <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
-                                </div>
-                            </div>
-                            
-                            <!-- Category List-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">CATEGORIES</h3>
-                                </div>
-                                <div class="widget-categories">
-                                    <ul>
-                                        <li>
-                                            <a href="#">BreakFast
-                                                <span>25</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Lunch
-                                                <span>15</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Pasta
-                                                <span>22</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dinner
-                                                <span>18</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dessert
-                                                <span>36</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Drinks
-                                                <span>12</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Fruits
-                                                <span>05</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Popular Tags-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">POPULAR TAGS</h3>
-                                </div>
-                                <div class="widget-tag">
-                                    <ul>
-                                        <li>
-                                            <a href="#">DESERT</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">CAKE</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BREAKFAST</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BURGER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">DINNER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">PIZZA</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SEA FOOD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SALAD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">JUICE</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                                            
+                     <!--Right side bar start here-->
+                    <%@include file="righ-side-bar.jsp" %>
+                    <!--Right side bar end here-->
                     </div>
                 </div>             
             </section>
@@ -651,5 +424,15 @@
         <script src="js/smoothscroll.min.js"></script>
         <!-- Custom Js -->
         <script src="js/main.js"></script>
+        <script>
+        <!--Chan gui form bang Enter-->
+        $("form").keypress(function (e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/adjustServing.js"></script>
     </body>
 </html>

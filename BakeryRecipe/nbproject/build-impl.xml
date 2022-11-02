@@ -1413,10 +1413,7 @@ exists or setup the property manually. For example like this:
         <property name="build.dir.to.clean" value="${build.web.dir}"/>
         <delete includeEmptyDirs="true" quiet="true">
             <fileset dir="${build.dir.to.clean}/WEB-INF/lib"/>
-        </delete>
-        <delete dir="${build.dir}"/>
-        <available file="${build.dir.to.clean}/WEB-INF/lib" property="status.clean-failed" type="dir"/>
-        <delete dir="${dist.dir}"/>
+        </delete>        
     </target>
     <target depends="do-clean" if="status.clean-failed" name="check-clean">
         <echo message="Warning: unable to delete some files in ${build.web.dir}/WEB-INF/lib - they are probably locked by the J2EE server. "/>

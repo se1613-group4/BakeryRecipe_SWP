@@ -111,7 +111,7 @@
                                     <h1>Submit Recipe</h1>
                                     <ul>
                                         <li>
-                                            <a href="displayHomePage">Home</a>
+                                            <a href="homePage">Home</a>
                                         </li>
                                         <li>Submit Recipe</li>
                                     </ul>

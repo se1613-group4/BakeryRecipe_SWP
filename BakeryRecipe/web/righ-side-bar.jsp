@@ -35,8 +35,8 @@
         <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
-        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
-            <!-- Top 5 Recipes-->
+<!--        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
+             Top 5 Recipes
             <div class="widget">                            
                 <div class="section-heading heading-dark">
                     <h3 class="item-heading">TOP RECIPES</h3>
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <!-- Category List-->
+             Category List
             <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
             <div class="widget">
                 <div class="section-heading heading-dark">
@@ -88,8 +88,136 @@
                     </ul>
                 </div>
             </div>                        
-        </div>
+        </div>-->
+        
+        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
+                            <!-- Top 5 Recipes-->
+                            <div class="widget">                            
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">TOP RECIPES</h3>
+                                </div>
+                                <c:import url="LoadHomePageController"></c:import>
+                                <div class="widget-latest">
+                                    <ul class="block-list">
+                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
+                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
+                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
+                                            <c:set var="category" value="${recipeDto.category}"/>
+                                            <c:set var="image" value="${recipeDto.image}"/>
+                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                                            </c:url>                                        
+                                            <li class="single-item">
+                                                <div class="item-img">
+                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
+                                                    <div class="count-number">${counter.count}</div>
+                                                </div>
+                                                <div class="item-content">
+                                                    <div class="item-ctg">${category.name}</div>
+                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
+                                                    <div class="item-post-by">
+                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
+                                                            ${author.fullName}</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
 
+
+                            <div class="widget">
+                                <div class="widget-ad">
+                                    <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Category List-->
+                            <div class="widget">
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">CATEGORIES</h3>
+                                </div>
+                                <div class="widget-categories">
+                                    <ul>
+                                        <li>
+                                            <a href="#">BreakFast
+                                                <span>25</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Lunch
+                                                <span>15</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pasta
+                                                <span>22</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dinner
+                                                <span>18</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dessert
+                                                <span>36</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Drinks
+                                                <span>12</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Fruits
+                                                <span>05</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Popular Tags-->
+                            <div class="widget">
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">POPULAR TAGS</h3>
+                                </div>
+                                <div class="widget-tag">
+                                    <ul>
+                                        <li>
+                                            <a href="#">DESERT</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">CAKE</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">BREAKFAST</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">BURGER</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">DINNER</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">PIZZA</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SEA FOOD</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SALAD</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">JUICE</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>                                    
+        
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <!-- Bootstrap Js -->

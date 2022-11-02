@@ -71,7 +71,7 @@
                                 <h1>Search Your Recipes</h1>
                                 <ul>
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <a href="homePage">Home</a>
                                     </li>
                                     <li>All Recipes</li>
                                 </ul>
@@ -168,29 +168,24 @@
                     <div class="modal-body">
                         <c:url var="login_url" value="loginPage"></c:url>
                         <c:url var="register_url" value="registerPage"></c:url>
-                        <form class="login-form" action="login_url"  method="post" id="loginform">
-                            <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
-
-                            <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
-
-
-                            <div class="inline-box mb-5 mt-4">
-                                <!--                                <div class="checkbox checkbox-primary">
-                                                                    <input id="modal-checkbox" type="checkbox">
-                                                                    <label for="modal-checkbox">Remember Me</label>
-                                                                </div>-->
-                                <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
-                            </div>
-                            <div class="inline-box mb-5 mt-4">
-                                <a href="${login_url}">Login</a>
-                                <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
-                                <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
-                                                                    <i class="flaticon-profile"></i>register here
-                                                                </button>-->
+                            <form class="login-form" action="login_url"  method="post" id="loginform">
                                 <!--                                <div class="inline-box mb-5 mt-4">
-                                                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
-                                                                </div>-->
-                                <a href="${register_url}">Register</a>
+                                                                    <a href="${login_url}">Login</a>
+                                                                <a href="${register_url}">Register</a>
+                                                            </div>-->
+                            <div class="inline-box mb-5 mt-4">
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+                                <script>
+                                    function dieu_huong_login() {
+                                        location.assign("${login_url}");
+                                    }
+                                </script>
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
+                                <script>
+                                    function dieu_huong_Register() {
+                                        location.assign("${register_url}");
+                                    }
+                                </script>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>
@@ -206,7 +201,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal End-->
+        <!-- Modal End-->  
 
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>

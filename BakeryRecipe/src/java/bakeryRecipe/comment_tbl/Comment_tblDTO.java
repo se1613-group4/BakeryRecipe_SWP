@@ -13,6 +13,7 @@ import java.sql.Date;
  * @author LamVo, ThongNT
  */
 public class Comment_tblDTO implements Serializable{
+    private int commentId;
     private int userId;
     private int recipeId;
     private String fullName;
@@ -28,16 +29,8 @@ public class Comment_tblDTO implements Serializable{
     public Comment_tblDTO() {
     }
 
-    public Comment_tblDTO(int userId, int recipeId, String commentDetail, Date created_date, Date lastModified, boolean isActived) {
-        this.userId = userId;
-        this.recipeId = recipeId;
-        this.commentDetail = commentDetail;
-        this.createdDate = created_date;
-        this.lastModified = lastModified;
-        this.isActived = isActived;
-    }
-
-    public Comment_tblDTO(int userId, int recipeId, String fullName, String avtUrl, String commentDetail, Date createdDate, Date lastModified, boolean isActived) {
+    public Comment_tblDTO(int commentId, int userId, int recipeId, String fullName, String avtUrl, String commentDetail, Date createdDate, Date lastModified, boolean isActived) {
+        this.commentId = commentId;
         this.userId = userId;
         this.recipeId = recipeId;
         this.fullName = fullName;
@@ -50,6 +43,10 @@ public class Comment_tblDTO implements Serializable{
     
     
     // Getters
+   
+    public int getCommentId() {
+        return commentId;
+    }
 
     public int getUserId() {
         return userId;
@@ -86,6 +83,10 @@ public class Comment_tblDTO implements Serializable{
     
     // Setters
 
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
+    }
+    
     public void setUserId(int userId) {
         this.userId = userId;
     }

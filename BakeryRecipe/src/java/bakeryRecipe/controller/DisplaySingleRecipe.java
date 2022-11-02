@@ -77,6 +77,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
+//                System.out.println("COMMENTS_LIST" + commentsList);
                 
                 
                 //DISPLAY LIKES OF RECIPE FUNCTION

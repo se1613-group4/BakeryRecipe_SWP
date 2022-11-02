@@ -73,7 +73,7 @@ public class Comment_tblDAO implements Serializable {
                         + "inner join comment_tbl on R.recipe_id = comment_tbl.recipe_id\n"
                         + "inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
-                        + "WHERE R.recipe_id = ?;";
+                        + "WHERE R.recipe_id = ? and comment_tbl.is_actived=1;";
                 //3. Create statement obj
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, recipeId);
@@ -146,7 +146,6 @@ public class Comment_tblDAO implements Serializable {
                 stm.setDate(4, created_date);
                 stm.setDate(5, last_modified);
                 stm.setBoolean(6, is_actived);
-//                System.out.println("----------------------------------------------");
                 //4. Execute query
                 int tmp = stm.executeUpdate();
 
@@ -175,16 +174,16 @@ public class Comment_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQl String
-                String sql = "DELETE FROM `bakery_recipe`.`comment_tbl` "
+                String sql = "UPDATE `bakery_recipe`.`comment_tbl` SET `is_actived` = false "
                         + "WHERE (`comment_id` = ?);";
-                
+
                 //3. Create statement obj
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, commentId);
-                
+
                 //4. Execute query
                 int tmp = stm.executeUpdate();
-                
+
                 //5. Process result
                 if (tmp != 0) {
                     result = true;

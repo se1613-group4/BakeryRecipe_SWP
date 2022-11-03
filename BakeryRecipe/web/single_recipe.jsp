@@ -86,6 +86,8 @@
                 <c:param name="recipeId" value="${recipeDto.recipeId}"/>
             </c:url>
             <c:set var="save_result" value="${requestScope.SAVED}"/>
+
+            <c:set var="loginValue" value="${sessionScope.USER}"/>
             
             <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
                 <div class="container">
@@ -104,26 +106,28 @@
                                             </li>
                                             <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                     Likes</a><jsp:include page="like.jsp" /></li>
-                                                    <c:if test="${save_result == false || empty save_result}">
-                                                <li class="single-meta">
-                                                    <form action="saveRecipeController">      
-                                                        <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                        <input type="submit" name="saveRecipeController" value="Save">        
-                                                        <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
-                                                    </form> 
-                                                </li>
+                                                    <!--Save-->
+                                            <c:if test="${not empty loginValue}">
+                                                <c:if test="${empty save_result}">
+                                                    <li class="single-meta">
+                                                        <form action="saveRecipeController" method="POST">      
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
+                                                            <input type="submit" name="saveRecipeController" value="Save">        
+                                                            <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
+                                                        </form> 
+                                                    </li>
+                                                </c:if>
+                                                <c:if test="${not empty save_result}">
+                                                    <li class="single-meta">
+                                                        <form action="unsaveRecipeController" method="POST">      
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
+                                                            <input type="submit" name="saveRecipeController" value="Unsaved">        
+                                                            <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
+                                                        </form> 
+                                                    </li>
+                                                </c:if> 
                                             </c:if>
-                                            <c:if test="${save_result == true}">
-                                                <li class="single-meta">
-                                                    <!--<form action="SaveRecipe">-->      
-                                                    <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                    <input type="submit" name="saveRecipeController" value="Unsaved">        
-                                                    <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
-                                                    <!--</form>--> 
-                                                </li>
-                                            </c:if> 
-                                            <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
-                                                    Saves</a></li>-->
+                                            <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
                                 </div>
@@ -194,22 +198,39 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="ingridients-wrap">
                                                 <h3 class="item-title"><i class="fas fa-list-ul"></i>Ingridients</h3>
+                                                <!--Adjust servings-->
+                                                <div class="adjust-servings">
+                                                    <div class="servings-title">Adjust Servings</div>
+                                                    <form class="servings-quantity" action="#">
+                                                        <div class="input-group quantity-holder" id="quantity-holder">
+                                                            <input type="text" name='numServing' class="form-control quantity-input"
+                                                                   value="${recipeDto.serving}" placeholder="1" readonly>
+                                                            <input type="hidden" name="trecipeId" id="recipeID" value="${param.recipeId}" />
+                                                            <input type="hidden" name="tserving" id="serving" value="${recipeDto.serving}" />
+                                                            <div class="btn-quantity-select">
+                                                                <button class="quantity-plus" type="button"> 
+                                                                    <i class="fas fa-plus"></i>
+                                                                </button>
+                                                                <button class="quantity-minus" type="button">
+                                                                    <i class="fas fa-minus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="testAjax">
+                                                <!--Display Ingredient List-->
                                                 <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
                                                 <c:if test="${not empty ingreList}">
                                                     <c:forEach var="ingredient" items="${ingreList}">
-                                                        <div class="checkbox checkbox-primary">
-                                                            <!--<input id="checkbox1" type="checkbox">-->
-                                                            <!--<label>${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</label>-->
-                                                            <p>+  ${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</p>
+                                                        <div class="ingredient">
+                                                            <p><b><span class="ingredient-quantity">${ingredient.quantity}</span> 
+                                                                    <c:if test="${ingredient.unit != 'none'}">${ingredient.unit}</c:if></b> 
+                                                                ${ingredient.ingredientName}</p>    
                                                         </div>
-                                                    </c:forEach>
+                                                    </c:forEach>                                                   
                                                 </c:if>
-                                                <!-- List ingredients-->
-                                                <!--                                            <div class="checkbox checkbox-primary">
-                                                                                                <input id="checkbox1" type="checkbox">
-                                                                                                <label for="checkbox1">1 cup sifted all purpose flour</label>
-                                                                                            </div>-->
-                                                <!--End of list ingredients-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -218,11 +239,7 @@
                                     <div class="direction-wrap-layout1">
                                         <div class="section-heading heading-dark">
                                             <h2 class="item-heading">DIRECTIONS</h2>
-                                        </div>
-                                        <!--                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                            taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                            particular are subject. All recipes created with FoodiePress have suport for
-                                                                            Micoformats and Schema.org is a collaboration byo improve convallis.</p>-->
+                                        </div>          
                                         <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
                                         <c:if test="${not empty stepList}">
                                             <c:forEach var="step" items="${stepList}" varStatus="counter">
@@ -233,77 +250,26 @@
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                        </c:if>
-                                        <!--                                <div class="direction-box-layout1">
-                                                                            <div class="item-content">
-                                                                                <div class="serial-number">01 Step</div>
-                                                                                <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                    collaboration improve
-                                                                                    the web by creat inegaera structured markupinn ocuously
-                                                                                    side crudey mightily rigorous plot life.</p>
-                                                                            </div>
-                                                                            <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                                taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                                particular are subject. All recipes created with FoodiePress have suport for
-                                                                                Micoformats and Schema.org is a collaboration byo improve convallis.</p>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">01 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">02 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">03 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">04 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>-->
+                                        </c:if>                                        
                                     </div>
 
                                     <!-- Tag of this Recipe-->
                                     <div class="tag-share">
                                         <ul>
-                                            <li>
-                                                <ul class="inner-tag">
-                                                    <li>
-                                                        <a href="#">Burger</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Dinner</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Pizza</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Salad</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            <!--Tags-->
+                                            <c:set var="tagList" value="${requestScope.TAG_LIST}"></c:set>
+                                            <c:if test="${not empty tagList}">
+                                                <li>
+                                                    <ul class="inner-tag">                                                
+                                                        <c:forEach var="tag" items="${tagList}">
+                                                            <li>
+                                                                <a href="#">${tag}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </li>
+                                            </c:if>   
+                                            <!--Share-->    
                                             <li>
                                                 <ul class="inner-share">
                                                     <li>
@@ -339,13 +305,12 @@
                                     <!-- Recipe's Author -->
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
-                                            <img src="img/blog/author9.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                            <img src="${author.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                    style="height: 20%; width: 20%;">
                                             <div class="media-body">
-                                                <h4 class="author-title">Michel Jack</h4>
+                                                <h4 class="author-title">${author.fullName}</h4>
                                                 <h5 class="author-sub-title">Written by</h5>
-                                                <p>I love cooking and blogging. Using a fork, break salmon. Halve reserved 
-                                                    potatoes and eggs crosswise. The of something of did require met of
-                                                    help have someone.</p>
+                                                <p>${author.biography}</p>
                                                 <ul class="author-social">
                                                     <li>
                                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -366,54 +331,8 @@
                                             </div>
                                         </div>
                                     </div>            
-                                    <div class="also-like-wrap">
-                                        <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product11.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">BREAKFAST</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
-                                                                Chanterelles</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- <<<<<<< thongnt  -->               <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product12.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">DESERT</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
-                                                                GingersnapCrust</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>                         
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product13.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">JUICE</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                                                                                                      
-                                    </div>
-
-
+                                    <!-- Suggest recipe start here -->
+                                    <!-- Suggest recipe end here -->
 
                                     <jsp:include page="like.jsp" />
                                     <jsp:include page="comment.jsp" />
@@ -421,187 +340,10 @@
                                 </div>
                             </div>
                         </div> 
-                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
-                            <!-- Top 5 Recipes-->
-                            <div class="widget">                            
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">TOP RECIPES</h3>
-                                </div>
-                                <div class="widget-latest">
-                                    <ul class="block-list">
-                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
-                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
-                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
-                                            <c:set var="category" value="${recipeDto.category}"/>
-                                            <c:set var="image" value="${recipeDto.image}"/>
-                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
-                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-                                            </c:url>                                        
-                                            <li class="single-item">
-                                                <div class="item-img">
-                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
-                                                    <div class="count-number">${counter.count}</div>
-                                                </div>
-                                                <div class="item-content">
-                                                    <div class="item-ctg">${category.name}</div>
-                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
-                                                    <div class="item-post-by">
-                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
-                                                            ${author.fullName}</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                            <div class="widget">
-                                <div class="widget-ad">
-                                    <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
-                                </div>
-                            </div>
-
-                            <!--Featured Article-->                           
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">FEATURED ARTICLE</h3>
-                                </div>
-                                <div class="widget-featured-feed">
-                                    <div class="rc-carousel nav-control-layout1" data-loop="true" data-items="3"
-                                         data-margin="5" data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700"
-                                         data-dots="false" data-nav="true" data-nav-speed="false" data-r-x-small="1"
-                                         data-r-x-small-nav="true" data-r-x-small-dots="false" data-r-x-medium="1"
-                                         data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
-                                         data-r-small-nav="true" data-r-small-dots="false" data-r-medium="1"
-                                         data-r-medium-nav="true" data-r-medium-dots="false" data-r-large="1"
-                                         data-r-large-nav="true" data-r-large-dots="false" data-r-extra-large="1"
-                                         data-r-extra-large-nav="true" data-r-extra-large-dots="false">
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product17.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">BREAKFAST</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product18.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">DINNER</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                        <div class="featured-box-layout1">
-                                            <div class="item-img">
-                                                <img src="img/product/product19.jpg" alt="Brand" class="img-fluid">
-                                            </div>
-                                            <div class="item-content">
-                                                <span class="ctg-name">SALAD</span>
-                                                <h4 class="item-title"><a href="single-recipe1.html">Baked Garlic Prawn</a></h4>
-                                                <p>Definitiones noel ei verear intelle
-                                                    gatpri civibus consequat area
-                                                    refund efficiantue.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Category List-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">CATEGORIES</h3>
-                                </div>
-                                <div class="widget-categories">
-                                    <ul>
-                                        <li>
-                                            <a href="#">BreakFast
-                                                <span>25</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Lunch
-                                                <span>15</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Pasta
-                                                <span>22</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dinner
-                                                <span>18</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dessert
-                                                <span>36</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Drinks
-                                                <span>12</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Fruits
-                                                <span>05</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Popular Tags-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">POPULAR TAGS</h3>
-                                </div>
-                                <div class="widget-tag">
-                                    <ul>
-                                        <li>
-                                            <a href="#">DESERT</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">CAKE</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BREAKFAST</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BURGER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">DINNER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">PIZZA</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SEA FOOD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SALAD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">JUICE</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                                            
+                     <!--Right side bar start here-->
+                    <%@include file="righ-side-bar.jsp" %>
+                    <!--Right side bar end here-->
                     </div>
                 </div>             
             </section>
@@ -617,7 +359,8 @@
             </form>
         </div>    
         <!-- Search Box End Here -->
-        <!-- Modal Start-->
+        
+         <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -629,28 +372,23 @@
                         <c:url var="login_url" value="loginPage"></c:url>
                         <c:url var="register_url" value="registerPage"></c:url>
                             <form class="login-form" action="login_url"  method="post" id="loginform">
-                                <!--                            <input class="main-input-box" name="txtUsername" type="text" placeholder="User Name" />-->
-
-                                <!--                            <input class="main-input-box" name="txtPassword" type="password" placeholder="Password" />-->
-
-
-                                <div class="inline-box mb-5 mt-4">
-                                    <!--                                <div class="checkbox checkbox-primary">
-                                                                        <input id="modal-checkbox" type="checkbox">
-                                                                        <label for="modal-checkbox">Remember Me</label>
-                                                                    </div>-->
-                                    <!--                                <label class="lost-password"><a href="#">Lost your password?</a></label>-->
-                                </div>
-                                <div class="inline-box mb-5 mt-4">
-                                    <a href="${login_url}">Login</a>
-                                <!--<a href="registration.jsp" name="Register" class="btn-register"><i class="fas fa-user"></i>Register Here!</a>-->
-                                <!--                                <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal2">
-                                                                    <i class="flaticon-profile"></i>register here
-                                                                </button>-->
                                 <!--                                <div class="inline-box mb-5 mt-4">
-                                                                    <button class="btn-fill" type="submit" value="Register1" name="btAction">register</button>
-                                                                </div>-->
-                                <a href="${register_url}">Register</a>
+                                                                    <a href="${login_url}">Login</a>
+                                                                <a href="${register_url}">Register</a>
+                                                            </div>-->
+                            <div class="inline-box mb-5 mt-4">
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+                                <script>
+                                    function dieu_huong_login() {
+                                        location.assign("${login_url}");
+                                    }
+                                </script>
+                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
+                                <script>
+                                    function dieu_huong_Register() {
+                                        location.assign("${register_url}");
+                                    }
+                                </script>
                             </div>
                         </form>
                         <label>Login connect with your Social Network</label>
@@ -666,7 +404,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal End-->
+        <!-- Modal End-->  
 
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>
@@ -682,5 +420,15 @@
         <script src="js/smoothscroll.min.js"></script>
         <!-- Custom Js -->
         <script src="js/main.js"></script>
+        <script>
+        <!--Chan gui form bang Enter-->
+        $("form").keypress(function (e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/adjustServing.js"></script>
     </body>
 </html>

@@ -34,8 +34,6 @@
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <!-- Custom Css -->
         <link rel="stylesheet" href="style.css">
-        <!-- Modernizr Js -->
-        <script src="js/modernizr-3.6.0.min.js"></script>
         <!--Notification--> 
         <link rel="stylesheet" href="css/notification.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -51,12 +49,12 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
                                 <div class="site-logo-mobile">
-                                    <a href="displayHomePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
-                                    <a href="displayHomePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
+                                    <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                                    <a href="homePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
                                 </div>
                                 <nav class="site-nav">
                                     <ul id="site-menu" class="site-menu">
-                                        <li><a href="displayHomePage">Home</a>
+                                        <li><a href="homePage">Home</a>
                                         </li>
                                         <li>
                                             <a href="#">Category</a>
@@ -75,7 +73,7 @@
                                     <!--profile user-->
                                     <li>
                                         <a href="#">
-                                            <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
+                                            <i class="flaticon-profile"></i> Welcome, <font color="#E1141E"><b>${sessionScope.USER.username}</b></font></a>
                                         <ul class="dropdown-menu-col-1" id="dropdown-user">
                                             <li>
                                                 <a href="displayUserProfileController">
@@ -105,7 +103,18 @@
                                         <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                                         <div id="notifications">
                                             <h3>Notifications</h3>
-                                            <div style="height:300px;"></div>
+                                            <div style="height:300px; overflow-y: scroll;">
+                                                <c:set var="noti" value="${sessionScope.NOTIFICATION_RESULT}"/>
+                                                <c:if test="${not empty noti}">
+                                                    <c:forEach var="notiDto" items="${noti}" varStatus="counter">
+                                                        <c:set var="notiDetail" value="${notiDto.detail}"/>
+                                                            <p>${notiDetail}</p>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${empty noti}">
+                                                    <p>No notification yet</p>
+                                                </c:if>
+                                            </div>
                                             <div class="seeAll"><a href="#">See All</a></div>
                                         </div>
                                     </li>
@@ -150,7 +159,7 @@
                             <!-- Logo -->
                             <div class="col-lg-4 d-none d-lg-block">
                                 <div class="site-logo-desktop">
-                                    <a href="index.html" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
+                                    <a href="homePage" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
                                 </div>
                             </div>
                         </div>
@@ -158,34 +167,9 @@
                 </div>
                 
             <!--</div>-->
-        </header>
-
-        <!--notification-->
-        <c:forEach var="noti" items="${NOTIFIII}">
-            <p>${noti.getDetail()}</p>
-        </c:forEach>      
-        <!--notification-->
-        <!--notification-->
-        <c:forEach var="noti" items="${NOTIFIII}">
-            <p>${noti.getDetail()}</p>
-        </c:forEach>      
-        <!--notification-->
+        </header>        
+        
         <!-- Header end here -->
 
-            <!-- Jquery Js -->
-            <script src="js/jquery-3.3.1.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/popper.min.js"></script>
-            <!-- Bootstrap Js -->
-            <script src="js/bootstrap.min.js"></script>
-            <!-- Plugins Js -->
-            <script src="js/plugins.js"></script>
-            <!-- Owl Carousel Js -->
-            <script src="js/owl.carousel.min.js"></script>
-            <!-- Smoothscroll Js -->
-            <script src="js/smoothscroll.min.js"></script>
-            <!-- Custom Js -->
-            <script src="js/main.js"></script>
-        
     </body>
 </html>

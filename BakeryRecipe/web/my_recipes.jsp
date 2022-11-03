@@ -71,7 +71,7 @@
                                         <h1>Manage my Recipes</h1>
                                         <ul>
                                             <li>
-                                                <a href="userHomePage">Home</a>
+                                                <a href="homePage">Home</a>
                                             </li>
                                             <li>My Recipes</li>
                                         </ul>
@@ -87,7 +87,7 @@
                     </br><h2>You have not created any recipe yet!</h2>
                 </c:if>
                 <c:if test="${not empty recipeList}">
-
+                    
 
 
                 </c:if>

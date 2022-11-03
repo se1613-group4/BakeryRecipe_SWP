@@ -58,7 +58,7 @@ public class VerifyCode extends HttpServlet {
                 boolean check = accDAO.verifyEmail(userID);
                 if (check == true) {
                     url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.LOGIN_PAGE);
-                    request.getSession().setAttribute("verifyCode_done", "done");
+                    request.getSession().setAttribute("verifyCode_done", errors);
                 }
             } 
             if(code!= user.getCode()){

@@ -12,14 +12,12 @@ import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,9 +29,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author LamVo
  */
-@WebServlet(name = "DisplayHomePage", urlPatterns = {"/DisplayHomePage"})
-public class DisplayHomePage extends HttpServlet {
-//    private final String HOME_PAGE = "home_page.jsp";
+@WebServlet(name = "LoadHomePageController", urlPatterns = {"/LoadHomePageController"})
+public class LoadHomePageController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,19 +41,9 @@ public class DisplayHomePage extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        /**
-         * Get site map (Copy this for all controller)
-         */
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
-        
-        // Mapping url        
-        String url = AppContants.DisplayHomePageFeature.HOME_PAGE;    
         try {
             HttpSession session = request.getSession(true);
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
@@ -76,6 +64,7 @@ public class DisplayHomePage extends HttpServlet {
             categoryDao.loadAllCategory();
             List<Category_tblDTO> allCategory = categoryDao.getCategoryDtoList();
             session.setAttribute("ALL_CATEGORY", allCategory);
+            
             //--- Listen to new NOTIFICATION //
              
              Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
@@ -95,16 +84,10 @@ public class DisplayHomePage extends HttpServlet {
             
              }
               //--- Listen to new NOTIFICATION //
-            
         } catch (SQLException ex) {
-            log("DisplayHomePage Controller _ SQL " + ex.getMessage());
+            Logger.getLogger(LoadHomePageController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             
-            
-            
-            
-            response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url)
         }
     }
 

@@ -14,9 +14,12 @@ import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.tag_detail_tbl.Tag_Detail_tblDAO;
+import bakeryRecipe.tag_tbl.Tag_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
@@ -65,10 +68,27 @@ public class DisplaySingleRecipe extends HttpServlet {
                 String steps = recipeDto.getSteps();
                 String[] stepArr = steps.split(" --- ");
                 request.setAttribute("STEP_LIST", stepArr);
+                // Load ingredient
                 Recipe_Ingredient_tblDAO ingredientDetailDao = new Recipe_Ingredient_tblDAO();
                 ingredientDetailDao.getIngredientDetail(recipeId);
                 List<Recipe_Ingredient_tblDTO> ingredientDetailDtoList = ingredientDetailDao.getRecipeIngreDtoList();
                 request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);
+                // load tags
+                Tag_Detail_tblDAO tagDetailDao = new Tag_Detail_tblDAO();                
+                List<Integer> listTagIds = tagDetailDao.getTagIds(recipeId);
+                if (listTagIds != null) {
+                    Tag_tblDAO tagDao = new Tag_tblDAO();
+                    List<String> tagNames = new ArrayList<>();
+                    for (Integer tagId : listTagIds) {
+                        String tagName = tagDao.getTagName(tagId);
+                        if (tagName != null) {
+                            tagNames.add(tagName);
+                        }
+                    }
+                    request.setAttribute("TAG_LIST", tagNames);
+                }
+                
+                        
                 //----------------------------
                 //thongnt section start
                 //DISPLAY COMMENTS FUNCTION
@@ -77,12 +97,15 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Comment_tblDTO> commentsList = commentDao.getCommentByRecipeId(recipeId);
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
+//                System.out.println("COMMENTS_LIST" + commentsList);
+                
+                
                 //DISPLAY LIKES OF RECIPE FUNCTION
                 //1. Call DAO
                 Like_tblDAO likeDao = new Like_tblDAO();
                 int likeCount = likeDao.getLikesNums(recipeId);
                 //2. Process result
-                request.setAttribute("LIKES_COUNT", likeCount);
+                request.setAttribute("LIKES_COUNT", recipeDto.getLikedCount());
 
                 //CHECK IF LIKED and FOLLOWED FUNCTION
                 HttpSession session = request.getSession(true);
@@ -105,7 +128,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                         isfollowed = 1;
                     }//end check if user has followed this recipe's author
                 }//end check if user has login
-
+                
                 request.setAttribute("ISLIKED", isLiked);
                 request.setAttribute("ISFOLLOWED", isfollowed);
 

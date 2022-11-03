@@ -69,7 +69,7 @@
                                 <h1>Verify Email Page</h1>
                                 <ul>
                                     <li>
-                                        <a href="displayHomePage">Home</a>
+                                        <a href="homePage">Home</a>
                                     </li>
                                     <li>Verify Email</li>
                                 </ul>

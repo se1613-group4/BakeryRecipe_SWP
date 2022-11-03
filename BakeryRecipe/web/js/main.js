@@ -69,31 +69,30 @@
     /*-------------------------------------
     Quantity Holder
     -------------------------------------*/
-    $('#quantity-holder').on('click', '.quantity-plus', function () {
-
-        var $holder = $(this).parents('.quantity-holder');
-        var $target = $holder.find('input.quantity-input');
-        var $quantity = parseInt($target.val(), 10);
-        if ($.isNumeric($quantity) && $quantity > 0) {
-            $quantity = $quantity + 1;
-            $target.val($quantity);
-        } else {
-            $target.val($quantity);
-        }
-
-    }).on('click', '.quantity-minus', function () {
-
-        var $holder = $(this).parents('.quantity-holder');
-        var $target = $holder.find('input.quantity-input');
-        var $quantity = parseInt($target.val(), 10);
-        if ($.isNumeric($quantity) && $quantity >= 2) {
-            $quantity = $quantity - 1;
-            $target.val($quantity);
-        } else {
-            $target.val(1);
-        }
-    });
-
+//    $('#quantity-holder').on('click', '.quantity-plus', function () {
+//
+//        var $holder = $(this).parents('.quantity-holder');
+//        var $target = $holder.find('input.quantity-input');
+//        var $quantity = parseInt($target.val(), 10);
+//        if ($.isNumeric($quantity) && $quantity > 0) {
+//            $quantity = $quantity +1;
+//            $target.val($quantity);
+//        } else {
+//            $target.val($quantity);
+//        }
+//
+//    }).on('click', '.quantity-minus', function () {
+//
+//        var $holder = $(this).parents('.quantity-holder');
+//        var $target = $holder.find('input.quantity-input');
+//        var $quantity = parseInt($target.val(), 10);
+//        if ($.isNumeric($quantity) && $quantity >= 2) {
+//            $quantity = $quantity - 1;
+//            $target.val($quantity);
+//        } else {
+//            $target.val(1);
+//        }
+//    });
     /*-------------------------------------
     On Scroll 
     -------------------------------------*/
@@ -354,3 +353,12 @@
     }
 
 })(jQuery);
+
+//report a recipe (ThongNT)
+function displayReportContainer() {
+    document.querySelector('#leave-report-container').classList.remove('hideThis');
+}
+
+function hideReportContainer() {
+    document.querySelector('#leave-report-container').classList.add('hideThis');
+}

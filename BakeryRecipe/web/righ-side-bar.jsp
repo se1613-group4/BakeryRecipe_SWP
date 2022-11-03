@@ -31,18 +31,17 @@
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <!-- Custom Css -->
         <link rel="stylesheet" href="style.css">
-        <!-- Modernizr Js -->
-        <script src="js/modernizr-3.6.0.min.js"></script>
     </head>
     <body>
+        <c:import url="LoadHomePageController"></c:import>
         <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
-            <!-- Top 5 Recipes-->
+             <!--Top 5 Recipes-->
             <div class="widget">                            
                 <div class="section-heading heading-dark">
                     <h3 class="item-heading">TOP RECIPES</h3>
                 </div>
-                <div class="widget-latest">
-                    <ul class="block-list">
+                <div class="widget-latest">                    
+                    <ul class="block-list">                        
                         <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
                         <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
                             <c:set var="author" value="${recipeDto.authorInfo}"/>
@@ -70,7 +69,7 @@
                 </div>
             </div>
 
-            <!-- Category List-->
+             <!--Category List-->
             <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
             <div class="widget">
                 <div class="section-heading heading-dark">
@@ -89,20 +88,7 @@
                 </div>
             </div>                        
         </div>
+        
 
-        <!-- Jquery Js -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/popper.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Plugins Js -->
-        <script src="js/plugins.js"></script>
-        <!-- Owl Carousel Js -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- Smoothscroll Js -->
-        <script src="js/smoothscroll.min.js"></script>
-        <!-- Custom Js -->
-        <script src="js/main.js"></script>
     </body>
 </html>

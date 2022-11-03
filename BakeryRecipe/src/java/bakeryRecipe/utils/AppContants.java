@@ -18,11 +18,18 @@ public class AppContants { // mapping all features strings
 
     public class SearchAllRecipesFeature {
 
-        public static final String HOME_PAGE = "homePageJsp";
+        public static final String HOME_PAGE = "homePage";
         public static final String SEARCH_RESULT_PAGE = "searchResultPage";
     }
 
     public class AddNewCommentFeature {
+
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+    }
+    
+    public class AddNewReportFeature {
 
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
         public static final String ERROR_PAGE = "addCommentErrorPage";
@@ -62,8 +69,10 @@ public class AppContants { // mapping all features strings
 
     public class LoginFeatures {
 
+        public static final String GET_NOTIFICATION_DATA_CONTROLLER = "getNotificationDataController";
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "homePage";
         public static final String LOGIN_PAGE = "loginPage";
-        public static final String HOME_PAGE_USER = "homePageUser";
+        public static final String HOME_PAGE_USER = "homePage";
     }
 
     public class RegisterFeatures {
@@ -87,18 +96,18 @@ public class AppContants { // mapping all features strings
     public class DisplayUserProfileFeartures {
 
         public static final String PROFILE_PAGE = "userProfilePage";
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
     }
 
     public class ResetPasswordFeartures {
 
         public static final String RESET_PASSWORD_PAGE = "resetPasswordPage";
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
     }
 
     public class RemoveAccountFeartures {
 
-        public static final String USER_HOME_PAGE = "userHomePage";
+        public static final String USER_HOME_PAGE = "homePage";
         public static final String LOGIN_PAGE = "loginPage";
     }
 
@@ -152,4 +161,40 @@ public class AppContants { // mapping all features strings
         public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
     }
 
+     public class SaveRecipe {
+
+        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
+        public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
+        public static final String DISPLAY_SINGLE_REICPE_CONTROLLER = "displaySingleRecipe";
+    }
+     
+    public class NotificationFeartures {
+        
+        public static final String DISPLAY_HOME_PAGE_CONTROLLER = "homePage";
+        public static final String HEADER_USER = "headerUser";
+        
+    }
+    
+    public class FollowFeatures {
+
+        public static final String ERROR_PAGE = "addCommentErrorPage";
+        public static final String LOGIN_PAGE = "loginPage";
+        public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+
+    }
+    
+    public class DisplaySavedRecipeFeartures {
+        
+        public static final String USER_PROFILE_PAGE = "userProfilePage";
+        public static final String SAVED_RECIPE_PAGE = "savedRecipePage";
+        public static final String DISPLAY_SAVED_RECIPE_CONTROLLER = "displaySavedRecipeController";
+    }
+     
+    public class SearchSavedRecipeFeartures {
+        
+        public static final String SAVED_RECIPE_PAGE = "savedRecipePage";
+        public static final String SEARCH_SAVED_RECIPE_PAGE = "searchSavedResultPage";
+        public static final String DISPLAY_SAVED_RECIPE_CONTROLLER = "displaySavedRecipeController";
+        public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
+    }
 }

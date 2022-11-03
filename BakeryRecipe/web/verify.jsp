@@ -71,7 +71,7 @@
                                 <h1>Verify Code Page</h1>
                                 <ul>
                                     <li>
-                                        <a href="displayHomePage">Home</a>
+                                        <a href="homePage">Home</a>
                                     </li>
                                     <li>Verify Code</li>
                                 </ul>

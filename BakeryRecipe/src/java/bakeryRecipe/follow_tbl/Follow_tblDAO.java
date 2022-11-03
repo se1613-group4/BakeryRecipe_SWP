@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -96,7 +98,15 @@ public class Follow_tblDAO implements Serializable {
         return result;
     }
 
-    public boolean isFollowed(int userId, int recipeAuthorId) throws SQLException {
+    /**
+     * This function is used to check if the current user have followed the other user yet.
+     * 
+     * @param currentUserId
+     * @param otherUserId
+     * @return
+     * @throws SQLException 
+     */
+    public boolean isFollowed(int currentUserId, int otherUserId) throws SQLException {
         boolean result = false;
         Connection connection = null;
         PreparedStatement stm = null;
@@ -111,8 +121,8 @@ public class Follow_tblDAO implements Serializable {
                         + "where user_id = ? and user_id_followed = ?;";
                 //3. Create statement obj
                 stm = connection.prepareStatement(sql);
-                stm.setInt(1, userId);
-                stm.setInt(2, recipeAuthorId);
+                stm.setInt(1, currentUserId);
+                stm.setInt(2, otherUserId);
                 //4. Execute statement
                 rs = stm.executeQuery();
                 //5. Process ResultSet
@@ -140,6 +150,14 @@ public class Follow_tblDAO implements Serializable {
         return result;
     }
     
+    /**
+     * This function is used to add a row to follow_tbl 
+     * 
+     * @param userId
+     * @param recipeAuthorId
+     * @return true if the operation is successful, otherwise, false
+     * @throws SQLException 
+     */
     public boolean followRecipe(int userId, int recipeAuthorId) throws SQLException {
         boolean result = false;
         Connection connection = null;
@@ -174,6 +192,14 @@ public class Follow_tblDAO implements Serializable {
         }
     }
 
+    /**
+     * This function is used to delete a row from  follow_tbl 
+     * 
+     * @param userId
+     * @param recipeAuthorId
+     * @return true if the operation is successful, otherwise, false
+     * @throws SQLException 
+     */
     public boolean unfollowRecipe(int userId, int recipeAuthorId) throws SQLException {
         boolean result = false;
         Connection connection = null;
@@ -208,5 +234,48 @@ public class Follow_tblDAO implements Serializable {
             }
         }
     }
-
+    
+    public List<Integer> getFollowers(int loginValue)
+            throws SQLException, NamingException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int followerId;
+        List<Integer> result = null;
+        try {
+            //1. Make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Create SQL String
+                String sql = "select user_id_followed\n"
+                        + "from follow_tbl\n"
+                        + "where user_id = ?";
+                //3. Create Statement Object
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, loginValue);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. Process result 
+                while (rs.next()) {
+                    followerId = rs.getInt("user_id_followed");
+                    if (result == null){
+                        result = new ArrayList<>();
+                    }
+                    result.add(followerId);
+                }
+                return result;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
 }

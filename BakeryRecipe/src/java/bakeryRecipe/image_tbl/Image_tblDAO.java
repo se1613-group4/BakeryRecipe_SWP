@@ -42,7 +42,7 @@ public class Image_tblDAO implements Serializable{
                 //3. create stm obj and pass value to sql
                 stm = con.prepareStatement(sql);
                 for (String url : urls) {
-                    if (!"".equals(url)) {
+                    if (url!= null && !url.isEmpty()) {
                         stm.setInt(1, recipeId);
                         stm.setString(2, url);
                         stm.addBatch();
@@ -65,7 +65,7 @@ public class Image_tblDAO implements Serializable{
         } catch (SQLException ex) {
             if (con != null) {
                 con.rollback();
-                Logger.getLogger(Recipe_Ingredient_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Image_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
             } 
             
         }finally {

@@ -315,7 +315,7 @@ public class Recipe_tblDAO implements Serializable {
             if (connection != null) {
                 //2. create sql string
                 String sql = "SELECT liked_count, saved_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
-                        + "		profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, \n"
+                        + "		profile_tbl.user_id, profile_tbl.full_name, profile_tbl.bio, category_tbl.category_id, category_tbl.name as category_name, \n"
                         + "        serving, prepare_time, cook_time, instruction, R.last_modified, step\n"
                         + "FROM recipe_tbl as R\n"
                         + "	inner join category_tbl on R.category_id = category_tbl.category_id\n"
@@ -342,7 +342,8 @@ public class Recipe_tblDAO implements Serializable {
                     // get user's profile DTO info
                     int userId = rs.getInt("profile_tbl.user_id");
                     String authorName = rs.getString("profile_tbl.full_name");
-                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
+                    String authorBio = rs.getString("profile_tbl.bio");
+                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName, authorBio);
                     // get category DTO info
                     int categoryId = rs.getInt("category_tbl.category_id");
                     String categoryName = rs.getString("category_name");

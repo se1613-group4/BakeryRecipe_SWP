@@ -88,7 +88,7 @@
             <c:set var="save_result" value="${requestScope.SAVED}"/>
 
             <c:set var="loginValue" value="${sessionScope.USER}"/>
-            
+
             <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
                 <div class="container">
                     <div class="row gutters-60">
@@ -101,12 +101,16 @@
                                     <div class="col-xl-9 col-12">
                                         <ul class="entry-meta">
                                             <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
-                                            <li class="single-meta"><a href="#DisplayAuthorInfo"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a>
+                                            <li class="single-meta">
+                                                <form action="displayOtherUserProfileController">
+                                                    <i class="fas fa-user"></i><input type="submit" value="by ${author.fullName}"/>
+                                                    <input type="hidden" name="authorID" value="${author.userId}">
+                                                </form>
                                                 <jsp:include page="follow.jsp" />
                                             </li>
                                             <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                     Likes</a><jsp:include page="like.jsp" /></li>
-                                                    <!--Save-->
+                                            <!--Save-->
                                             <c:if test="${not empty loginValue}">
                                                 <c:if test="${empty save_result}">
                                                     <li class="single-meta">
@@ -129,7 +133,7 @@
                                             </c:if>
                                             <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
                                                     Saves</a></li>-->
-                                                <jsp:include page="report.jsp" />
+                                            <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
                                 </div>
@@ -360,17 +364,14 @@
                                             </li>
                                         </ul>
                                     </div>  
-
                                     <!-- Recipe's Author -->
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
                                             <img src="img/blog/author9.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
                                             <div class="media-body">
-                                                <h4 class="author-title">Michel Jack</h4>
+                                                <h4 class="author-title">${author.fullName}</h4>
                                                 <h5 class="author-sub-title">Written by</h5>
-                                                <p>I love cooking and blogging. Using a fork, break salmon. Halve reserved 
-                                                    potatoes and eggs crosswise. The of something of did require met of
-                                                    help have someone.</p>
+                                                <p>${author.biography}</p>
                                                 <ul class="author-social">
                                                     <li>
                                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -390,7 +391,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>            
+                                    </div>   
                                     <div class="also-like-wrap">
                                         <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
                                         <div class="row">
@@ -446,8 +447,8 @@
                                 </div>
                             </div>
                         </div> 
-                        
-                                    
+
+
                         <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
                             <!-- Top 5 Recipes-->
                             <div class="widget">                            
@@ -455,8 +456,8 @@
                                     <h3 class="item-heading">TOP RECIPES</h3>
                                 </div>
                                 <c:import url="LoadHomePageController"></c:import>
-                                <div class="widget-latest">
-                                    <ul class="block-list">
+                                    <div class="widget-latest">
+                                        <ul class="block-list">
                                         <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
                                         <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
                                             <c:set var="author" value="${recipeDto.authorInfo}"/>
@@ -490,7 +491,7 @@
                                     <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
                                 </div>
                             </div>
-                            
+
                             <!-- Category List-->
                             <div class="widget">
                                 <div class="section-heading heading-dark">
@@ -590,8 +591,8 @@
             </form>
         </div>    
         <!-- Search Box End Here -->
-        
-         <!-- Modal Start-->
+
+        <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

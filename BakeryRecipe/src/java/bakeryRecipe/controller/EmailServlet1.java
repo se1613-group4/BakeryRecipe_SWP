@@ -6,15 +6,13 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.email.Email_DTO;
-import bakeryRecipe.email.VerifyCodeErr;
+import bakeryRecipe.email.SendEmail;
+import bakeryRecipe.email.VerifyEmailErr;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -28,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author PC
  */
-@WebServlet(name = "VerifyCode", urlPatterns = {"/VerifyCode"})
-public class VerifyCode extends HttpServlet {
+@WebServlet(name = "EmailServlet1", urlPatterns = {"/EmailServlet1"})
+public class EmailServlet1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,38 +39,53 @@ public class VerifyCode extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, NamingException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String email = request.getParameter("txtEmail");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
-        HttpSession session = request.getSession();
-        VerifyCodeErr errors = new VerifyCodeErr();
+        String url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_EMAIL_PAGE_1);
+        VerifyEmailErr errors = new VerifyEmailErr();
+        Account_tblDAO accDAO=new Account_tblDAO();
+        boolean foundErr = false;
         try {
-            Email_DTO user = (Email_DTO) session.getAttribute("authcode");
-            String code = request.getParameter("authcode");
-            //String email = request.getParameter("txtEmail");
-            if (code.equals(user.getCode())) {
-                Account_tblDAO accDAO = new Account_tblDAO();
-                int userID = accDAO.checkUserIdWithEmail(user.getEmail());
-                boolean check = accDAO.verifyEmail(userID);
-                if (check == true) {
-                    url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.LOGIN_PAGE);
-                    request.getSession().setAttribute("verifyCode_done", errors);
-                }
-            } 
-            if(code!= user.getCode()){
-                
-                //url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
-                request.setAttribute("VerifyCode_ERR", errors);
-                errors.setCodeIncorrect("This code you entered is incorrect!");
+            /* TODO output your page here. You may use following sample code. */
+            boolean checkEmailExit = accDAO.checkEmail(email);
+            if (checkEmailExit == false) {
+                foundErr = true;
+                errors.setEmailNotExisted("Email does not exist try again!");
             }
-        } catch (SQLException ex) {
+            boolean checkEmailActive= accDAO.checkEmailIsActive(email);
+            if (checkEmailActive == false) {
+                foundErr = true;
+                errors.setEmailIsActive("Your account has been locked, please contact admin to unlock your account!");
+            }
+            if (foundErr) {
+                request.setAttribute("VerifyMail_ERR", errors);
+            }else{
+                SendEmail sm = new SendEmail();
+                String code = sm.getRandom();
+                Email_DTO user = new Email_DTO( email, code);
+                boolean test = sm.sendEmail(user);
+                if (test==true) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("authcode", user);
+                    url = siteMaps.getProperty(AppContants.EmailFeatures.VERIFY_CODE_PAGE_1);
+                    //request.setAttribute("VerifyEmail_done","done");
+                    session.setAttribute("email_A",user);
+                } else {
+                    errors.setCannotSend("Can not send mail. Try again");
+                    request.setAttribute("VerifyMail_ERR", errors);
+                    
+                }
+            }
+            
+        }catch (SQLException ex) {
             log("EmailServlet _ SQL " + ex.getMessage());
-        } // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
-        finally {
+        } finally {
+            // goi sendRedirect de btAction ko bi goi lai -> ko bi trung lai
             RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response); // sendRedirect + urlRewriting ~
+            rd.forward(request, response); // sendRedirect + urlRewriting ~ 
         }
     }
 
@@ -88,13 +101,7 @@ public class VerifyCode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -108,13 +115,7 @@ public class VerifyCode extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

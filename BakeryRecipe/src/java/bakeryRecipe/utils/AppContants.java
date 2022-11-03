@@ -148,13 +148,17 @@ public class AppContants { // mapping all features strings
     public class EmailFeatures {
 
         public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
+        public static final String VERIFY_EMAIL_PAGE_1 = "verifyEmailPage1";
         public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+        public static final String VERIFY_CODE_PAGE_1 = "verifyCodePage1";
     }
 
     public class VerifyCodeFeatures {
 
         public static final String LOGIN_PAGE = "loginPage";
         public static final String VERIFY_CODE_PAGE = "verifyCodePage";
+        public static final String VERIFY_CODE_PAGE_1 = "verifyCodePage1";
+        public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
     }
 
      public class SaveRecipe {

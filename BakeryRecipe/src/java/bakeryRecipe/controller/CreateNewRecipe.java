@@ -12,6 +12,8 @@ import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.tag_detail_tbl.Tag_Detail_tblDAO;
+import bakeryRecipe.tag_tbl.Tag_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import bakeryRecipe.video_tbl.Video_tblDAO;
 import java.io.File;
@@ -79,6 +81,7 @@ public class CreateNewRecipe extends HttpServlet {
         String[] steps = request.getParameterValues("txtStep");
 //        String[] imgUrls = request.getParameterValues("txtImgUrl");
         String vidUrl = request.getParameter("txtVidUrl");
+        String[] tags = request.getParameterValues("txtTag");
         // all validate data
         try {
             /*
@@ -136,7 +139,7 @@ public class CreateNewRecipe extends HttpServlet {
             }
             // call imageDao and insert into image_tbl
             boolean resultInsertImg = true;
-            if (imgUrls != null && !"".equals(imgUrls[0])) {
+            if (imgUrls[0] != null && !"".equals(imgUrls[0])) {
                 Image_tblDAO imgDao = new Image_tblDAO();                
                 imgDao.removeImg(recipeCurrentId);
                 resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
@@ -151,9 +154,22 @@ public class CreateNewRecipe extends HttpServlet {
                 Video_tblDAO vidDao = new Video_tblDAO();
                 resultInsertVid = vidDao.insertVideo(recipeCurrentId, vidUrl);
                 System.out.println("======RESULT INSERT VIDEO=======" + resultInsertVid);
-            }   
+            }
+            /*
+            * INSERT TO TAG TABLE    
+            */
+            // call videoDao and insert into video_tbl
+            boolean resultInsertTag = true;
+            if (tags != null) {
+                Tag_tblDAO tagDao = new Tag_tblDAO();
+                tagDao.insertTags(tags);                
+                Tag_Detail_tblDAO tagDetailDao = new Tag_Detail_tblDAO();
+                tagDetailDao.removeTagDetail(recipeCurrentId);                
+                resultInsertTag = tagDetailDao.insertTagDetail(recipeCurrentId, tags);
+                System.out.println("======RESULT INSERT TAGS=======" + resultInsertTag);
+            }
             // All insert results are true -> redirect to MyRecipes Page
-            if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid) {
+            if (resultInsertRecipe && resultInsertIngre && resultInsertImg && resultInsertVid && resultInsertTag) {
                 url = siteMaps.getProperty(AppContants.CreateRecipeFeature.MY_RECIPES_PAGE);
                 
                 //Notification

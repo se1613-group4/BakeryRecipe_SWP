@@ -256,22 +256,20 @@
                                     <!-- Tag of this Recipe-->
                                     <div class="tag-share">
                                         <ul>
-                                            <li>
-                                                <ul class="inner-tag">
-                                                    <li>
-                                                        <a href="#">Burger</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Dinner</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Pizza</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Salad</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            <!--Tags-->
+                                            <c:set var="tagList" value="${requestScope.TAG_LIST}"></c:set>
+                                            <c:if test="${not empty tagList}">
+                                                <li>
+                                                    <ul class="inner-tag">                                                
+                                                        <c:forEach var="tag" items="${tagList}">
+                                                            <li>
+                                                                <a href="#">${tag}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </li>
+                                            </c:if>   
+                                            <!--Share-->    
                                             <li>
                                                 <ul class="inner-share">
                                                     <li>
@@ -307,13 +305,12 @@
                                     <!-- Recipe's Author -->
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
-                                            <img src="img/blog/author9.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                            <img src="${author.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                    style="height: 20%; width: 20%;">
                                             <div class="media-body">
-                                                <h4 class="author-title">Michel Jack</h4>
+                                                <h4 class="author-title">${author.fullName}</h4>
                                                 <h5 class="author-sub-title">Written by</h5>
-                                                <p>I love cooking and blogging. Using a fork, break salmon. Halve reserved 
-                                                    potatoes and eggs crosswise. The of something of did require met of
-                                                    help have someone.</p>
+                                                <p>${author.biography}</p>
                                                 <ul class="author-social">
                                                     <li>
                                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -336,7 +333,6 @@
                                     </div>            
                                     <!-- Suggest recipe start here -->
                                     <!-- Suggest recipe end here -->
-
 
                                     <jsp:include page="like.jsp" />
                                     <jsp:include page="comment.jsp" />

@@ -43,6 +43,11 @@
         </style>
     </head>
     <body>
+        <c:if test="${not empty Not_active}">
+        <script>alert("Your account not active,please contant admin");
+        </script></c:if>
+        <c:remove var="Not_active" scope="session" />
+        
         <c:import url="LoadHomePageController"></c:import>
         
         <!-- Preloader Start Here -->
@@ -206,7 +211,8 @@
                                 <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/BakeryRecipe/login-google&response_type=code&client_id=220347070456-brh7fuqartnn99t6prha0o1kcc6rmajr.apps.googleusercontent.com&approval_prompt=force" 
+                                       class="google"><i class="fab fa-google-plus-g"></i></a></li>
                             </ul>
                         </div>
                     </div>

@@ -26,8 +26,8 @@ function countTags(){
 function createTag(){
     ul.querySelectorAll(".li-tag").forEach(li => li.remove());
     tags.slice().reverse().forEach(tag =>{
-        let liTag = `<li class="li-tag">${tag} 
-            <i class="fa-solid fa-xmark" onclick="remove(this, '${tag}')"></i></li>`;
+        let liTag = `<li class="li-tag">${tag}<i class="fa-solid fa-xmark" onclick="remove(this, '${tag}')"></i></li>`;
+//    let liTag = `<li class="li-tag" onclick="remove(this, '${tag}')>${tag}</li>`;
         ul.insertAdjacentHTML("afterbegin", liTag);
     });
     countTags();

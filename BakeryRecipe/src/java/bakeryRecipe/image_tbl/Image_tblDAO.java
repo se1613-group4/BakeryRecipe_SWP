@@ -5,7 +5,6 @@
  */
 package bakeryRecipe.image_tbl;
 
-import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
 import java.sql.Connection;

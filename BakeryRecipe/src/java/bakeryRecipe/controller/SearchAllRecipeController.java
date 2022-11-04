@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author thongnt
+ * @author ThongNT
  */
 @WebServlet(name = "SearchAllRecipeController", urlPatterns = {"/SearchAllRecipeController"})
 public class SearchAllRecipeController extends HttpServlet {
@@ -60,9 +60,11 @@ public class SearchAllRecipeController extends HttpServlet {
 
                 //2. Process result
                 List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue);
+                List<Recipe_tblDTO> resultTop9 = dao.searchAllRecipePaging9(searchValue, 0);
 
                 //3. setAttribute to request
                 request.setAttribute("SEARCH_RESULT", result);
+                request.setAttribute("SEARCH_RESULT_TOP9", resultTop9);
             }
 
             url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);

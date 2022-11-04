@@ -2,8 +2,8 @@
     "use strict";
 
     /*-------------------------------------
-     Contact Form initiating
-     -------------------------------------*/
+    Contact Form initiating
+    -------------------------------------*/
     var contactForm = $('#contact-form');
     if (contactForm.length) {
         contactForm.validator().on('submit', function (e) {
@@ -34,8 +34,8 @@
     }
 
     /*-------------------------------------
-     Jquery Serch Box
-     -------------------------------------*/
+    Jquery Serch Box
+    -------------------------------------*/
     $('a[href="#search"]').on("click", function (event) {
         event.preventDefault();
         var target = $("#search");
@@ -57,8 +57,8 @@
     });
 
     /*-------------------------------------
-     Jquery Advance Serch Box
-     -------------------------------------*/
+    Jquery Advance Serch Box
+    -------------------------------------*/
     $("#adv-serch").on('click', function () {
         var _self = $(this);
         _self.parents('.adv-search-wrap').find(".advance-search-form").slideToggle();
@@ -67,35 +67,35 @@
     });
 
     /*-------------------------------------
-     Quantity Holder
-     -------------------------------------*/
-    //    $('#quantity-holder').on('click', '.quantity-plus', function () {
-    //
-    //        var $holder = $(this).parents('.quantity-holder');
-    //        var $target = $holder.find('input.quantity-input');
-    //        var $quantity = parseInt($target.val(), 10);
-    //        if ($.isNumeric($quantity) && $quantity > 0) {
-    //            $quantity = $quantity +1;
-    //            $target.val($quantity);
-    //        } else {
-    //            $target.val($quantity);
-    //        }
-    //
-    //    }).on('click', '.quantity-minus', function () {
-    //
-    //        var $holder = $(this).parents('.quantity-holder');
-    //        var $target = $holder.find('input.quantity-input');
-    //        var $quantity = parseInt($target.val(), 10);
-    //        if ($.isNumeric($quantity) && $quantity >= 2) {
-    //            $quantity = $quantity - 1;
-    //            $target.val($quantity);
-    //        } else {
-    //            $target.val(1);
-    //        }
-    //    });
+    Quantity Holder
+    -------------------------------------*/
+//    $('#quantity-holder').on('click', '.quantity-plus', function () {
+//
+//        var $holder = $(this).parents('.quantity-holder');
+//        var $target = $holder.find('input.quantity-input');
+//        var $quantity = parseInt($target.val(), 10);
+//        if ($.isNumeric($quantity) && $quantity > 0) {
+//            $quantity = $quantity +1;
+//            $target.val($quantity);
+//        } else {
+//            $target.val($quantity);
+//        }
+//
+//    }).on('click', '.quantity-minus', function () {
+//
+//        var $holder = $(this).parents('.quantity-holder');
+//        var $target = $holder.find('input.quantity-input');
+//        var $quantity = parseInt($target.val(), 10);
+//        if ($.isNumeric($quantity) && $quantity >= 2) {
+//            $quantity = $quantity - 1;
+//            $target.val($quantity);
+//        } else {
+//            $target.val(1);
+//        }
+//    });
     /*-------------------------------------
-     On Scroll 
-     -------------------------------------*/
+    On Scroll 
+    -------------------------------------*/
     $(window).on('scroll', function () {
         if ($(window).scrollTop() > 700) {
             $('.scrollup').addClass('back-top');
@@ -105,8 +105,8 @@
     });
 
     /*-------------------------------------
-     Rating selection
-     -------------------------------------*/
+    Rating selection
+    -------------------------------------*/
     $('.rate-wrapper').on('click', '.rate .rate-item', function () {
         var self = $(this),
             target = self.parent('.rate');
@@ -132,7 +132,7 @@
 
     /*-------------------------------------
      Google Map
-     -------------------------------------*/
+    -------------------------------------*/
     if ($('#googleMap').length) {
         var initialize = function () {
             var mapOptions = {
@@ -158,8 +158,8 @@
     }
 
     /*-------------------------------------
-     Active Menu
-     -------------------------------------*/
+    Active Menu
+    -------------------------------------*/
     $('#site-menu li a').on('click', function () {
         $('#site-menu').find('.current').removeClass('current');
         $(this).parent().addClass('current');
@@ -172,30 +172,30 @@
     })
 
     /*-------------------------------------
-     Menu fixded
-     -------------------------------------*/
+    Menu fixded
+    -------------------------------------*/
     if ($('header .header-main-menu').length && $('header .header-main-menu').hasClass('header-sticky')) {
         var header_position = $('header .header-main-menu').offset(),
             lastScroll = 100;
         $(window).on('scroll load', function (event) {
             var st = $(this).scrollTop();
             if (st > header_position.top) {
-                ($(".header-table").length) ? $('header .header-table').addClass("header-fixed") : $('header .header-main-menu').addClass("header-fixed");
+                ($(".header-table").length) ? $('header .header-table').addClass("header-fixed"): $('header .header-main-menu').addClass("header-fixed");
             } else {
-                ($(".header-table").length) ? $('header .header-table').removeClass("header-fixed") : $('header .header-main-menu').removeClass("header-fixed");
+                ($(".header-table").length) ? $('header .header-table').removeClass("header-fixed"): $('header .header-main-menu').removeClass("header-fixed");
             }
 
             lastScroll = st;
 
             if (st === 0) {
-                ($(".header-table").length) ? $('header .header-table').removeClass("header-fixed") : $('header .header-main-menu').removeClass("header-fixed");
+                ($(".header-table").length) ? $('header .header-table').removeClass("header-fixed"): $('header .header-main-menu').removeClass("header-fixed");
             }
         });
     }
 
     /*---------------------------------------
-     On Click Section Switch
-     --------------------------------------- */
+    On Click Section Switch
+    --------------------------------------- */
     $('[data-type="section-switch"]').on('click', function () {
         if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
             var target = $(this.hash);
@@ -211,8 +211,8 @@
     });
 
     /*-------------------------------------
-     Carousel slider initiation
-     -------------------------------------*/
+    Carousel slider initiation
+    -------------------------------------*/
     if ($.fn.owlCarousel) {
         $('.rc-carousel').each(function () {
             var carousel = $(this),
@@ -315,8 +315,8 @@
     }
 
     /*-------------------------------------
-     Window On Load Function
-     -------------------------------------*/
+    Window On Load Function
+    -------------------------------------*/
     $(window).on('load', function () {
 
         // Page Preloader
@@ -327,8 +327,8 @@
     });
 
     /*---------------------------------------
-     Summernote
-     --------------------------------------- */
+    Summernote
+    --------------------------------------- */
     if ($.fn.summernote !== undefined) {
         $(document).ready(function () {
             $('.summernote').summernote({
@@ -338,8 +338,8 @@
     }
 
     /*-------------------------------------
-     Section background image 
-     -------------------------------------*/
+    Section background image 
+    -------------------------------------*/
     imageFunction();
 
     function imageFunction() {
@@ -362,34 +362,3 @@ function displayReportContainer() {
 function hideReportContainer() {
     document.querySelector('#leave-report-container').classList.add('hideThis');
 }
-
-
-
-//LoadMore search result (ThongNT)
-
-
-function loadMoreSearchResult() {
-    let searchValue = document.querySelector('#searchValueForJs').innerHTML;
-    let startNumber = document.querySelectorAll('.search-result-box').length;
-    let searchResultSize = document.querySelector('#searchResultSizeForJs').innerHTML;
-    if (startNumber >= searchResultSize) {
-        document.querySelector('#search-result-loadmore-btn').remove();
-        document.querySelector('.search-result-container').innerHTML += '<h3>There is no more result ...</h3>'
-    } else {
-        $.ajax({
-            url: "/BakeryRecipe/SearchAllRecipeLoadMoreController",
-            type: "get", //send it through get method
-            data: {
-                searchValue: searchValue,
-                startNumber: startNumber
-            },
-            success: (response) => {
-                document.querySelector('.search-result-container').innerHTML += response;
-                console.log('search rs from ', startNumber);
-            },
-            error: (xhr) => {
-                console.log('error:: ', xhr);
-            }
-        });
-    }
-};

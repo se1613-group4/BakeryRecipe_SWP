@@ -8,6 +8,10 @@ import bakeryRecipe.comment_tbl.Comment_tblDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ThongNT
+ * @author trung
  */
 @WebServlet(name = "DeleteCommentController", urlPatterns = {"/DeleteCommentController"})
 public class DeleteCommentController extends HttpServlet {

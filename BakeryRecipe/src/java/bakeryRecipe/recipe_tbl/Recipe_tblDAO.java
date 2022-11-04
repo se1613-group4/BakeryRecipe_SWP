@@ -37,9 +37,8 @@ public class Recipe_tblDAO implements Serializable {
     }
 
     /**
-     * Search all Recipe object by name
+     * Search all Recipe object by name Author: ThongNT
      *
-     * @Author: ThongNT
      * @param searchValue characters of recipe's name
      * @return A list of Recipe_tblDTO objects
      * @throws SQLException
@@ -93,118 +92,6 @@ public class Recipe_tblDAO implements Serializable {
                 stm = connection.prepareStatement(sql);
                 stm.setString(1, "%" + searchValue + "%");
                 stm.setString(2, "%" + searchValue + "%");
-                //4. Execute statement
-                rs = stm.executeQuery();
-                //5. Process result= rs.getInt("recipe_id");
-                while (rs.next()) {
-                    // get recipe DTO info
-                    int recipeId = rs.getInt("R.recipe_id");
-                    String recipeName = rs.getString("recipe_name");
-                    String description = rs.getString("instruction");
-                    int serving = rs.getInt("serving");
-                    int totalTime = rs.getInt("total_time");
-                    int likedCount = rs.getInt("liked_count");
-                    Date lastModified = rs.getDate("R.last_modified");
-
-                    // get user's profile DTO info
-                    int userId = rs.getInt("profile_tbl.user_id");
-                    String authorName = rs.getString("profile_tbl.full_name");
-                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
-
-                    // get category DTO info
-                    int categoryId = rs.getInt("category_tbl.category_id");
-                    String categoryName = rs.getString("category_name");
-                    Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
-
-                    // get image info
-                    int imgId = rs.getInt("img_id");
-                    String imgLink = rs.getString("img_link");
-                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
-
-                    // create recipeDTO
-                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, totalTime, likedCount, lastModified, authorInfo, category, image);
-
-                    // check recipe dto list not null
-                    if (recipesList == null) {
-                        recipesList = new ArrayList<>();
-                    }
-                    //recipesList has existed
-                    recipesList.add(recipeDto);
-                }//end traverse ResultSet
-            }
-            return recipesList;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }//end searchAllRecipe function
-    
-    /**
-     * Search all Recipe object by name, limit by 9 object from a input parameter
-     * 
-     * @Author: ThongNT
-     * @param searchValue characters of recipe's name
-     * @return A list of Recipe_tblDTO objects
-     * @throws SQLException
-     */
-    public List<Recipe_tblDTO> searchAllRecipePaging9(String searchValue, int startNumber) throws SQLException {
-
-        List<Recipe_tblDTO> recipesList = null;
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-
-        try {
-            //1. Get connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. Write SQL String
-                String sql = "SELECT liked_count, \n"
-                        + "		R.recipe_id, \n"
-                        + "        R.name as recipe_name, \n"
-                        + "        img_id, \n"
-                        + "        img_link,\n"
-                        + "		profile_tbl.user_id, \n"
-                        + "        profile_tbl.full_name, \n"
-                        + "        category_tbl.category_id, \n"
-                        + "        category_tbl.name as category_name, \n"
-                        + "        serving, \n"
-                        + "        (prepare_time+cook_time) as total_time, \n"
-                        + "        instruction, \n"
-                        + "        R.last_modified\n"
-                        + "FROM (select liked_count, \n"
-                        + "			recipe_id, \n"
-                        + "            name, \n"
-                        + "            serving, \n"
-                        + "            prepare_time, \n"
-                        + "            cook_time, \n"
-                        + "            instruction, \n"
-                        + "            last_modified, \n"
-                        + "            category_id, \n"
-                        + "            user_id, \n"
-                        + "            is_actived, \n"
-                        + "            is_hidden\n"
-                        + "		from recipe_tbl \n"
-                        + "		where \n"
-                        + "			is_actived = 1 \n"
-                        + "                 and is_hidden = 0 ) as R\n"
-                        + "		inner join category_tbl on R.category_id = category_tbl.category_id\n"
-                        + "		inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
-                        + "		inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
-                        + "WHERE (R.name like ? or profile_tbl.full_name like ?)"
-                        + "LIMIT ?, 9;";
-                //3. Create Statement Object
-                stm = connection.prepareStatement(sql);
-                stm.setString(1, "%" + searchValue + "%");
-                stm.setString(2, "%" + searchValue + "%");                
-                stm.setInt(3, startNumber);
                 //4. Execute statement
                 rs = stm.executeQuery();
                 //5. Process result= rs.getInt("recipe_id");

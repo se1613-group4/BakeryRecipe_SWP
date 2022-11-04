@@ -26,8 +26,7 @@
         <!-- Animate CSS -->
         <link rel="stylesheet" href="css/animate.min.css">
         <!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="css/fontawesome-all.min.css">        
-        <script src="https://kit.fontawesome.com/6166015301.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <!-- Flaticon CSS -->
         <link rel="stylesheet" href="fonts/flaticon.css">
         <!-- Summernote CSS -->
@@ -74,11 +73,10 @@
                                 margin-top: 5px !IMPORTANT;*/
                 /*                top: 350px !IMPORTANT;*/
             }
-            .uploaded-img {
-                height: 15%;
-                width: 15%;
-                margin: 2px;
-            }
+            /*            .div-upload {
+                            height: 40.39px;
+                            margin-bottom: 5px;
+                        }*/
             .btn-upload:hover {
                 background: #ff4a52f7 !IMPORTANT;
             }
@@ -110,7 +108,7 @@
                                     <h1>Edit Recipe</h1>
                                     <ul>
                                         <li>
-                                            <a href="homePage">Home</a>
+                                            <a href="displayHomePage">Home</a>
                                         </li>
                                         <li>Submit Recipe</li>
                                     </ul>
@@ -132,8 +130,8 @@
                         <!--Form-->
                         <div class="col-lg-8">                                            
                             <!--Edit Recipe Form-->
-                            <form id="submitForm" class="submit-recipe-form" action="EditRecipeController" 
-                                  onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+                            <form id="submitForm" class="submit-recipe-form" action="editRecipeController" 
+                                  onsubmit="return validateForm()" method="post">
 
                                 <!--Input recipe name-->
                                 <div class="form-group">
@@ -159,12 +157,13 @@
                                 </div>
                                 <!--Input tags of recipe-->
                                 <div class="tag-container">
-                                    <div class="tag-title">                                        
+                                    <div class="tag-title">
+                                        <!--<img src="https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/Tags-Input/tag-icon.svg" alt="icon">-->
                                         <label>Tags</label>
                                     </div>
 
                                     <div class="tag-content">
-                                        <p>Type tags separated by (,) and press Enter to save tags.</p>
+                                        <p>Type tags and press Enter to save tags, separated by (,).</p>
                                         <ul id="ul-tag"><input type="text" id="input-tag" spellcheck="false"></ul>
                                     </div>
 
@@ -188,15 +187,19 @@
                                 <!--Upload photos-->
                                 <div class="additional-input-wrap">
                                     <label>Your photos</label>
-                                    <div class="form-group">                             
-                                        <!--Input image url-->
-                                        <div id="uploaded-image-grid">
-                                            <img src="${image.imgLink}" class="uploaded-img" alt="recipe-image"></img>
+                                    <div class="form-group">
+                                        <div class="row no-gutters img-div no-remove" id="img-sample">                                    
+                                            <!--Input image url-->
+                                            <div class="col-12">
+                                                <div class="form-group additional-input-box icon-right">
+                                                    <input type="text" placeholder="Paste your image url here" class="form-control"
+                                                           name="txtImgUrl" value="${image.imgLink}"/>
+                                                    <i class="fas fa-times" onclick="removeElement(this)"></i>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <input type="file" name="file" id="file-uploader" accept=".jpg, .jpeg, .png" 
-                                               style="margin-top: 5px;"/>
-                                        <!--<p style="font-size: 12px; margin-top: 3px;">Maximum 5 images</p>-->
-                                        <!--<a type="button" id="add-img-btn" class="btn-upload upload-window button" href="#login-box">Upload image</a>-->
+                                        <!--                                    <button type="button" id="add-img-btn" class="btn-upload" onclick="addImg()">
+                                                                                    <i class="flaticon-add-plus-button"></i>Add Image</button>-->
                                     </div>
                                 </div>
                                 <!--Upload videos-->
@@ -355,9 +358,61 @@
                                 <button type="submit" class="btn-submit">EDIT RECIPE</button>
                             </form>
                         </div>  
-                        <!--Right side bar start here-->
-                    <%@include file="righ-side-bar.jsp" %>
-                    <!--Right side bar end here-->
+                        <!--Right Side Bar-->
+                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
+                            <!-- Top 5 Recipes-->
+                            <div class="widget">                            
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">TOP RECIPES</h3>
+                                </div>
+                                <div class="widget-latest">
+                                    <ul class="block-list">
+                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
+                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
+                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
+                                            <c:set var="category" value="${recipeDto.category}"/>
+                                            <c:set var="image" value="${recipeDto.image}"/>
+                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                                            </c:url>                                        
+                                            <li class="single-item">
+                                                <div class="item-img">
+                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
+                                                    <div class="count-number">${counter.count}</div>
+                                                </div>
+                                                <div class="item-content">
+                                                    <div class="item-ctg">${category.name}</div>
+                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
+                                                    <div class="item-post-by">
+                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
+                                                            ${author.fullName}</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Category List-->
+                            <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
+                                <div class="widget">
+                                    <div class="section-heading heading-dark">
+                                        <h3 class="item-heading">CATEGORIES</h3>
+                                    </div>
+                                    <div class="widget-categories">
+                                        <ul>
+                                        <c:forEach var="categoryDto" items="${categoryList}">
+                                            <li>
+                                                <a href="#${categoryDto.categoryId}">${categoryDto.name}
+                                                    <span>${categoryDto.countNum}</span>
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>                        
+                        </div>
                     </div>
                 </div>
             </section>
@@ -366,7 +421,15 @@
             <%@include file="footer.html" %>
             <!-- Footer Area End Here -->
         </div>
-                 
+         
+            <script>
+        <!--Chặn gửi form bằng Enter-->
+            $("#submitForm").keypress(function (e) {
+                if (e.which == 13) {
+                    return false;
+                }
+            });            
+        </script> 
         <!-- Jquery Js -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <!-- Bootstrap Js -->
@@ -384,16 +447,8 @@
         <!-- Smoothscroll Js -->
         <script src="js/smoothscroll.min.js"></script>
         <!-- Custom Js -->
-        <script src="js/main.js"></script>
-        <script>
-        <!--Chặn gửi form bằng Enter-->
-            $("#submitForm").keypress(function (e) {
-                if (e.which == 13) {
-                    return false;
-                }
-            });            
-        </script> 
-        <script src="./js/upload-image.js"></script>       
+        <!--<script src="js/main.js"></script>-->
+               
         <script src="js/submit_recipe.js"></script>
         <script src="js/tagStyle.js"></script>
     </body>

@@ -58,7 +58,8 @@
 
                                     <li class="reviews-single-item comment-element">
                                         <div class="media media-none--xs">
-                                            <img src="${avtUrl}" alt="commenter-avatar" class="media-img-auto">
+                                            <img src="${avtUrl}" alt="commenter-avatar" class="media-img-auto"
+                                                 style="height: 20%; width: 20%">
                                             <div class="media-body">
                                                 <h4 class="comment-title">${fullName}</h4>
 

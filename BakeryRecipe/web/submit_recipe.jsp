@@ -154,13 +154,12 @@
                                 </div>
                                 <!--Input tags of recipe-->
                                 <div class="tag-container">
-                                    <div class="tag-title">
-                                        <!--<img src="https://niemvuilaptrinh.ams3.cdn.digitaloceanspaces.com/Tags-Input/tag-icon.svg" alt="icon">-->
+                                    <div class="tag-title">                                        
                                         <label>Tags</label>
                                     </div>
 
                                     <div class="tag-content">
-                                        <p>Type tags and press Enter to save tags, separated by (,).</p>
+                                        <p>Type tags separated by (,) and press Enter to save tags.</p>
                                         <ul id="ul-tag"><input type="text" id="input-tag" spellcheck="false"></ul>
                                     </div>
 
@@ -168,7 +167,9 @@
                                         <p><span>10</span> tags maximum</p>
                                         <!--<button>Clear all tags</button>-->
                                     </div>
-
+                                </div>
+                                <!--Hidden area for tag-->
+                                <div class="hidden-tag">                                    
                                 </div>
                                 <!--Input recipe description-->
                                 <div class="form-group">
@@ -305,61 +306,9 @@
 
                         </div>  
 
-                        <!--Right Side Bar-->
-                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
-                            <!-- Top 5 Recipes-->
-                            <div class="widget">                            
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">TOP RECIPES</h3>
-                                </div>
-                                <div class="widget-latest">
-                                    <ul class="block-list">
-                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
-                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
-                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
-                                            <c:set var="category" value="${recipeDto.category}"/>
-                                            <c:set var="image" value="${recipeDto.image}"/>
-                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
-                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-                                            </c:url>                                        
-                                            <li class="single-item">
-                                                <div class="item-img">
-                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
-                                                    <div class="count-number">${counter.count}</div>
-                                                </div>
-                                                <div class="item-content">
-                                                    <div class="item-ctg">${category.name}</div>
-                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
-                                                    <div class="item-post-by">
-                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
-                                                            ${author.fullName}</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Category List-->
-                            <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
-                                <div class="widget">
-                                    <div class="section-heading heading-dark">
-                                        <h3 class="item-heading">CATEGORIES</h3>
-                                    </div>
-                                    <div class="widget-categories">
-                                        <ul>
-                                        <c:forEach var="categoryDto" items="${categoryList}">
-                                            <li>
-                                                <a href="#${categoryDto.categoryId}">${categoryDto.name}
-                                                    <span>${categoryDto.countNum}</span>
-                                                </a>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>                        
-                        </div>
+                        <!--Right side bar start here-->
+                    <%@include file="righ-side-bar.jsp" %>
+                    <!--Right side bar end here-->
                     </div>
                 </div>
             </section>
@@ -406,7 +355,7 @@
     <!-- Smoothscroll Js -->
     <script src="js/smoothscroll.min.js"></script>
     <!-- Custom Js -->
-    <!--<script src="js/main.js"></script>-->
+    <script src="js/main.js"></script>
     <script>
     <!--Chan gui form bang Enter-->
         $("#submitForm").keypress(function (e) {

@@ -1,4 +1,10 @@
 <%-- 
+    Document   : verify
+    Created on : Oct 23, 2022, 6:47:18 PM
+    Author     : PC
+--%>
+
+<%-- 
     Document   : login
     Created on : Oct 4, 2022, 4:59:46 PM
     Author     : PC
@@ -6,17 +12,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="bakeryRecipe.account_tbl.RegisterError" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Forgot Password</title>
+        <title>Verify Email</title>
 
         <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bakery Recipe| Forgot Password</title>
+        <title>Bakery Recipe| Verify Email</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -37,7 +43,7 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
-        
+
     </head>
     <body>
     <body>
@@ -62,12 +68,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumbs-area">
-                                <h1>Forgot Password Page</h1>
+                                <h1>Verify Code Page</h1>
                                 <ul>
                                     <li>
-                                        <a href=homePage name="btAction" value="Home">Home</a>
+                                        <a href="displayHomePage">Home</a>
                                     </li>
-                                    <li>Forgot Password</li>
+                                    <li>Verify Code</li>
                                 </ul>
                             </div>
                         </div>
@@ -83,32 +89,22 @@
                         <div class="col-lg-8">
                             <div class="login-box-layout1">
                                 <div class="section-heading heading-dark">
-                                    <h2 class="item-heading">FORGOT PASSWORD FORM</h2>
+                                    <h2 class="item-heading">VERIFY CODE FORM</h2>
                                 </div>
-                                <!--FORGOT PASSWORD FORM-->
-                                <c:set var="error" value="${requestScope.FORGOTPASSWOD_ERR}"></c:set>
-                                    <form class="login-form" action="forgotPasswordController"  method="post">
-                                    <input class="main-input-box" name="txtNewPassword" type="password" placeholder="Password" required
-                                           oninvalid="this.setCustomValidity('Enter password Here')"
+                                <!--REGISTER FORM-->
+                                <c:set var="error" value="${requestScope.VerifyCode_ERR}"></c:set>
+                                    <form class="login-form" action="verifyCodeController1"  method="post">
+
+                                        <input  class="main-input-box" name="authcode" type="text" placeholder="otp code" required
+                                           oninvalid="this.setCustomValidity('Enter otp code here')"
                                            oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.newPasswordFormatErr}">
-                                        <font color="red">${error.newPasswordFormatErr}</font></br>
+                                    <c:if test="${not empty error.codeIncorrect}">
+                                        <font color="red">${error.codeIncorrect}</font></br>
                                     </c:if>
-                                    <c:if test="${not empty error.newPasswordSameAsErr}">
-                                        <font color="red">${error.newPasswordSameAsErr}</font></br>
-                                    </c:if>
-
-                                    <input class="main-input-box" name="txtConfirm" type="password" placeholder="Confirm" required
-                                           oninvalid="this.setCustomValidity('Enter Confirm password Here')"
-                                           oninput="this.setCustomValidity('')"/>
-                                    <c:if test="${not empty error.confirmNotMathched}">
-                                        <font color="red">${error.confirmNotMathched}</font></br>
-                                    </c:if> 
-
-
+                                    
 
                                     <div class="inline-box mb-5 mt-4">
-                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Update Password</button>
+                                        <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Verify Email</button>
 
                                     </div>
                                 </form>
@@ -139,3 +135,8 @@
     </body>
 </body>
 </html>
+
+<!--<form action="verifyCodeController" method="post">
+            <input type="text" name="authcode" >
+            <input type="submit" value="verify">
+</form>-->

@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author PC
  */
-@WebServlet(name = "VerifyCode", urlPatterns = {"/VerifyCode"})
-public class VerifyCode extends HttpServlet {
+@WebServlet(name = "VerifyCode1", urlPatterns = {"/VerifyCode1"})
+public class VerifyCode1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,7 +45,7 @@ public class VerifyCode extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
-        String url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
+        String url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE_1);
         HttpSession session = request.getSession();
         VerifyCodeErr errors = new VerifyCodeErr();
         try {
@@ -57,8 +57,8 @@ public class VerifyCode extends HttpServlet {
                 int userID = accDAO.checkUserIdWithEmail(user.getEmail());
                 boolean check = accDAO.verifyEmail(userID);
                 if (check == true) {
-                    url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.LOGIN_PAGE);
-                    request.getSession().setAttribute("verifyCode_done", errors);
+                    url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.FORGOT_PASSWORD_PAGE);
+                    request.getSession().setAttribute("verifyCode_done", "done");
                 }
             } 
             if(code!= user.getCode()){
@@ -91,9 +91,9 @@ public class VerifyCode extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyCode1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyCode1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -111,9 +111,9 @@ public class VerifyCode extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyCode1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(VerifyCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyCode1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

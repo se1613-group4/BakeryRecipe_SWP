@@ -60,6 +60,13 @@ public class Profile_tblDTO extends Account_tblDTO implements Serializable {
         this.fullName = fullName;
         this.biography = biography;
     }
+    public Profile_tblDTO(int userId, String fullName, String avatarUrl, String biography) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.avatarUrl = avatarUrl;
+        this.biography = biography;
+    }
+    
     // Getters
 
     public int getProfileId() {

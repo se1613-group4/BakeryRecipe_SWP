@@ -209,10 +209,12 @@
                                                     <div class="servings-title">Adjust Servings</div>
                                                     <form class="servings-quantity" action="#">
                                                         <div class="input-group quantity-holder" id="quantity-holder">
-                                                            <input type="text" name='quantity' class="form-control quantity-input"
-                                                                   value="1" placeholder="1">
+                                                            <input type="text" name='numServing' class="form-control quantity-input"
+                                                                   value="${recipeDto.serving}" placeholder="1" readonly>
+                                                            <input type="hidden" name="trecipeId" id="recipeID" value="${param.recipeId}" />
+                                                            <input type="hidden" name="tserving" id="serving" value="${recipeDto.serving}" />
                                                             <div class="btn-quantity-select">
-                                                                <button class="quantity-plus" type="button">
+                                                                <button class="quantity-plus" type="button"> 
                                                                     <i class="fas fa-plus"></i>
                                                                 </button>
                                                                 <button class="quantity-minus" type="button">
@@ -222,23 +224,19 @@
                                                         </div>
                                                     </form>
                                                 </div>
+                                                <div class="testAjax">
                                                 <!--Display Ingredient List-->
                                                 <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
                                                 <c:if test="${not empty ingreList}">
                                                     <c:forEach var="ingredient" items="${ingreList}">
-                                                        <div class="checkbox checkbox-primary">
-                                                            <!--<input id="checkbox1" type="checkbox">-->
-                                                            <!--<label>${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</label>-->
-                                                            <p>+  ${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}</p>
+                                                        <div class="ingredient">
+                                                            <p><b><span class="ingredient-quantity">${ingredient.quantity}</span> 
+                                                                    <c:if test="${ingredient.unit != 'none'}">${ingredient.unit}</c:if></b> 
+                                                                ${ingredient.ingredientName}</p>    
                                                         </div>
-                                                    </c:forEach>
+                                                    </c:forEach>                                                   
                                                 </c:if>
-                                                <!-- List ingredients-->
-                                                <!--                                            <div class="checkbox checkbox-primary">
-                                                                                                <input id="checkbox1" type="checkbox">
-                                                                                                <label for="checkbox1">1 cup sifted all purpose flour</label>
-                                                                                            </div>-->
-                                                <!--End of list ingredients-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -247,11 +245,7 @@
                                     <div class="direction-wrap-layout1">
                                         <div class="section-heading heading-dark">
                                             <h2 class="item-heading">DIRECTIONS</h2>
-                                        </div>
-                                        <!--                                <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                            taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                            particular are subject. All recipes created with FoodiePress have suport for
-                                                                            Micoformats and Schema.org is a collaboration byo improve convallis.</p>-->
+                                        </div>          
                                         <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
                                         <c:if test="${not empty stepList}">
                                             <c:forEach var="step" items="${stepList}" varStatus="counter">
@@ -262,77 +256,26 @@
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                        </c:if>
-                                        <!--                                <div class="direction-box-layout1">
-                                                                            <div class="item-content">
-                                                                                <div class="serial-number">01 Step</div>
-                                                                                <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                    collaboration improve
-                                                                                    the web by creat inegaera structured markupinn ocuously
-                                                                                    side crudey mightily rigorous plot life.</p>
-                                                                            </div>
-                                                                            <p class="section-paragraph">Salamander lied porpoise much over tightly circa horse
-                                                                                taped so innocuously side crudey mightily rigorous plot life. New homes in
-                                                                                particular are subject. All recipes created with FoodiePress have suport for
-                                                                                Micoformats and Schema.org is a collaboration byo improve convallis.</p>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">01 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">02 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">03 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="direction-box-layout1">
-                                                                                <div class="item-content">
-                                                                                    <div class="serial-number">04 Step</div>
-                                                                                    <p>Recipe View<span class="item-time"><i class="far fa-clock"></i>5 Minutes</span> chemaorg is a
-                                                                                        collaboration improve
-                                                                                        the web by creat inegaera structured markupinn ocuously
-                                                                                        side crudey mightily rigorous plot life.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>-->
+                                        </c:if>                                        
                                     </div>
 
                                     <!-- Tag of this Recipe-->
                                     <div class="tag-share">
                                         <ul>
-                                            <li>
-                                                <ul class="inner-tag">
-                                                    <li>
-                                                        <a href="#">Burger</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Dinner</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Pizza</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Salad</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            <!--Tags-->
+                                            <c:set var="tagList" value="${requestScope.TAG_LIST}"></c:set>
+                                            <c:if test="${not empty tagList}">
+                                                <li>
+                                                    <ul class="inner-tag">                                                
+                                                        <c:forEach var="tag" items="${tagList}">
+                                                            <li>
+                                                                <a href="#">${tag}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </li>
+                                            </c:if>   
+                                            <!--Share-->    
                                             <li>
                                                 <ul class="inner-share">
                                                     <li>
@@ -367,7 +310,8 @@
                                     <!-- Recipe's Author -->
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
-                                            <img src="img/blog/author9.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                            <img src="${author.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                    style="height: 20%; width: 20%;">
                                             <div class="media-body">
                                                 <h4 class="author-title">${author.fullName}</h4>
                                                 <h5 class="author-sub-title">Written by</h5>
@@ -440,6 +384,9 @@
                                     </div>
 
 
+                                    </div>            
+                                    <!-- Suggest recipe start here -->
+                                    <!-- Suggest recipe end here -->
 
                                     <jsp:include page="like.jsp" />
                                     <jsp:include page="comment.jsp" />
@@ -576,6 +523,10 @@
                                 </div>
                             </div>
                         </div>
+                                                            
+                     <!--Right side bar start here-->
+                    <%@include file="righ-side-bar.jsp" %>
+                    <!--Right side bar end here-->
                     </div>
                 </div>             
             </section>
@@ -652,5 +603,15 @@
         <script src="js/smoothscroll.min.js"></script>
         <!-- Custom Js -->
         <script src="js/main.js"></script>
+        <script>
+        <!--Chan gui form bang Enter-->
+        $("form").keypress(function (e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/adjustServing.js"></script>
     </body>
 </html>

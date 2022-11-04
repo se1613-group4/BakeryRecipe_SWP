@@ -88,7 +88,7 @@
             <c:set var="save_result" value="${requestScope.SAVED}"/>
 
             <c:set var="loginValue" value="${sessionScope.USER}"/>
-            
+
             <section class="single-recipe-wrap-layout1 padding-top-74 padding-bottom-50">            
                 <div class="container">
                     <div class="row gutters-60">
@@ -101,12 +101,16 @@
                                     <div class="col-xl-9 col-12">
                                         <ul class="entry-meta">
                                             <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
-                                            <li class="single-meta"><a href="#DisplayAuthorInfo"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a>
+                                            <li class="single-meta">
+                                                <form action="displayOtherUserProfileController">
+                                                    <i class="fas fa-user"></i><input type="submit" value="by ${author.fullName}"/>
+                                                    <input type="hidden" name="authorID" value="${author.userId}">
+                                                </form>
                                                 <jsp:include page="follow.jsp" />
                                             </li>
                                             <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
                                                     Likes</a><jsp:include page="like.jsp" /></li>
-                                                    <!--Save-->
+                                            <!--Save-->
                                             <c:if test="${not empty loginValue}">
                                                 <c:if test="${empty save_result}">
                                                     <li class="single-meta">
@@ -127,6 +131,8 @@
                                                     </li>
                                                 </c:if> 
                                             </c:if>
+                                            <!--<li class="single-meta"><a href="#"><i class="fa-light fa-floppy-disk"></i><span>${recipeDto.savedCount}</span>
+                                                    Saves</a></li>-->
                                             <jsp:include page="report.jsp" />
                                         </ul>
                                     </div>
@@ -301,7 +307,6 @@
                                             </li>
                                         </ul>
                                     </div>  
-
                                     <!-- Recipe's Author -->
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
@@ -330,6 +335,55 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                    </div>   
+                                    <div class="also-like-wrap">
+                                        <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                <div class="product-box-layout2">
+                                                    <figure class="item-figure"><img src="img/product/product11.jpg"
+                                                                                     alt="Product"></figure>
+                                                    <div class="item-content">
+                                                        <span class="sub-title">BREAKFAST</span>
+                                                        <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
+                                                                Chanterelles</a></h3>
+                                                        <ul class="entry-meta">
+                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <<<<<<< thongnt  -->               <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                <div class="product-box-layout2">
+                                                    <figure class="item-figure"><img src="img/product/product12.jpg"
+                                                                                     alt="Product"></figure>
+                                                    <div class="item-content">
+                                                        <span class="sub-title">DESERT</span>
+                                                        <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
+                                                                GingersnapCrust</a></h3>
+                                                        <ul class="entry-meta">
+                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                        </ul>
+                                                    </div>                         
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
+                                                <div class="product-box-layout2">
+                                                    <figure class="item-figure"><img src="img/product/product13.jpg"
+                                                                                     alt="Product"></figure>
+                                                    <div class="item-content">
+                                                        <span class="sub-title">JUICE</span>
+                                                        <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
+                                                        <ul class="entry-meta">
+                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                                                                                      
+                                    </div>
+
+
                                     </div>            
                                     <!-- Suggest recipe start here -->
                                     <!-- Suggest recipe end here -->
@@ -340,6 +394,135 @@
                                 </div>
                             </div>
                         </div> 
+
+
+                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
+                            <!-- Top 5 Recipes-->
+                            <div class="widget">                            
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">TOP RECIPES</h3>
+                                </div>
+                                <c:import url="LoadHomePageController"></c:import>
+                                    <div class="widget-latest">
+                                        <ul class="block-list">
+                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
+                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
+                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
+                                            <c:set var="category" value="${recipeDto.category}"/>
+                                            <c:set var="image" value="${recipeDto.image}"/>
+                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                                            </c:url>                                        
+                                            <li class="single-item">
+                                                <div class="item-img">
+                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
+                                                    <div class="count-number">${counter.count}</div>
+                                                </div>
+                                                <div class="item-content">
+                                                    <div class="item-ctg">${category.name}</div>
+                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
+                                                    <div class="item-post-by">
+                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
+                                                            ${author.fullName}</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div class="widget">
+                                <div class="widget-ad">
+                                    <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
+                                </div>
+                            </div>
+
+                            <!-- Category List-->
+                            <div class="widget">
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">CATEGORIES</h3>
+                                </div>
+                                <div class="widget-categories">
+                                    <ul>
+                                        <li>
+                                            <a href="#">BreakFast
+                                                <span>25</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Lunch
+                                                <span>15</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pasta
+                                                <span>22</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dinner
+                                                <span>18</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dessert
+                                                <span>36</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Drinks
+                                                <span>12</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Fruits
+                                                <span>05</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Popular Tags-->
+                            <div class="widget">
+                                <div class="section-heading heading-dark">
+                                    <h3 class="item-heading">POPULAR TAGS</h3>
+                                </div>
+                                <div class="widget-tag">
+                                    <ul>
+                                        <li>
+                                            <a href="#">DESERT</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">CAKE</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">BREAKFAST</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">BURGER</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">DINNER</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">PIZZA</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SEA FOOD</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SALAD</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">JUICE</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                                                             
                      <!--Right side bar start here-->
                     <%@include file="righ-side-bar.jsp" %>
@@ -359,8 +542,8 @@
             </form>
         </div>    
         <!-- Search Box End Here -->
-        
-         <!-- Modal Start-->
+
+        <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

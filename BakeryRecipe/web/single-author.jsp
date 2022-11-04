@@ -95,19 +95,20 @@
                                     <c:if test="${not empty profile_result}">
                                         <div class="author-info">
                                             <div class="media media-none--xs">
-                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto">
                                                 <div class="media-body">
                                                     <form action="displayUserProfileController" method="POST">
 
-                                                        <h2 class="author-title">${profile_result.fullName}
-                                                        </h2>
+                                                        <h1 class="author-title">${profile_result.fullName}
+                                                        </h1>
 
-                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
-                                                            <input style="margin-left: 40px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
-                                                            <a href="displaySavedRecipeController" style="margin-left: 20px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
+                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
+                                                        <div style="margin-bottom: 20px ">
+                                                            <input type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
+                                                            <a href="displaySavedRecipeController" style="margin-left: 10px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
                                                                 <i class="fa fa-bookmark" aria-hidden="true"><span style="margin-left: 5px">Saved</span></i>
                                                             </a>
-                                                        </p>
+                                                        </div>
 
                                                         <label>Username: </label><h2>${profile_result.username}</h2>
 
@@ -130,7 +131,10 @@
                                     <c:if test="${not empty profile_result}">
                                         <div class="author-info">
                                             <div class="media media-none--xs">
-                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                <div style="display: flex; flex-direction: column;">
+                                                    <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                    <input style="width: 100%; margin-top: 10px" type="text" name="txtAvatarUrl" value="${profile_result.avatarUrl}"/>
+                                                </div>
                                                 <div class="media-body">
                                                     <form action="updateUserProfileController" method="POST">
 
@@ -143,7 +147,7 @@
 
                                                         <label>Username:</label><p style="font-size: 2rem">${profile_result.username}</p>
                                                         <!--<h3>Password: </h3><p>--> 
-                                                            <!--<input style="width: 100%" type="password" name="txtPassword" value=""/></p>-->
+                                                        <!--<input style="width: 100%" type="password" name="txtPassword" value=""/></p>-->
 
                                                         <%--<c:if test="${not empty error.passwordFormatErr}">--%>
                                                             <!--<font color="red">${error.passwordFormatErr}</font></br>-->
@@ -179,11 +183,11 @@
                                                         <label>Bio: </label><p> 
                                                             <textarea style="width: 100%; height: 100px" type="text" name="txtBiography" value="${profile_result.biography}">${profile_result.biography}</textarea>
 
-                                                        <c:if test="${not empty error.bioFormatError}">
-                                                            <font color="red">${error.bioFormatError}</font></br>
-                                                        </c:if>  
-                                                            
-                                                        <input style="background-color: #ed5c5c; color: white; float: right; width: 100px; height: 50px; font-size: 2rem" type="submit" name="editBtn" value="Update" class="btn btn-light"/> 
+                                                            <c:if test="${not empty error.bioFormatError}">
+                                                                <font color="red">${error.bioFormatError}</font></br>
+                                                            </c:if>  
+
+                                                            <input style="background-color: #ed5c5c; color: white; float: right; width: 100px; height: 50px; font-size: 2rem" type="submit" name="editBtn" value="Update" class="btn btn-light"/> 
 
                                                     </form>
                                                 </div>
@@ -603,7 +607,7 @@
             </form>
         </div>
         <!-- Search Box End Here -->
-         <!-- Modal Start-->
+        <!-- Modal Start-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

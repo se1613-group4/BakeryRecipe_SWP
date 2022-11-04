@@ -421,7 +421,14 @@
                             </div>
                         </header>-->
 
-            <%@include file="header_user.jsp" %>
+            <!--Header start here-->
+            <c:set var="user" value="${sessionScope.USER}"></c:set>
+            <c:if test="${empty user}">
+                <%@include file="header.html" %>
+            </c:if>
+            <c:if test="${not empty user}">
+                <jsp:include page="header_user.jsp"></jsp:include>
+            </c:if>
             <!-- Header Area End Here -->
             <!-- Inne Page Banner Area Start Here -->
             <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
@@ -447,47 +454,34 @@
                 <div class="container">
                     <div class="row gutters-60">
                         <div class="col-lg-8">
-                            <c:set var="loginValue" value="${sessionScope.USER.userId}"/>
-                            <c:if test="${not empty loginValue}">
-                                <c:set var="profile_result" value="${requestScope.USER_PROFILE}"/>
-                                <c:set var="followers_result" value="${requestScope.USER_FOLLOWERS}"/>
-                                <c:set var="following_result" value="${requestScope.USER_FOLLOWING}"/>
-                                <c:set var="error" value="${requestScope.UPDATE_ERR}"></c:set>
-                                <c:set var="update_profile_trigger" value="${requestScope.EDIT_TRIGGER}"></c:set>
-                                <c:if test="${empty update_profile_trigger}">
-                                    <c:if test="${not empty profile_result}">
-                                        <div class="author-info">
-                                            <div class="media media-none--xs">
-                                                <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
-                                                <div class="media-body">
-                                                    <form action="displayUserProfileController" method="POST">
+                            <c:set var="profile_result" value="${requestScope.USER_PROFILE}"/>
+                            <c:set var="followers_result" value="${requestScope.USER_FOLLOWERS}"/>
+                            <c:set var="following_result" value="${requestScope.USER_FOLLOWING}"/>
+                            <c:if test="${not empty profile_result}">
+                                <div class="author-info">
+                                    <div class="media media-none--xs">
+                                        <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                        <div class="media-body">
+                                            <form action="displayUserProfileController" method="POST">
 
-                                                        <h2 class="author-title">${profile_result.fullName}
-                                                        </h2>
+                                                <h2 class="author-title">${profile_result.fullName}
+                                                </h2>
 
-                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
-                                                            <input style="margin-left: 40px;" type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>                                                           
-                                                            <a href="search_saved_recipe.jsp" style="margin-left: 20px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
-                                                                <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Saved</span>
-                                                            </a>
-                                                        </p>
+                                                <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
+                                                </p>
 
-                                                        <label>Username: </label><h2>${profile_result.username}</h2>
+                                                <label>Gender: </label><h2> ${profile_result.gender}</h2>
 
-                                                        <label>Gender: </label><h2> ${profile_result.gender}</h2>
+                                                <label>Bio: </label><h2> ${profile_result.biography}</h2>
 
-                                                        <label>Bio: </label><h2> ${profile_result.biography}</h2>
+                                            </form>
 
-                                                    </form>
-
-                                                </div>
-                                            </div>
                                         </div>
-                                    </c:if>
-                                    <c:if test="${empty profile_result}">
-                                        <h1>User is not found!!</h1>
-                                    </c:if>
-                                </c:if>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${empty profile_result}">
+                                <h1>User is not found!!</h1>
                             </c:if>
                             <div class="section-heading heading-dark">
                                 <h2 class="item-heading">36 RECIPES</h2>

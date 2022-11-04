@@ -5,7 +5,6 @@
  */
 package bakeryRecipe.image_tbl;
 
-import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -65,7 +64,7 @@ public class Image_tblDAO implements Serializable{
         } catch (SQLException ex) {
             if (con != null) {
                 con.rollback();
-                Logger.getLogger(Recipe_Ingredient_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Image_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
             } 
             
         }finally {

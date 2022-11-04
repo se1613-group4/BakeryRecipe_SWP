@@ -65,7 +65,7 @@ public class SendEmail {
             mess.setSubject("User Email Verification");
 
             //set message text
-            mess.setText("Here is your code: " + user.getCode());
+            mess.setText("Registered successfully.Please verify your account using this code: " + user.getCode());
             //send the message
             Transport.send(mess);
 

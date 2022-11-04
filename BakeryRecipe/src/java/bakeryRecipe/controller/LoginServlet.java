@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("txtPassword");
             byte[] getSha= SHA256.getSHA(password);
             String passSHA= SHA256.toHexString(getSha);
-            boolean checkAccIsActive = accDAO.checkAccountIsActive(username);
+            boolean checkAccIsActive = accDAO.checkAccountIsActive(username, passSHA);
             if (checkAccIsActive == false) {
                 foundErr = true;
                 errors.setAccIsactive("Account not active!");

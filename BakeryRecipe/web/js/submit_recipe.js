@@ -106,9 +106,8 @@ function saveIngreString() {
 
 }
 function saveTags() {
-    let place = document.querySelector(".hidden-tag");
-    document.querySelectorAll(".li-tag").forEach(li => {        
-        li.removeChild(li.querySelector(".fa-solid"));
+    let place = document.querySelector(".hidden-tag");    
+    document.querySelectorAll(".li-tag").forEach(li => {
         let inputTag = document.createElement('input');
 //     inputEle.type="hidden";
         inputTag.type="text";

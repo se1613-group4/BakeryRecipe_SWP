@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
         String phoneNumber = request.getParameter("txtPhonenumber");
         Date lastModified = Date.valueOf(LocalDate.now());
         //String register = request.getParameter("btAction");
-        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{4,15}");
+        Pattern usernamePattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]{5,15}");
         /*
         Must be 8-15 characters and must start with a letter
         May not contain special characters – only letters and numbers
@@ -98,7 +98,7 @@ public class RegisterServlet extends HttpServlet {
             if (usernamePattern.matcher(username).matches() == false) {
                 foundErr = true;
                 errors.setUsernameFormatErr("Username wrong format.\n "
-                        + "Username must be 5-15 characters.\n "
+                        + "Username must be 6-15 characters.\n "
                         + "Must start with a letter.\n "
                         + "May not contain special characters");
             }

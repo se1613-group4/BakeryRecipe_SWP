@@ -73,7 +73,7 @@
                                     <!--profile user-->
                                     <li>
                                         <a href="#">
-                                            <i class="flaticon-profile"></i> Welcome, <font color="#E1141E"><b>${sessionScope.USER.username}</b></font></a>
+                                            <i class="flaticon-profile"></i> Welcome, ${sessionScope.USER.username}</a>
                                         <ul class="dropdown-menu-col-1" id="dropdown-user">
                                             <li>
                                                 <a href="displayUserProfileController">

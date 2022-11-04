@@ -55,10 +55,12 @@ public class ResetPasswordServlet extends HttpServlet {
         ResetPasswordError errors = new ResetPasswordError();
         boolean foundErr = false;
         String olePassword = request.getParameter("txtOldPassword");
-        byte[] getSha= SHA256.getSHA(olePassword);
-                String oldPassSHA= SHA256.toHexString(getSha);
+        byte[] getShaOldPass= SHA256.getSHA(olePassword);
+        String oldPassSHA= SHA256.toHexString(getShaOldPass);
         String confirm = request.getParameter("txtConfirm");
         String newPassword = request.getParameter("txtNewPassword");
+        byte[] getShaNewPass= SHA256.getSHA(newPassword);
+        String newPassSHA= SHA256.toHexString(getShaNewPass);
         //Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         /*
         Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
@@ -70,7 +72,7 @@ public class ResetPasswordServlet extends HttpServlet {
                 foundErr = true;
                 errors.setOldPasswordWrongErr("Wrong old password please check and re-enter");
             } 
-            boolean checkNewPassword= accDAO.checkPasword(user.getUserId(), newPassword);
+            boolean checkNewPassword= accDAO.checkPasword(user.getUserId(), newPassSHA);
             if (checkNewPassword==true) {
                 foundErr = true;
                 errors.setNewPasswordSameAsErr("The new password must not be the same as the old password");
@@ -87,8 +89,6 @@ public class ResetPasswordServlet extends HttpServlet {
             }if (foundErr) {
                 request.setAttribute("RESETPASSWOD_ERR", errors);
             } else {
-                byte[] getShaNew= SHA256.getSHA(newPassword);
-                String newPassSHA= SHA256.toHexString(getShaNew);
                 Account_tblDTO accDTO = new Account_tblDTO();
                 Account_tblDAO accDao = new Account_tblDAO();
                 boolean result = accDao.uploadPassword(user.getUserId(), oldPassSHA, newPassSHA);

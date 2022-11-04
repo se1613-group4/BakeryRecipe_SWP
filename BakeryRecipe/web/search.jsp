@@ -120,6 +120,19 @@
                                         <c:param name="recipeId" value="${recipeDto.recipeId}"/>
                                     </c:url>
 
+<<<<<<< HEAD
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12 search-result-box">
+                                            <div class="product-box-layout1">
+                                                <figure class="item-figure">
+                                                    <a href=${single_recipe_url}>
+                                                        <img src=${image} alt="Recipe"></a>
+                                                </figure>
+                                                <div class="item-content">
+                                                    <span class="sub-title">${category.name}</span>
+                                                    <h3 class="item-title">
+                                                        <a href="${single_recipe_url}">${recipeName}</a>
+                                                    </h3>
+=======
                                     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="product-box-layout1">
                                             <figure class="item-figure">
@@ -131,6 +144,7 @@
                                                 <h3 class="item-title">
                                                     <a href="single-recipe1.html">${recipeName}</a>
                                                 </h3>
+>>>>>>> fd851147854e086cd3aaccce632dd135c591b649
 
                                                 <p>${description} </p>
                                                 <ul class="entry-meta">
@@ -144,6 +158,48 @@
                                 </c:forEach>
                             </c:if>
 
+<<<<<<< HEAD
+                                <c:if test="${searchResult.size() < 10}">
+                                    <c:forEach var="recipeDto" items="${searchResult}" varStatus="counter">
+                                        <c:set var="recipeName" value="${recipeDto.name}"/>
+                                        <c:set var="description" value="${recipeDto.description}"/>
+                                        <c:set var="author" value="${recipeDto.authorInfo}"/>
+                                        <c:set var="category" value="${recipeDto.category}"/>
+                                        <c:set var="image" value="${recipeDto.image.imgLink}"/>                                    
+                                        <c:set var="totalTime" value="${recipeDto.totalTime}"/>
+                                        <c:set var="likedCount" value="${recipeDto.likedCount}"/>                                    
+                                        <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                            <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                                        </c:url>
+
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                            <div class="product-box-layout1">
+                                                <figure class="item-figure">
+                                                    <a href=${single_recipe_url}>
+                                                        <img src=${image} alt="Recipe"></a>
+                                                </figure>
+                                                <div class="item-content">
+                                                    <span class="sub-title">${category.name}</span>
+                                                    <h3 class="item-title">
+                                                        <a href="${single_recipe_url}">${recipeName}</a>
+                                                    </h3>
+
+                                                    <p>${description} </p>
+                                                    <ul class="entry-meta">
+                                                        <li><a href="#"><i class="fas fa-clock"></i>${totalTime} minute</a></li>
+                                                        <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                                        <li><a href="#"><i class="fas fa-heart"></i>${likedCount} Likes</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:if><!-- there was less than 9 search result value = enough in a page -->
+
+                            </c:if><!-- there was search result -->
+                        </c:if><!-- there was search value -->
+=======
+>>>>>>> fd851147854e086cd3aaccce632dd135c591b649
 
                         </c:if>
 

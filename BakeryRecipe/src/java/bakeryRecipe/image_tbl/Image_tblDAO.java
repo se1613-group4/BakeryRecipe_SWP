@@ -65,7 +65,7 @@ public class Image_tblDAO implements Serializable{
         } catch (SQLException ex) {
             if (con != null) {
                 con.rollback();
-                Logger.getLogger(Image_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Recipe_Ingredient_tblDAO.class.getName()).log(Level.SEVERE, null, ex);
             } 
             
         }finally {

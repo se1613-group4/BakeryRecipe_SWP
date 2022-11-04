@@ -1,0 +1,101 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 27, 2022, 12:01:22 PM
+    Author     : LamVo
+*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+/* body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #5372F0;
+} */
+/*.tag-container{
+  width: 496px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 25px 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}*/
+.tag-container :where('.tag-title', li, li i, '.tag-details'){
+  display: flex;
+  align-items: center;
+}
+.tag-title img{
+  max-width: 21px;
+}
+.tag-title label{
+  font-size: 21px;
+  font-weight: 600;
+  margin: 0;
+}
+.wrapper .tag-content{
+  margin: 10px 0;
+}
+.tag-content p, .tag-details{
+  font-size: 12px;
+}
+.tag-content ul{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 7px;
+  margin: 12px 0;
+  border-radius: 5px;
+  border: 1px solid #a6a6a6;
+}
+.tag-content ul  li{
+  color: #333;
+  margin: 4px 3px;
+  list-style: none;
+  border-radius: 5px;
+  background: #F2F2F2;
+  padding: 5px 8px 5px 10px;
+  border: 1px solid #e3e1e1;
+}
+.tag-content ul li i{
+  height: 20px;
+  width: 20px;
+  color: #808080;
+  margin-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #dfdfdf;
+  justify-content: center;
+}
+.tag-content ul input{
+  flex: 1;
+  padding: 5px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+.tag-container .tag-details{
+  justify-content: space-between;
+}
+.tag-details button{
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 9px 10px;
+    border-radius: 5px;
+    background: #7D7A7A;
+    position: absolute;
+    right: 20px;
+    top: 350px;
+}
+.tag-details button:hover{
+  background: #ff4a52f7;
+}

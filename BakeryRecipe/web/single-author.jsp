@@ -95,7 +95,8 @@
                                     <c:if test="${not empty profile_result}">
                                         <div class="author-info">
                                             <div class="media media-none--xs">
-                                                <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto">
+                                                <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                     style="width: 20%; height: 20%">
                                                 <div class="media-body">
                                                     <form action="displayUserProfileController" method="POST">
 

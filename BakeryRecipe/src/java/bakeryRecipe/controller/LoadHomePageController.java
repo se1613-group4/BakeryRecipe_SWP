@@ -12,6 +12,8 @@ import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.tag_tbl.Tag_tblDAO;
+import bakeryRecipe.tag_tbl.Tag_tblDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,6 +66,12 @@ public class LoadHomePageController extends HttpServlet {
             categoryDao.loadAllCategory();
             List<Category_tblDTO> allCategory = categoryDao.getCategoryDtoList();
             session.setAttribute("ALL_CATEGORY", allCategory);
+             
+            Tag_tblDAO tagDao = new Tag_tblDAO();
+            tagDao.loadAllTag();
+            List<Tag_tblDTO> allTag = tagDao.getTagDtoList();
+            session.setAttribute("All_TAG", allTag);
+           
             
             //--- Listen to new NOTIFICATION //
              

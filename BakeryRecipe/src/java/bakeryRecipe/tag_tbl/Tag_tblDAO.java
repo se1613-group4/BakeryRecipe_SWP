@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -154,4 +157,57 @@ public class Tag_tblDAO implements Serializable{
         }
         return result;
     }
+    
+    private List<Tag_tblDTO> tagDtoList;
+
+    /**
+     * Author: LamVo
+     * @return list of category DTO (s)
+     */
+    public List<Tag_tblDTO> getTagDtoList() {
+        return this.tagDtoList;
+    }
+     public void loadAllTag()
+            throws SQLException {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        this.tagDtoList = null;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT tag_id, name , count FROM bakery_recipe.tag_tbl";
+                //3. create statement obj
+                stm = con.createStatement();
+                //4. execute query
+                rs = stm.executeQuery(sql);
+                //5 process result
+                while (rs.next()) {                    
+                    // get tag DTO info
+                    int tagId = rs.getInt("tag_id");
+                    String tagName = rs.getString("name");
+                    int countNum = rs.getInt("count");
+                    Tag_tblDTO tagDTO = new Tag_tblDTO(tagId, tagName, countNum);                                                            
+                    // check categoryDto list not null
+                    if (this.tagDtoList == null) {
+                        this.tagDtoList = new ArrayList<>();
+                    }// end check categoryDto list is null
+                    // add to categoryDto list
+                    this.tagDtoList.add(tagDTO);
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }// end loadAllCategory function
 }

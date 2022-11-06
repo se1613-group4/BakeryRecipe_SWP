@@ -79,14 +79,14 @@ public class LoginGoogleServlet extends HttpServlet {
 
                 Account_tblDTO user = accDAO.loginGG(accGG.getEmail(), passSHA);
                 if (user != null) {
-//                    boolean checkAccIsActive = accDAO.checkAccountIsActive(accGG.getEmail());
-//                    if (checkAccIsActive == false) {
-//                        foundErr = true;
-//                        String message = "Your account not active,please contant admin";
-//                        request.getSession().setAttribute("Not_active", message);
-//                        RequestDispatcher rd = request.getRequestDispatcher(url);
-//                        rd.forward(request, response);
-//                    }
+                    boolean checkAccIsActive = accDAO.checkAccountIsActiveGG(accGG.getEmail());
+                    if (checkAccIsActive == false) {
+                        foundErr = true;
+                        String message = "Your account not active,please contant admin";
+                        request.getSession().setAttribute("Not_active", message);
+                        RequestDispatcher rd = request.getRequestDispatcher(url);
+                        rd.forward(request, response);
+                    }
                     HttpSession session = request.getSession(true);
                     session.setAttribute("USER", user);
                     session.setAttribute("LOGIN_USER", user);

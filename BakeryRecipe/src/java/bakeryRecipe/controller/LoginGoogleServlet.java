@@ -79,7 +79,7 @@ public class LoginGoogleServlet extends HttpServlet {
 
                 Account_tblDTO user = accDAO.loginGG(accGG.getEmail(), passSHA);
                 if (user != null) {
-                    boolean checkAccIsActive = accDAO.checkAccountIsActive(accGG.getEmail());
+                    boolean checkAccIsActive = accDAO.checkAccountIsActiveGG(accGG.getEmail());
                     if (checkAccIsActive == false) {
                         foundErr = true;
                         String message = "Your account not active,please contant admin";

@@ -627,6 +627,43 @@ public class Account_tblDAO implements Serializable {
         return set;
 
     }
+    public boolean checkAccountIsActiveGG(String username) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select is_actived from account_tbl where username=? and is_actived=true ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, username);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
     public boolean checkEmailIsActive(String email) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;

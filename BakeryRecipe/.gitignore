@@ -13,6 +13,6 @@ nbdist/
 =
 .DS_Store
 
-/BakeryRecipe/src/java/bakeryRecipe/utils/DBConnection.java
+
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans

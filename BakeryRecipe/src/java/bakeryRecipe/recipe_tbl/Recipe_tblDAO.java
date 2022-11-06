@@ -435,7 +435,7 @@ public class Recipe_tblDAO implements Serializable {
                         + "inner join category_tbl on R.category_id = category_tbl.category_id\n"
                         + "inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "left join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
-                        + "where R.recipe_id = ?";
+                        + "where R.recipe_id = ?;";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setInt(1, recipeId);

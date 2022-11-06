@@ -13,7 +13,8 @@ import java.sql.Date;
  *
  * @author LamVo
  */
-public class Profile_tblDTO extends Account_tblDTO implements Serializable{
+public class Profile_tblDTO extends Account_tblDTO implements Serializable {
+
     private int profileId;
     private int userId;
     private String fullName;
@@ -40,8 +41,7 @@ public class Profile_tblDTO extends Account_tblDTO implements Serializable{
         this.biography = biography;
         this.lastModified = lastModified;
     }
-    
-    
+
     public Profile_tblDTO(String username, String password, String fullName, String email, String phoneNumber, String gender, String avatarUrl, String bio, boolean isActived, boolean isAdmin) {
         super(username, password, email, phoneNumber, isActived, isAdmin);
         this.fullName = fullName;
@@ -49,12 +49,17 @@ public class Profile_tblDTO extends Account_tblDTO implements Serializable{
         this.gender = gender;
         this.avatarUrl = avatarUrl;
     }
-    
+
     public Profile_tblDTO(int userId, String fullName) {
         this.userId = userId;
         this.fullName = fullName;
     }
 
+    public Profile_tblDTO(int userId, String fullName, String biography) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.biography = biography;
+    }
     public Profile_tblDTO(int userId, String fullName, String avatarUrl, String biography) {
         this.userId = userId;
         this.fullName = fullName;
@@ -120,5 +125,5 @@ public class Profile_tblDTO extends Account_tblDTO implements Serializable{
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-    
+
 }

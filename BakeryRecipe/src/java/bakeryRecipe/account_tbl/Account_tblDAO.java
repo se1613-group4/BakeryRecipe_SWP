@@ -509,7 +509,7 @@ public class Account_tblDAO implements Serializable {
     }
 
     //check new password is the same old password when have email and phonenumber
-    public boolean checkPasswordEP(String email, String newPassword) throws SQLException {
+    public boolean checkPasswordEP(String email, String phonenumber, String newPassword) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -519,11 +519,12 @@ public class Account_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "select user_id from account_tbl where email=? and password=?";
+                String sql = "select user_id from account_tbl where email=? and phone_number=? and password=?";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setString(1, email);
-                stm.setString(2, newPassword);
+                stm.setString(2, phonenumber);
+                stm.setString(3, newPassword);
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result
@@ -549,7 +550,7 @@ public class Account_tblDAO implements Serializable {
     }
 
     //update password when have email and phonenumber
-    public boolean uploadPasswordEP(String email, String newPassword,int userId)
+    public boolean uploadPasswordEP(String email, String phonenumber, String newPassword)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -561,13 +562,14 @@ public class Account_tblDAO implements Serializable {
             if (con != null) {
                 //2. create sql string
                 String sql = "update account_tbl set password=?, last_modified=? "
-                        + "where email=? and user_id=?";
+                        + "where email=? and phone_number=? ";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, newPassword);
                 stm.setDate(2, now);
                 stm.setString(3, email);
-                stm.setInt(4,userId);
+                stm.setString(4, phonenumber);
+
                 //4. execute query
                 int affectedRows = stm.executeUpdate();
                 //5 process result
@@ -587,7 +589,7 @@ public class Account_tblDAO implements Serializable {
     }
 
     //check account is active
-    public boolean checkAccountIsActive(String username) throws SQLException {
+    public boolean checkAccountIsActive(String username, String password) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -597,10 +599,11 @@ public class Account_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "select is_actived from account_tbl where username=? and is_actived=true ";
+                String sql = "select is_actived from account_tbl where username=? and password=? and is_actived=true ";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setString(1, username);
+                stm.setString(2, password);
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result

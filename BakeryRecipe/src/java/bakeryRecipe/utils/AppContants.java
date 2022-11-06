@@ -53,6 +53,7 @@ public class AppContants { // mapping all features strings
 
     public class DisplaySingleRecipeFeature {
 
+        public static final String CHECK_SAVED_RECIPE_CONTROLLER = "checkSavedRecipeController";
         public static final String RECIPE_NOT_FOUND_PAGE = "recipeNotFoundPage";
         public static final String SINGLE_RECIPE_PAGE = "singleRecipePage";
     }
@@ -148,17 +149,13 @@ public class AppContants { // mapping all features strings
     public class EmailFeatures {
 
         public static final String VERIFY_EMAIL_PAGE = "verifyEmailPage";
-        public static final String VERIFY_EMAIL_PAGE_1 = "verifyEmailPage1";
         public static final String VERIFY_CODE_PAGE = "verifyCodePage";
-        public static final String VERIFY_CODE_PAGE_1 = "verifyCodePage1";
     }
 
     public class VerifyCodeFeatures {
 
         public static final String LOGIN_PAGE = "loginPage";
         public static final String VERIFY_CODE_PAGE = "verifyCodePage";
-        public static final String VERIFY_CODE_PAGE_1 = "verifyCodePage1";
-        public static final String FORGOT_PASSWORD_PAGE = "forgotPasswordPage";
     }
 
      public class SaveRecipe {
@@ -196,5 +193,11 @@ public class AppContants { // mapping all features strings
         public static final String SEARCH_SAVED_RECIPE_PAGE = "searchSavedResultPage";
         public static final String DISPLAY_SAVED_RECIPE_CONTROLLER = "displaySavedRecipeController";
         public static final String SEARCH_SAVED_RECIPE_CONTROLLER = "searchSavedRecipeController";
+    }
+    
+    public class DisplayOtherUserProfileFeartures {
+        
+        public static final String USER_NOT_FOUND_PAGE = "userNotFoundPage";
+        public static final String USER_PROFILE_PAGE = "otherUserProfilePage";
     }
 }

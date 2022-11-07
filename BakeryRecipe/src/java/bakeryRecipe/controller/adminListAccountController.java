@@ -6,6 +6,8 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
+import bakeryRecipe.report_tbl.Report_tblDAO;
+import bakeryRecipe.report_tbl.Report_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,13 +46,15 @@ public class adminListAccountController extends HttpServlet {
         String url = AppContants.Admin.ADMIN_LISTRECIPE;
         int pageindex;  //  trang đang đứng 
         int endindex;    /// trang cuoi cung 
+        Report_tblDAO rpdao = new Report_tblDAO();
+        
         ArrayList<Account_tblDTO> result = null;
         try {
              
             HttpSession session = request.getSession();
             String test =request.getParameter("roww");
             String searchuseradmin = request.getParameter("a");
-            
+            ArrayList<Report_tblDTO> myreport = rpdao.getListRpAdmin();
             
               if(test == null){
                   pageindex = 1 ;
@@ -65,7 +69,7 @@ public class adminListAccountController extends HttpServlet {
             
             session.setAttribute("ADMIN_LIST_USER", result);
             session.setAttribute("end_account", endindex);
-            
+            session.setAttribute("ADMIN_LIST_REPORT", myreport);
         } catch (SQLException ex) {
             log(ex.getMessage() + "DisplayHomePage Controller _ SQL ");
         } finally {

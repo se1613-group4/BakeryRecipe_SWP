@@ -61,7 +61,33 @@
                                     </c:if>
                                 </div>
                             </div>
+<!--report--> 
+ <div id="listuser" class="main-content">
+                                <h2><i class="fa fa-play"></i>Report : </h2>
+                                <h5>          <a  href="adminListAccountController"  type="Submit"/> Làm Mới Thông Báo </a> </h5>
 
+                                <div class="content-container">
+                                    <table id="customers">
+                                        <tr>
+                                            <th> stt </th> 
+                                            <th> Report messeger  </th>  
+                                        </tr>
+                                            <c:if test="${ not empty sessionScope.ADMIN_LIST_REPORT}">
+                                                <c:forEach items="${sessionScope.ADMIN_LIST_REPORT}" var="rp">
+                                                    <tr>  
+                                                        <td>
+                                                           ${rp.reportId}
+                                                        </td>
+                                                        <td>
+                                                            ${rp.comment_detail}
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+
+                                        </c:if>
+                                    </table>
+                                </div>
+                            </div>
                             <!--session 2-->
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>

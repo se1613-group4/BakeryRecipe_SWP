@@ -64,7 +64,7 @@ public class VerifyCode extends HttpServlet {
             if(code!= user.getCode()){
                 
                 //url = siteMaps.getProperty(AppContants.VerifyCodeFeatures.VERIFY_CODE_PAGE);
-                request.setAttribute("VerifyCode_ERR", errors);
+                request.setAttribute("VerifyCode_ERR", "done");
                 errors.setCodeIncorrect("This code you entered is incorrect!");
             }
         } catch (SQLException ex) {

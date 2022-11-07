@@ -225,17 +225,17 @@
                                                     </form>
                                                 </div>
                                                 <div class="testAjax">
-                                                <!--Display Ingredient List-->
-                                                <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
-                                                <c:if test="${not empty ingreList}">
-                                                    <c:forEach var="ingredient" items="${ingreList}">
-                                                        <div class="ingredient">
-                                                            <p><b><span class="ingredient-quantity">${ingredient.quantity}</span> 
-                                                                    <c:if test="${ingredient.unit != 'none'}">${ingredient.unit}</c:if></b> 
-                                                                ${ingredient.ingredientName}</p>    
-                                                        </div>
-                                                    </c:forEach>                                                   
-                                                </c:if>
+                                                    <!--Display Ingredient List-->
+                                                    <c:set var="ingreList" value="${requestScope.INGREDIENT_LIST}"></c:set>
+                                                    <c:if test="${not empty ingreList}">
+                                                        <c:forEach var="ingredient" items="${ingreList}">
+                                                            <div class="ingredient">
+                                                                <p><b><span class="ingredient-quantity">${ingredient.quantity}</span> 
+                                                                        <c:if test="${ingredient.unit != 'none'}">${ingredient.unit}</c:if></b> 
+                                                                    ${ingredient.ingredientName}</p>    
+                                                            </div>
+                                                        </c:forEach>                                                   
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>
@@ -311,7 +311,7 @@
                                     <div class="recipe-author">
                                         <div class="media media-none--xs">
                                             <img src="${author.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
-                                                    style="height: 20%; width: 20%;">
+                                                 style="height: 20%; width: 20%;">
                                             <div class="media-body">
                                                 <h4 class="author-title">${author.fullName}</h4>
                                                 <h5 class="author-sub-title">Written by</h5>
@@ -336,282 +336,304 @@
                                             </div>
                                         </div>
                                     </div>   
-                                    <div class="also-like-wrap">
-                                        <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product11.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">BREAKFAST</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
-                                                                Chanterelles</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
+                                    <c:set var="similarRecipes" value="${requestScope.SIMILAR_RECIPE_LIST}"></c:set>     
+                                        <div class="also-like-wrap">
+                                            <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
+                                            <div class="row">
+                                            <c:if test="${not empty similarRecipes}">
+                                                <c:forEach var="similarRecipe" items="${similarRecipes}">
+                                                    <c:set var="author" value="${similarRecipe.authorInfo}"></c:set>
+                                                    <c:set var="image" value="${similarRecipe.image}"></c:set>
+                                                        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                            <div class="product-box-layout2">
+                                                                <figure class="item-figure"><img src="${image.imgLink}"
+                                                                                             alt="Product"></figure>
+                                                            <div class="item-content">
+                                                                <span class="sub-title">${similarRecipe.name}</span>
+                                                                <h3 class="item-title"><a href="single-recipe1.html">${similarRecipe.description}</a></h3>
+                                                                <ul class="entry-meta">
+                                                                    <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty similarRecipes}">
+                                                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product11.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">BREAKFAST</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
+                                                                    Chanterelles</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- <<<<<<< thongnt  -->               <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product12.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">DESERT</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
-                                                                GingersnapCrust</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>                         
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product13.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">JUICE</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
+                                                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product12.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">DESERT</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
+                                                                    GingersnapCrust</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>                         
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product13.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">JUICE</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                         </div>                                                                                                      
                                     </div>
 
 
-                                    </div>            
-                                    <!-- Suggest recipe start here -->
-                                    <!-- Suggest recipe end here -->
+                                </div>            
+                                <!-- Suggest recipe start here -->
+                                <!-- Suggest recipe end here -->
 
-                                    <jsp:include page="like.jsp" />
-                                    <jsp:include page="comment.jsp" />
+                                <jsp:include page="like.jsp" />
+                                <jsp:include page="comment.jsp" />
 
-                                </div>
-                            </div>
-                        </div> 
-
-
-                        <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
-                            <!-- Top 5 Recipes-->
-                            <div class="widget">                            
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">TOP RECIPES</h3>
-                                </div>
-                                <c:import url="LoadHomePageController"></c:import>
-                                    <div class="widget-latest">
-                                        <ul class="block-list">
-                                        <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
-                                        <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
-                                            <c:set var="author" value="${recipeDto.authorInfo}"/>
-                                            <c:set var="category" value="${recipeDto.category}"/>
-                                            <c:set var="image" value="${recipeDto.image}"/>
-                                            <c:url var="single_recipe_url" value="DisplaySingleRecipe">
-                                                <c:param name="recipeId" value="${recipeDto.recipeId}"/>
-                                            </c:url>                                        
-                                            <li class="single-item">
-                                                <div class="item-img">
-                                                    <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
-                                                    <div class="count-number">${counter.count}</div>
-                                                </div>
-                                                <div class="item-content">
-                                                    <div class="item-ctg">${category.name}</div>
-                                                    <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
-                                                    <div class="item-post-by">
-                                                        <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
-                                                            ${author.fullName}</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                            <div class="widget">
-                                <div class="widget-ad">
-                                    <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
-                                </div>
-                            </div>
-
-                            <!-- Category List-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">CATEGORIES</h3>
-                                </div>
-                                <div class="widget-categories">
-                                    <ul>
-                                        <li>
-                                            <a href="#">BreakFast
-                                                <span>25</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Lunch
-                                                <span>15</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Pasta
-                                                <span>22</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dinner
-                                                <span>18</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dessert
-                                                <span>36</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Drinks
-                                                <span>12</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Fruits
-                                                <span>05</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Popular Tags-->
-                            <div class="widget">
-                                <div class="section-heading heading-dark">
-                                    <h3 class="item-heading">POPULAR TAGS</h3>
-                                </div>
-                                <div class="widget-tag">
-                                    <ul>
-                                        <li>
-                                            <a href="#">DESERT</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">CAKE</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BREAKFAST</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">BURGER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">DINNER</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">PIZZA</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SEA FOOD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">SALAD</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">JUICE</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
-                                                            
-                     <!--Right side bar start here-->
+                    </div> 
+
+
+                    <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
+                        <!-- Top 5 Recipes-->
+                        <div class="widget">                            
+                            <div class="section-heading heading-dark">
+                                <h3 class="item-heading">TOP RECIPES</h3>
+                            </div>
+                            <c:import url="LoadHomePageController"></c:import>
+                                <div class="widget-latest">
+                                    <ul class="block-list">
+                                    <c:set var="top5Recipes" value="${sessionScope.TOP5_RECIPES}"/>
+                                    <c:forEach var="recipeDto" items="${top5Recipes}" varStatus="counter">
+                                        <c:set var="author" value="${recipeDto.authorInfo}"/>
+                                        <c:set var="category" value="${recipeDto.category}"/>
+                                        <c:set var="image" value="${recipeDto.image}"/>
+                                        <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                                            <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                                        </c:url>                                        
+                                        <li class="single-item">
+                                            <div class="item-img">
+                                                <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
+                                                <div class="count-number">${counter.count}</div>
+                                            </div>
+                                            <div class="item-content">
+                                                <div class="item-ctg">${category.name}</div>
+                                                <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
+                                                <div class="item-post-by">
+                                                    <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
+                                                        ${author.fullName}</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="widget">
+                            <div class="widget-ad">
+                                <a href="#"><img src="img/figure/figure4.jpg" alt="Ad" class="img-fluid"></a>
+                            </div>
+                        </div>
+
+                        <!-- Category List-->
+                        <div class="widget">
+                            <div class="section-heading heading-dark">
+                                <h3 class="item-heading">CATEGORIES</h3>
+                            </div>
+                            <div class="widget-categories">
+                                <ul>
+                                    <li>
+                                        <a href="#">BreakFast
+                                            <span>25</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Lunch
+                                            <span>15</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Pasta
+                                            <span>22</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Dinner
+                                            <span>18</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Dessert
+                                            <span>36</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Drinks
+                                            <span>12</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Fruits
+                                            <span>05</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Popular Tags-->
+                        <div class="widget">
+                            <div class="section-heading heading-dark">
+                                <h3 class="item-heading">POPULAR TAGS</h3>
+                            </div>
+                            <div class="widget-tag">
+                                <ul>
+                                    <li>
+                                        <a href="#">DESERT</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">CAKE</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">BREAKFAST</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">BURGER</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">DINNER</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">PIZZA</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">SEA FOOD</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">SALAD</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">JUICE</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Right side bar start here-->
                     <%@include file="righ-side-bar.jsp" %>
                     <!--Right side bar end here-->
-                    </div>
-                </div>             
-            </section>
-            <!-- Single Recipe With Side bar Area End Here -->
-        </div>
+                </div>
+        </div>             
+    </section>
+    <!-- Single Recipe With Side bar Area End Here -->
+</div>
 
-        <!-- Search Box Start Here -->
-        <div id="search" class="search-wrap">
-            <button type="button" class="close">×</button>
-            <form class="search-form">
-                <input type="search" value="" placeholder="Type here........" />
-                <button type="submit" class="search-btn"><i class="flaticon-search"></i></button>
-            </form>
-        </div>    
-        <!-- Search Box End Here -->
+<!-- Search Box Start Here -->
+<div id="search" class="search-wrap">
+    <button type="button" class="close">×</button>
+    <form class="search-form">
+        <input type="search" value="" placeholder="Type here........" />
+        <button type="submit" class="search-btn"><i class="flaticon-search"></i></button>
+    </form>
+</div>    
+<!-- Search Box End Here -->
 
-        <!-- Modal Start-->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="title-default-bold mb-none">Login</div>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+<!-- Modal Start-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="title-default-bold mb-none">Login</div>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <c:url var="login_url" value="loginPage"></c:url>
+                <c:url var="register_url" value="registerPage"></c:url>
+                    <form class="login-form" action="login_url"  method="post" id="loginform">
+                        <!--                                <div class="inline-box mb-5 mt-4">
+                                                            <a href="${login_url}">Login</a>
+                                                        <a href="${register_url}">Register</a>
+                                                    </div>-->
+                    <div class="inline-box mb-5 mt-4">
+                        <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
+                        <script>
+                            function dieu_huong_login() {
+                                location.assign("${login_url}");
+                            }
+                        </script>
+                        <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
+                        <script>
+                            function dieu_huong_Register() {
+                                location.assign("${register_url}");
+                            }
+                        </script>
                     </div>
-                    <div class="modal-body">
-                        <c:url var="login_url" value="loginPage"></c:url>
-                        <c:url var="register_url" value="registerPage"></c:url>
-                            <form class="login-form" action="login_url"  method="post" id="loginform">
-                                <!--                                <div class="inline-box mb-5 mt-4">
-                                                                    <a href="${login_url}">Login</a>
-                                                                <a href="${register_url}">Register</a>
-                                                            </div>-->
-                            <div class="inline-box mb-5 mt-4">
-                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_login()">Login</button>
-                                <script>
-                                    function dieu_huong_login() {
-                                        location.assign("${login_url}");
-                                    }
-                                </script>
-                                <button type="button"  class="btn btn-danger" style="font-size: 1.75rem"  onclick="dieu_huong_Register()">Register</button>
-                                <script>
-                                    function dieu_huong_Register() {
-                                        location.assign("${register_url}");
-                                    }
-                                </script>
-                            </div>
-                        </form>
-                        <label>Login connect with your Social Network</label>
-                        <div class="login-box-social">
-                            <ul>
-                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+                </form>
+                <label>Login connect with your Social Network</label>
+                <div class="login-box-social">
+                    <ul>
+                        <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                        <li><a href="#" class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <!-- Modal End-->  
+    </div>
+</div>
+<!-- Modal End-->  
 
-        <!-- Jquery Js -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/popper.min.js"></script>
-        <!-- Bootstrap Js -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Plugins Js -->
-        <script src="js/plugins.js"></script>
-        <!-- Owl Carousel Js -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- Smoothscroll Js -->
-        <script src="js/smoothscroll.min.js"></script>
-        <!-- Custom Js -->
-        <script src="js/main.js"></script>
-        <script>
-        <!--Chan gui form bang Enter-->
-        $("form").keypress(function (e) {
-            if (e.which == 13) {
-                return false;
-            }
-        });
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="js/adjustServing.js"></script>
-    </body>
+<!-- Jquery Js -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="js/popper.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Plugins Js -->
+<script src="js/plugins.js"></script>
+<!-- Owl Carousel Js -->
+<script src="js/owl.carousel.min.js"></script>
+<!-- Smoothscroll Js -->
+<script src="js/smoothscroll.min.js"></script>
+<!-- Custom Js -->
+<script src="js/main.js"></script>
+<script>
+<!--Chan gui form bang Enter-->
+                            $("form").keypress(function (e) {
+                                if (e.which == 13) {
+                                    return false;
+                                }
+                            });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="js/adjustServing.js"></script>
+</body>
 </html>

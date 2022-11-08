@@ -4,6 +4,7 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.account_tbl.Account_tblDAO;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.report_tbl.Report_tblDAO;
 import bakeryRecipe.utils.AppContants;
@@ -65,7 +66,14 @@ public class CreateNewReportController extends HttpServlet {
                 Date created_date = new Date(Calendar.getInstance().getTime().getTime());
 //            System.out.println("UnitTest REPORT: " + user_id + recipe_id + report_detail + created_date + last_modified + is_actived);
                 Report_tblDAO dao = new Report_tblDAO();
-                if (dao.addNewReport(user_id, recipe_id, report_detail, created_date)) {
+                Account_tblDAO acdao = new Account_tblDAO();
+                String usnameofrec = acdao.getUsernamebyRecipeId(recipe_id);
+                // hieuvm inject code here  =
+                 String new_report_detail = "|Id : " + recipe_id + " [ by : " +usnameofrec+ "]:sms:"+report_detail;
+                // hieuvm endcode
+                                    // HIEU VM INJECT NEW REPORT MESSEGER 
+                if (dao.addNewReport(user_id, recipe_id, new_report_detail, created_date)) {
+
                     urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=success";
                 }//end check result
             }//end check has been login

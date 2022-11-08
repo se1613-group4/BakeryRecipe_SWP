@@ -53,4 +53,43 @@ public class Report_tblDAO {
             }
         }
     } //end addNewReport function
+
+    public ArrayList<Report_tblDTO> getListRpAdmin() throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Report_tblDTO> result = null;
+        
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                // `bakery_recipe`.`report_tbl` (`user_id`, `recipe_id`, `report_detail`, `created_date`) "
+                String sql = "select * from bakery_recipe.report_tbl";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                if(result == null)    result = new ArrayList<>();
+                Report_tblDTO b = new Report_tblDTO(rs.getInt("report_id"),rs.getInt("user_id"),rs.getInt("recipe_id"),rs.getString("report_detail"));
+                   result.add(b);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close(); 
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
 }

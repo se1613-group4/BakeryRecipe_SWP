@@ -75,9 +75,9 @@ public class Report_tblDAO {
                 //4. execute query
                 rs = stm.executeQuery();
                 //5 process result
-                if (rs.next()) {
+                while (rs.next()) {
                 if(result == null)    result = new ArrayList<>();
-                Report_tblDTO b = new Report_tblDTO(rs.getInt("report_id"),rs.getInt("user_id"),rs.getInt("recipe_id"),rs.getString("detail"));
+                Report_tblDTO b = new Report_tblDTO(rs.getInt("report_id"),rs.getInt("user_id"),rs.getInt("recipe_id"),rs.getString("report_detail"));
                    result.add(b);
                 }
             }

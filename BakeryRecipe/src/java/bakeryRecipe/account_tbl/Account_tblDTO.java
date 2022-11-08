@@ -80,6 +80,10 @@ public class Account_tblDTO implements Serializable{
         this.isAdmin = admin;
     }
 
+    Account_tblDTO(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     public int getAccountId() {
         return accountId;

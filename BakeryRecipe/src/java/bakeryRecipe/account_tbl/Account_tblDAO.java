@@ -911,6 +911,45 @@ public class Account_tblDAO implements Serializable {
         return result;
     }
 
+    public String getUsernamebyRecipeId(int userid) throws SQLException {
+        String result = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select username \n"
+                        + " from Account_tbl join recipe_tbl\n"
+                        + " where recipe_id=? and account_tbl.user_id = recipe_tbl.user_id";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, userid);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                //int accountId, int userId, String username, String password, String email, String phoneNumber, Date lastModified, boolean isActived, boolean isAdmin
+                if (rs.next()) {
+                  result =  rs.getString("username");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
     public int updateAccount(int usupid, boolean usupstt) throws SQLException {
          Connection con = null;
         PreparedStatement stm = null;

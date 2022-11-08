@@ -65,12 +65,7 @@ public class CreateNewReportController extends HttpServlet {
                 Date created_date = new Date(Calendar.getInstance().getTime().getTime());
 //            System.out.println("UnitTest REPORT: " + user_id + recipe_id + report_detail + created_date + last_modified + is_actived);
                 Report_tblDAO dao = new Report_tblDAO();
-                
-                // hieuvm inject code here  
-                 String new_report_detail = currentUser.getUsername() + " report -> : " + report_detail + " | recipe:  " + recipe_id ;
-                // hieuvm endcode
-                                    // HIEU VM INJECT NEW REPORT MESSEGER 
-                if (dao.addNewReport(user_id, recipe_id, new_report_detail, created_date)) {
+                if (dao.addNewReport(user_id, recipe_id, report_detail, created_date)) {
                     urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=success";
                 }//end check result
             }//end check has been login

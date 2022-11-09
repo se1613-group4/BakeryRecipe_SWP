@@ -44,7 +44,7 @@ public class Recipe_tblDAO implements Serializable {
      * @return A list of Recipe_tblDTO objects
      * @throws SQLException
      */
-    public List<Recipe_tblDTO> searchAllRecipe(String searchValue, String[] categoryFilter) throws SQLException {
+    public List<Recipe_tblDTO> searchAllRecipe(String searchValue) throws SQLException {
 
         List<Recipe_tblDTO> recipesList = null;
         Connection connection = null;
@@ -89,16 +89,6 @@ public class Recipe_tblDAO implements Serializable {
                         + "		inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "		inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
                         + "WHERE (R.name like ? or profile_tbl.full_name like ?)";
-
-                if (categoryFilter != null) {
-                    sql = sql.concat(" and category_tbl.name in (");
-                    for (String categoryName : categoryFilter) {
-                        sql = sql.concat("'").concat(categoryName).concat("', ");
-                    }
-                    sql = sql.concat(")");
-                    sql = sql.replace(", )", ")");
-                    System.out.println("SQL STring: " + sql);
-                }
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setString(1, "%" + searchValue + "%");
@@ -155,11 +145,10 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }//end searchAllRecipe function
-
+    
     /**
-     * Search all Recipe object by name, limit by 9 object from a input
-     * parameter
-     *
+     * Search all Recipe object by name, limit by 9 object from a input parameter
+     * 
      * @Author: ThongNT
      * @param searchValue characters of recipe's name
      * @return A list of Recipe_tblDTO objects
@@ -214,7 +203,7 @@ public class Recipe_tblDAO implements Serializable {
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setString(1, "%" + searchValue + "%");
-                stm.setString(2, "%" + searchValue + "%");
+                stm.setString(2, "%" + searchValue + "%");                
                 stm.setInt(3, startNumber);
                 //4. Execute statement
                 rs = stm.executeQuery();
@@ -477,7 +466,7 @@ public class Recipe_tblDAO implements Serializable {
                     // get image info
                     int imgId = rs.getInt("img_id");
                     String imgLink = rs.getString("img_link");
-                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
+                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);                    
                     // create recipeDTO
                     Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, preTime, cookTime, likedCount, savedCount, lastModified, authorInfo, category, image, steps);
                     result = recipeDto;
@@ -631,18 +620,18 @@ public class Recipe_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 while (rs.next()) {
-                    if (result == null) {
+                    if(result == null){
                         result = new ArrayList<>();
                     }
-                    result.add(new Recipe_tblDTO(
-                            rs.getInt("recipe_id"),
-                            rs.getString("name"),
-                            rs.getInt("liked_count"),
-                            rs.getInt("saved_count"),
-                            rs.getDate("created_date"),
-                            rs.getDate("last_modified"),
-                            rs.getBoolean("is_actived")
-                    ));
+                       result.add(new Recipe_tblDTO(
+                               rs.getInt("recipe_id"),
+                               rs.getString("name"),
+                               rs.getInt("liked_count"),
+                               rs.getInt("saved_count"),
+                               rs.getDate("created_date"),
+                               rs.getDate("last_modified"),
+                               rs.getBoolean("is_actived")
+                       ));
                 }
             }
         } finally {
@@ -658,15 +647,14 @@ public class Recipe_tblDAO implements Serializable {
         }
         return result;
     }
-
+    
     /**
      * Author LamVo
-     *
      * @param recipeDto
      * @return
      * @throws SQLException
      */
-    public boolean insertRecipe(Recipe_tblDTO recipeDto)
+    public boolean insertRecipe(Recipe_tblDTO recipeDto) 
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -704,10 +692,10 @@ public class Recipe_tblDAO implements Serializable {
                 con.close();
             }
         }
-        return result;
+        return result;                
     }
-
-    public int getCurrentIdent() throws SQLException {
+    
+    public int getCurrentIdent() throws SQLException{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -719,7 +707,7 @@ public class Recipe_tblDAO implements Serializable {
                 //2. create sql string
                 String sql = "SELECT recipe_id as current_identity FROM recipe_tbl ORDER BY created_date DESC LIMIT 1";
                 //3. create statement obj
-                stm = con.createStatement();
+                stm = con.createStatement();                
                 //4. execute query
                 rs = stm.executeQuery(sql);
                 //5 process result
@@ -728,7 +716,7 @@ public class Recipe_tblDAO implements Serializable {
                 }
             }// end check con not null
         } finally {
-            if (rs != null) {
+            if (rs !=null) {
                 rs.close();
             }
             if (stm != null) {
@@ -740,7 +728,7 @@ public class Recipe_tblDAO implements Serializable {
         }
         return currentIdent;
     }
-
+    
     public void activeRecipe(int recipeId) throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -756,7 +744,7 @@ public class Recipe_tblDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, recipeId);
                 //4. execute query
-                stm.executeUpdate();
+                 stm.executeUpdate();
                 //5 process result              
             }// end check con not null
         } finally {
@@ -768,15 +756,14 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }
-
+    
     /**
      * Author LamVo
-     *
      * @param recipeDto
      * @return
      * @throws SQLException
      */
-    public boolean updateRecipe(Recipe_tblDTO recipeDto, int recipeId)
+    public boolean updateRecipe(Recipe_tblDTO recipeDto, int recipeId) 
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -821,9 +808,9 @@ public class Recipe_tblDAO implements Serializable {
                 con.close();
             }
         }
-        return result;
+        return result;                
     }
-
+    
     public List<Recipe_tblDTO> displaySavedRecipe(int loginUserId) throws SQLException {
 
         List<Recipe_tblDTO> recipesList = null;
@@ -897,7 +884,8 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }
-
+    
+    
     public List<Recipe_tblDTO> searchSavedRecipe(int loginUserId, String searchValue) throws SQLException {
 
         List<Recipe_tblDTO> recipesList = null;
@@ -920,8 +908,8 @@ public class Recipe_tblDAO implements Serializable {
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, loginUserId);
-                stm.setString(2, "%" + searchValue + "%");
-                stm.setString(3, "%" + searchValue + "%");
+                stm.setString(2,  "%" + searchValue + "%");
+                stm.setString(3,  "%" + searchValue + "%");
                 //4. Execute statement
                 rs = stm.executeQuery();
                 //5. Process result= rs.getInt("recipe_id");

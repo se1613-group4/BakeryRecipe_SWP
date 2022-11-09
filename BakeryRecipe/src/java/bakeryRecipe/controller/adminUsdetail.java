@@ -8,6 +8,8 @@ import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,6 +54,13 @@ import javax.servlet.http.HttpSession;
                     session.setAttribute( "usinf", dto);
                     urlRewriting ="adminHome";
                     session.setAttribute("NOTIFICATION_LIST_ADMIN", listnotifii);
+                    
+                      Recipe_tblDAO recdao = new Recipe_tblDAO();
+            ArrayList<Recipe_tblDTO> rslt = recdao.AdmingetRecipebyUser(usid);
+             
+            if (rslt != null) {
+                    session.setAttribute( "ADMIN_LIST_RECIPE", rslt);
+            }
             }
             
             

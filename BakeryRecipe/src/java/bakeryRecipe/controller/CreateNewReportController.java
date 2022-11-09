@@ -73,6 +73,7 @@ public class CreateNewReportController extends HttpServlet {
                 // hieuvm endcode
                                     // HIEU VM INJECT NEW REPORT MESSEGER 
                 if (dao.addNewReport(user_id, recipe_id, new_report_detail, created_date)) {
+
                     urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=success";
                 }//end check result
             }//end check has been login

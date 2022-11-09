@@ -4,11 +4,18 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,46 +28,32 @@ import javax.servlet.http.HttpSession;
  *
  * @author jexk
  */
-@WebServlet(name = "adminUpdateRecipe", urlPatterns = {"/adminUpdateRecipe"})
-public class adminUpdateRecipe extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(name = "listRecipeAdmin", urlPatterns = {"/listRecipeAdmin"})
+ public class adminListRecipe extends HttpServlet {
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         /**
          * Get site map (Copy this for all controller)
          */
         ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
-        String test = request.getParameter("recid");
-        boolean sttRec = (request.getParameter("sttRec")).equals("true");
-        int recid = test == null ? 0 : Integer.parseInt(test);
+        String urlRewriting = AppContants.Admin.ADMIN_HOME;
+        String test = request.getParameter("usrecid");
+        int  usid = test==null? 0 :  Integer.parseInt(test);
+        
         try {
-
-            if (recid != 0) {
-                Recipe_tblDAO dao = new Recipe_tblDAO();
-               if(sttRec){
-                  dao.removeRecipe(recid);
-               }else{
-                   dao.activeRecipe(recid);
-               }
-
-            } else {
-                System.out.println("no update recipe status because recipe id = 0");
+             Recipe_tblDAO dao = new Recipe_tblDAO();
+            ArrayList<Recipe_tblDTO> rslt = dao.AdmingetRecipebyUser(usid);
+            
+            
+            if (rslt != null) {
+                    session.setAttribute( "ADMIN_LIST_RECIPE", rslt);
             }
-
+            
+            
         } catch (SQLException ex) {
             log("RemoveRecipe Controller _ SQL " + ex.getMessage());
         } finally {

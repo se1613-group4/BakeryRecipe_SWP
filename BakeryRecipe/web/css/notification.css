@@ -34,8 +34,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* THE POPULAR RED NOTIFICATIONS COUNTER. */
 #noti_Counter {
-    width: 10px;
-    height: 10px;
     display:block;
     position:absolute;
     background:#E1141E;
@@ -43,8 +41,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size:12px;
     font-weight:normal;
     padding:1px 3px;
-    margin:-5px 0 0 20px;
-    border-radius:50px !important;
+    margin:-8px 0 0 25px;
+    border-radius:2px;
     -moz-border-radius:2px;
     -webkit-border-radius:2px;
     z-index:1;

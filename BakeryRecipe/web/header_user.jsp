@@ -95,11 +95,7 @@
 
                                     <!--Notification-->
                                     <li  id="noti_Container">
-                                        <c:set var="countNoti" value="${sessionScope.NOTI_COUNTING_RESULT}"/>
-                                        <p id="countingNoti" style="display: none">${countNoti}</p>
-                                        <!--<input name="countNoti" type="hidden" name="countNoti" value="${countNoti}"/>-->
-                                        <!--<h2 style="color: #FFF">${countNoti}</h2>-->
-                                        <div id="noti_Counter"></div>   <!--SHOW NOTIFICATIONS COUNT.-->
+                                        <div id="noti_Counter" ></div>   <!--SHOW NOTIFICATIONS COUNT.-->
 
                                         <!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
                                         <div id="noti_Button"><i style="color: #FFF" class="fa fa-bell" ></i></div>    

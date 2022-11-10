@@ -135,15 +135,6 @@ public class Recipe_tblDTO implements Serializable{
         this.isActived = isActived;
     }
 
-    Recipe_tblDTO(int recipeId, String recipeName, String description, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image) {
-        this.recipeId = recipeId;
-        this.name = recipeName;
-        this.description = description;
-        this.authorInfo = authorInfo;
-        this.category = category;
-        this.image = image;
-    }
-
     
     // Getters
     public int getRecipeId() {

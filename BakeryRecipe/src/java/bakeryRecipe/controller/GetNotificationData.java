@@ -59,9 +59,7 @@ public class GetNotificationData extends HttpServlet {
                 for (int i = 0; i < result.size(); i++) {
                     System.out.println(result.get(i));
                 }
-                int countNoti = dao.countNoti(user.getUserId());
                 session.setAttribute("NOTIFICATION_RESULT", result);
-                session.setAttribute("NOTI_COUNTING_RESULT", countNoti);
                 url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
             }
         } catch (SQLException ex) {

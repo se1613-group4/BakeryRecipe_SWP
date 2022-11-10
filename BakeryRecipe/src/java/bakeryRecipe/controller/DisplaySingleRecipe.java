@@ -87,10 +87,8 @@ public class DisplaySingleRecipe extends HttpServlet {
                     }
                     request.setAttribute("TAG_LIST", tagNames);
                 }
-                // Load similar recipes
-//                System.out.println("---------Display Single Recipe: " + recipeDto.getCategoryId());
-                List<Recipe_tblDTO> similarRecipeResultList = recipeDao.displaySimilarRecipe(recipeDto.getCategoryId());
-                request.setAttribute("SIMILAR_RECIPE_LIST", similarRecipeResultList);
+                
+                        
                 //----------------------------
                 //thongnt section start
                 //DISPLAY COMMENTS FUNCTION
@@ -135,8 +133,6 @@ public class DisplaySingleRecipe extends HttpServlet {
                 request.setAttribute("ISFOLLOWED", isfollowed);
 
                 //thongnt section end
-                
-                
                 //----------------------------
                 url = siteMaps.getProperty(AppContants.DisplaySingleRecipeFeature.CHECK_SAVED_RECIPE_CONTROLLER);
 

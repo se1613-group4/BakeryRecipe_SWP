@@ -12,10 +12,12 @@ import java.util.ArrayList;
  *
  * @author LamVo
  */
-public class Notification_tblDAO implements Serializable {
+public class Notification_tblDAO implements Serializable{
+
+
 
     public ArrayList<Notification_tblDTO> getListNoti(int usId) throws SQLException {
-        ArrayList<Notification_tblDTO> ls = null;
+       ArrayList<Notification_tblDTO> ls = null;
         Connection connection = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -24,7 +26,7 @@ public class Notification_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "select * from notification_tbl where user_id=? order by created_date asc";
+                String sql = "select * from notification_tbl where user_id=?";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setInt(1, usId);
@@ -32,10 +34,10 @@ public class Notification_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5 process result
                 while (rs.next()) {
-                    if (ls == null) {
-                        ls = new ArrayList<Notification_tblDTO>();
-                    }
-                    ls.add(new Notification_tblDTO(rs.getInt("noti_id"), rs.getInt("user_id"), rs.getString("detail"), rs.getDate("created_date")));
+                  if(ls == null){
+                      ls = new ArrayList<Notification_tblDTO>();
+                  }
+                  ls.add(new Notification_tblDTO(rs.getInt("noti_id"),rs.getInt("user_id"),rs.getString("detail"),rs.getDate("created_date")));
                 }
             }
         } finally {
@@ -49,14 +51,13 @@ public class Notification_tblDAO implements Serializable {
                 connection.close();
             }
         }
-        return ls;
+          return ls ;
     }
-
-    public int setNoti(int usId, String sms) throws SQLException {
+    public int setNoti(int usId,String sms) throws SQLException {
         int rslt = 0;
         Connection connection = null;
         PreparedStatement stm = null;
-
+        
         try {
             //1. make connection
             connection = DBConnection.getConnection();
@@ -70,10 +71,10 @@ public class Notification_tblDAO implements Serializable {
                 //4. execute query
                 rslt = stm.executeUpdate();
                 //5 process result
-
+              
             }
         } finally {
-
+           
             if (stm != null) {
                 stm.close();
             }
@@ -81,43 +82,6 @@ public class Notification_tblDAO implements Serializable {
                 connection.close();
             }
         }
-        return rslt;
-    }
-
-    public int countNoti(int usId) throws SQLException {
-        Connection connection = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        int result = 0;
-        try {
-            //1. make connection
-            connection = DBConnection.getConnection();
-            if (connection != null) {
-                //2. create sql string
-                String sql = "select count(noti_id)\n"
-                        + "from notification_tbl\n"
-                        + "where user_id = ?;";
-                //3. create statement obj
-                stm = connection.prepareStatement(sql); // tao ra obj rong
-                stm.setInt(1, usId);
-                //4. execute query
-                rs = stm.executeQuery();
-                //5 process result
-                if (rs.next()) {
-                    result = rs.getInt("count(noti_id)");
-                }
-            }
-            return result;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
+       return rslt;
     }
 }

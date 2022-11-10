@@ -12,6 +12,7 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javax.mail.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.mysql-connector-java-8.0.30.jar}</file>
@@ -21,11 +22,8 @@
                     <file>${file.reference.activation-jaf1.1.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
-<<<<<<< HEAD
-=======
                 <library dirs="200">
                     <file>${file.reference.javax.mail.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.commons-logging-1.2.jar-1}</file>
@@ -47,7 +45,6 @@
                     <file>${file.reference.httpcore-4.4.9.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
->>>>>>> eca4fd967659e83befebac96a69f0fac42cebd37
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

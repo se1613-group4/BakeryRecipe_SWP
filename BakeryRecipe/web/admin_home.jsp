@@ -141,7 +141,7 @@
                                                             </c:if>
                                                         </td>
                                                         <td>
-                                                            <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}">Update status</a>
+                                                            <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -259,7 +259,7 @@
                                                         </td>
                                                         <td>
 
-                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}">Update status this Recipe</a>
+                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status this Recipe</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

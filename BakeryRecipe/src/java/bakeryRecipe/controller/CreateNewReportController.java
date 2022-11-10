@@ -69,7 +69,7 @@ public class CreateNewReportController extends HttpServlet {
                 Account_tblDAO acdao = new Account_tblDAO();
                 String usnameofrec = acdao.getUsernamebyRecipeId(recipe_id);
                 // hieuvm inject code here  =
-                 String new_report_detail = "|Id : " + recipe_id + " [ by : " +usnameofrec+ "]:sms:"+report_detail;
+                 String new_report_detail = "Id : " + recipe_id + " - by : " +usnameofrec+ " - sms: "+report_detail;
                 // hieuvm endcode
                                     // HIEU VM INJECT NEW REPORT MESSEGER 
                 if (dao.addNewReport(user_id, recipe_id, new_report_detail, created_date)) {

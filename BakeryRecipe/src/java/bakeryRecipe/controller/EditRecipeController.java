@@ -10,6 +10,8 @@ import bakeryRecipe.image_tbl.Image_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.tag_detail_tbl.Tag_Detail_tblDAO;
+import bakeryRecipe.tag_tbl.Tag_tblDAO;
 import bakeryRecipe.utils.AppContants;
 import bakeryRecipe.video_tbl.Video_tblDAO;
 import java.io.File;
@@ -40,7 +42,8 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 50)
 public class EditRecipeController extends HttpServlet {
     //Save images in absolute directory path
-    private static final String SAVE_DIR = "D:" + File.separator + "bakeryrecipe_images";
+    //    private final String SAVE_DIR = "D:" + File.separator + "bakeryrecipe_images";
+   private final String SAVE_DIR = "/upload_images";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -74,6 +77,7 @@ public class EditRecipeController extends HttpServlet {
 //        String[] imgUrls = request.getParameterValues("txtImgUrl");
         String vidUrl = request.getParameter("txtVidUrl");
         int recipeId = Integer.parseInt(request.getParameter("txtRecipeId"));
+        String[] tags = request.getParameterValues("txtTag");
         // all validate data
         try {
             /*
@@ -114,8 +118,13 @@ public class EditRecipeController extends HttpServlet {
             /*
             * INSERT TO IMAGE TABLE   
             */
+            /*
+            * INSERT TO IMAGE TABLE   
+            */
             // Get uploaded image files
-            File fileSaveDir = new File(SAVE_DIR);
+            String savePath = request.getServletContext().getRealPath(SAVE_DIR);
+            File fileSaveDir = new File(savePath);
+//            File fileSaveDir = new File(SAVE_DIR);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
@@ -125,24 +134,21 @@ public class EditRecipeController extends HttpServlet {
             for (Part part : request.getParts()) {
                 String fileName = ExtractFileName(part);
                 if (!fileName.isEmpty()) {
-                    String filePath = SAVE_DIR + File.separator +fileName;
-                    imgUrls[i++] = "/bakeryrecipe_images/" + fileName;
+//                    String filePath = SAVE_DIR + File.separator +fileName;
+//                    imgUrls[i++] = "/bakeryrecipe_images/" + fileName;
+                    String filePath = savePath + File.separator + fileName;
+                    imgUrls[i++] = "upload_images" + "/" + fileName;
                     part.write(filePath);
                 }
             }
             // call imageDao and insert into image_tbl
             boolean resultUpdateImg = true;
-            if (imgUrls != null && !"".equals(imgUrls[0])) {
-                Image_tblDAO imgDao = new Image_tblDAO();
-                // remove old img of that reicpe
+            if (imgUrls[0] != null && !"".equals(imgUrls[0])) {
+                Image_tblDAO imgDao = new Image_tblDAO();                
                 imgDao.removeImg(recipeId);
-                // add new img(s) of that recipe
                 resultUpdateImg = imgDao.insertImg(recipeId, imgUrls);
-//                if (imgDao.removeImg(recipeCurrentId)) {
-//                    resultInsertImg = imgDao.insertImg(recipeCurrentId, imgUrls);
-//                }
                 System.out.println("======RESULT INSERT IMAGE=======" + resultUpdateImg);
-            }          
+            }
             /*
             * INSERT TO VIDEO TABLE    
             */
@@ -156,6 +162,19 @@ public class EditRecipeController extends HttpServlet {
             // All insert results are true -> redirect to MyRecipes Page
             if (resultUpdateRecipe && resultUpdateIngre && resultUpdateImg && resultInsertVid) {
                 url = "DisplaySingleRecipe?recipeId="+recipeId;
+            }
+            /*
+            * INSERT TO TAG TABLE    
+            */
+            // call videoDao and insert into video_tbl
+            boolean resultInsertTag = true;
+            if (tags != null) {
+                Tag_tblDAO tagDao = new Tag_tblDAO();
+                tagDao.insertTags(tags);                
+                Tag_Detail_tblDAO tagDetailDao = new Tag_Detail_tblDAO();
+                tagDetailDao.removeTagDetail(recipeId);                
+                resultInsertTag = tagDetailDao.insertTagDetail(recipeId, tags);
+                System.out.println("======RESULT INSERT TAGS=======" + resultInsertTag);
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateNewRecipe.class.getName()).log(Level.SEVERE, null, ex);

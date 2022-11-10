@@ -53,27 +53,26 @@ public class Comment_tblDAO implements Serializable {
             if (connection != null) {
                 //2. Create SQl String
                 String sql = "SELECT \n"
-                        + "comment_tbl.comment_id,\n"
-                        + "R.recipe_id, \n"
-                        + "comment_tbl.user_id, \n"
-                        + "profile_tbl.full_name,\n"
-                        + "profile_tbl.avatar_url,\n"
-                        + "comment_detail,\n"
-                        + "comment_tbl.created_date,\n"
-                        + "comment_tbl.last_modified,\n"
-                        + "comment_tbl.is_actived\n"
-                        + "FROM (select liked_count, \n"
-                        + "recipe_id,  \n"
-                        + "user_id, \n"
-                        + "is_actived, \n"
-                        + "is_hidden\n"
-                        + "from recipe_tbl \n"
-                        + "where \n"
-                        + "is_actived = 1 and is_hidden = 0 ) as R\n"
-                        + "inner join comment_tbl on R.recipe_id = comment_tbl.recipe_id\n"
-                        + "inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
-                        + "inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
-                        + "WHERE R.recipe_id = ? and comment_tbl.is_actived=1;";
+                        + "                        comment_tbl.comment_id,\n"
+                        + "                        R.recipe_id, \n"
+                        + "                        comment_tbl.user_id, \n"
+                        + "                        profile_tbl.full_name,\n"
+                        + "                        profile_tbl.avatar_url,\n"
+                        + "                        comment_detail,\n"
+                        + "                        comment_tbl.created_date,\n"
+                        + "                        comment_tbl.last_modified,\n"
+                        + "                        comment_tbl.is_actived\n"
+                        + "                        FROM (select liked_count, \n"
+                        + "                        recipe_id,  \n"
+                        + "                        user_id, \n"
+                        + "                        is_actived, \n"
+                        + "                        is_hidden\n"
+                        + "                        from recipe_tbl \n"
+                        + "                        where \n"
+                        + "                        is_actived = 1 and is_hidden = 0 ) as R\n"
+                        + "                        inner join comment_tbl on R.recipe_id = comment_tbl.recipe_id\n"
+                        + "                        inner join profile_tbl on comment_tbl.user_id = profile_tbl.user_id\n"
+                        + "                        WHERE R.recipe_id = ? and comment_tbl.is_actived=1;";
                 //3. Create statement obj
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, recipeId);
@@ -199,8 +198,8 @@ public class Comment_tblDAO implements Serializable {
             }
         }
     }//end deleteCommentByCommentId function
-    
-    public boolean uploadComment( String comment_detail,int comment_id)
+
+    public boolean uploadComment(String comment_detail, int comment_id)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;

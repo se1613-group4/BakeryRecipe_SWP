@@ -415,6 +415,7 @@
 
                             </div>
                         </div>
+<<<<<<< HEAD
                     </div> 
 
 
@@ -554,6 +555,16 @@
     </section>
     <!-- Single Recipe With Side bar Area End Here -->
 </div>
+=======
+                        <!--Right side bar start here-->
+                        <%@include file="righ-side-bar.jsp" %>
+                        <!--Right side bar end here-->
+                    </div> 
+                </div>           
+            </section>
+            <!-- Single Recipe With Side bar Area End Here -->
+        </div>
+>>>>>>> eca4fd967659e83befebac96a69f0fac42cebd37
 
 <!-- Search Box Start Here -->
 <div id="search" class="search-wrap">

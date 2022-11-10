@@ -428,8 +428,11 @@ public class Recipe_tblDAO implements Serializable {
             if (connection != null) {
                 //2. create sql string
                 String sql = "SELECT liked_count, saved_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
+<<<<<<< HEAD
                         + "profile_tbl.user_id, profile_tbl.full_name, profile_tbl.bio, category_tbl.category_id, category_tbl.name as category_name, \n"
                         + "serving, prepare_time, cook_time, instruction, R.last_modified, step,\n"
+=======
+>>>>>>> eca4fd967659e83befebac96a69f0fac42cebd37
                         + "profile_tbl.user_id, profile_tbl.full_name, profile_tbl.avatar_url, profile_tbl.bio,\n"
                         + "category_tbl.category_id, category_tbl.name as category_name,\n"
                         + "serving, prepare_time, cook_time, instruction, R.last_modified, step\n"
@@ -437,7 +440,7 @@ public class Recipe_tblDAO implements Serializable {
                         + "inner join category_tbl on R.category_id = category_tbl.category_id\n"
                         + "inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "left join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
-                        + "where R.recipe_id = ?";
+                        + "where R.recipe_id = ?;";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
                 stm.setInt(1, recipeId);

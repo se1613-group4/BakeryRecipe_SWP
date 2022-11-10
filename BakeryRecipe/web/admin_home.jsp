@@ -61,6 +61,28 @@
                                     </c:if>
                                 </div>
                             </div>
+                                <div class="content-container">
+                                    <table id="customers">
+                                        <tr>
+                                            <th> stt </th> 
+                                            <th> Report messeger  </th>  
+                                        </tr>
+                                        <c:if test="${ not empty sessionScope.ADMIN_LIST_REPORT}">
+                                            <c:forEach items="${sessionScope.ADMIN_LIST_REPORT}" var="rp">
+                                                <tr>  
+                                                    <td>
+                                                        ${rp.reportId}
+                                                    </td>
+                                                    <td>
+                                                        ${rp.comment_detail}
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+                                        </c:if>
+                                    </table>
+                                </div>
+                            </div>
 
                             <!--session 2-->
                             <div id="listuser" class="main-content">
@@ -119,7 +141,9 @@
                                                             </c:if>
                                                         </td>
                                                         <td>
-                                                            <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}">Update status</a>
+
+                                                            <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status</a>
+
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -237,7 +261,9 @@
                                                         </td>
                                                         <td>
 
-                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}">Update status this Recipe</a>
+
+                                                            <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status this Recipe</a>
+
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,4 +199,40 @@ public class Comment_tblDAO implements Serializable {
             }
         }
     }//end deleteCommentByCommentId function
+    
+    public boolean uploadComment( String comment_detail,int comment_id)
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        Date now = Date.valueOf(LocalDate.now());
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "UPDATE comment_tbl SET comment_detail=?, "
+                        + "last_modified=? WHERE comment_id=?";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setString(1, comment_detail);
+                stm.setDate(2, now);
+                stm.setInt(3, comment_id);
+                //4. execute query
+                int affectedRows = stm.executeUpdate();
+                //5 process result
+                if (affectedRows > 0) {
+                    result = true;
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }

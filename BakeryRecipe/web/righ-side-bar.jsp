@@ -86,7 +86,25 @@
                         </c:forEach>
                     </ul>
                 </div>
-            </div>                        
+            </div> 
+            
+            <c:set var="tagList" value="${sessionScope.All_TAG}"></c:set>
+            <div class="widget">
+                <div class="section-heading heading-dark">
+                    <h3 class="item-heading">TAG</h3>
+                </div>
+                <div class="widget-categories">
+                    <ul>
+                        <c:forEach var="tagDto" items="${tagList}">
+                            <li>
+                                <a href="#${tagDto.tagId}">${tagDto.name}
+                                    <span>${tagDto.count}</span>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div> 
         </div>
         
 

@@ -43,12 +43,13 @@ public class adminUpdateRecipe extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         HttpSession session = request.getSession();
 
-        String urlRewriting = AppContants.Admin.ADMIN_LISTRECIPE;
+        String urlRewriting = AppContants.Admin.ADMIN_LISTUSER;
         String test = request.getParameter("recid");
         boolean sttRec = (request.getParameter("sttRec")).equals("true");
         int recid = test == null ? 0 : Integer.parseInt(test);
         try {
-
+                session.setAttribute("NOTIFICATION_LIST_ADMIN", null);
+                session.setAttribute("ADMIN_LIST_RECIPE", null);
             if (recid != 0) {
                 Recipe_tblDAO dao = new Recipe_tblDAO();
                if(sttRec){

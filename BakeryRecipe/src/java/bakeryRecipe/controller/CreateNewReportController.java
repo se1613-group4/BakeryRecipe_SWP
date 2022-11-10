@@ -68,10 +68,12 @@ public class CreateNewReportController extends HttpServlet {
                 Report_tblDAO dao = new Report_tblDAO();
                 Account_tblDAO acdao = new Account_tblDAO();
                 String usnameofrec = acdao.getUsernamebyRecipeId(recipe_id);
-                // hieuvm inject code here  =
+                // hieuvm inject code here  
+
                  String new_report_detail = "Id : " + recipe_id + " - by : " +usnameofrec+ " - sms: "+report_detail;
+
                 // hieuvm endcode
-                                    // HIEU VM INJECT NEW REPORT MESSEGER 
+                                    
                 if (dao.addNewReport(user_id, recipe_id, new_report_detail, created_date)) {
                     urlRewriting = siteMaps.getProperty(AppContants.AddNewReportFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id + "&REPORT_STATUS=success";
                 }//end check result

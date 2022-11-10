@@ -61,7 +61,6 @@
                                     </c:if>
                                 </div>
                             </div>
-
                                 <div class="content-container">
                                     <table id="customers">
                                         <tr>
@@ -84,6 +83,7 @@
                                     </table>
                                 </div>
                             </div>
+
                             <!--session 2-->
                             <div id="listuser" class="main-content">
                                 <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>
@@ -141,7 +141,9 @@
                                                             </c:if>
                                                         </td>
                                                         <td>
+
                                                             <a href="adminUpdateAccount?usupid=${account.userId}&usupstt=${account.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status</a>
+
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -259,7 +261,9 @@
                                                         </td>
                                                         <td>
 
+
                                                             <a href="adminUpdateRecipe?recid=${rec.recipeId}&sttRec=${rec.isActived}" onclick="if (confirm('Are you sure?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Update status this Recipe</a>
+
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

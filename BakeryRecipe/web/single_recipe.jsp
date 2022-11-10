@@ -409,7 +409,6 @@
                                 </div>            
                                 <!-- Suggest recipe start here -->
                                 <!-- Suggest recipe end here -->
-
                                 <jsp:include page="like.jsp" />
                                 <jsp:include page="comment.jsp" />
 
@@ -454,6 +453,8 @@
                             </div>
                         </div>
 
+                                <jsp:include page="like.jsp" />
+                                <jsp:include page="comment.jsp" />
 
                         <div class="widget">
                             <div class="widget-ad">
@@ -554,6 +555,16 @@
     </section>
     <!-- Single Recipe With Side bar Area End Here -->
 </div>
+                            </div>
+                        </div>
+                        <!--Right side bar start here-->
+                        <%@include file="righ-side-bar.jsp" %>
+                        <!--Right side bar end here-->
+                    </div> 
+                </div>           
+            </section>
+            <!-- Single Recipe With Side bar Area End Here -->
+        </div>
 
 <!-- Search Box Start Here -->
 <div id="search" class="search-wrap">

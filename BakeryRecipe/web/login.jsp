@@ -37,34 +37,33 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
-
     </head>
     <body>
     <body>
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-        
+
         <c:if test="${not empty Must_login}">
-        <script>alert("Your account is delete");
-        </script></c:if>
+            <script>alert("Your account is delete");
+            </script></c:if>
         <c:remove var="Must_login" scope="session" /> 
-        
+
         <c:if test="${not empty verifyCode_done}">
-        <script>alert("Your email is verify");
-        </script></c:if>
+            <script>alert("Your email is verify");
+            </script></c:if>
         <c:remove var="verifyCode_done" scope="session" /> 
-        
+
         <c:if test="${not empty Remove_done}">
-        <script>alert("Your account is delete");
-        </script></c:if>
+            <script>alert("Your account is delete");
+            </script></c:if>
         <c:remove var="Remove_done" scope="session" /> 
-        
-        
-        
+
+
+
         <c:if test="${not empty Forgot_done}">
-        <script>alert("Your password is change. Please Login!");
-        </script></c:if>
+            <script>alert("Your password is change. Please Login!");
+            </script></c:if>
         <c:remove var="Forgot_done" scope="session" /> 
         <!-- Add your site or application content here -->
         <!-- Preloader Start Here -->
@@ -111,11 +110,11 @@
                                 </div>
                                 <!--LOGIN FORM-->
                                 <c:set var="error" value="${requestScope.LOGIN_ERR}"></c:set>
-                                
-                                
-                                <form class="login-form" action="loginController"  method="post">
 
-                                    <input class="main-input-box" value="${param.txtUsername}" name="txtUsername" type="text" placeholder="User Name" required
+
+                                    <form class="login-form" action="loginController"  method="post">
+
+                                        <input class="main-input-box" value="${param.txtUsername}" name="txtUsername" type="text" placeholder="User Name" required
                                            oninvalid="this.setCustomValidity('Enter User Name Here')"
                                            oninput="this.setCustomValidity('')"/>
                                     <c:if test="${not empty error.userameEmptyErr}">
@@ -128,20 +127,20 @@
                                     <c:if test="${not empty error.passwordEmptyErr}">
                                         <font color="red">${error.passwordEmptyErr}</font></br>
                                     </c:if>
-                                        
+
 
                                     <c:if test="${not empty error.accountNotFound}">
                                         <font color="red">${error.accountNotFound}</font></br>
                                     </c:if>
-                                        
+
                                     <c:if test="${not empty error.accIsactive}">
                                         <font color="red">${error.accIsactive}</font></br>
                                     </c:if>
                                     <div class="inline-box mb-5 mt-4">
-<!--                                        <div class="checkbox checkbox-primary">
-                                            <input id="modal-checkbox" type="checkbox">
-                                            <label for="modal-checkbox">Remember Me</label>
-                                        </div>-->
+                                        <!--                                        <div class="checkbox checkbox-primary">
+                                                                                    <input id="modal-checkbox" type="checkbox">
+                                                                                    <label for="modal-checkbox">Remember Me</label>
+                                                                                </div>-->
                                         <c:url var="forgot_url" value="forgotPasswordPage"></c:url>
                                         <label class="lost-password"><a href="${forgot_url}">Lost your password?</a></label></br>
                                         <c:url var="verifyEmail_url" value="verifyEmailPage"></c:url>
@@ -152,7 +151,14 @@
                                         <button class="btn btn-danger" style="font-size: 1.5rem" type="submit" >Login</button>
                                         <c:url var="register_url" value="registerPage"></c:url>
                                         <a href="${register_url}">Register</a>
+                                        <div class="login-box-social">
+                                        <ul>
+                                            <li><a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/BakeryRecipe/login-google&response_type=code&client_id=220347070456-brh7fuqartnn99t6prha0o1kcc6rmajr.apps.googleusercontent.com&approval_prompt=force" 
+                                                   class="google"><i class="fab fa-google-plus-g"></i></a></li>
+                                        </ul>
                                     </div>
+                                    </div>
+                                    
                                 </form>
 
                             </div>

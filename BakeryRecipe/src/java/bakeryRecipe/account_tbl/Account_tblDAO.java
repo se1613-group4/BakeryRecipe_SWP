@@ -5,6 +5,7 @@
  */
 package bakeryRecipe.account_tbl;
 
+import bakeryRecipe.google_tbl.GooglePojo;
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -72,7 +73,48 @@ public class Account_tblDAO implements Serializable {
         }
         return set;
     }
+    
+    public boolean saveUserGG(GooglePojo acc, String pass, int currentUserId) throws SQLException {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        Date now = Date.valueOf(LocalDate.now());
+        try {
+            con = DBConnection.getConnection();
+            //Insert register data to database
+            String query = "insert into Account_tbl ( user_id, username, password,"
+                    + " email, last_modified, is_actived, is_admin)"
+                    + " values ( ?, ?, ?, ?, ?, ?, ?);";
 
+            PreparedStatement pt = con.prepareStatement(query);
+            pt.setInt(1, currentUserId);
+            pt.setString(2, acc.getEmail());
+            pt.setString(3, pass);
+            pt.setString(4, acc.getEmail()); 
+            pt.setDate(5, now);
+            pt.setBoolean(6, false);
+            pt.setBoolean(7, false);
+            pt.executeUpdate();
+            set = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return set;
+    }
+
+    
     // user login
     public Account_tblDTO login(String username, String pass) throws SQLException {
         Account_tblDTO acc = null;
@@ -84,6 +126,44 @@ public class Account_tblDAO implements Serializable {
             String query = "SELECT user_id,username,is_admin \n"
                     + "FROM account_tbl\n"
                     + "where username like ? and password=? and is_actived=true ";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, username);
+            pst.setString(2, pass);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int userId = rs.getInt("user_id");
+                boolean isadmin = rs.getBoolean("is_admin");
+                acc = new Account_tblDTO(userId, username, pass, isadmin);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return acc;
+    }
+    public Account_tblDTO loginGG(String username, String pass) throws SQLException {
+        Account_tblDTO acc = null;
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnection.getConnection();
+            String query = "SELECT user_id,username,is_admin \n"
+                    + "FROM account_tbl\n"
+                    + "where username like ? and password=? ";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, username);
             pst.setString(2, pass);
@@ -547,6 +627,43 @@ public class Account_tblDAO implements Serializable {
         return set;
 
     }
+    public boolean checkAccountIsActiveGG(String username) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select is_actived from account_tbl where username=? and is_actived=true ";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setString(1, username);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                if (rs.next()) {
+                    set = true;
+                } else {
+                    set = false;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return set;
+
+    }
     public boolean checkEmailIsActive(String email) throws SQLException {
         Connection connection = null;
         PreparedStatement stm = null;
@@ -778,6 +895,45 @@ public class Account_tblDAO implements Serializable {
                             false
                     ));
 
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
+    public String getUsernamebyRecipeId(int userid) throws SQLException {
+        String result = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "select username \n"
+                        + " from Account_tbl join recipe_tbl\n"
+                        + " where recipe_id=? and account_tbl.user_id = recipe_tbl.user_id";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, userid);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                //int accountId, int userId, String username, String password, String email, String phoneNumber, Date lastModified, boolean isActived, boolean isAdmin
+                if (rs.next()) {
+                  result =  rs.getString("username");
                 }
             }
         } finally {

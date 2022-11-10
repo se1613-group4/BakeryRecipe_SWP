@@ -30,6 +30,14 @@ public class Report_tblDTO {
         this.comment_detail = comment_detail;
         this.created_date = created_date;
     }
+
+    Report_tblDTO(int reportId, int user_id,int recipe_id, String comment_detail) {
+        this.reportId = reportId;
+        this.user_id = user_id;
+        this.recipe_id = recipe_id;
+        this.comment_detail = comment_detail;
+    }
+
     
     //Getters, Setters
 

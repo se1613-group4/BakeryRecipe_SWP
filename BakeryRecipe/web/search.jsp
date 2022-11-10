@@ -128,7 +128,7 @@
                                                 <div class="item-content">
                                                     <span class="sub-title">${category.name}</span>
                                                     <h3 class="item-title">
-                                                        <a href="single-recipe1.html">${recipeName}</a>
+                                                        <a href="${single_recipe_url}">${recipeName}</a>
                                                     </h3>
 
                                                     <p>${description} </p>
@@ -167,7 +167,7 @@
                                                 <div class="item-content">
                                                     <span class="sub-title">${category.name}</span>
                                                     <h3 class="item-title">
-                                                        <a href="single-recipe1.html">${recipeName}</a>
+                                                        <a href="${single_recipe_url}">${recipeName}</a>
                                                     </h3>
 
                                                     <p>${description} </p>

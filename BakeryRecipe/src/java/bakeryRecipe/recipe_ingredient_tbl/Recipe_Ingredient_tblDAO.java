@@ -101,9 +101,9 @@ public class Recipe_Ingredient_tblDAO implements Serializable{
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. create sql string
-                String sql = "SELECT I.name as ingredient_name, R.quantity, I.unit\n"
+                String sql = "SELECT I.ingredient_id, R.quantity, I.name, I.unit\n"
                         + "FROM recipe_ingredient_tbl R\n"
-                        + "		inner join ingredient_tbl I on R.ingredient_id = I.ingredient_id\n"
+                        + "inner join ingredient_tbl I on R.ingredient_id = I.ingredient_id\n"
                         + "where R.recipe_id = ?;";
                 //3. create statement obj
                 stm = connection.prepareStatement(sql); // tao ra obj rong
@@ -113,11 +113,12 @@ public class Recipe_Ingredient_tblDAO implements Serializable{
                 //5. process result
                 while (rs.next()) {
                     // get ingredient detail DTO info
-                    String ingredientName = rs.getString("ingredient_name");
-                    double quantity = rs.getDouble("quantity");
-                    String unit = rs.getString("unit");                                 
+                    int ingredientId = rs.getInt("I.ingredient_id");
+                    String unit = rs.getString("I.unit");
+                    double quantity = rs.getDouble("R.quantity");
+                    String ingredientName = rs.getString("I.name");
                     // create recipeDTO
-                    Recipe_Ingredient_tblDTO recipeIngreDto = new Recipe_Ingredient_tblDTO(unit, quantity, ingredientName);
+                    Recipe_Ingredient_tblDTO recipeIngreDto = new Recipe_Ingredient_tblDTO(ingredientId,unit,quantity,ingredientName);
                     if (this.recipeIngreDtoList == null) {
                         this.recipeIngreDtoList = new ArrayList<>();
                     }

@@ -30,10 +30,22 @@ public class Recipe_Ingredient_tblDTO implements Serializable{
         this.ingredientName = ingredientName;
     }
 
+    public Recipe_Ingredient_tblDTO(int ingredientId, String unit, double quantity, String ingredientName) {
+        this.ingredientId = ingredientId;
+        this.unit = unit;
+        this.quantity = quantity;
+        this.ingredientName = ingredientName;
+    }
+    
     public Recipe_Ingredient_tblDTO(String unit, double quantity, String ingredientName) {
         this.unit = unit;
         this.quantity = quantity;
         this.ingredientName = ingredientName;
+    }
+
+    public Recipe_Ingredient_tblDTO(int ingredientId, double quantity) {
+        this.ingredientId = ingredientId;
+        this.quantity = quantity;
     }
     
     

@@ -38,7 +38,7 @@
     <c:import url="LoadHomePageController"></c:import>
     <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
         <!--Top 5 Recipes-->
-        <div class="widget right-side-top-5-recipes">                            
+        <div class="widget right-side-top-5-recipes">          
             <div class="section-heading heading-dark">
                 <h3 class="item-heading">TOP RECIPES</h3>
             </div>
@@ -91,18 +91,18 @@
         </div> 
 
         <c:set var="tagList" value="${sessionScope.All_TAG}"></c:set>
+
         <div class="widget right-side-top-5-tags">
             <div class="section-heading heading-dark">
-                <h3 class="item-heading">TAG</h3>
+                <h3 class="item-heading">POPULAR TAGS</h3>
             </div>
-            <div class="widget-categories">
+            <div class="widget-tag">
                 <ul>
                     <c:forEach var="tagDto" items="${tagList}">
                         <li>
                             <a href="#${tagDto.tagId}">${tagDto.name}
-                                <span>${tagDto.count}</span>
                             </a>
-                        </li>
+                        </li> 
                     </c:forEach>
                 </ul>
             </div>

@@ -256,7 +256,7 @@
                                             <div class="row no-gutters ingre-div" id="ingre-detail-${counter.count}">
                                                 <!--Select Ingredient-->
                                                 <div class="col-7">
-                                                    <div class="form-group additional-input-box icon-left">  
+                                                    <div class="form-group additional-input-box icon-left">
                                                         <select class="select2 input-select2" name="txtIngredientId">
                                                             <c:if test="${not empty ingredientList}">
                                                                 <c:forEach var="ingredientDto" items="${ingredientList}">

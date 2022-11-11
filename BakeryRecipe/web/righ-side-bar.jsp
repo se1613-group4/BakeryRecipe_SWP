@@ -36,7 +36,7 @@
     </head>
     <body>
     <c:import url="LoadHomePageController"></c:import>
-    <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
+    <div class="col-lg-3 sidebar-widget-area sidebar-break-md">                                                
         <!--Top 5 Recipes-->
         <div class="widget right-side-top-5-recipes">          
             <div class="section-heading heading-dark">

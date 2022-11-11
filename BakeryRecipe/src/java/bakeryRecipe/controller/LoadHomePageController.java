@@ -68,7 +68,7 @@ public class LoadHomePageController extends HttpServlet {
             session.setAttribute("ALL_CATEGORY", allCategory);
              
             Tag_tblDAO tagDao = new Tag_tblDAO();
-            tagDao.loadAllTag();
+            tagDao.loadTopTag(10);
             List<Tag_tblDTO> allTag = tagDao.getTagDtoList();
             session.setAttribute("All_TAG", allTag);
            

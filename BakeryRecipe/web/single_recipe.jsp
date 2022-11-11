@@ -36,6 +36,8 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
+        <!--ThongNT custom css-->
+        <link rel="stylesheet" href="css/custom/single-recipe.css">
     </head>
     <body>
         <!-- Pre loader Start Here -->
@@ -108,8 +110,7 @@
                                                 </form>
                                                 <jsp:include page="follow.jsp" />
                                             </li>
-                                            <li class="single-meta"><a href="#"><i class="fas fa-heart"></i><span>${likeCount}</span>
-                                                    Likes</a><jsp:include page="like.jsp" /></li>
+                                            <jsp:include page="like.jsp" />
                                             <!--Save-->
                                             <c:if test="${not empty loginValue}">
                                                 <c:if test="${empty save_result}">

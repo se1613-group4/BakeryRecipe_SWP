@@ -31,12 +31,14 @@
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <!-- Custom Css -->
         <link rel="stylesheet" href="style.css">
+        <!--ThongNT custom css-->
+        <link rel="stylesheet" href="css/custom/homepage.css">
     </head>
     <body>
     <c:import url="LoadHomePageController"></c:import>
     <div class="col-lg-4 sidebar-widget-area sidebar-break-md">                                                
         <!--Top 5 Recipes-->
-        <div class="widget">                            
+        <div class="widget right-side-top-5-recipes">          
             <div class="section-heading heading-dark">
                 <h3 class="item-heading">TOP RECIPES</h3>
             </div>
@@ -71,7 +73,7 @@
 
         <!--Category List-->
         <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
-        <div class="widget">
+        <div class="widget right-side-top-5-category">
             <div class="section-heading heading-dark">
                 <h3 class="item-heading">CATEGORIES</h3>
             </div>
@@ -89,7 +91,8 @@
         </div> 
 
         <c:set var="tagList" value="${sessionScope.All_TAG}"></c:set>
-        <div class="widget">
+
+        <div class="widget right-side-top-5-tags">
             <div class="section-heading heading-dark">
                 <h3 class="item-heading">POPULAR TAGS</h3>
             </div>

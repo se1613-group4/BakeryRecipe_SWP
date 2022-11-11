@@ -61,19 +61,20 @@ public class LikeController extends HttpServlet {
                 Like_tblDAO dao = new Like_tblDAO();
                 if (dao.likeRecipe(recipe_id, user_id)) {
                     urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
-                    Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has liked a recipe post.");
-                    }
+                    // Hoang Anh Scope --NHO MO COMMENT
+//                    Follow_tblDAO followDao = new Follow_tblDAO();
+//                    List<Integer> followerId = followDao.getFollowers(user_id);
+//                    Notification_tblDAO notiDao = new Notification_tblDAO();
+//                    for (int i = 0; i < followerId.size(); i++) {
+//                        notiDao.setNoti(followerId.get(i), user_id + " has liked a recipe post.");
+//                    }
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
             log("Like Controller _ SQL " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("Like Controller _ SQL " + ex.getMessage());
+//        } catch (NamingException ex) {
+//            log("Like Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);
         }

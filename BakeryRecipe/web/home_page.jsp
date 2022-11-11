@@ -58,9 +58,9 @@
                 <!-- Header Area End Here -->
 
                 <!-- Slider Area Start Here - TOP 3 RECIPES (by likes)-->
-                <section class="ranna-slider-area">
+<!--                <section class="ranna-slider-area">
                     <div class="container">
-                        <!-- Search input -->
+                         Search input 
                         <div class="adv-search-wrap">
                             <div class="input-group">
                                 <form class="form-control search-form" action="SearchAllRecipeController"
@@ -120,17 +120,36 @@
                             </c:forEach>
                         </div>
                     </div>
-                </section>
+                </section>-->
                 <!-- Slider Area End Here -->
 
                 <!-- Latest Recipe Start Here -->
                 <section class="padding-bottom-45">
                     <div class="container">
                         <div class="row gutters-60">
+                            <!--Right side bar start here-->
+                            <%@include file="righ-side-bar.jsp" %>
+                            <!--Right side bar end here-->
+                            
                             <!-- Trending Recipes-->
-                            <div class="col-lg-8">
+                            <div class="col-lg-6">
+                                
+                                <!--Search input--> 
+                                <div class="adv-search-wrap">
+                                    <div class="input-group">
+                                        <form class="form-control search-form" action="SearchAllRecipeController"
+                                              style="border: none; display: flex !important;    justify-content: center !important;">
+                                            <input type="text" id="ooooo" value="" placeholder="Author Name or Recipe Search . . ."
+                                                   name="txtSearchValue" class="form-control" style="border-radius: 10px 0 0 10px;"/>
+                                            <button type="submit" class="search-btn custom-btn-thongnt" value="Search" name="btAction"><i
+                                                    class="flaticon-search"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--End Search input--> 
+                                
                                 <div class="section-heading heading-dark">
-                                    <h2 class="item-heading">LATEST RECIPES</h2>
+                                    <!--<h2 class="item-heading">LATEST RECIPES</h2>-->
                                 </div>
                                 <div class="row">
                                     <c:set var="recentlyRecipes" value="${sessionScope.RECENTLY_RECIPES}" />
@@ -187,9 +206,11 @@
                                     <a href="#"><img src="img/figure/figure1.jpg" alt="ad"></a>
                                 </div>
                             </div>
+                            <!-- Trending Recipes-->
+                            
                             <!--Right side bar start here-->
                             <%@include file="righ-side-bar.jsp" %>
-                                <!--Right side bar end here-->
+                            <!--Right side bar end here-->
                         </div>
                     </div>
                 </section>

@@ -123,8 +123,12 @@ public class Account_tblDAO implements Serializable {
         ResultSet rs = null;
         try {
             con = DBConnection.getConnection();
-            String query = "SELECT user_id,username,is_admin \n"
+//            String query = "SELECT user_id,username,is_admin \n"
+//                    + "FROM account_tbl\n"
+//                    + "where username like ? and password=? and is_actived=true ";
+            String query = "SELECT account_tbl.user_id,username,is_admin, avatar_url\n"
                     + "FROM account_tbl\n"
+                    + "left join profile_tbl on account_tbl.user_id = profile_tbl.user_id\n"
                     + "where username like ? and password=? and is_actived=true ";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, username);
@@ -133,9 +137,10 @@ public class Account_tblDAO implements Serializable {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                int userId = rs.getInt("user_id");
+                int userId = rs.getInt("account_tbl.user_id");
                 boolean isadmin = rs.getBoolean("is_admin");
-                acc = new Account_tblDTO(userId, username, pass, isadmin);
+                String avatar = rs.getString("avatar_url");
+                acc = new Account_tblDTO(userId, username, pass, isadmin, avatar);
 
             }
 

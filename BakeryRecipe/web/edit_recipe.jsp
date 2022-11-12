@@ -119,11 +119,12 @@
                         </div>
                     </div>
                 </section>
-                <!-- Inne Page Banner Area End Here -->
-
+                <!-- Inne Page Banner Area End Here -->            
+            
             <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
             <c:set var="author" value="${recipeDto.authorInfo}"/>
             <c:set var="category" value="${recipeDto.category}"/>
+            <c:if test="${not empty category}"><h2>category existed</h2></c:if>
             <c:set var="image" value="${recipeDto.image}"/>
             <!-- Submit Recipe Area Start Here -->                                        
             <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">
@@ -184,6 +185,7 @@
                                               class="textarea form-control" name="txtDescription" id="form-message"
                                               rows="3" cols="20" data-error="Description is required" required>${recipeDto.description}</textarea>
                                     <div class="help-block with-errors"></div>
+                                    <font color="red">${requestScope.ERROR.descriptionExceedCharsCount}</font>
                                 </div>
                                 <!--Upload photos-->
                                 <div class="additional-input-wrap">
@@ -200,12 +202,25 @@
                                     </div>
                                 </div>
                                 <!--Upload videos-->
+                                <!--Upload videos-->
                                 <div class="additional-input-wrap">
                                     <label>Your video</label>
+                                    <div id="video-grid" style="margin-bottom: 20px">            
+                                    </div>
                                     <div class="form-group">                                    
-                                        <input type="text" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value=""/>                                                                  
+                                        <input type="text" id="vid-input" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value="${param.txtVidUrl}"/>
+                                        <button type="button" id="add-vid-btn" class="btn-upload" onclick="checkUrl()">Check URL</button>
                                     </div>
                                 </div>
+<!--                                <div class="additional-input-wrap">
+                                    <label>Your video</label>
+                                    <div id="video-grid" style="margin-bottom: 20px">            
+                                    </div>
+                                    <div class="form-group">                                    
+                                        <input type="text" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value="${param.txtVidUrl}"/>
+                                        <button type="button" id="add-vid-btn" class="btn-upload" onclick="checkUrl()">Check URL</button>
+                                    </div>
+                                </div>-->
 
                                 <!--Input Detail information-->
                                 <div class="additional-input-wrap">
@@ -317,6 +332,7 @@
                                 <!--Input instruction (steps)-->                                                        
                                 <div class="form-group">
                                     <label>Instruction</label>
+                                    <font color="red">${requestScope.ERROR.stepExceedCharsCount}</font>
                                     <c:set var="stepList" value="${requestScope.STEP_LIST}"></c:set>
                                     <c:if test="${not empty stepList}">
                                         <c:forEach var="step" items="${stepList}" varStatus="counter">
@@ -396,5 +412,6 @@
         <script src="./js/upload-image.js"></script>       
         <script src="js/submit_recipe.js"></script>
         <script src="js/tagStyle.js"></script>
+        <script src="js/checkYoutubeLink.js"></script>
     </body>
 </html>

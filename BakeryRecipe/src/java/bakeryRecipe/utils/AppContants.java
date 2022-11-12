@@ -128,6 +128,7 @@ public class AppContants { // mapping all features strings
 
         public static final String ERROR_PAGE = "errorPage";
         public static final String MY_RECIPES_PAGE = "displayOwnRecipes";
+        public static final String SUBMIT_RECIPE_PAGE = "submitRecipePage";
     }
 
     public class UpdateUserProfile {
@@ -143,6 +144,7 @@ public class AppContants { // mapping all features strings
     
     public class EditRecipeFeature {
         public static final String RECIPE_NOT_FOUND= "errorPage";
+        public static final String EDIT_RECIPE_PAGE = "editRecipePage";
         //success: displaySingleRecipe
     }
 

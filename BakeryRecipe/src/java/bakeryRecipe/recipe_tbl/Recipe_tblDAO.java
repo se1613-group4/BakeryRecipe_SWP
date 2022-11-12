@@ -444,7 +444,7 @@ public class Recipe_tblDAO implements Serializable {
                         + "serving, prepare_time, cook_time, instruction, R.last_modified, step\n"
                         + "FROM recipe_tbl as R\n"
                         + "inner join category_tbl on R.category_id = category_tbl.category_id\n"
-                        + "inner join profile_tbl on R.user_id = profile_tbl.user_id\n"
+                        + "left join profile_tbl on R.user_id = profile_tbl.user_id\n"
                         + "left join image_tbl on R.recipe_id = image_tbl.recipe_id\n"
                         + "where R.recipe_id = ?;";
                 //3. create statement obj

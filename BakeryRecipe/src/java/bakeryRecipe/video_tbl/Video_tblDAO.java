@@ -5,10 +5,16 @@
  */
 package bakeryRecipe.video_tbl;
 
+import bakeryRecipe.category_tbl.Category_tblDTO;
+import bakeryRecipe.image_tbl.Image_tblDTO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.DBConnection;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -56,5 +62,45 @@ public class Video_tblDAO implements Serializable{
             }
         }
         return result;                
+    }
+    
+    
+    public String getVidUrl(int recipeId)
+            throws SQLException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String result = null;
+        try {
+            //1. make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. create sql string
+                String sql = "SELECT video_link\n"
+                        + "FROM bakery_recipe.video_tbl\n"
+                        + "where recipe_id = ?;";
+                //3. create statement obj
+                stm = connection.prepareStatement(sql); // tao ra obj rong
+                stm.setInt(1, recipeId);
+                //4. execute query
+                rs = stm.executeQuery(); // do phia tren da nap roi nen ko can truyen them tham so de nap vao bo nho
+                //5. process result
+                if (rs.next()) {
+                    // get recipe DTO info
+                    result = rs.getString("video_link");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
     }
 }

@@ -47,6 +47,11 @@
                 <div id="header-main-menu" class="header-main-menu header-sticky">
                     <div class="container">                    
                         <div class="row">
+<!--                            <div class="col-lg-2 d-none d-lg-block">
+                            <div class="site-logo-desktop" style="margin: 5px 0 0 0">
+                                <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                            </div>
+                        </div>-->
                             <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
                                 <div class="site-logo-mobile">
                                     <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
@@ -69,31 +74,8 @@
 
                             <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
                             <div class="nav-action-elements-layout1">
-                                <ul class="site-menu">                                     
-                                    <!--profile user-->
-                                    <li>
-                                        <a href="#">
-                                            <i class="flaticon-profile"></i> Welcome, <font color="#E1141E"><b>${sessionScope.USER.username}</b></font></a>
-                                        <ul class="dropdown-menu-col-1" id="dropdown-user">
-                                            <li>
-                                                <a href="displayUserProfileController">
-                                                    Profile</a>
-                                            </li>
-                                            <li>
-                                                <a href="displayOwnRecipes">My recipes</a>
-                                            </li>  
-                                            <li>
-                                                <c:url var="Reset_url" value="resetPasswordPage"></c:url>
-                                                <a href="${Reset_url}">Reset Password</a>
-                                            </li>
-                                            <li>
-                                                <a href="removeAccountController" onclick="return confirm('Are you sure? Do you want to delete this item?');">Delete</a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-
-                                    <!--Notification-->
+                                <ul class="site-menu">                                                                         
+                                   <!--Notification-->
                                     <li  id="noti_Container">
                                         <div id="noti_Counter" ></div>   <!--SHOW NOTIFICATIONS COUNT.-->
 
@@ -118,24 +100,55 @@
                                             <div class="seeAll"><a href="#">See All</a></div>
                                         </div>
                                     </li>
-
-                                    <!--                                    <li>
-                                                                            <a href="displayUserProfileController" class="fill-btn"><i class="flaticon-plus-1"></i>
-                                                                                PROFILE</a>
-                                                                        </li>-->
-
+                                    <!--End Notification-->
+                                    <!--Create recipe button-->
                                     <li>
-                                        <a href="displaySubmitReciePageController" class="fill-btn"><i class="flaticon-plus-1"></i>
+                                        <a href="submitRecipePage" class="fill-btn"><i class="flaticon-plus-1"></i>
                                             CREATE RECIPE</a>
+                                    </li>                                                                         
+                                    <!--End Create recipe button-->
+                                    <!--profile user-->
+                                    <li>
+                                        <c:set var="avatar" value="${sessionScope.USER.avatar}"></c:set>
+                                        <a href="#" style="width: 10rem">
+                                            <c:if test="${not empty avatar}">
+                                            <img src="${avatar}" alt="user-avatar" class="rounded-circle"
+                                                     style="width: 40%;"/>
+                                            </c:if>
+                                            <c:if test="${empty avatar}">
+                                            <i class="flaticon-profile"></i>
+                                            </c:if>
+                                            <b>  ${sessionScope.USER.username}</b></a>
+                                        <ul class="dropdown-menu-col-1" id="dropdown-user" style="width: 15rem">
+                                            <li style="display: inline-block; width: 100%">
+                                                <a href="displayUserProfileController">
+                                                    Profile</a>
+                                            </li>
+                                            <li style="display: inline-block; width: 100%">
+                                                <a href="displayOwnRecipes">My recipes</a>
+                                            </li>  
+                                            <li style="display: inline-block; width: 100%">
+                                                <c:url var="Reset_url" value="resetPasswordPage"></c:url>
+                                                <a href="${Reset_url}">Reset Password</a>
+                                            </li>
+                                            <li style="display: inline-block; width: 100%">
+                                                <a href="removeAccountController" onclick="return confirm('Are you sure? Do you want to delete this item?');">Inactive account</a>
+                                            </li>
+                                            <li style="display: inline-block; width: 100%">                                                                                        
+                                                <!--<button type="button" class="login-btn" >-->
+                                                    <a href="logoutController">Logout</a>
+                                                <!--</button>-->     
+
+                                            </li> 
+                                        </ul>
                                     </li>
+                                    <!--End profile user-->
                                         <!-- Logout Button-->
-                                        <li>
-                                            
-                                            
+<!--                                        <li>                                                                                        
                                                 <button type="button" class="login-btn" >
                                                     <a href="logoutController" class="login-btn">Logout</a>
                                                 </button>     
-                                            
+                                            -->
                                         </li>                                    
                                     </ul>
                             </div>
@@ -152,19 +165,20 @@
                     </div>
                 </div>
 
-                <!-- Bottom Header-->
-                <div class="header-bottom d-none d-lg-block">
-                    <div class="container">
-                        <div class="row">
-                            <!-- Logo -->
-                            <div class="col-lg-4 d-none d-lg-block">
-                                <div class="site-logo-desktop">
-                                    <a href="homePage" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
-                                </div>
+            <!-- Bottom Header-->
+            <div class="header-bottom d-none d-lg-block">
+                <div class="container">
+                    <div class="row">
+                        <!-- Logo -->
+                        <div class="col-lg-12 d-none d-lg-block">
+                            <div class="site-logo-desktop" style="display: flex; justify-content: center;">
+                                <a href="homePage" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
+            </div>
                 
             <!--</div>-->
         </header>        

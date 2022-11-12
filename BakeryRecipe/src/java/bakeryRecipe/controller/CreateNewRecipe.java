@@ -12,6 +12,7 @@ import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
+import bakeryRecipe.recipe_tbl.Recipe_tblErrorDTO;
 import bakeryRecipe.tag_detail_tbl.Tag_Detail_tblDAO;
 import bakeryRecipe.tag_tbl.Tag_tblDAO;
 import bakeryRecipe.utils.AppContants;
@@ -26,6 +27,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -83,12 +85,8 @@ public class CreateNewRecipe extends HttpServlet {
 //        String[] imgUrls = request.getParameterValues("txtImgUrl");
         String vidUrl = request.getParameter("txtVidUrl");
         String[] tags = request.getParameterValues("txtTag");
-        // all validate data
-        try {
-            /*
-            * INSERT TO RECIPE TABLE   
-            */
-            String stepStr = " ";
+        //process step string
+        String stepStr = " ";
             if (!"".equals(steps[0].trim())) {
                 stepStr = steps[0];
             }
@@ -97,6 +95,27 @@ public class CreateNewRecipe extends HttpServlet {
                     stepStr = stepStr + " --- " + steps[i];
                 }
             }
+        Recipe_tblErrorDTO error = new Recipe_tblErrorDTO();
+        boolean flag = true;
+        if (description.length() > 2000) { // not excedd 2000 chars
+            error.setDescriptionExceedCharsCount("The description must be not exceed 2000 charaters.");
+            flag = false;
+        }
+        if (stepStr.length() > 10000) { // not excedd 10 000 chars
+            error.setStepExceedCharsCount("The characters of all steps must be not exceed 10000 charaters.");
+            flag = false;
+        }
+        if (!flag) {
+            url = siteMaps.getProperty(AppContants.CreateRecipeFeature.SUBMIT_RECIPE_PAGE);
+            request.setAttribute("ERROR", error);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        } else {
+        // all validate data
+        try {
+            /*
+            * INSERT TO RECIPE TABLE   
+            */            
             Recipe_tblDTO recipeDto = new Recipe_tblDTO(userId, categoryId, recipeName, serving, description, prepTime, cookTime,stepStr);
             // call reippe DAO and insert into recipe_tbl
             Recipe_tblDAO recipeDao = new Recipe_tblDAO();
@@ -193,6 +212,7 @@ public class CreateNewRecipe extends HttpServlet {
             //            log("CreateNewRecipe Controller _ SQL " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
+        }
         }
     }
     

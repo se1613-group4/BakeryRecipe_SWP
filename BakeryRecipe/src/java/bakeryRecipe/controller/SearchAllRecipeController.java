@@ -4,6 +4,8 @@
  */
 package bakeryRecipe.controller;
 
+import bakeryRecipe.category_tbl.Category_tblDAO;
+import bakeryRecipe.category_tbl.Category_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -53,18 +55,24 @@ public class SearchAllRecipeController extends HttpServlet {
 
         String searchValue = request.getParameter("txtSearchValue");
 
+        String[] categoryCheckboxs = request.getParameterValues("category-checkboxs");
+
         try {
             if (!searchValue.trim().isEmpty()) {
                 //1. Call DAO
                 Recipe_tblDAO dao = new Recipe_tblDAO();
+                Category_tblDAO catDao = new Category_tblDAO();
 
                 //2. Process result
-                List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue);
+                List<Recipe_tblDTO> result = dao.searchAllRecipe(searchValue, categoryCheckboxs);
                 List<Recipe_tblDTO> resultTop9 = dao.searchAllRecipePaging9(searchValue, 0);
+                catDao.loadAllCategory();
+                List<Category_tblDTO> categoryList = catDao.getCategoryDtoList();
 
                 //3. setAttribute to request
                 request.setAttribute("SEARCH_RESULT", result);
                 request.setAttribute("SEARCH_RESULT_TOP9", resultTop9);
+                request.setAttribute("CATEGORY_LIST", categoryList);
             }
 
             url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);

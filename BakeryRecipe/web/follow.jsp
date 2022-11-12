@@ -34,6 +34,10 @@
         <link rel="stylesheet" href="style.css">
         <!-- Modernizr Js -->
         <script src="js/modernizr-3.6.0.min.js"></script>
+        <!-- Icon -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!--ThongNT custom css-->
+        <link rel="stylesheet" href="css/custom/single-recipe.css">
     </head>
 
     <body>
@@ -48,7 +52,7 @@
                     <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
                     <input type="hidden" name="txtRecipeAuthorId" value="${recipeDto.authorInfo.userId}">
-                    <button>Follow <i class="fa fa-heart" aria-hidden="true"></i></button>
+                    <button class="custom-btn-thongnt"><i class="bi bi-plus"></i>&nbsp;Follow</button>
                 </form>
             </div>
         </c:if><!-- end check if user has not login (check here only for display suitable button) -->

@@ -210,4 +210,49 @@ public class Tag_tblDAO implements Serializable{
             }
         }
     }// end loadAllCategory function
+     
+     public void loadTopTag(int topNum)
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        this.tagDtoList = null;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT tag_id, name , count FROM bakery_recipe.tag_tbl as B order by B.count desc limit ?;";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, topNum);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {                    
+                    // get tag DTO info
+                    int tagId = rs.getInt("tag_id");
+                    String tagName = rs.getString("name");
+                    int countNum = rs.getInt("count");
+                    Tag_tblDTO tagDTO = new Tag_tblDTO(tagId, tagName, countNum);                                                            
+                    // check categoryDto list not null
+                    if (this.tagDtoList == null) {
+                        this.tagDtoList = new ArrayList<>();
+                    }// end check categoryDto list is null
+                    // add to categoryDto list
+                    this.tagDtoList.add(tagDTO);
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }// end loadAllCategory function
 }

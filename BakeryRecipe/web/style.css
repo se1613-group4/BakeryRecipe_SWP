@@ -78,6 +78,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 	color: #646464;
+        background-color: #F2F2F2;
 }
 
 p {
@@ -670,7 +671,7 @@ ul {
 	right: 20px;
 	text-align: center;
 	z-index: 9999;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	display: block;
 	font-size: 16px;
 	color: #ffffff;
@@ -2217,7 +2218,7 @@ ul {
 	content: "";
 	height: 100%;
 	width: 100%;
-	background-color: rgba(255, 74, 82, 0.97);
+	background-color: #ff4a52;
 	top: 0;
 	left: 0;
 	z-index: 1;
@@ -3425,10 +3426,6 @@ ul {
 	color: #ffffff;
 }
 
-.header-one .header-bottom {
-	background-color: #ffffff;
-}
-
 .header-one .header-bottom .nav-action-elements-layout2 .nav-social li a {
 	color: #808080;
 }
@@ -4358,7 +4355,7 @@ ul {
 
 .about-box .about-contact-form .list-unstyled {
 	position: absolute;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	border-radius: 45px;
 	padding: 6px 20px 4px;
 	bottom: -19px;
@@ -4927,7 +4924,7 @@ ul {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	z-index: 0;
 	opacity: 0;
 	visibility: hidden;
@@ -5119,7 +5116,7 @@ ul {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	z-index: 0;
 	opacity: 0;
 	visibility: hidden;
@@ -5321,7 +5318,7 @@ ul {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	z-index: 0;
 	opacity: 0;
 	visibility: hidden;
@@ -5579,7 +5576,7 @@ ul {
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: all 0.3s ease-in-out;
@@ -10635,7 +10632,7 @@ ul {
 
 .contact-form-box .list-unstyled {
 	position: absolute;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	border-radius: 45px;
 	padding: 6px 20px 4px;
 	bottom: -19px;
@@ -11109,7 +11106,7 @@ ul {
 	height: 35px;
 	width: 35px;
 	border-radius: 50%;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 }
 
 .widget-latest ul.block-list .single-item .item-content {
@@ -11548,7 +11545,7 @@ ul {
 	left: 0;
 	right: 0;
 	z-index: 1;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: all 0.3s ease-out;
@@ -11710,7 +11707,7 @@ ul {
 	width: 100%;
 	margin: 0 auto;
 	z-index: 1;
-	background-color: rgba(255, 74, 82, 0.8);
+	background-color: #ff4a52;
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: all 0.3s ease-in-out;
@@ -12378,4 +12375,41 @@ lam edit user dropdown (in header)
     height: 50%;
     width: 50%;
     color: white;
+}
+
+.custom-btn-thongnt{
+	width: fit-content;
+	height: fit-content;
+	padding: 1.5rem;
+	background-color: white;
+	border: solid 1px;
+	border-radius: 0 10px 10px 0;
+	color: #ff4a52;
+	position: relative;
+	z-index: 1;
+}
+
+.custom-btn-thongnt::after{
+	content: '';
+	top: 0;
+	right: 0;
+	width: 0;
+	height: 100%;
+	position: absolute;
+	background-color: #ff4a52;
+	border-radius: 0 10px 10px 0;
+	color: white;
+	transition: 0.4s;
+	z-index: -1;
+}
+
+.custom-btn-thongnt:hover{
+	color: white;
+	transition: 0.4s;
+}
+
+.custom-btn-thongnt:hover::after{
+	left: 0;
+	padding: 1.5rem;
+	width: 100%;
 }

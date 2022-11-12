@@ -10,6 +10,7 @@ import bakeryRecipe.notification_tbl.Notification_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
@@ -56,10 +57,17 @@ public class GetNotificationData extends HttpServlet {
                 Notification_tblDAO dao = new Notification_tblDAO();
                 //process result 
                 List<Notification_tblDTO> result = dao.getListNoti(user.getUserId());
-                for (int i = 0; i < result.size(); i++) {
-                    System.out.println(result.get(i));
-                }
-                session.setAttribute("NOTIFICATION_RESULT", result);
+                if(result == null ) {
+                   result = new ArrayList<Notification_tblDTO>();
+                   Notification_tblDTO newDto = new Notification_tblDTO();
+                   newDto.setDetail("Welcome to Bakery recipe");
+                 result.add(newDto);
+               }
+//                for (int i = 0; i < result.size(); i++) {
+//                }
+               
+             session.setAttribute("NOTIFICATION_RESULT", result );
+           
                 url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
             }
         } catch (SQLException ex) {

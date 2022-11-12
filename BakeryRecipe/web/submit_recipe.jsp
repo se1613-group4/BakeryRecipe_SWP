@@ -121,7 +121,7 @@
                     </div>
                 </section>
                 <!-- Inne Page Banner Area End Here -->
-                
+                <c:import url="DisplaySubmitRecipePage"></c:import>
                 <!-- Submit Recipe Area Start Here -->                                        
                 <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">
                     <div class="container">
@@ -135,7 +135,7 @@
                                     <!--Input recipe name-->
                                     <div class="form-group">
                                         <label for="txtRecipeName">Recipe Title <font color="red">*</font></label>
-                                        <input type="text" placeholder="Recipe Name" class="form-control" name="txtRecipeName" value="" autofocus
+                                        <input type="text" placeholder="Recipe Name" class="form-control" name="txtRecipeName" value="${param.txtRecipeName}" autofocus
                                                data-error="Title is required" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -176,8 +176,9 @@
                                     <label for="txtDescription">Description <font color="red">*</font></label>
                                     <textarea placeholder="Short description about your recipe..." 
                                               class="textarea form-control" name="txtDescription" id="form-message"
-                                              rows="3" cols="20" data-error="Description is required" required></textarea>
+                                              rows="3" cols="20" data-error="Description is required" required>${param.txtDescription}</textarea>
                                     <div class="help-block with-errors"></div>
+                                    <font color="red">${requestScope.ERROR.descriptionExceedCharsCount}</font>
                                 </div>
                                 <!--Upload photos-->
                                 <div class="additional-input-wrap">
@@ -187,7 +188,7 @@
                                         <div id="uploaded-image-grid">            
                                         </div>
                                         <input type="file" name="file" id="file-uploader" accept=".jpg, .jpeg, .png" 
-                                               style="margin-top: 5px;"/>
+                                               style="margin-top: 5px;" value="${param.file}"/>
                                         <!--<p style="font-size: 12px; margin-top: 3px;">Maximum 5 images</p>-->
                                         <!--<a type="button" id="add-img-btn" class="btn-upload upload-window button" href="#login-box">Upload image</a>-->
                                     </div>
@@ -195,9 +196,11 @@
                                 <!--Upload videos-->
                                 <div class="additional-input-wrap">
                                     <label>Your video</label>
+                                    <div id="video-grid" style="margin-bottom: 20px">            
+                                    </div>
                                     <div class="form-group">                                    
-                                        <input type="text" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value=""/>
-                                        <button type="button" id="add-vid-btn" class="btn-upload" onclick="#">Check URL</button>
+                                        <input type="text" id="vid-input" placeholder="Paste your youtube video url here" class="form-control" name="txtVidUrl" value="${param.txtVidUrl}"/>
+                                        <button type="button" id="add-vid-btn" class="btn-upload" onclick="checkUrl()">Check URL</button>
                                     </div>
                                 </div>
 
@@ -211,7 +214,7 @@
                                                 <i class="far fa-clock"></i>
                                                 <label class="col-lg-4 small-label" style="color:#6E6E6E">Prep time</label>
                                                 <input type="number" min="1" max="1000" placeholder="00 (minutes)" class="form-control"
-                                                       name="txtPrepTime" data-error="Prep time is required" required>
+                                                       name="txtPrepTime" data-error="Prep time is required" value="${param.txtPrepTime}" required>
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
@@ -221,7 +224,7 @@
                                                 <i class="fas fa-utensils"></i>
                                                 <label class="col-lg-4 small-label" style="color:#6E6E6E">Cook time</label>
                                                 <input type="number" min="1" max="1000" placeholder="00 (minutes)" class="form-control"
-                                                       name="txtCookTime" data-error="Cook Time is required" required>
+                                                       name="txtCookTime" data-error="Cook Time is required" value="${param.txtCookTime}" required>
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
@@ -231,7 +234,7 @@
                                                 <i class="fas fa-users"></i>
                                                 <label class="col-lg-4 small-label" style="color:#6E6E6E; padding-left: 6px">Serving</label>
                                                 <input type="number" min="1" max="1000000" placeholder="Serving: 00 (people)" class="form-control"
-                                                       name="txtServing" data-error="Serving is required" required>
+                                                       name="txtServing" data-error="Serving is required" value="${param.txtServing}" required>
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
@@ -281,6 +284,7 @@
                                 <!--Input instruction (steps)-->
                                 <div class="form-group">
                                     <label>Instruction</label>
+                                    <font color="red">${requestScope.ERROR.stepExceedCharsCount}</font>
                                     <div class="row no-gutters step-div no-remove" id="step-sample">                                    
                                         <!--Input Step-->
                                         <div class="col-12">
@@ -368,5 +372,6 @@
     <script src="js/submit_recipe.js"></script>
     <script src="js/tagStyle.js"></script>
     <script src="js/dialog.js"></script>
+    <script src="js/checkYoutubeLink.js"></script>
 </body>
 </html>

@@ -22,6 +22,7 @@ public class Account_tblDTO implements Serializable{
     private Date lastModified;
     private boolean isActived;
     private boolean isAdmin;
+    private String avatar;
     // Constructors
 
     public Account_tblDTO() {
@@ -80,6 +81,14 @@ public class Account_tblDTO implements Serializable{
         this.isAdmin = admin;
     }
 
+    public Account_tblDTO(int userId, String username, String password, boolean isAdmin, String avatar) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.avatar = avatar;
+    }
+    
     Account_tblDTO(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -111,6 +120,10 @@ public class Account_tblDTO implements Serializable{
 
     public Date getLastModified() {
         return lastModified;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public boolean isIsActived() {
@@ -156,6 +169,10 @@ public class Account_tblDTO implements Serializable{
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     
 }

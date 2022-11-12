@@ -39,7 +39,7 @@ function validateForm() {
     };    
     saveIngreString();
     saveTags();
-    alert("Submit recipe successfully!");
+//    alert("Submit recipe successfully!");
     return true;    
 }
 

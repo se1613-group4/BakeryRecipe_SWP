@@ -141,7 +141,8 @@
                                 <!--image of recipe-->
                                 <div class="item-figure">
                                     <img src="${image.imgLink}" alt="Post Image">
-                                </div>
+                                </div>                                                                   
+                                
                                 <!--Recipe Icon Addition information Detail-->
                                 <div class="item-feature">
                                     <ul>
@@ -241,9 +242,21 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
+                                                        <!--Video youtube of recipe-->
+                                                    <c:set var="youtubeVid" value="${requestScope.YOUTUBE_CODE}"></c:set>
+                                                    <c:if test="${not empty youtubeVid}">                                    
+                                                        <iframe width="560" height="315" 
+                                                                src="https://www.youtube.com/embed/${youtubeVid}" 
+                                                                title="YouTube video player" frameborder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowfullscreen></iframe>                                    
+                                                        </c:if>                                   
+                                                    <!--VIdeo end here-->               
+                                                    
+                                                    
                                     <!--List of making steps-->
-                                    <div class="direction-wrap-layout1">
+                                    <div class="direction-wrap-layout1" style="margin-top: 25px">
                                         <div class="section-heading heading-dark">
                                             <h2 class="item-heading">DIRECTIONS</h2>
                                         </div>          

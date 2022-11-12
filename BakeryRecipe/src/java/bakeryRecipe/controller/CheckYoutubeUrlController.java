@@ -5,17 +5,8 @@
  */
 package bakeryRecipe.controller;
 
-import bakeryRecipe.category_tbl.Category_tblDAO;
-import bakeryRecipe.category_tbl.Category_tblDTO;
-import bakeryRecipe.ingredient_tbl.Ingredient_tblDAO;
-import bakeryRecipe.ingredient_tbl.Ingredient_tblDTO;
-import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LamVo
  */
-@WebServlet(name = "DisplaySubmitRecipePage", urlPatterns = {"/DisplaySubmitRecipePage"})
-public class DisplaySubmitRecipePage extends HttpServlet {
+@WebServlet(name = "CheckYoutubeUrlController", urlPatterns = {"/CheckYoutubeUrlController"})
+public class CheckYoutubeUrlController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,38 +32,29 @@ public class DisplaySubmitRecipePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /**
-         * Get site map (Copy this for all controller)
-         */
-        ServletContext context = getServletContext();
-        Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");        
-        // End get site map
         
-        // Mapping url        
-//        String url = siteMaps.getProperty(AppContants.DisplaySubmitRecipeFeature.SUBMIT_RECIPE_PAGE);
-        try {
-            // Load all category recipe
-            Category_tblDAO categoryDao = new Category_tblDAO();
-            categoryDao.loadAllCategory();
-            List<Category_tblDTO> categoryList = categoryDao.getCategoryDtoList();
-            if (categoryList != null) {
-                request.setAttribute("CATRGORY_LIST", categoryList);
-            }
-            // Load all ingredient
-            Ingredient_tblDAO ingredientDao = new Ingredient_tblDAO();
-            ingredientDao.loadAllIngredient();
-            List<Ingredient_tblDTO> ingredienList = ingredientDao.getIngredientDtoList();
-            if (ingredienList != null) {
-                request.setAttribute("INGREDIENT_LIST", ingredienList);
-            }
-        } catch (SQLException ex) {
-            log("DisplaySubmitRecipePage Controller _ SQL " + ex.getMessage());
-        } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
+        String vidUrl = request.getParameter("vidUrl");
+        String youtubeCode = "";
+        if (vidUrl != null) {
+            youtubeCode = GetYoutubeVideoCode(vidUrl);
+        }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<iframe width=\"320\" height=\"180\" \n" +
+"                   src=\"https://www.youtube.com/embed/"+ youtubeCode +"\" \n" +
+"                   title=\"YouTube video player\" frameborder=\"0\" \n" +
+"                   allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" \n" +
+"                   allowfullscreen></iframe>   ");
         }
     }
 
+    
+    private String GetYoutubeVideoCode(String vidUrl) {
+        int startIndex = vidUrl.indexOf("?v=");
+        int endIndex = vidUrl.indexOf("&") > startIndex ? vidUrl.indexOf("&") : vidUrl.length();        
+        return vidUrl.substring(startIndex+3, endIndex);
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

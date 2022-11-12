@@ -17,6 +17,7 @@ import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.tag_detail_tbl.Tag_Detail_tblDAO;
 import bakeryRecipe.tag_tbl.Tag_tblDAO;
 import bakeryRecipe.utils.AppContants;
+import bakeryRecipe.video_tbl.Video_tblDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,8 +88,13 @@ public class DisplaySingleRecipe extends HttpServlet {
                     }
                     request.setAttribute("TAG_LIST", tagNames);
                 }
-                
-                        
+                // Get video url
+                Video_tblDAO vidDao = new Video_tblDAO();
+                String vidUrl = vidDao.getVidUrl(recipeId);
+                if (vidUrl!=null) {
+                    String youtubeCode = GetYoutubeVideoCode(vidUrl);
+                    request.setAttribute("YOUTUBE_CODE", youtubeCode);
+                }
                 //----------------------------
                 //thongnt section start
                 //DISPLAY COMMENTS FUNCTION
@@ -143,6 +149,13 @@ public class DisplaySingleRecipe extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
+    }
+    
+    
+    private String GetYoutubeVideoCode(String vidUrl) {
+        int startIndex = vidUrl.indexOf("?v=");
+        int endIndex = vidUrl.indexOf("&") > startIndex ? vidUrl.indexOf("&") : vidUrl.length();        
+        return vidUrl.substring(startIndex+3, endIndex);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

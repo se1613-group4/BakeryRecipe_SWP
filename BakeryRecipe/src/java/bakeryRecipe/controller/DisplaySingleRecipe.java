@@ -154,7 +154,7 @@ public class DisplaySingleRecipe extends HttpServlet {
     
     private String GetYoutubeVideoCode(String vidUrl) {
         int startIndex = vidUrl.indexOf("?v=");
-        int endIndex = vidUrl.indexOf("&");
+        int endIndex = vidUrl.indexOf("&") > startIndex ? vidUrl.indexOf("&") : vidUrl.length();        
         return vidUrl.substring(startIndex+3, endIndex);
     }
 

@@ -59,21 +59,25 @@
                                     <li class="reviews-single-item comment-element">
                                         <div class="media media-none--xs">
                                             <img src="${avtUrl}" alt="commenter-avatar" class="media-img-auto"
-                                                 style="height: 20%; width: 20%">
+                                                style="height: 20%; width: 20%">
                                             <div class="media-body">
                                                 <h4 class="comment-title">${fullName}</h4>
 
                                                 <c:if test="${userId == currentUser.userId}">
-                                                    <form action="dddd">
-                                                        <button class="quantity-plus" type="submit">Edit</button>
-                                                    </form>
+                                                    <p class="d-none" id="comment-detail">${commentDetail}</p>
+                                                    <button class="quantity-plus btn-edit" type="submit">Edit</button>
                                                     <p class="d-none">${commentDto.commentId}</p>
                                                     <button class="quantity-plus btn-delete"
                                                         type="submit">Delete</button>
-                                                    <!--onclick="deleteComment(${commentDto.commentId})"-->
                                                 </c:if>
                                                 <span class="post-date">${createdDate}</span>
-                                                <p>${commentDetail}</p>
+                                                <p id="comment-detail-${commentDto.commentId}">${commentDetail}</p>
+                                                <div>
+                                                    <form class="d-none comment-edit-form-${commentDto.commentId}">
+                                                        <input name="content" type="text" value="${commentDetail}" required >
+                                                        <button type="submit">Save</button>
+                                                    </form>
+                                                </div>
                                                 <ul class="item-rating">
                                                     <li class="single-item star-fill"><i class="fas fa-star"></i></li>
                                                     <li class="single-item star-fill"><i class="fas fa-star"></i></li>
@@ -139,48 +143,8 @@
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                     <!-- Custom Js -->
                     <script src="js/main.js"></script>
-                    <!-- Internal Js -->
-                    <script>
-                        document.querySelector('#commentList').addEventListener("click", event => {
-                            let isConfirm = confirm('You will remove a comment, are you sure?');
-                            if (isConfirm) {
-                                if (event.target.classList.contains("btn-delete")) {
-                                    //remove comment item on UI
-                                    let item = event.target.parentElement;
-                                    let commendId = event.target.previousElementSibling.innerHTML;
-                                    while (!item.classList.contains("comment-element")) {
-                                        item = item.parentElement;
-                                    }
-                                    item.remove();
-
-                                    //change total number of comments
-                                    let total = document.querySelector('.review-number');
-                                    console.log('Total comments: ', total);
-                                    total.innerHTML = parseInt(total.innerHTML) - 1;
-                                    //remove comment item on Database by Ajax
-                                    deleteComment(commendId);
-                                };
-                            };
-
-                        });
-
-                        //This function to remove comments item on Database by Ajax                            
-                        function deleteComment(commentId) {
-                            $.ajax({
-                                url: "/BakeryRecipe/DeleteCommentController",
-                                type: "get", //send it through get method
-                                data: {
-                                    commentId: commentId
-                                },
-                                success: (response) => {
-                                    console.log(response);
-                                },
-                                error: (xhr) => {
-                                    console.log(xhr);
-                                }
-                            });
-                        };
-                    </script>
+                    <!-- ThongNT JS -->
+                    <script src="js/comment.js"></script>
 
                 </body>
 

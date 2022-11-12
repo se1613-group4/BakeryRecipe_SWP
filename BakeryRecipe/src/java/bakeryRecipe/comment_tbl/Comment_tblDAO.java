@@ -199,7 +199,7 @@ public class Comment_tblDAO implements Serializable {
         }
     }//end deleteCommentByCommentId function
 
-    public boolean uploadComment(String comment_detail, int comment_id)
+    public boolean editCommentByCommentId(int comment_id, String comment_detail)
             throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -233,5 +233,5 @@ public class Comment_tblDAO implements Serializable {
             }
         }
         return result;
-    }
+    }//end editCommentByCommentId function
 }

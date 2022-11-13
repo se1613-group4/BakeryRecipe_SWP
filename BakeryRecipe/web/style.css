@@ -78,7 +78,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 	color: #646464;
-        background-color: #F2F2F2;
+        background-color: #ffffff;
 }
 
 p {
@@ -12353,28 +12353,6 @@ lam edit user dropdown (in header)
 
 .displayThis {
     display: flex !important;
-}
-
-#leave-report-container{
-    background-color: rgba(0, 0, 0, 0.399);
-    position: absolute;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    z-index: 1111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.inner-report-container{
-    background-color: #ff5057;
-    border: solid 1px white;
-    border-radius: 50px;
-    padding: 3rem;
-    height: 50%;
-    width: 50%;
-    color: white;
 }
 
 .custom-btn-thongnt{

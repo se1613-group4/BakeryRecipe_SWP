@@ -58,6 +58,7 @@ public class SearchAllRecipeController extends HttpServlet {
         String[] categoryCheckboxs = request.getParameterValues("category-checkboxs");
 
         try {
+            int searchNotFound = 1;//search not found is true by default
             if (!searchValue.trim().isEmpty()) {
                 //1. Call DAO
                 Recipe_tblDAO dao = new Recipe_tblDAO();
@@ -73,8 +74,29 @@ public class SearchAllRecipeController extends HttpServlet {
                 request.setAttribute("SEARCH_RESULT", result);
                 request.setAttribute("SEARCH_RESULT_TOP9", resultTop9);
                 request.setAttribute("CATEGORY_LIST", categoryList);
+                if (result != null) {
+                    searchNotFound = 0;//search not found is false
+                }
+            } else {
+                searchNotFound = -1;//input empty search value
+                //1. Call DAO
+                Recipe_tblDAO dao = new Recipe_tblDAO();
+                Category_tblDAO catDao = new Category_tblDAO();
+
+                //2. Process result
+                List<Recipe_tblDTO> result = dao.searchAllRecipe("", categoryCheckboxs);
+                List<Recipe_tblDTO> resultTop9 = dao.searchAllRecipePaging9("", 0);
+                catDao.loadAllCategory();
+                List<Category_tblDTO> categoryList = catDao.getCategoryDtoList();
+
+                //3. setAttribute to request
+                request.setAttribute("SEARCH_RESULT", result);
+                request.setAttribute("SEARCH_RESULT_TOP9", resultTop9);
+                request.setAttribute("CATEGORY_LIST", categoryList);
             }
 
+            request.setAttribute("SEARCH_NOT_FOUND", searchNotFound);
+            System.out.println("SEARCH_NOT_FOUND" + searchNotFound);
             url = siteMaps.getProperty(AppContants.SearchAllRecipesFeature.SEARCH_RESULT_PAGE);
         } catch (SQLException ex) {
             log("SearchAllRecipe Controller _ SQL " + ex.getMessage());

@@ -1,0 +1,30 @@
+#leave-report-container{
+    background-color: rgba(0, 0, 0, 0.399);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-report-container{
+    background-color: #ff5057;
+    border: solid 1px white;
+    border-radius: 50px;
+    padding: 3rem;
+    height: 50%;
+    width: 50%;
+    color: white;
+}
+
+.custom-btn-thongnt-report-btn{
+    border: none !important;
+}
+
+.custom-btn-thongnt-like-btn a:hover{
+    color: white !important;
+}

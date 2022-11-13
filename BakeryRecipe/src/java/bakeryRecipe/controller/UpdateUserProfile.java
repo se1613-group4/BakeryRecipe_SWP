@@ -68,7 +68,7 @@ public class UpdateUserProfile extends HttpServlet {
         Pattern emailPattern = Pattern.compile(
                 "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$");
         Pattern phonenumberPattern = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})");
-        Pattern bioPattern = Pattern.compile("^.{0,10}$");
+//        Pattern bioPattern = Pattern.compile("^.{0,10}$");
         Pattern genderPattern = Pattern.compile("^[a-zA-Z]{1,10}$");
 
         try {
@@ -110,12 +110,12 @@ public class UpdateUserProfile extends HttpServlet {
                 foundErr = true;
                 errors.setPhonenumberExisted("Phonenumer existed try again!");
             }
-            if (bioPattern.matcher(biography).matches() == false) {
-                foundErr = true;
-                errors.setBioFormatError("Bio wrong format.\n  "
-                        + "Bio contain 0-3000 characters.\n"
-                );
-            }
+//            if (bioPattern.matcher(biography).matches() == false) {
+//                foundErr = true;
+//                errors.setBioFormatError("Bio wrong format.\n  "
+//                        + "Bio contain 0-3000 characters.\n"
+//                );
+//            }
             if (genderPattern.matcher(gender).matches() == false) {
                 foundErr = true;
                 errors.setGenderFormatError("Gender wrong format.\n  "

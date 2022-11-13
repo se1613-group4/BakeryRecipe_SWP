@@ -36,6 +36,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <!--ThongNT custom css-->
         <link rel="stylesheet" href="css/custom/single-recipe.css">
+        <!-- ToolTip -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    
     </head>
 
     <body>
@@ -53,33 +58,19 @@
             <c:param name="txtUserId" value="${currentAccountDto.userId}"></c:param>
         </c:url>
 
-    <li class="single-meta">
-        <a class="custom-btn-thongnt" href=
-           <c:if test="${isLiked == -1  || isLiked == 0}">"${likeURL}"> <i class="bi bi-heart"></i></c:if>
-            <c:if test="${isLiked == 1}">"${unlikeURL}"> <i class="fas fa-heart"></i></c:if>
+    <li class="single-meta custom-btn-thongnt custom-btn-thongnt-like-btn">
+        <a 
+        href=
+           <c:if test="${isLiked == -1  || isLiked == 0}">"${likeURL}" data-toggle="tooltip" title="Like"> <i class="bi bi-heart"></i></c:if>
+            <c:if test="${isLiked == 1}">"${unlikeURL}" data-toggle="tooltip" title="Unlike"> <i class="fas fa-heart"></i></c:if>
             <span>${likeCount}</span>
             Likes</a>
     </li>
-    <%--
-    <c:if test="${isLiked == -1  || isLiked == 0}">
-        <div class="like-container">
-            <form action="likeController">
-                <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
-                <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                <button>LIKE <i class="fa fa-heart" aria-hidden="true"></i></button>
-            </form>
-        </div>
-    </c:if><!-- end check if user has not login (check here only for display suitable button) -->
-
-    <c:if test="${isLiked == 1}">
-        <div class="like-container">
-            <form action="unlikeController">
-                <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
-                <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                <button>UNLIKE <i class="fa fa-heart" aria-hidden="true"></i></button>
-            </form>
-        </div>
-    </c:if><!-- end check if user has login (check here only for display suitable button) -->
-    --%>
+    
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </body>
 </html>

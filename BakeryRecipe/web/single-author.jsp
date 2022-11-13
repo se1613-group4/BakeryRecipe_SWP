@@ -93,39 +93,75 @@
                                 <c:set var="update_profile_trigger" value="${requestScope.EDIT_TRIGGER}"></c:set>
                                 <c:if test="${empty update_profile_trigger}">
                                     <c:if test="${not empty profile_result}">
-                                        <div class="author-info">
-                                            <div class="media media-none--xs">
-                                                <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
-                                                     style="width: 20%; height: 20%">
-                                                <div class="media-body">
-                                                    <form action="displayUserProfileController" method="POST">
+                                        <form action="displayUserProfileController" method="POST">
 
-                                                        <h1 class="author-title">${profile_result.fullName}
-                                                        </h1>
+                                            <div class="author-info">
+                                                <div class="media media-none--xs" style="display: flex; flex-direction: column">
+                                                    <div style="display: flex; flex-direction: row">
+                                                        <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                             style="width: 20%; height: 20%">
 
-                                                        <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
-                                                        <div style="margin-bottom: 20px ">
-                                                            <input type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
-                                                            <a href="displaySavedRecipeController" style="margin-left: 10px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
-                                                                <i class="fa fa-bookmark" aria-hidden="true"><span style="margin-left: 5px">Saved</span></i>
-                                                            </a>
+                                                        <div style="display: flex; flex-direction: column; margin-left: 10px; margin-top: 20px">
+                                                            <h1 class="author-title">${profile_result.fullName}
+                                                            </h1>
+                                                            <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
+                                                        </div>
+                                                        <div style="display: flex; flex-direction: row; margin-left: 20%; margin-top: 20px">
+                                                            <div style="margin-bottom: 20px ">
+                                                                <input type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
+                                                                <a href="displaySavedRecipeController" style="margin-left: 10px; background-color: #ff4a52; padding:3px 8px 3px 8px; color: #FFFFFF; border-radius: 2px;" >
+                                                                    <i class="fa fa-bookmark" aria-hidden="true"><span style="margin-left: 5px">Saved</span></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="media-body" style="margin-top: 20px; width: 100%">
+
+                                                        <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0">
+                                                            <div style="width: 30%">
+                                                                <label style="font-size: 20px; font-weight: bold">Username: </label>
+                                                            </div>
+                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                                <p style="font-size: 25px; text-align: center;">${profile_result.username}</p>
+                                                            </div>
                                                         </div>
 
-                                                        <label>Username: </label><h2>${profile_result.username}</h2>
+                                                        <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
+                                                            <div style="width: 30%">
+                                                                <label style="font-size: 20px; font-weight: bold">Email: </label>
+                                                            </div>
+                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                                <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.email}</p>
+                                                            </div>
+                                                        </div>
 
-                                                        <label>Email: </label><h2> ${profile_result.email}</h2>
+                                                        <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
+                                                            <div style="width: 30%">
+                                                                <label style="font-size: 20px; font-weight: bold">Phone number: </label>
+                                                            </div>
+                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                                <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.phoneNumber}</p>
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
+                                                            <div style="width: 30%">
+                                                                <label style="font-size: 20px; font-weight: bold">Gender: </label></div>
+                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                                <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.gender}</p>
+                                                            </div>
+                                                        </div>
 
-                                                        <label>Phone number: </label><h2> ${profile_result.phoneNumber}</h2>
+                                                        <div>
+                                                            <label style="font-size: 20px; font-weight: bold">Bio: </label>
+                                                            <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.biography}</p>
+                                                        </div>
 
-                                                        <label>Gender: </label><h2> ${profile_result.gender}</h2>
-
-                                                        <label>Bio: </label><h2> ${profile_result.biography}</h2>
-
-                                                    </form>
-
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
+
                                     </c:if>
                                 </c:if>
                                 <c:if test="${not empty update_profile_trigger}">
@@ -146,7 +182,7 @@
                                                         </c:if>
                                                         <p><b>${followers_result}</b> Followers <b style="margin-left: 10px">${following_result}</b> Following</p>
 
-                                                        <label>Username:</label><p style="font-size: 2rem">${profile_result.username}</p>
+                                                        <label style="font-size: 20px; font-weight: bold">Username:</label><p style="font-size: 2rem">${profile_result.username}</p>
                                                         <!--<h3>Password: </h3><p>--> 
                                                         <!--<input style="width: 100%" type="password" name="txtPassword" value=""/></p>-->
 
@@ -154,7 +190,7 @@
                                                             <!--<font color="red">${error.passwordFormatErr}</font></br>-->
                                                         <%--</c:if>--%>
 
-                                                        <label>Email:</label><p> 
+                                                        <label style="font-size: 20px; font-weight: bold">Email:</label><p> 
                                                             <input style="width: 100%" type="text" name="txtEmail" value="${profile_result.email}"/></p>
 
                                                         <c:if test="${not empty error.emailFormatErr}">
@@ -164,7 +200,7 @@
                                                             <font color="red">${error.emailExisted}</font></br>
                                                         </c:if>
 
-                                                        <label>Phone number: </label><p> 
+                                                        <label style="font-size: 20px; font-weight: bold">Phone number: </label><p> 
                                                             <input style="width: 100%" type="text" name="txtPhoneNumber" value="${profile_result.phoneNumber}"/></p>
 
                                                         <c:if test="${not empty error.phonenumberFormatErr}">
@@ -174,14 +210,14 @@
                                                             <font color="red">${error.phonenumberExisted}</font></br>
                                                         </c:if>
 
-                                                        <label>Gender: </label><p> 
+                                                        <label style="font-size: 20px; font-weight: bold">Gender: </label><p> 
                                                             <input style="width: 100%" type="text" name="txtGender" value="${profile_result.gender}"/></p>
 
                                                         <c:if test="${not empty error.genderFormatError}">
                                                             <font color="red">${error.genderFormatError}</font></br>
                                                         </c:if>  
 
-                                                        <label>Bio: </label><p> 
+                                                        <label style="font-size: 20px; font-weight: bold">Bio: </label><p> 
                                                             <textarea style="width: 100%; height: 100px" type="text" name="txtBiography" value="${profile_result.biography}">${profile_result.biography}</textarea>
 
                                                             <c:if test="${not empty error.bioFormatError}">

@@ -458,27 +458,39 @@
                             <c:set var="followers_result" value="${requestScope.USER_FOLLOWERS}"/>
                             <c:set var="following_result" value="${requestScope.USER_FOLLOWING}"/>
                             <c:if test="${not empty profile_result}">
-                                <div class="author-info">
-                                    <div class="media media-none--xs">
-                                        <img src="img/blog/author.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
-                                        <div class="media-body">
-                                            <form action="displayUserProfileController" method="POST">
+                                <form action="displayUserProfileController" method="POST">
 
-                                                <h2 class="author-title">${profile_result.fullName}
-                                                </h2>
+                                    <div class="author-info">
+                                        <div class="media media-none--xs" style="display: flex; flex-direction: column">
+                                            <div style="display: flex; flex-direction: row; justify-content: center">
+                                                <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                                                     style="width: 30%; height: 30%">
 
-                                                <p><b>${followers_result}</b> Followers <b style="margin-left: 40px">${following_result}</b> Following     
-                                                </p>
+                                                <div style="display: flex; flex-direction: column; margin-left: 10px; margin-top: 20px">
+                                                    <h1 class="author-title">${profile_result.fullName}
+                                                    </h1>
+                                                    <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
+                                                </div>
+                                            </div>
+                                            <div class="media-body" style="margin-top: 20px; width: 100%">
 
-                                                <label>Gender: </label><h2> ${profile_result.gender}</h2>
+                                                <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
+                                                    <div style="width: 20%">
+                                                        <label style="font-size: 20px; font-weight: bold">Gender: </label></div>
+                                                    <div style="width: 70%;  border-radius: 10px; ">
+                                                        <p style="font-size: 25px; width: 100%"> ${profile_result.gender}</p>
+                                                    </div>
+                                                </div>
 
-                                                <label>Bio: </label><h2> ${profile_result.biography}</h2>
+                                                <div>
+                                                    <label style="font-size: 20px; font-weight: bold">Bio: </label>
+                                                    <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.biography}</p>
+                                                </div>
 
-                                            </form>
-
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </c:if>
                             <c:if test="${empty profile_result}">
                                 <h1>User is not found!!</h1>

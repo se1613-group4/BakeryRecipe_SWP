@@ -124,7 +124,7 @@
                                                                                 <a href="#editRecipe?recipeId=recipeId">Edit</a>-->
 
                                         <figure class="item-figure"><a href="${single_recipe_url}">
-                                                <img src="${image.imgLink}"
+                                                <img class="search-recipe-image" src="${image.imgLink}"
                                                      alt="Product"></a></figure>
                                         <div class="item-content">
                                             <span class="sub-title">${category.name}</span>

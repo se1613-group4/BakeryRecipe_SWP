@@ -65,15 +65,15 @@
                         <form action="createNewReport" class="leave-form-box">
                             <div class="row">
                                 <div class="col-12 form-group">
-                                    <label>Detail :</label>
-                                    <textarea placeholder="" class="textarea form-control" name="txtReportContent"
+                                    <label style="font-size: larger">Detail :</label>
+                                    <textarea style="font-size: large" placeholder="" class="textarea form-control" name="txtReportContent"
                                         rows="7" cols="20" data-error="Message field is required" required></textarea>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
                                 <div class="col-12 form-group mb-0">
-                                    <button class="item-btn" onclick="hideReportContainer()">CANCEL</button>
-                                    <button type="submit" class="item-btn" onclick="createNewReport()">REPORT</button>
+                                    <button class="custom-btn-thongnt" onclick="hideReportContainer()">CANCEL</button>
+                                    <button type="submit" class="custom-btn-thongnt" onclick="createNewReport()">REPORT</button>
                                 </div>
                             </div>
                         </form>

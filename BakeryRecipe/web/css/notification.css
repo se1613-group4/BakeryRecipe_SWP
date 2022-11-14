@@ -59,6 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     left:0;
     background:#FFF;
     border:solid 1px rgba(100, 100, 100, .20);
+    border-radius: 25%; 
     -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
     z-index: 0;
 }

@@ -101,7 +101,7 @@
                                                     </div>
                                                 </c:if>
                                             </div>
-                                            <div class="seeAll"><a href="#">See All</a></div>
+                                            <div class="seeAll"></div>
                                         </div>
                                     </li>
                                     <!--End Notification-->

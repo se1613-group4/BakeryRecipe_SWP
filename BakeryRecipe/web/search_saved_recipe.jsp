@@ -122,18 +122,14 @@
                                     <%--<c:param name="recipeId" value="${recipeDto.recipeId}"/>--%>
                                     <%--<c:param name="userId" value="${sessionScope.USER.userId}"/>--%>
                                     <%--</c:url>--%>
+
                                     <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="product-box-layout1">
-                                            <!--                                         Remove Link 
-                                                                                    <i class="fa-solid fa-trash-can"></i>
-                                                                                    <a href="${remove_recipe_url}">Remove</a>
-                                                                                     Edit Link
-                                                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                                                    <a href="#editRecipe?recipeId=recipeId">Edit</a>-->
-
-                                            <figure class="item-figure"><a href="${single_recipe_url}">
-                                                    <img src="${image.imgLink}"
-                                                         alt="Product"></a></figure>
+                                            <figure class="item-figure">
+                                                <a href="${single_recipe_url}">
+                                                    <img class="search-recipe-image" src=${image.imgLink} alt="Product">
+                                                </a>
+                                            </figure>
                                             <div class="item-content">
                                                 <span class="sub-title">${category.name}</span>
                                                 <h3 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h3>

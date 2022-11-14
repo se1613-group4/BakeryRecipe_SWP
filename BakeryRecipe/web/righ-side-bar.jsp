@@ -71,6 +71,42 @@
             </div>
         </div>
 
+        <!--Most View Recipes-->
+        <div class="widget right-side-top-5-recipes">          
+            <div class="section-heading heading-dark">
+                <h3 class="item-heading">MOST VIEW RECIPES</h3>
+            </div>
+            <div class="widget-latest">                    
+                <ul class="block-list">                        
+                    <c:set var="top3Recipes" value="${sessionScope.TOP3_VIEW_RECIPES}"/>
+                    <c:forEach var="recipeDto" items="${top3Recipes}" varStatus="counter">
+                        <c:set var="author" value="${recipeDto.authorInfo}"/>
+                        <c:set var="category" value="${recipeDto.category}"/>
+                        <c:set var="image" value="${recipeDto.image}"/>
+                        <c:set var="viewCount" value="${recipeDto.view_count}"/>
+                        <c:url var="single_recipe_url" value="DisplaySingleRecipe">
+                            <c:param name="recipeId" value="${recipeDto.recipeId}"/>
+                        </c:url>                                        
+                        <li class="single-item">
+                            <div class="item-img">
+                                <a href="${single_recipe_url}"><img src="${image.imgLink}" alt="Post"></a>
+                                <div class="count-number">${counter.count}</div>
+                            </div>
+                            <div class="item-content">
+                                <div class="item-ctg">${category.name}</div>
+                                <h4 class="item-title"><a href="${single_recipe_url}">${recipeDto.name}</a></h4>
+                                <div class="item-post-by">
+                                    <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
+                                        ${author.fullName}</a>
+                                </div>
+                                <div class="">${viewCount}</div>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </div>
+
         <!--Category List-->
         <c:set var="categoryList" value="${sessionScope.ALL_CATEGORY}"></c:set>
         <div class="widget right-side-top-5-category">

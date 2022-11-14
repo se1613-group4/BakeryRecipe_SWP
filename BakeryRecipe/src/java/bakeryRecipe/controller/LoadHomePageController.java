@@ -84,14 +84,18 @@ public class LoadHomePageController extends HttpServlet {
             Profile_tblDAO daoProfile = new Profile_tblDAO();
             Follow_tblDAO daoFollow = new Follow_tblDAO();
             //process result
-            Profile_tblDTO profile = daoProfile.displayMostRecipesUserProfile();
+//            Profile_tblDTO profile = daoProfile.displayMostRecipesUserProfile();
+            Account_tblDTO loginUser = (Account_tblDTO)session.getAttribute("USER");
             List<Profile_tblDTO> profileList = daoProfile.getUsersTopFollower();
-            int follower_amount = daoFollow.displayFollower(profile.getUserId());
-            int following_amount = daoFollow.displayFollowing(profile.getUserId());
-            session.setAttribute("MOST_RECIPE_PROFILE", profile);
-            session.setAttribute("USER_MOST_FOLLOW_LIST", profileList);
-            session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWERS", follower_amount);
-            session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWING", following_amount); 
+            if (loginUser != null) {
+                int follower_amount = daoFollow.displayFollower(loginUser.getUserId());
+                int following_amount = daoFollow.displayFollowing(loginUser.getUserId());
+                session.setAttribute("MOST_RECIPE_PROFILE", loginUser);
+                session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWERS", follower_amount);
+                session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWING", following_amount);
+            }
+            
+            session.setAttribute("USER_MOST_FOLLOW_LIST", profileList);            
             //hoanganh section end
 
             //--- Listen to new NOTIFICATION //

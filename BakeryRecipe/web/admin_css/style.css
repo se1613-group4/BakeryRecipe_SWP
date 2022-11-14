@@ -125,7 +125,7 @@ textarea {
 }
 
 .mybutton {
-  background-color: #4CAF50;  
+  background-color: #ff4a52;  
   border: none;
   color: white;
   padding: 15px 32px;
@@ -171,7 +171,7 @@ select:focus {
 #hdr {
     min-width: 980px;
     width: 100%;
-    background: #E66EB2;
+    background: #000000;
     padding: 10px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -362,7 +362,7 @@ select:focus {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
+  background-color: #ff4a52;
   color: white;
 }
 .pagination {
@@ -378,7 +378,7 @@ select:focus {
 }
 
 .pagination a.active {
-  background-color: #4CAF50;
+  background-color: #ff4a52;
   color: white;
   border-radius: 5px;
 }

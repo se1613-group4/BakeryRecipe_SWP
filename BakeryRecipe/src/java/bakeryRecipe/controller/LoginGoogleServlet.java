@@ -74,6 +74,7 @@ public class LoginGoogleServlet extends HttpServlet {
                 Account_tblDAO accDAO = new Account_tblDAO();
                 //boolean checkUsername= accDAO.checkUserName(accGG.getId());
                 String password = (String) accGG.getId();
+                String avt=(String) accGG.getPicture();
                 byte[] getSha = SHA256.getSHA(password);
                 String passSHA = SHA256.toHexString(getSha);
 
@@ -108,9 +109,9 @@ public class LoginGoogleServlet extends HttpServlet {
                     boolean userResult = userDao.CreateUser_tbl();
                     int cuurentUserId = userDao.getCurrentUserId();
                     boolean accResult = accDao.saveUserGG(accGG, passSHA, cuurentUserId);
-                    boolean profileResult = proDao.CreateProfile_tbl(proDto, cuurentUserId, accGG.getName());
+                    boolean profileResult = proDao.CreateProfileGG_tbl(proDto, cuurentUserId, accGG.getName(),accGG.getPicture());
                     if (userResult && accResult && profileResult) {
-                        url = siteMaps.getProperty(AppContants.RegisterFeatures.VERIFY_EMAIL_PAGE);
+                        url = siteMaps.getProperty(AppContants.LoginFeatures.GET_NOTIFICATION_DATA_CONTROLLER);
                         HttpSession session = request.getSession(true);
 
                         String message = "Your account has been successfully created, please login to use the website";

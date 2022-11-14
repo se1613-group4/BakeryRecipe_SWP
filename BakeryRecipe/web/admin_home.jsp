@@ -22,7 +22,7 @@
         <!--header-->
         <div id="hdr">
             <div class="hdr-inner">
-                <h1>Trang Quản Trị Bakery Recipe</h1>
+                <h1>Wellcome to Bakery Recipe Management</h1>
             </div>
             <button type="button" class="login-btn" >
                 <a href="logoutController" class="login-btn">Logout</a>
@@ -39,7 +39,7 @@
                             <li><a href="#listuser" id="menu-user"><i class="fa fa-play"></i>List Account </a></li>
                             <li><a href="#userdetail" id="menu-userdetail"><i class="fa fa-sitemap"></i>Account Detail</a></li>
                             <li><a href="#listrecipe" id="menu-listpost"><i class="fa fa-upload"></i>User's Recipe</a></li>
-                            <li><a href="#help" id="menu-help"><i class="fa fa-question-circle-o"></i>Thông Tin & Hỗ Trợ</a></li>
+                            <li><a href="#help" id="menu-help"><i class="fa fa-question-circle-o"></i>Info and Help</a></li>
                         </ul>
                     </div>
 
@@ -48,7 +48,7 @@
                             <!--session 1--> 
 
                             <div id="dashboard" class="main-content">
-                                <h2><i class="fa fa-info"></i>Tổng Quan :</h2>  
+                                <h2><i class="fa fa-info"></i>Total :</h2>  
 
 
                                 <div class="content-container">
@@ -58,16 +58,24 @@
                                         <h3>  Total Account : ${adminDashBoard.get(0)} </h3> <br/>
                                         <h3>  Banned Account :   ${adminDashBoard.get(1)}  </h3> <br/>
                                         <h3>  Active Account :  ${adminDashBoard.get(2)} </h3> <br/>
+                                        
+
                                     </c:if>
                                 </div>
                             </div>
+
                                 <div class="content-container">
                                     <table id="customers">
+                                        <h5>  <a href="adminUpdateAccount?usupid=10&usupstt=1">Update</a> </h5>
+
                                         <tr>
+     
                                             <th> stt </th> 
-                                            <th> Report messeger  </th>  
+                                            <th> Report messeger  </th> 
                                         </tr>
+
                                         <c:if test="${ not empty sessionScope.ADMIN_LIST_REPORT}">
+                                            
                                             <c:forEach items="${sessionScope.ADMIN_LIST_REPORT}" var="rp">
                                                 <tr>  
                                                     <td>
@@ -86,7 +94,7 @@
 
                             <!--session 2-->
                             <div id="listuser" class="main-content">
-                                <h2><i class="fa fa-play"></i>Danh Sách Người Dùng : </h2>
+                                <h2><i class="fa fa-play"></i>List User : </h2>
                                 <p><strong>[&] </strong>Search:</p>
 
                                 <form action="adminListAccountController">
@@ -150,7 +158,6 @@
                                             </form>
 
                                         </c:if>
-                                        <a  href="adminListAccountController"  type="Submit"/> Làm Mới </a>
                                     </table>
 
                                 </div>

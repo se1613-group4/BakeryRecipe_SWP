@@ -973,4 +973,75 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }
+    
+    public List<Recipe_tblDTO> displaySimilarRecipe(int recipeCategory) throws SQLException {
+
+        List<Recipe_tblDTO> recipesList = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. Get connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Write SQL String
+                String sql = "select recipe_tbl.recipe_id, recipe_tbl.name, instruction, profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name, image_tbl.img_link \n"
+                        + "from recipe_tbl\n"
+                        + "inner join category_tbl on category_tbl.category_id = recipe_tbl.category_id\n"
+                        + "inner join profile_tbl on profile_tbl.user_id = recipe_tbl.user_id\n"
+                        + "inner join image_tbl on image_tbl.recipe_id = recipe_tbl.recipe_id\n"
+                        + "where category_tbl.category_id = ?\n";
+                //3. Create Statement Object
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, 1);
+//                stm.setInt(1, recipeCategory);
+//                stm.setString(2,  "%" + nameOfAuthor + "%");
+                //4. Execute statement
+                rs = stm.executeQuery();
+                //5. Process result= rs.getInt("recipe_id");
+                while (rs.next()) {
+                    // get recipe DTO info
+                    int recipeId = rs.getInt("recipe_tbl.recipe_id");
+                    String recipeName = rs.getString("recipe_tbl.name");
+                    String description = rs.getString("instruction");
+
+                    // get user's profile DTO info
+                    int userId = rs.getInt("profile_tbl.user_id");
+                    String authorName = rs.getString("profile_tbl.full_name");
+                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
+
+                    // get category DTO info
+                    int categoryId = rs.getInt("category_tbl.category_id");
+                    String categoryName = rs.getString("category_tbl.name");
+                    Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
+
+                    // get image info
+                    String imgLink = rs.getString("image_tbl.img_link");
+                    Image_tblDTO image = new Image_tblDTO(imgLink);
+
+                    // create recipeDTO
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, description, authorInfo, category, image);
+
+                    // check recipe dto list not null
+                    if (recipesList == null) {
+                        recipesList = new ArrayList<>();
+                    }
+                    //recipesList has existed
+                    recipesList.add(recipeDto);
+                }//end traverse ResultSet
+            }
+            return recipesList;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 }

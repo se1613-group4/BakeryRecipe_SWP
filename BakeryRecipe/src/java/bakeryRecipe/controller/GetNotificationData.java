@@ -47,12 +47,13 @@ public class GetNotificationData extends HttpServlet {
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         //end get sitemap
 
-        String url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
+//        String url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
 
         try {
             HttpSession session = request.getSession();
             Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
             if (user != null) {
+                
                 //call dao 
                 Notification_tblDAO dao = new Notification_tblDAO();
                 //process result 
@@ -68,13 +69,13 @@ public class GetNotificationData extends HttpServlet {
                
              session.setAttribute("NOTIFICATION_RESULT", result );
            
-                url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
+//                url = siteMaps.getProperty(AppContants.NotificationFeartures.DISPLAY_HOME_PAGE_CONTROLLER);
             }
         } catch (SQLException ex) {
             log("SearchController _ SQL " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
         }
     }
 

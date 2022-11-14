@@ -52,7 +52,7 @@ public class SearchAllRecipeLoadMoreController extends HttpServlet {
                             + "                                            <div class=\"product-box-layout1\">\n"
                             + "                                                <figure class=\"item-figure\">\n"
                             + "                                                    <a href=\"DisplaySingleRecipe?recipeId=" + recipeDto.getRecipeId() + "\">\n"
-                            + "                                                        <img src='" + recipeDto.getImage().getImgLink() + "' alt=\"Recipe\"></a>\n"
+                            + "                                                        <img class=\"search-recipe-image\" src='" + recipeDto.getImage().getImgLink() + "' alt=\"Recipe\"></a>\n"
                             + "                                                </figure>\n"
                             + "                                                <div class=\"item-content\">\n"
                             + "                                                    <span class=\"sub-title\">" + recipeDto.getCategory().getName() + "</span>\n"

@@ -247,9 +247,9 @@ public class Follow_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQL String
-                String sql = "select user_id_followed\n"
+                String sql = "select user_id\n"
                         + "from follow_tbl\n"
-                        + "where user_id = ?";
+                        + "where user_id_followed = ?";
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, loginValue);
@@ -257,7 +257,7 @@ public class Follow_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5. Process result 
                 while (rs.next()) {
-                    followerId = rs.getInt("user_id_followed");
+                    followerId = rs.getInt("user_id");
                     if (result == null){
                         result = new ArrayList<>();
                     }

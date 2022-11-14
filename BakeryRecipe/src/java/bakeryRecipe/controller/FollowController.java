@@ -69,7 +69,7 @@ public class FollowController extends HttpServlet {
                     Profile_tblDTO profileResult = profileDao.displayUserProfile(user_id);
                     Profile_tblDTO authorResult = profileDao.displayUserProfile(recipeAuthor_id);
                     Notification_tblDAO notiDao = new Notification_tblDAO();
-                    notiDao.setNoti(user_id, profileResult.getFullName() + " has followed." + authorResult.getFullName());
+                    notiDao.setNoti(recipeAuthor_id, profileResult.getFullName() + " has followed." + authorResult.getFullName());
                 }//end check result
             }//end check has been login
 

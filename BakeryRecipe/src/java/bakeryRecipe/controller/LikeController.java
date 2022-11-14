@@ -67,7 +67,7 @@ public class LikeController extends HttpServlet {
                     Profile_tblDAO profileDao = new Profile_tblDAO();
                     Profile_tblDTO profileResult = profileDao.displayUserProfile(user_id);
                     Notification_tblDAO notiDao = new Notification_tblDAO();
-                    notiDao.setNoti(user_id, profileResult.getFullName() + " has liked a recipe post.");
+                    notiDao.setNoti(currentUser.getUserId(), profileResult.getFullName() + " has liked your recipe post.");
                 }//end check result
             }//end check has been login
 

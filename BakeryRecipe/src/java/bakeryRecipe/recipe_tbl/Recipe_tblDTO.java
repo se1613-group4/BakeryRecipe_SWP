@@ -32,6 +32,7 @@ public class Recipe_tblDTO implements Serializable{
     private boolean isActived;
     private boolean isHidden;
     private String Steps;
+    private int view_count;
     
     private Profile_tblDTO authorInfo;
     private Category_tblDTO category;
@@ -124,6 +125,20 @@ public class Recipe_tblDTO implements Serializable{
         this.category = category;
         this.image = image;
     }
+    
+    public Recipe_tblDTO(int recipeId, String name, int serving,String description, int totalTime, int likedCount, Date lastModified, Profile_tblDTO authorInfo, Category_tblDTO category, Image_tblDTO image, int view_count) {
+        this.recipeId = recipeId;
+        this.name = name;
+        this.serving = serving;
+        this.description = description;
+        this.totalTime = totalTime;
+        this.likedCount = likedCount;
+        this.lastModified = lastModified;
+        this.authorInfo = authorInfo;
+        this.category = category;
+        this.image = image;
+        this.view_count = view_count;
+    }
 
     public Recipe_tblDTO(int recipeId, String name, int likedCount,int savedCount, Date createdDate, Date lastModified, boolean isActived) {
         this.recipeId = recipeId;
@@ -213,6 +228,12 @@ public class Recipe_tblDTO implements Serializable{
     public String getSteps() {
         return Steps;
     }
+
+    public int getView_count() {
+        return view_count;
+    }
+    
+    
     
         
     // Setter
@@ -292,6 +313,12 @@ public class Recipe_tblDTO implements Serializable{
     public void setSteps(String Steps) {
         this.Steps = Steps;
     }
+
+    public void setView_count(int view_count) {
+        this.view_count = view_count;
+    }
+    
+    
     
     
     

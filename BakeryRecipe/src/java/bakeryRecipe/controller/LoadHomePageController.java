@@ -62,6 +62,10 @@ public class LoadHomePageController extends HttpServlet {
             List<Recipe_tblDTO> top5Recipes = recipeDao.getRecipeDtoList();
             session.setAttribute("TOP5_RECIPES", top5Recipes);
             
+            recipeDao.loadMostViewRecipe(3);
+            List<Recipe_tblDTO> top3ViewRecipes = recipeDao.getRecipeDtoList();
+            session.setAttribute("TOP3_VIEW_RECIPES", top3ViewRecipes);
+            
             recipeDao.loadRecentlyRecipe();
             List<Recipe_tblDTO> recentlyRecipes = recipeDao.getRecipeDtoList();
             session.setAttribute("RECENTLY_RECIPES", recentlyRecipes);

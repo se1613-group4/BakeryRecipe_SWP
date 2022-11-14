@@ -128,7 +128,7 @@
                     <div class="container">
                         <div class="row gutters-60">
                             <!--Right side bar start here-->
-                            <%@include file="righ-side-bar.jsp" %>
+                            <%@include file="left-side-bar.jsp" %>
                             <!--Right side bar end here-->
                             
                             <!-- Trending Recipes-->

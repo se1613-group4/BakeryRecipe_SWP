@@ -12391,3 +12391,41 @@ lam edit user dropdown (in header)
 	padding: 1.5rem;
 	width: 100%;
 }
+
+.custom-btn-anhdh{
+	width: fit-content;
+	height: fit-content;
+	padding: 1.5rem;
+	background-color: white;
+	border: solid 1px;
+	border-radius: 10px 10px 10px 10px;
+	/*color: #ff4a52;*/
+        color: black;
+	position: relative;
+	z-index: 1;
+}
+
+.custom-btn-anhdh::after{
+	content: '';
+	top: 0;
+	right: 0;
+	width: 0;
+	height: 100%;
+	position: absolute;
+	background-color: #ff4a52;
+	border-radius: 10px 10px 10px 10px;
+	color: white;
+	transition: 0.4s;
+	z-index: -1;
+}
+
+.custom-btn-anhdh:hover{
+	color: white;
+	transition: 0.4s;
+}
+
+.custom-btn-anhdh:hover::after{
+	left: 0;
+	padding: 1.5rem;
+	width: 100%;
+}

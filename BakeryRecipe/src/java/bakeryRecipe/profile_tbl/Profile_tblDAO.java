@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import bakeryRecipe.utils.DBConnection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -88,8 +90,8 @@ public class Profile_tblDAO implements Serializable {
                     String username = rs.getString("username");
                     String password = rs.getString("password");
                     String fullName = rs.getString("full_name");
-                    String email = rs.getString("email");                    
-                    String phoneNumber = rs.getString("phone_number");                    
+                    String email = rs.getString("email");
+                    String phoneNumber = rs.getString("phone_number");
                     String gender = rs.getString("gender");
                     String avatarUrl = rs.getString("avatar_url");
                     String biography = rs.getString("bio");
@@ -156,9 +158,56 @@ public class Profile_tblDAO implements Serializable {
         }
         return result;
     }
-    
-    public boolean updateUserProfile(int userId, String fullName,  String email,  String  phoneNumber,  
-                                                                                    String  gender,  String  avatarUrl,  String biography,  boolean  isActived, boolean isAdmin)
+
+    public Profile_tblDTO displayMostRecipesUserProfile()
+            throws SQLException, NamingException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Profile_tblDTO result = null;
+        try {
+            //1. Make connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Create SQL String
+                String sql = "select max(countRecipe), profile_id, profile.user_id, full_name, gender, avatar_url, bio, profile.last_modified\n"
+                        + "from (\n"
+                        + "select count(recipe_tbl.recipe_id) as countRecipe, profile_id, profile_tbl.user_id, full_name, gender, avatar_url, bio, profile_tbl.last_modified\n"
+                        + "from profile_tbl \n"
+                        + "inner join recipe_tbl on recipe_tbl.user_id = profile_tbl.user_id\n"
+                        + "group by profile_tbl.user_id) as profile";
+                //3. Create Statement Object
+                stm = connection.prepareStatement(sql);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. Process result 
+                if (rs.next()) {
+                    int profileID = rs.getInt("profile_id");
+                    int userID = rs.getInt("user_id");
+                    String fullName = rs.getString("full_name");
+                    String gender = rs.getString("gender");
+                    String avatarUrl = rs.getString("avatar_url");
+                    String biography = rs.getNString("bio");
+                    Date lastModified = rs.getDate("last_modified");
+                    result = new Profile_tblDTO(profileID, userID, fullName, gender, avatarUrl, biography, lastModified);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean updateUserProfile(int userId, String fullName, String email, String phoneNumber,
+            String gender, String avatarUrl, String biography, boolean isActived, boolean isAdmin)
             throws SQLException, NamingException {
         boolean result = false;
 
@@ -176,13 +225,13 @@ public class Profile_tblDAO implements Serializable {
 
                 //Create Statement
                 stm = connection.prepareStatement(sql);
-               stm.setString(1, fullName);
+                stm.setString(1, fullName);
                 stm.setString(2, email);
                 stm.setString(3, phoneNumber);
                 stm.setString(4, gender);
                 stm.setString(5, avatarUrl);
                 stm.setString(6, biography);
-                stm.setBoolean(7, isActived);                
+                stm.setBoolean(7, isActived);
                 stm.setBoolean(8, isAdmin);
                 stm.setInt(9, userId);
                 //Execute stm
@@ -201,5 +250,58 @@ public class Profile_tblDAO implements Serializable {
             }
         }
         return result;
+    }
+
+    public List<Profile_tblDTO> getUsersTopFollower() throws SQLException {
+        List<Profile_tblDTO> profileList = null;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            //1. Get connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Write SQL String
+                String sql = "select count(user_id_followed) as follow, profile_id, profile_tbl.user_id, full_name, gender, avatar_url, bio, profile_tbl.last_modified\n"
+                        + "from profile_tbl \n"
+                        + "inner join follow_tbl on follow_tbl.user_id = profile_tbl.user_id\n"
+                        + "group by profile_tbl.user_id\n"
+                        + "order by user_id_followed desc";
+                //3. Create Statement Object
+                stm = connection.prepareStatement(sql);
+                //4. Execute statement
+                rs = stm.executeQuery();
+                //5. Process result= rs.getInt("recipe_id");
+                while (rs.next()) {
+                    //
+                    int profileID = rs.getInt("profile_id");
+                    int userID = rs.getInt("user_id");
+                    String fullName = rs.getString("full_name");
+                    String gender = rs.getString("gender");
+                    String avatarUrl = rs.getString("avatar_url");
+                    String biography = rs.getNString("bio");
+                    Date lastModified = rs.getDate("last_modified");
+                    Profile_tblDTO result = new Profile_tblDTO(profileID, userID, fullName, gender, avatarUrl, biography, lastModified);
+                    // check recipe dto list not null
+                    if (profileList == null) {
+                        profileList = new ArrayList<>();
+                    }
+                    //recipesList has existed
+                    profileList.add(result);
+                }//end traverse ResultSet
+            }
+            return profileList;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
     }
 }

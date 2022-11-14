@@ -121,7 +121,7 @@
                                                             <div style="width: 30%">
                                                                 <label style="font-size: 20px; font-weight: bold">Username: </label>
                                                             </div>
-                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                            <div style="width: 70%; margin-bottom: 10px;">
                                                                 <p style="font-size: 25px; text-align: center;">${profile_result.username}</p>
                                                             </div>
                                                         </div>
@@ -130,7 +130,7 @@
                                                             <div style="width: 30%">
                                                                 <label style="font-size: 20px; font-weight: bold">Email: </label>
                                                             </div>
-                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                            <div style="width: 70%; margin-bottom: 10px;">
                                                                 <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.email}</p>
                                                             </div>
                                                         </div>
@@ -139,7 +139,7 @@
                                                             <div style="width: 30%">
                                                                 <label style="font-size: 20px; font-weight: bold">Phone number: </label>
                                                             </div>
-                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                            <div style="width: 70%; margin-bottom: 10px; ">
                                                                 <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.phoneNumber}</p>
                                                             </div>
                                                         </div>
@@ -147,7 +147,7 @@
                                                         <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
                                                             <div style="width: 30%">
                                                                 <label style="font-size: 20px; font-weight: bold">Gender: </label></div>
-                                                            <div style="width: 70%; border: solid 1px grey; border-radius: 10px; margin-bottom: 10px; box-shadow: 3px 1px 1px grey;">
+                                                            <div style="width: 70%; margin-bottom: 10px;">
                                                                 <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.gender}</p>
                                                             </div>
                                                         </div>

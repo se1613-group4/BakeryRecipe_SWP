@@ -8,8 +8,11 @@ package bakeryRecipe.controller;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.category_tbl.Category_tblDAO;
 import bakeryRecipe.category_tbl.Category_tblDTO;
+import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDTO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
 import bakeryRecipe.tag_tbl.Tag_tblDAO;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,7 +76,20 @@ public class LoadHomePageController extends HttpServlet {
             List<Tag_tblDTO> allTag = tagDao.getTagDtoList();
             session.setAttribute("All_TAG", allTag);
            
-            
+            //hoanganh section start
+            Profile_tblDAO daoProfile = new Profile_tblDAO();
+            Follow_tblDAO daoFollow = new Follow_tblDAO();
+            //process result
+            Profile_tblDTO profile = daoProfile.displayMostRecipesUserProfile();
+            List<Profile_tblDTO> profileList = daoProfile.getUsersTopFollower();
+            int follower_amount = daoFollow.displayFollower(profile.getUserId());
+            int following_amount = daoFollow.displayFollowing(profile.getUserId());
+            session.setAttribute("MOST_RECIPE_PROFILE", profile);
+            session.setAttribute("USER_MOST_FOLLOW_LIST", profileList);
+            session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWERS", follower_amount);
+            session.setAttribute("MOST_RECIPE_PROFILE_FOLLOWING", following_amount); 
+            //hoanganh section end
+
             //--- Listen to new NOTIFICATION //
              
              Account_tblDTO account = (Account_tblDTO) session.getAttribute("USER");
@@ -94,7 +111,9 @@ public class LoadHomePageController extends HttpServlet {
               //--- Listen to new NOTIFICATION //
         } catch (SQLException ex) {
             Logger.getLogger(LoadHomePageController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        } catch (NamingException e) {
+            Logger.getLogger(LoadHomePageController.class.getName()).log(Level.SEVERE, null, e);
+        }finally {
             
         }
     }

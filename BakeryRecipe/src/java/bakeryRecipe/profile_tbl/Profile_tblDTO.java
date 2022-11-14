@@ -41,7 +41,7 @@ public class Profile_tblDTO extends Account_tblDTO implements Serializable {
         this.biography = biography;
         this.lastModified = lastModified;
     }
-
+     
     public Profile_tblDTO(String username, String password, String fullName, String email, String phoneNumber, String gender, String avatarUrl, String bio, boolean isActived, boolean isAdmin) {
         super(username, password, email, phoneNumber, isActived, isAdmin);
         this.fullName = fullName;

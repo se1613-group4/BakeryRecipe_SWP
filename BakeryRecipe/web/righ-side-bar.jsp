@@ -90,7 +90,7 @@
             </div>
         </div> 
 
-        <c:set var="tagList" value="${sessionScope.All_TAG}"></c:set>
+<!--        <c:set var="tagList" value="${sessionScope.All_TAG}"></c:set>
 
         <div class="widget right-side-top-5-tags">
             <div class="section-heading heading-dark">
@@ -106,7 +106,7 @@
                     </c:forEach>
                 </ul>
             </div>
-        </div> 
+        </div> -->
     </div>
 
 

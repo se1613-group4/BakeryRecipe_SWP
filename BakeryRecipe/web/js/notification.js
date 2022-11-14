@@ -8,7 +8,7 @@ $(document).ready(function () {
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
     $('#noti_Counter')
             .css({opacity: 0})
-            .text('7')  // ADD DYNAMIC VALUE (YOU CAN EXTRACT DATA FROM DATABASE OR XML).
+//            .text(' ')  // ADD DYNAMIC VALUE (YOU CAN EXTRACT DATA FROM DATABASE OR XML).
             .css({top: '-10px'})
             .animate({top: '-2px', opacity: 1}, 500);
 

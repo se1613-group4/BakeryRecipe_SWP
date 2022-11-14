@@ -36,6 +36,110 @@ public class Recipe_tblDAO implements Serializable {
         return this.recipeDtoList;
     }
 
+    
+    public boolean addNewView(int recipeId) throws SQLException {
+        boolean result = false;
+        Connection connection = null;
+        PreparedStatement stm = null;
+        try {
+            //1. Get connection
+            connection = DBConnection.getConnection();
+            if (connection != null) {
+                //2. Write SQL String
+                String sql = "UPDATE `bakery_recipe`.`recipe_tbl` SET `view_count` = `view_count` + 1 WHERE (`recipe_id` = ?);";
+                //3. Create statement
+                stm = connection.prepareStatement(sql);
+                stm.setInt(1, recipeId);
+                //4. Execute statement
+                int tmp = stm.executeUpdate();
+                //5. Process result
+                if (tmp != 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }//end addNewView function
+
+
+public void loadMostViewRecipe(int topNum)
+            throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        this.recipeDtoList = null;
+        try {
+            //1. make connection
+            con = DBConnection.getConnection();
+            if (con != null) {
+                //2. create sql string
+                String sql = "SELECT liked_count, R.recipe_id, R.name as recipe_name, serving, (prepare_time+cook_time) as total_time,\n" +
+"                        		instruction, R.last_modified, img_id, img_link, \n" +
+"                        		profile_tbl.user_id, profile_tbl.full_name, category_tbl.category_id, category_tbl.name as category_name, R.view_count\n" +
+"                        FROM recipe_tbl as R\n" +
+"                        	inner join category_tbl on R.category_id = category_tbl.category_id\n" +
+"                        	inner join profile_tbl on R.user_id = profile_tbl.user_id\n" +
+"                            inner join image_tbl on R.recipe_id = image_tbl.recipe_id\n" +
+"                        where R.is_actived = 1 and R.is_hidden = 0\n" +
+"                        	  order by R.view_count desc limit ?;";
+                //3. create statement obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, topNum);
+                //4. execute query
+                rs = stm.executeQuery();
+                //5 process result
+                while (rs.next()) {
+                    // get recipe DTO info
+                    int recipeId = rs.getInt("R.recipe_id");
+                    String recipeName = rs.getString("recipe_name");
+                    String description = rs.getString("instruction");
+                    int serving = rs.getInt("serving");
+                    int totalTime = rs.getInt("total_time");
+                    int likedCount = rs.getInt("liked_count");
+                    Date lastModified = rs.getDate("R.last_modified");
+                    int view_count = rs.getInt("R.view_count");
+                    // get user's profile DTO info
+                    int userId = rs.getInt("profile_tbl.user_id");
+                    String authorName = rs.getString("profile_tbl.full_name");
+                    Profile_tblDTO authorInfo = new Profile_tblDTO(userId, authorName);
+                    // get category DTO info
+                    int categoryId = rs.getInt("category_tbl.category_id");
+                    String categoryName = rs.getString("category_name");
+                    Category_tblDTO category = new Category_tblDTO(categoryId, categoryName);
+                    // get image info
+                    int imgId = rs.getInt("img_id");
+                    String imgLink = rs.getString("img_link");
+                    Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
+                    // create recipeDTO
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, totalTime, likedCount, lastModified, authorInfo, category, image, view_count);
+                    // check recipe dto list not null
+                    if (this.recipeDtoList == null) {
+                        this.recipeDtoList = new ArrayList<>();
+                    }// end check recipeIdList is null
+                    // add to recipeId list
+                    this.recipeDtoList.add(recipeDto);
+                }// end process rs
+            }// end check con not null
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }// end loadMostViewRecipe function
+    
     /**
      * Search all Recipe object by name
      *
@@ -344,7 +448,7 @@ public class Recipe_tblDAO implements Serializable {
             }
         }
     }// end loadTopRecipe function
-
+    
     /**
      * Load all recipes sort by update day - with pagination sql
      *

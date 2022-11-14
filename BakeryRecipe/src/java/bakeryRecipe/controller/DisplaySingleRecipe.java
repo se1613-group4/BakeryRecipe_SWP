@@ -63,6 +63,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 int recipeId = Integer.parseInt(request.getParameter("recipeId"));
                 //1. Call DAO (method)
                 Recipe_tblDAO recipeDao = new Recipe_tblDAO();
+                recipeDao.addNewView(recipeId);
                 Recipe_tblDTO recipeDto = recipeDao.getRecipe(recipeId);
                 //2. Process result
                 request.setAttribute("RECIPE_INFO", recipeDto);
@@ -75,7 +76,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 List<Recipe_Ingredient_tblDTO> ingredientDetailDtoList = ingredientDetailDao.getRecipeIngreDtoList();
                 request.setAttribute("INGREDIENT_LIST", ingredientDetailDtoList);
                 // load tags
-                Tag_Detail_tblDAO tagDetailDao = new Tag_Detail_tblDAO();                
+                Tag_Detail_tblDAO tagDetailDao = new Tag_Detail_tblDAO();
                 List<Integer> listTagIds = tagDetailDao.getTagIds(recipeId);
                 if (listTagIds != null) {
                     Tag_tblDAO tagDao = new Tag_tblDAO();
@@ -91,7 +92,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 // Get video url
                 Video_tblDAO vidDao = new Video_tblDAO();
                 String vidUrl = vidDao.getVidUrl(recipeId);
-                if (vidUrl!=null) {
+                if (vidUrl != null) {
                     String youtubeCode = GetYoutubeVideoCode(vidUrl);
                     request.setAttribute("YOUTUBE_CODE", youtubeCode);
                 }
@@ -108,8 +109,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                 //2. Process result
                 request.setAttribute("COMMENTS_LIST", commentsList);
 //                System.out.println("COMMENTS_LIST" + commentsList);
-                
-                
+
                 //DISPLAY LIKES OF RECIPE FUNCTION
                 //1. Call DAO
                 Like_tblDAO likeDao = new Like_tblDAO();
@@ -138,7 +138,7 @@ public class DisplaySingleRecipe extends HttpServlet {
                         isfollowed = 1;
                     }//end check if user has followed this recipe's author
                 }//end check if user has login
-                
+
                 request.setAttribute("ISLIKED", isLiked);
                 request.setAttribute("ISFOLLOWED", isfollowed);
 
@@ -154,12 +154,11 @@ public class DisplaySingleRecipe extends HttpServlet {
             rd.forward(request, response);
         }
     }
-    
-    
+
     private String GetYoutubeVideoCode(String vidUrl) {
         int startIndex = vidUrl.indexOf("?v=");
-        int endIndex = vidUrl.indexOf("&") > startIndex ? vidUrl.indexOf("&") : vidUrl.length();        
-        return vidUrl.substring(startIndex+3, endIndex);
+        int endIndex = vidUrl.indexOf("&") > startIndex ? vidUrl.indexOf("&") : vidUrl.length();
+        return vidUrl.substring(startIndex + 3, endIndex);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

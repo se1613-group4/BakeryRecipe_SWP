@@ -202,7 +202,7 @@
                                                     </div>
                                                     <div class="media-body space-sm">
                                                         <div class="feature-title">VIEWS</div>
-                                                        <div class="feature-sub-title">0</div>
+                                                        <div class="feature-sub-title">${recipeDto.view_count}</div>
                                                     </div>
                                                 </div>
                                             </div>

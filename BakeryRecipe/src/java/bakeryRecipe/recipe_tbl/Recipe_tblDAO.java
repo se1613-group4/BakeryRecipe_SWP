@@ -545,7 +545,7 @@ public void loadMostViewRecipe(int topNum)
                 String sql = "SELECT liked_count, saved_count, R.recipe_id, R.name as recipe_name, img_id, img_link,\n"
                         + "profile_tbl.user_id, profile_tbl.full_name, profile_tbl.avatar_url, profile_tbl.bio,\n"
                         + "category_tbl.category_id, category_tbl.name as category_name,\n"
-                        + "serving, prepare_time, cook_time, instruction, R.last_modified, step\n"
+                        + "serving, prepare_time, cook_time, instruction, R.last_modified, step, R.view_count\n"
                         + "FROM recipe_tbl as R\n"
                         + "inner join category_tbl on R.category_id = category_tbl.category_id\n"
                         + "left join profile_tbl on R.user_id = profile_tbl.user_id\n"
@@ -568,6 +568,7 @@ public void loadMostViewRecipe(int topNum)
                     int savedCount = rs.getInt("saved_count");
                     Date lastModified = rs.getDate("last_modified");
                     String steps = rs.getString("step");
+                    int view_count = rs.getInt("R.view_count");
                     // get user's profile DTO info
                     int userId = rs.getInt("profile_tbl.user_id");
                     String authorName = rs.getString("profile_tbl.full_name");
@@ -583,7 +584,7 @@ public void loadMostViewRecipe(int topNum)
                     String imgLink = rs.getString("img_link");
                     Image_tblDTO image = new Image_tblDTO(imgId, imgLink);
                     // create recipeDTO
-                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, preTime, cookTime, likedCount, savedCount, lastModified, authorInfo, category, image, steps);
+                    Recipe_tblDTO recipeDto = new Recipe_tblDTO(recipeId, recipeName, serving, description, preTime, cookTime, likedCount, savedCount, lastModified, authorInfo, category, image, steps, view_count);
                     result = recipeDto;
 
                 }

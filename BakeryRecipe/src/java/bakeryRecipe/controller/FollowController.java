@@ -7,6 +7,8 @@ package bakeryRecipe.controller;
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,21 +63,20 @@ public class FollowController extends HttpServlet {
                 Follow_tblDAO dao = new Follow_tblDAO();
                 if (dao.followRecipe(user_id, recipeAuthor_id)) {
                     urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
-                    
+
                     //Notification
-                    Follow_tblDAO followDao = new Follow_tblDAO();
-                    List<Integer> followerId = followDao.getFollowers(user_id);
+                    Profile_tblDAO profileDao = new Profile_tblDAO();
+                    Profile_tblDTO profileResult = profileDao.displayUserProfile(user_id);
+                    Profile_tblDTO authorResult = profileDao.displayUserProfile(recipeAuthor_id);
                     Notification_tblDAO notiDao = new Notification_tblDAO();
-                    for (int i = 0; i < followerId.size(); i++) {
-                        notiDao.setNoti(followerId.get(i), user_id + " has followed." + recipeAuthor_id);
-                    }
+                    notiDao.setNoti(recipeAuthor_id, profileResult.getFullName() + " has followed." + authorResult.getFullName());
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
             log("Follow Controller _ SQL " + ex.getMessage());
         } catch (NamingException ex) {
-            log("Follow Controller _ SQL " + ex.getMessage());
+            log("Like Controller _ Naming " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);
         }

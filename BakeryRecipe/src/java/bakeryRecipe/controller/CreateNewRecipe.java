@@ -9,6 +9,8 @@ import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.image_tbl.Image_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.recipe_ingredient_tbl.Recipe_Ingredient_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDAO;
 import bakeryRecipe.recipe_tbl.Recipe_tblDTO;
@@ -197,11 +199,13 @@ public class CreateNewRecipe extends HttpServlet {
                 url = siteMaps.getProperty(AppContants.CreateRecipeFeature.MY_RECIPES_PAGE);
                 
                 //Notification
+                Profile_tblDAO profileDao = new Profile_tblDAO();
+                Profile_tblDTO profileResult = profileDao.displayUserProfile(userId);
                 Follow_tblDAO followDao = new Follow_tblDAO();
                 List<Integer> followerId = followDao.getFollowers(userId);
                 Notification_tblDAO notiDao = new Notification_tblDAO();
                 for (int j = 0; j < followerId.size(); i++) {
-                    notiDao.setNoti(followerId.get(i), userId + " has created a reicpe.");
+                    notiDao.setNoti(followerId.get(i), profileResult.getFullName() + " has created a reicpe.");
                 }
             }
         } catch (SQLException ex) {

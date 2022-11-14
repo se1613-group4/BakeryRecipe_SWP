@@ -40,42 +40,42 @@
         <script src="js/notification.js"></script>
     </head>
     <body>
-        
-            <!-- Header start here-->
-            <header class="header-one">
-                <!-- Top Header-->    
-                <div id="header-main-menu" class="header-main-menu header-sticky">
-                    <div class="container">                    
-                        <div class="row">
-<!--                            <div class="col-lg-2 d-none d-lg-block">
-                            <div class="site-logo-desktop" style="margin: 5px 0 0 0">
+
+        <!-- Header start here-->
+        <header class="header-one">
+            <!-- Top Header-->    
+            <div id="header-main-menu" class="header-main-menu header-sticky">
+                <div class="container">                    
+                    <div class="row">
+                        <!--                            <div class="col-lg-2 d-none d-lg-block">
+                                                    <div class="site-logo-desktop" style="margin: 5px 0 0 0">
+                                                        <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                                                    </div>
+                                                </div>-->
+                        <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
+                            <div class="site-logo-mobile">
                                 <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
+                                <a href="homePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
                             </div>
-                        </div>-->
-                            <div class="col-lg-6 col-md-3 col-sm-4 col-4 possition-static">
-                                <div class="site-logo-mobile">
-                                    <a href="homePage" class="sticky-logo-light"><img src="img/logo-light.png" alt="Site Logo"></a>
-                                    <a href="homePage" class="sticky-logo-dark"><img src="img/logo-dark.png" alt="Site Logo"></a>
-                                </div>
-                                <nav class="site-nav">
-                                    <ul id="site-menu" class="site-menu">
-                                        <li><a href="homePage">Home</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Category</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">All Recipes</a>
-                                        </li>
+                            <nav class="site-nav">
+                                <ul id="site-menu" class="site-menu">
+                                    <li><a href="homePage">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Category</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">All Recipes</a>
+                                    </li>
 
-                                    </ul>
-                                </nav>
-                            </div>                                                    
+                                </ul>
+                            </nav>
+                        </div>                                                    
 
-                            <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                        <div class="col-lg-6 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
                             <div class="nav-action-elements-layout1">
                                 <ul class="site-menu">                                                                         
-                                   <!--Notification-->
+                                    <!--Notification-->
                                     <li  id="noti_Container">
                                         <div id="noti_Counter" ></div>   <!--SHOW NOTIFICATIONS COUNT.-->
 
@@ -90,11 +90,15 @@
                                                 <c:if test="${not empty noti}">
                                                     <c:forEach var="notiDto" items="${noti}" varStatus="counter">
                                                         <c:set var="notiDetail" value="${notiDto.detail}"/>
-                                                            <p>${notiDetail}</p>
+                                                        <div style="border-bottom: solid 1px gainsboro; display: flex; align-items: center; margin-bottom: 0px !important">
+                                                            <p style=" margin: 10px 0 10px 5px !important">${notiDetail}</p>
+                                                        </div>
                                                     </c:forEach>
                                                 </c:if>
                                                 <c:if test="${empty noti}">
-                                                    <p>No notification yet</p>
+                                                    <div style="border-bottom: solid 1px black">
+                                                        <p>No notification yet</p>
+                                                    </div>
                                                 </c:if>
                                             </div>
                                             <div class="seeAll"><a href="#">See All</a></div>
@@ -110,13 +114,13 @@
                                     <!--profile user-->
                                     <li>
                                         <c:set var="avatar" value="${sessionScope.USER.avatar}"></c:set>
-                                        <a href="#" style="width: 10rem">
+                                            <a href="#" style="width: 10rem">
                                             <c:if test="${not empty avatar}">
-                                            <img src="${avatar}" alt="user-avatar" class="rounded-circle"
+                                                <img src="${avatar}" alt="user-avatar" class="rounded-circle"
                                                      style="width: 40%;"/>
                                             </c:if>
                                             <c:if test="${empty avatar}">
-                                            <i class="flaticon-profile"></i>
+                                                <i class="flaticon-profile"></i>
                                             </c:if>
                                             <b>  ${sessionScope.USER.username}</b></a>
                                         <ul class="dropdown-menu-col-1" id="dropdown-user" style="width: 15rem">
@@ -136,21 +140,21 @@
                                             </li>
                                             <li style="display: inline-block; width: 100%">                                                                                        
                                                 <!--<button type="button" class="login-btn" >-->
-                                                    <a href="logoutController">Logout</a>
+                                                <a href="logoutController">Logout</a>
                                                 <!--</button>-->     
 
                                             </li> 
                                         </ul>
                                     </li>
                                     <!--End profile user-->
-                                        <!-- Logout Button-->
-<!--                                        <li>                                                                                        
-                                                <button type="button" class="login-btn" >
-                                                    <a href="logoutController" class="login-btn">Logout</a>
-                                                </button>     
-                                            -->
-                                        </li>                                    
-                                    </ul>
+                                    <!-- Logout Button-->
+                                    <!--                                        <li>                                                                                        
+                                                                                    <button type="button" class="login-btn" >
+                                                                                        <a href="logoutController" class="login-btn">Logout</a>
+                                                                                    </button>     
+                                    -->
+                                    </li>                                    
+                                </ul>
                             </div>
 
                             <div class="mob-menu-open toggle-menu">
@@ -160,10 +164,10 @@
                                 <span class="bar"></span>
                             </div>
                             <!--</div>-->
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <!-- Bottom Header-->
             <div class="header-bottom d-none d-lg-block">
@@ -175,14 +179,14 @@
                                 <a href="homePage" class="main-logo"><img src="img/logo-dark.png" alt="Site Logo"></a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
-                
+
             <!--</div>-->
         </header>        
-        
+
         <!-- Header end here -->
 
     </body>

@@ -8,6 +8,8 @@ import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
 import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.notification_tbl.Notification_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDAO;
+import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -62,19 +64,17 @@ public class LikeController extends HttpServlet {
                 if (dao.likeRecipe(recipe_id, user_id)) {
                     urlRewriting = siteMaps.getProperty(AppContants.LikeFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
                     // Hoang Anh Scope --NHO MO COMMENT
-//                    Follow_tblDAO followDao = new Follow_tblDAO();
-//                    List<Integer> followerId = followDao.getFollowers(user_id);
-//                    Notification_tblDAO notiDao = new Notification_tblDAO();
-//                    for (int i = 0; i < followerId.size(); i++) {
-//                        notiDao.setNoti(followerId.get(i), user_id + " has liked a recipe post.");
-//                    }
+                    Profile_tblDAO profileDao = new Profile_tblDAO();
+                    Profile_tblDTO profileResult = profileDao.displayUserProfile(user_id);
+                    Notification_tblDAO notiDao = new Notification_tblDAO();
+                    notiDao.setNoti(user_id, profileResult.getFullName() + " has liked a recipe post.");
                 }//end check result
             }//end check has been login
 
         } catch (SQLException ex) {
             log("Like Controller _ SQL " + ex.getMessage());
-//        } catch (NamingException ex) {
-//            log("Like Controller _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("Like Controller _ Naming " + ex.getMessage());
         } finally {
             response.sendRedirect(urlRewriting);
         }

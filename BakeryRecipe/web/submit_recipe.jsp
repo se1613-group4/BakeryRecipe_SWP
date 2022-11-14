@@ -283,7 +283,7 @@
                                 </div>
                                 <!--Input instruction (steps)-->
                                 <div class="form-group">
-                                    <label>Instruction</label>
+                                    <label>Instruction <font color="red">*</font></label>
                                     <font color="red">${requestScope.ERROR.stepExceedCharsCount}</font>
                                     <div class="row no-gutters step-div no-remove" id="step-sample">                                    
                                         <!--Input Step-->

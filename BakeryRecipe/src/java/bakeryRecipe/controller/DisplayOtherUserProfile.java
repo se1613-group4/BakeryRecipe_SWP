@@ -47,8 +47,6 @@ public class DisplayOtherUserProfile extends HttpServlet {
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         //end get sitemap
-
-        String editButton = request.getParameter("editBtn");
         String url = siteMaps.getProperty(AppContants.DisplayOtherUserProfileFeartures.USER_NOT_FOUND_PAGE);
         
         try {

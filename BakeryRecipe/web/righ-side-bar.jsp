@@ -72,7 +72,7 @@
         </div>
 
         <!--Most View Recipes-->
-        <div class="widget right-side-top-5-recipes">          
+        <div class="widget right-side-top-5-recipes" style="padding: 5px">          
             <div class="section-heading heading-dark">
                 <h3 class="item-heading">MOST VIEW RECIPES</h3>
             </div>

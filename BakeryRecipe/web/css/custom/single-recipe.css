@@ -1,5 +1,5 @@
 /* Follow */
-.custom-btn-thongnt{
+.custom-btn-thongnt {
     width: fit-content;
     height: fit-content;
     padding: 5px !important;
@@ -11,7 +11,7 @@
     z-index: 1;
 }
 
-.custom-btn-thongnt::after{
+.custom-btn-thongnt::after {
     content: '';
     top: 0;
     right: 0;
@@ -25,19 +25,37 @@
     z-index: -1;
 }
 
-.custom-btn-thongnt:hover{
+.custom-btn-thongnt:hover {
     color: white;
     transition: 0.4s;
 }
 
-.custom-btn-thongnt:hover::after{
+.custom-btn-thongnt:hover::after {
     left: 0;
     padding: 5px !important;
     width: 100%;
 }
 
-.follow-container{
+.follow-container {
     position: absolute;
     top: 7rem;
     left: 80%;
+}
+
+/* User profile */
+#view-user-profile-btn {
+    display: inline-block !important;
+    border: none;
+    background-color: #ffffff00;
+    padding: 5px;
+    font-size: small;
+}
+
+#view-user-profile-btn span {    
+    font-family: 'Hind', sans-serif !important;
+    font-size: medium;
+}
+
+.item-title{
+    font-size: xx-large;
 }

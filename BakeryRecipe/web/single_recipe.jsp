@@ -114,7 +114,7 @@
                                                                                                     <i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>
                                                                                                     <input type="hidden" name="authorID" value="${author.userId}">
                                                                                                 </form>-->
-                                                <jsp:include page="follow.jsp" />
+                                               
                                             </li>
                                             <jsp:include page="like.jsp" />
                                             <!--Save-->
@@ -202,7 +202,7 @@
                                                     </div>
                                                     <div class="media-body space-sm">
                                                         <div class="feature-title">VIEWS</div>
-                                                        <div class="feature-sub-title">0</div>
+                                                        <div class="feature-sub-title">${recipeDto.view_count}</div>
                                                     </div>
                                                 </div>
                                             </div>

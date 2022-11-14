@@ -50,7 +50,7 @@
                     <img src="${profile_result.avatar}" alt="Blog Author" class="rounded-circle media-img-auto"
                          style="width: 50%; height: 50%">
                     <div style="display: flex; flex-direction: column; margin-left: 10px; margin-top: 20px">
-                        <h2 class="author-title" style="text-align: center">${profile_result.username}
+                        <h2 class="author-title" style="text-align: center; overflow-wrap: anywhere;">${profile_result.username}
                         </h2>
 <!--                        <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>-->
                         <p style="margin-bottom: 0"><b>Followers</b><b style="margin-left: 10px">Following</b></p>

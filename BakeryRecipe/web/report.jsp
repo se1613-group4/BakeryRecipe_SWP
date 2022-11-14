@@ -67,7 +67,7 @@
                                 <div class="col-12 form-group">
                                     <label style="font-size: larger">Detail :</label>
                                     <textarea style="font-size: large" placeholder="" class="textarea form-control" name="txtReportContent"
-                                        rows="7" cols="20" data-error="Message field is required" required></textarea>
+                                        rows="3" cols="20" data-error="Message field is required" required></textarea>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">

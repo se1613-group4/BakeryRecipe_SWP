@@ -14,11 +14,15 @@
 .inner-report-container{
     background-color: #ff5057;
     border: solid 1px white;
-    border-radius: 50px;
+    border-radius: 10px;
     padding: 3rem;
     height: 50%;
     width: 50%;
     color: white;
+}
+
+.inner-report-container h2{
+    color: white !important;
 }
 
 .custom-btn-thongnt-report-btn{

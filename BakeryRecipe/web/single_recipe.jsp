@@ -101,13 +101,19 @@
                                 <!--header recipe information-->
                                 <div class="row mb-4">
                                     <div class="col-xl-9 col-12">
+                                        <form action="displayOtherUserProfileController">
+                                            <button class="custom-btn-anhdh" style=" font-style: none; padding: 5px; font-size: small; display: flex; flex-direction: row; justify-content: center"><i class="fas fa-user"><span style="margin-left: 3px">${author.fullName}</span></i></button>
+                                            <!--<i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>-->
+                                            <input type="hidden" name="authorID" value="${author.userId}">
+                                        </form>
                                         <ul class="entry-meta">
                                             <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
                                             <li class="single-meta">
-                                                <form action="displayOtherUserProfileController">
-                                                    <i class="fas fa-user"></i><input type="submit" value="by ${author.fullName}"/>
-                                                    <input type="hidden" name="authorID" value="${author.userId}">
-                                                </form>
+                                                <!--                                                <form action="displayOtherUserProfileController">
+                                                                                                    <button class="custom-btn-anhdh" style="padding: 5px"><i class="fas fa-user">${author.fullName}</i></button>
+                                                                                                    <i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>
+                                                                                                    <input type="hidden" name="authorID" value="${author.userId}">
+                                                                                                </form>-->
                                                 <jsp:include page="follow.jsp" />
                                             </li>
                                             <jsp:include page="like.jsp" />
@@ -115,18 +121,22 @@
                                             <c:if test="${not empty loginValue}">
                                                 <c:if test="${empty save_result}">
                                                     <li class="single-meta">
-                                                        <form action="saveRecipeController" method="POST">      
-                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                            <input type="submit" name="saveRecipeController" value="Save">        
+                                                        <form action="saveRecipeController" method="POST">   
+                                                            <button class="custom-btn-thongnt">
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Save</span>
+                                                            <!--<input type="submit" name="saveRecipeController" value="Save">-->  
+                                                            </button>
                                                             <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
                                                         </form> 
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${not empty save_result}">
                                                     <li class="single-meta">
-                                                        <form action="unsaveRecipeController" method="POST">      
-                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                            <input type="submit" name="saveRecipeController" value="Unsaved">        
+                                                        <form action="unsaveRecipeController" method="POST"> 
+                                                            <button class="custom-btn-thongnt">
+                                                                <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Unsaved</span>
+                                                            <!--<input type="submit" name="saveRecipeController" value="Unsaved">-->   
+                                                            </button>
                                                             <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
                                                         </form> 
                                                     </li>

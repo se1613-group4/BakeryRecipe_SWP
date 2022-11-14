@@ -99,7 +99,7 @@
                                     <a href="#DisplayAuthorProfile"><i class="fas fa-user"></i><span>by</span>
                                         ${author.fullName}</a>
                                 </div>
-                                <div class="">${viewCount}</div>
+                                <div class="">Views: ${viewCount}</div>
                             </div>
                         </li>
                     </c:forEach>

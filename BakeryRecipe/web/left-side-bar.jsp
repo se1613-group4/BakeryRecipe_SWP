@@ -5,11 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bakery Recipe - Righ Side Bar</title>
+        <title>Bakery Recipe - Left Side Bar</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon -->
@@ -38,19 +39,22 @@
     <c:import url="LoadHomePageController"></c:import>
     <div class="col-lg-3 sidebar-widget-area sidebar-break-md">        
 
-        <!--Top 5 Recipes-->
-        <c:set var="profile_result" value="${sessionScope.MOST_RECIPE_PROFILE}"/>
+        <!--Own profile-->
+        <c:set var="profile_result" value="${sessionScope.MOST_RECIPE_PROFILE}"/>                    
         <c:set var="followers_result" value="${sessionScope.MOST_RECIPE_PROFILE_FOLLOWERS}"/>
         <c:set var="following_result" value="${sessionScope.MOST_RECIPE_PROFILE_FOLLOWING}"/>
         <div class="widget left-side-most-recipes">          
+            <c:if test="${ not empty profile_result}">
             <div class="section-heading heading-dark">
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="${profile_result.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
+                    <img src="${profile_result.avatar}" alt="Blog Author" class="rounded-circle media-img-auto"
                          style="width: 50%; height: 50%">
                     <div style="display: flex; flex-direction: column; margin-left: 10px; margin-top: 20px">
-                        <h1 class="author-title">${profile_result.fullName}
-                        </h1>
-                        <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
+                        <h2 class="author-title" style="text-align: center">${profile_result.username}
+                        </h2>
+<!--                        <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>-->
+                        <p style="margin-bottom: 0"><b>Followers</b><b style="margin-left: 10px">Following</b></p>
+                        <p><span style="margin-left: 25px">${followers_result}</span><span style="margin-left: 80px">${following_result}</span></p>
                     </div>
                     <div style="width: 100%; text-align: center">
                         <form action="displayOtherUserProfileController">
@@ -60,7 +64,8 @@
                     </div>
                 </div>
             </div>
-
+            </c:if>
+            
             <c:set var="profileList" value="${sessionScope.USER_MOST_FOLLOW_LIST}"></c:set>
             <div class="widget-latest">                    
                 <ul class="block-list">                        
@@ -75,13 +80,13 @@
                             <img src="${profileDto.avatarUrl}" alt="Blog Author" class="rounded-circle media-img-auto"
                                  style="width: 20%; height: 20%">
                             <div style="display: flex; flex-direction: column; margin-left: 10px; margin-top: 20px; width: 60%">
-                                <h3 class="author-title">${profileDto.fullName}
-                                </h3>
+                                <h5 class="author-title">${profileDto.fullName}
+                                </h5>
                             </div>
                             <div style="width: 20%; text-align: center">
                             <form action="displayOtherUserProfileController">
                                 <button class="custom-btn-anhdh" style="padding: 5px; width: 100%; margin-left: 30px"><i class="fas fa-user"></i></button>
-                                <input class="" type="hidden" name="authorID" value="${profile_result.userId}">
+                                <input class="" type="hidden" name="authorID" value="${profileDto.userId}">
                             </form>
                             </div>
                         </li>

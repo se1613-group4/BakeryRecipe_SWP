@@ -31,9 +31,9 @@ public class Follow_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQL String
-                String sql = "select count(user_id_followed)\n"
-                        + "from follow_tbl\n"
-                        + "where user_id = ?";
+                String sql = "SELECT count(user_id) as followers\n"
+                        + "FROM follow_tbl\n"
+                        + "where user_id_followed = ?;";
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, loginValue);
@@ -41,7 +41,7 @@ public class Follow_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5. Process result 
                 if (rs.next()) {
-                    result = rs.getInt("count(user_id_followed)");
+                    result = rs.getInt("followers");
                 }
                 return result;
             }
@@ -70,9 +70,9 @@ public class Follow_tblDAO implements Serializable {
             connection = DBConnection.getConnection();
             if (connection != null) {
                 //2. Create SQL String
-                String sql = "select count(user_id)\n"
-                        + "from follow_tbl\n"
-                        + "where user_id_followed = ?";
+                String sql = "SELECT count(user_id_followed) as followings\n"
+                        + "FROM follow_tbl\n"
+                        + "where user_id = ?;";
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 stm.setInt(1, loginValue);
@@ -80,7 +80,7 @@ public class Follow_tblDAO implements Serializable {
                 rs = stm.executeQuery();
                 //5. Process result 
                 if (rs.next()) {
-                    result = rs.getInt("count(user_id)");
+                    result = rs.getInt("followings");
                 }
                 return result;
             }

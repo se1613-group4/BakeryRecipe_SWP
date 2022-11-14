@@ -45,15 +45,9 @@
         <c:set var="currentAccountDto" value="${sessionScope.USER}"/>
         <c:set var="isFollowed" value="${requestScope.ISFOLLOWED}"/>
         <c:set var="currentAuthor" value="${param.authorID}"/>
-        
-        <h1>currentAccountDto ${currentAccountDto}</h1>
-        <h1>isFollowed ${isFollowed}</h1>
-        <h1>currentAuthor ${currentAuthor}</h1>
-        <h1>FollowHere</h1>
-
 
         <c:if test="${isFollowed == -1  || isFollowed == 0}">
-            <div class="follow-container">
+            <div class="follow-container" >
                 <form action="followController">
                     <!--<input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">-->
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">

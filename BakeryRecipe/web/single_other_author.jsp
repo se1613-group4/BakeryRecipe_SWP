@@ -96,7 +96,6 @@
                             <c:set var="following_result" value="${requestScope.USER_FOLLOWING}"/>
                             <c:if test="${not empty profile_result}">
                                 <form action="displayUserProfileController" method="POST">
-
                                     <div class="author-info">
                                         <div class="media media-none--xs" style="display: flex; flex-direction: column">
                                             <div style="display: flex; flex-direction: row; justify-content: center">
@@ -109,7 +108,7 @@
                                                     <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
                                                 </div>  
                                             </div>                                              
-                                            <jsp:include page="follow.jsp" />
+
                                             <div class="media-body" style="margin-top: 20px; width: 100%">
 
                                                 <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
@@ -129,6 +128,7 @@
                                         </div>
                                     </div>
                                 </form>
+                                <jsp:include page="follow.jsp" />
                             </c:if>
                             <c:if test="${empty profile_result}">
                                 <h1>User is not found!!</h1>

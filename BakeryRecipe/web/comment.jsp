@@ -78,14 +78,6 @@
                                                         <button type="submit">Save</button>
                                                     </form>
                                                 </div>
-                                                <ul class="item-rating">
-                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                                    <li class="single-item star-fill"><i class="fas fa-star"></i></li>
-                                                    <li class="single-item star-empty"><i class="fas fa-star"></i></li>
-                                                    <li class="single-item"><span>9<span> / 10</span></span> </li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </li>
@@ -101,7 +93,7 @@
 
                     <div class="leave-review">
                         <div class="section-heading heading-dark">
-                            <h2 class="item-heading">LEAVE A REVIEW</h2>
+                            <h2 class="item-heading">LEAVE A COMMENT</h2>
                         </div>
                         <!--            <div class="rate-wrapper">
                             <div class="rate-label">Like</div>

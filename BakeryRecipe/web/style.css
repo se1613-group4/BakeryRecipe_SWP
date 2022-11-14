@@ -12429,3 +12429,9 @@ lam edit user dropdown (in header)
 	padding: 1.5rem;
 	width: 100%;
 }
+
+/* Comment */
+.comment-element{
+	margin: 0 !important;
+	margin-bottom: 3rem !important;
+}

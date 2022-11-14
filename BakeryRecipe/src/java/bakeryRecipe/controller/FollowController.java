@@ -62,7 +62,7 @@ public class FollowController extends HttpServlet {
                 int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
                 Follow_tblDAO dao = new Follow_tblDAO();
                 if (dao.followRecipe(user_id, recipeAuthor_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_OTHER_PROFILE_CONTROLLER) + "?" + "authorID=" + user_id;
+                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_OTHER_PROFILE_CONTROLLER) + "?" + "authorID=" + recipeAuthor_id;
 
                     //Notification
                     Profile_tblDAO profileDao = new Profile_tblDAO();

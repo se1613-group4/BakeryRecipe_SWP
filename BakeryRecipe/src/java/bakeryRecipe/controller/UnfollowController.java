@@ -58,7 +58,7 @@ public class UnfollowController extends HttpServlet {
                 int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
                 Follow_tblDAO dao = new Follow_tblDAO();
                 if (dao.unfollowRecipe(user_id, recipeAuthor_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_OTHER_PROFILE_CONTROLLER) + "?" + "authorID=" + user_id;
+                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_OTHER_PROFILE_CONTROLLER) + "?" + "authorID=" + recipeAuthor_id;
                 }//end check result
             }//end check has been login
 

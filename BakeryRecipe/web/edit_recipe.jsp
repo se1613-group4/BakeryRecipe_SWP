@@ -123,8 +123,7 @@
             
             <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
             <c:set var="author" value="${recipeDto.authorInfo}"/>
-            <c:set var="category" value="${recipeDto.category}"/>
-            <c:if test="${not empty category}"><h2>category existed</h2></c:if>
+            <c:set var="category" value="${recipeDto.category}"/>            
             <c:set var="image" value="${recipeDto.image}"/>
             <!-- Submit Recipe Area Start Here -->                                        
             <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">

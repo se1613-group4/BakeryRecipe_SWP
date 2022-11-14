@@ -85,13 +85,14 @@
                                         <!--THE NOTIFICAIONS DROPDOWN BOX.-->
                                         <div id="notifications">
                                             <h3>Notifications</h3>
+                                            <c:import url="GetNotificationData"></c:import>
                                             <div style="height:300px; overflow-y: scroll;">
                                                 <c:set var="noti" value="${sessionScope.NOTIFICATION_RESULT}"/>
                                                 <c:if test="${not empty noti}">
                                                     <c:forEach var="notiDto" items="${noti}" varStatus="counter">
-                                                        <c:set var="notiDetail" value="${notiDto.detail}"/>
+                                                        <%--<c:set var="notiDetail" value="${notiDto.detail}"/>--%>
                                                         <div style="border-bottom: solid 1px gainsboro; display: flex; align-items: center; margin-bottom: 0px !important">
-                                                            <p style=" margin: 10px 0 10px 5px !important">${notiDetail}</p>
+                                                            <p style=" margin: 10px 0 10px 5px !important">${notiDto.detail}</p>
                                                         </div>
                                                     </c:forEach>
                                                 </c:if>

@@ -6,6 +6,7 @@ package bakeryRecipe.controller;
 
 import bakeryRecipe.account_tbl.Account_tblDTO;
 import bakeryRecipe.follow_tbl.Follow_tblDAO;
+import bakeryRecipe.like_tbl.Like_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDAO;
 import bakeryRecipe.profile_tbl.Profile_tblDTO;
 import bakeryRecipe.utils.AppContants;
@@ -42,15 +43,13 @@ public class DisplayOtherUserProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         //start get sitemap
         ServletContext context = getServletContext();
         Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
         //end get sitemap
-
-        String editButton = request.getParameter("editBtn");
         String url = siteMaps.getProperty(AppContants.DisplayOtherUserProfileFeartures.USER_NOT_FOUND_PAGE);
-        
+
         try {
 //           HttpSession session = request.getSession();
 //            Account_tblDTO user = (Account_tblDTO) session.getAttribute("USER");
@@ -66,6 +65,28 @@ public class DisplayOtherUserProfile extends HttpServlet {
             request.setAttribute("USER_PROFILE", profile);
             request.setAttribute("USER_FOLLOWERS", follower_amount);
             request.setAttribute("USER_FOLLOWING", following_amount);
+
+            //----------------------------
+            //thongnt section start
+            //CHECK IF FOLLOWED FUNCTION
+            HttpSession session = request.getSession(true);
+            Follow_tblDAO followDao = new Follow_tblDAO();
+            Account_tblDTO currentUser = (Account_tblDTO) session.getAttribute("USER");
+            int isfollowed = 0; //have not loged in OR have not followed
+
+            if (currentUser == null) {
+                isfollowed = -1; //have not loged in
+            } else {
+                System.out.println("PAIR FOLLOW: " + currentUser.getUserId() + "-" + userID);
+                System.out.println(followDao.isFollowed(1, 1));
+                if (followDao.isFollowed(currentUser.getUserId(), userID)) {
+                    isfollowed = 1;
+                }//end check if user has followed this recipe's author
+            }//end check if user has login
+
+            request.setAttribute("ISFOLLOWED", isfollowed);
+            //thongnt section end
+            //----------------------------
 
             //redirect webpage
             url = siteMaps.getProperty(AppContants.DisplayOtherUserProfileFeartures.USER_PROFILE_PAGE);

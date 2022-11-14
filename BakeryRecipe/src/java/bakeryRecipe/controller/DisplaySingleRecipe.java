@@ -96,6 +96,10 @@ public class DisplaySingleRecipe extends HttpServlet {
                     String youtubeCode = GetYoutubeVideoCode(vidUrl);
                     request.setAttribute("YOUTUBE_CODE", youtubeCode);
                 }
+                
+                 // Load similar recipes
+                List<Recipe_tblDTO> similarRecipeResultList = recipeDao.displaySimilarRecipe(recipeDto.getCategoryId());
+                request.setAttribute("SIMILAR_RECIPE_LIST", similarRecipeResultList);
                 //----------------------------
                 //thongnt section start
                 //DISPLAY COMMENTS FUNCTION

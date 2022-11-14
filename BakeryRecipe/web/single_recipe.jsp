@@ -101,32 +101,42 @@
                                 <!--header recipe information-->
                                 <div class="row mb-4">
                                     <div class="col-xl-9 col-12">
+                                        <form action="displayOtherUserProfileController">
+                                            <button class="custom-btn-anhdh" style=" font-style: none; padding: 5px; font-size: small; display: flex; flex-direction: row; justify-content: center"><i class="fas fa-user"><span style="margin-left: 3px">${author.fullName}</span></i></button>
+                                            <!--<i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>-->
+                                            <input type="hidden" name="authorID" value="${author.userId}">
+                                        </form>
                                         <ul class="entry-meta">
                                             <li class="single-meta"><a href="#"><i class="far fa-calendar-alt"></i>${recipeDto.lastModified}</a></li>
                                             <li class="single-meta">
-                                                <form action="displayOtherUserProfileController">
-                                                    <i class="fas fa-user"></i><input type="submit" value="by ${author.fullName}"/>
-                                                    <input type="hidden" name="authorID" value="${author.userId}">
-                                                </form>
-                                                <jsp:include page="follow.jsp" />
+                                                <!--                                                <form action="displayOtherUserProfileController">
+                                                                                                    <button class="custom-btn-anhdh" style="padding: 5px"><i class="fas fa-user">${author.fullName}</i></button>
+                                                                                                    <i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>
+                                                                                                    <input type="hidden" name="authorID" value="${author.userId}">
+                                                                                                </form>-->
+                                               
                                             </li>
                                             <jsp:include page="like.jsp" />
                                             <!--Save-->
                                             <c:if test="${not empty loginValue}">
                                                 <c:if test="${empty save_result}">
                                                     <li class="single-meta">
-                                                        <form action="saveRecipeController" method="POST">      
-                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                            <input type="submit" name="saveRecipeController" value="Save">        
+                                                        <form action="saveRecipeController" method="POST">   
+                                                            <button class="custom-btn-thongnt">
+                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Save</span>
+                                                            <!--<input type="submit" name="saveRecipeController" value="Save">-->  
+                                                            </button>
                                                             <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
                                                         </form> 
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${not empty save_result}">
                                                     <li class="single-meta">
-                                                        <form action="unsaveRecipeController" method="POST">      
-                                                            <i class="fa fa-bookmark" aria-hidden="true"></i><span></span>
-                                                            <input type="submit" name="saveRecipeController" value="Unsaved">        
+                                                        <form action="unsaveRecipeController" method="POST"> 
+                                                            <button class="custom-btn-thongnt">
+                                                                <i class="fa fa-bookmark" aria-hidden="true"></i><span style="margin-left: 5px">Unsaved</span>
+                                                            <!--<input type="submit" name="saveRecipeController" value="Unsaved">-->   
+                                                            </button>
                                                             <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}"/>
                                                         </form> 
                                                     </li>
@@ -142,7 +152,7 @@
                                 <div class="item-figure">
                                     <img src="${image.imgLink}" alt="Post Image">
                                 </div>                                                                   
-                                
+
                                 <!--Recipe Icon Addition information Detail-->
                                 <div class="item-feature">
                                     <ul>
@@ -192,7 +202,7 @@
                                                     </div>
                                                     <div class="media-body space-sm">
                                                         <div class="feature-title">VIEWS</div>
-                                                        <div class="feature-sub-title">0</div>
+                                                        <div class="feature-sub-title">${recipeDto.view_count}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,19 +252,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                                        <!--Video youtube of recipe-->
-                                                    <c:set var="youtubeVid" value="${requestScope.YOUTUBE_CODE}"></c:set>
-                                                    <c:if test="${not empty youtubeVid}">                                    
-                                                        <iframe width="560" height="315" 
-                                                                src="https://www.youtube.com/embed/${youtubeVid}" 
-                                                                title="YouTube video player" frameborder="0" 
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                                allowfullscreen></iframe>                                    
-                                                        </c:if>                                   
-                                                    <!--VIdeo end here-->               
-                                                    
-                                                    
+
+                                    <!--Video youtube of recipe-->
+                                    <c:set var="youtubeVid" value="${requestScope.YOUTUBE_CODE}"></c:set>
+                                    <c:if test="${not empty youtubeVid}">                                    
+                                        <iframe width="560" height="315" 
+                                                src="https://www.youtube.com/embed/${youtubeVid}" 
+                                                title="YouTube video player" frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen></iframe>                                    
+                                        </c:if>                                   
+                                    <!--VIdeo end here-->               
+
+
                                     <!--List of making steps-->
                                     <div class="direction-wrap-layout1" style="margin-top: 25px">
                                         <div class="section-heading heading-dark">
@@ -353,47 +363,69 @@
                                     <div class="also-like-wrap">
                                         <h4 class="also-like-title">YOU MAY ALSO LIKE</h4>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product11.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">BREAKFAST</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
-                                                                Chanterelles</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
+                                            <c:set var="similarRecipes" value="${requestScope.SIMILAR_RECIPE_LIST}"></c:set>     
+                                            <c:if test="${not empty similarRecipes}">
+                                                <c:forEach var="similarRecipe" items="${similarRecipes}">
+                                                    <c:set var="author" value="${similarRecipe.authorInfo}"></c:set>
+                                                    <c:set var="image" value="${similarRecipe.image}"></c:set>
+                                                        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                            <div class="product-box-layout2">
+                                                                <figure class="item-figure"><img src="${image.imgLink}"
+                                                                                             alt="Product"></figure>
+                                                            <div class="item-content">
+                                                                <span class="sub-title">${similarRecipe.name}</span>
+                                                                <h3 class="item-title"><a href="single-recipe1.html">${similarRecipe.description}</a></h3>
+                                                                <ul class="entry-meta">
+                                                                    <li><a href="#"><i class="fas fa-user"></i>by <span>${author.fullName}</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty similarRecipes}">
+                                                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product11.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">BREAKFAST</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Tomatoes Stuffed with Foie and
+                                                                    Chanterelles</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- <<<<<<< thongnt  -->               <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product12.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">DESERT</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
-                                                                GingersnapCrust</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
-                                                    </div>                         
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
-                                                <div class="product-box-layout2">
-                                                    <figure class="item-figure"><img src="img/product/product13.jpg"
-                                                                                     alt="Product"></figure>
-                                                    <div class="item-content">
-                                                        <span class="sub-title">JUICE</span>
-                                                        <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
-                                                        <ul class="entry-meta">
-                                                            <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
-                                                        </ul>
+                                                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product12.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">DESERT</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Pumpkin Cheesecake With
+                                                                    GingersnapCrust</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>                         
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-xl-4 d-block d-md-none d-xl-block col-12">
+                                                    <div class="product-box-layout2">
+                                                        <figure class="item-figure"><img src="img/product/product13.jpg"
+                                                                                         alt="Product"></figure>
+                                                        <div class="item-content">
+                                                            <span class="sub-title">JUICE</span>
+                                                            <h3 class="item-title"><a href="single-recipe1.html">Blueberry Juice with Lemon Crema</a></h3>
+                                                            <ul class="entry-meta">
+                                                                <li><a href="#"><i class="fas fa-user"></i>by <span>John Martin</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                         </div>                                                                                                      
                                     </div>
 
@@ -487,12 +519,12 @@
         <!-- Custom Js -->
         <script src="js/main.js"></script>
         <script>
-        <!--Chan gui form bang Enter-->
-        $("form").keypress(function (e) {
-            if (e.which == 13) {
-                return false;
-            }
-        });
+<!--Chan gui form bang Enter-->
+                                    $("form").keypress(function (e) {
+                                        if (e.which == 13) {
+                                            return false;
+                                        }
+                                    });
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="js/adjustServing.js"></script>

@@ -1,37 +1,43 @@
 /* Follow */
 .custom-btn-thongnt{
-	width: fit-content;
-	height: fit-content;
-	padding: 5px !important;
-	background-color: white;
-	border: solid 1px;
-	border-radius: 10px !important;
-	color: #ff4a52;
-	position: relative;
-	z-index: 1;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px !important;
+    background-color: white;
+    border: solid 1px;
+    border-radius: 10px !important;
+    color: #ff4a52;
+    position: relative;
+    z-index: 1;
 }
 
 .custom-btn-thongnt::after{
-	content: '';
-	top: 0;
-	right: 0;
-	width: 0;
-	height: 100%;
-	position: absolute;
-	background-color: #ff4a52;
-	border-radius: 10px !important;
-	color: white;
-	transition: 0.4s;
-	z-index: -1;
+    content: '';
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100%;
+    position: absolute;
+    background-color: #ff4a52;
+    border-radius: 10px !important;
+    color: white;
+    transition: 0.4s;
+    z-index: -1;
 }
 
 .custom-btn-thongnt:hover{
-	color: white;
-	transition: 0.4s;
+    color: white;
+    transition: 0.4s;
 }
 
 .custom-btn-thongnt:hover::after{
-	left: 0;
-	padding: 5px !important;
-	width: 100%;
+    left: 0;
+    padding: 5px !important;
+    width: 100%;
+}
+
+.follow-container{
+    position: absolute;
+    top: 7rem;
+    left: 80%;
 }

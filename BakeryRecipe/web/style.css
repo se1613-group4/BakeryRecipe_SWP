@@ -12320,6 +12320,16 @@ svg {
     justify-content: center;
 }
 
+/*=======================================================================
+18. Search Page customise Css --Thong added
+=========================================================================*/
+.search-recipe-image{
+    width: 370px;
+    height: 250px;
+    object-fit: cover;
+}
+
+
 /*===========================================
 lam edit user dropdown (in header)
 =============================================*/
@@ -12428,4 +12438,10 @@ lam edit user dropdown (in header)
 	left: 0;
 	padding: 1.5rem;
 	width: 100%;
+}
+
+/* Comment */
+.comment-element{
+	margin: 0 !important;
+	margin-bottom: 3rem !important;
 }

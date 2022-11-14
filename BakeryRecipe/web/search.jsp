@@ -187,7 +187,7 @@
                                         <div class="product-box-layout1">
                                             <figure class="item-figure">
                                                 <a href=${single_recipe_url}>
-                                                    <img src=${image} alt="Recipe"></a>
+                                                    <img class="search-recipe-image" src=${image} alt="Recipe"></a>
                                             </figure>
                                             <div class="item-content">
                                                 <span class="sub-title">${category.name}</span>
@@ -237,7 +237,7 @@
                                         <div class="product-box-layout1">
                                             <figure class="item-figure">
                                                 <a href=${single_recipe_url}>
-                                                    <img src=${image} alt="Recipe"></a>
+                                                    <img class="search-recipe-image" src=${image} alt="Recipe"></a>
                                             </figure>
                                             <div class="item-content">
                                                 <span class="sub-title">${category.name}</span>

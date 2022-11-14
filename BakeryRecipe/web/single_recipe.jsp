@@ -114,7 +114,7 @@
                                                                                                     <i class="fas fa-user">${author.fullName}</i><input type="submit" value="by ${author.fullName}"/>
                                                                                                     <input type="hidden" name="authorID" value="${author.userId}">
                                                                                                 </form>-->
-                                                <jsp:include page="follow.jsp" />
+                                               
                                             </li>
                                             <jsp:include page="like.jsp" />
                                             <!--Save-->

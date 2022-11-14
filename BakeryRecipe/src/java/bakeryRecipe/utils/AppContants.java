@@ -48,6 +48,7 @@ public class AppContants { // mapping all features strings
         public static final String ERROR_PAGE = "addCommentErrorPage";
         public static final String LOGIN_PAGE = "loginPage";
         public static final String DISPLAY_SINGLE_RECIPE_CONTROLLER = "displaySingleRecipeController";
+        public static final String DISPLAY_OTHER_PROFILE_CONTROLLER = "displayOtherUserProfileController";
 
     }
 

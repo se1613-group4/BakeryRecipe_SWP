@@ -105,7 +105,9 @@
                                                             <h1 class="author-title">${profile_result.fullName}
                                                             </h1>
                                                             <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
+                                                            <jsp:include page="follow.jsp" />
                                                         </div>
+
                                                         <div style="display: flex; flex-direction: row; margin-left: 20%; margin-top: 20px">
                                                             <div style="margin-bottom: 20px ">
                                                                 <input type="submit" name="editBtn" value="Edit profile" class="btn btn-light fa-1x"/>
@@ -143,7 +145,7 @@
                                                                 <p style="font-size: 25px; text-align: center; width: 100%"> ${profile_result.phoneNumber}</p>
                                                             </div>
                                                         </div>
-                                                            
+
                                                         <div style="width: 100%; display: flex; flex-direction: row; border-bottom: solid 1px #C0C0C0; margin-top: 10px">
                                                             <div style="width: 30%">
                                                                 <label style="font-size: 20px; font-weight: bold">Gender: </label></div>

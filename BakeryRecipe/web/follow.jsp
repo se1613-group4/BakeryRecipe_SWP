@@ -41,17 +41,23 @@
     </head>
 
     <body>
-        <c:set var="recipeDto" value="${requestScope.RECIPE_INFO}"/>
+        
         <c:set var="currentAccountDto" value="${sessionScope.USER}"/>
         <c:set var="isFollowed" value="${requestScope.ISFOLLOWED}"/>
+        <c:set var="currentAuthor" value="${param.authorID}"/>
+        
+        <h1>currentAccountDto ${currentAccountDto}</h1>
+        <h1>isFollowed ${isFollowed}</h1>
+        <h1>currentAuthor ${currentAuthor}</h1>
+        <h1>FollowHere</h1>
 
 
         <c:if test="${isFollowed == -1  || isFollowed == 0}">
             <div class="follow-container">
                 <form action="followController">
-                    <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
+                    <!--<input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">-->
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                    <input type="hidden" name="txtRecipeAuthorId" value="${recipeDto.authorInfo.userId}">
+                    <input type="hidden" name="txtRecipeAuthorId" value="${currentAuthor}">
                     <button class="custom-btn-thongnt"><i class="bi bi-plus"></i>&nbsp;Follow</button>
                 </form>
             </div>
@@ -60,10 +66,10 @@
         <c:if test="${isFollowed == 1}">
             <div class="follow-container">
                 <form action="unfollowController">
-                    <input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">
+                    <!--<input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">-->
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
-                    <input type="hidden" name="txtRecipeAuthorId" value="${recipeDto.authorInfo.userId}">
-                    <button>Unfollow <i class="fa fa-heart" aria-hidden="true"></i></button>
+                    <input type="hidden" name="txtRecipeAuthorId" value="${currentAuthor}">
+                    <button class="custom-btn-thongnt">Unfollow <i class="fa fa-heart" aria-hidden="true"></i></button>
                 </form>
             </div>
         </c:if><!-- end check if user has login (check here only for display suitable button) -->

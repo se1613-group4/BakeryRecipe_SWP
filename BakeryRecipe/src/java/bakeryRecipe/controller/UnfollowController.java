@@ -53,12 +53,12 @@ public class UnfollowController extends HttpServlet {
             if (currentUser == null) {
                 urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.LOGIN_PAGE);
             } else {
-                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
+//                int recipe_id = Integer.parseInt(request.getParameter("txtRecipeId"));
                 int user_id = Integer.parseInt(request.getParameter("txtUserId"));
                 int recipeAuthor_id = Integer.parseInt(request.getParameter("txtRecipeAuthorId"));
                 Follow_tblDAO dao = new Follow_tblDAO();
                 if (dao.unfollowRecipe(user_id, recipeAuthor_id)) {
-                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_SINGLE_RECIPE_CONTROLLER) + "?" + "recipeId=" + recipe_id;
+                    urlRewriting = siteMaps.getProperty(AppContants.FollowFeature.DISPLAY_OTHER_PROFILE_CONTROLLER) + "?" + "authorID=" + user_id;
                 }//end check result
             }//end check has been login
 

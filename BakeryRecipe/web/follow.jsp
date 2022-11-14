@@ -58,7 +58,7 @@
                     <!--<input type="hidden" name="txtRecipeId" value="${recipeDto.recipeId}">-->
                     <input type="hidden" name="txtUserId" value="${currentAccountDto.userId}">
                     <input type="hidden" name="txtRecipeAuthorId" value="${currentAuthor}">
-                    <button class="custom-btn-thongnt"><i class="bi bi-plus"></i>&nbsp;Follow</button>
+                    <button class="custom-btn-thongnt" type="submit"><i class="bi bi-plus"></i>&nbsp;Follow</button>
                 </form>
             </div>
         </c:if><!-- end check if user has not login (check here only for display suitable button) -->

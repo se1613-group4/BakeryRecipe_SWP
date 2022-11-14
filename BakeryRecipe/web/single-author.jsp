@@ -105,7 +105,6 @@
                                                             <h1 class="author-title">${profile_result.fullName}
                                                             </h1>
                                                             <p><b>${followers_result}</b> Followers <b style="margin-left: 20px">${following_result}</b> Following</p>
-                                                            <jsp:include page="follow.jsp" />
                                                         </div>
 
                                                         <div style="display: flex; flex-direction: row; margin-left: 20%; margin-top: 20px">

@@ -264,10 +264,10 @@ public class Profile_tblDAO implements Serializable {
             if (connection != null) {
                 //2. Write SQL String
                 String sql = "select count(user_id_followed) as follow, profile_id, profile_tbl.user_id, full_name, gender, avatar_url, bio, profile_tbl.last_modified\n"
-                        + "from profile_tbl\n"
-                        + "inner join follow_tbl on follow_tbl.user_id = profile_tbl.user_id\n"
-                        + "group by profile_tbl.user_id\n"
-                        + "order by follow desc";
+                        + "from profile_tbl \n"
+                        + "inner join follow_tbl on follow_tbl.user_id_followed = profile_tbl.user_id\n"
+                        + "group by user_id_followed\n"
+                        + "order by user_id_followed desc;";
                 //3. Create Statement Object
                 stm = connection.prepareStatement(sql);
                 //4. Execute statement
@@ -304,8 +304,8 @@ public class Profile_tblDAO implements Serializable {
             }
         }
     }
-    
-     public boolean CreateProfileGG_tbl(Profile_tblDTO pro, int currentUserId, String fullname, String avt) throws SQLException {
+
+    public boolean CreateProfileGG_tbl(Profile_tblDTO pro, int currentUserId, String fullname, String avt) throws SQLException {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;

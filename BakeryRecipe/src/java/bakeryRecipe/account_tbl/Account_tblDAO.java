@@ -93,7 +93,7 @@ public class Account_tblDAO implements Serializable {
             pt.setString(3, pass);
             pt.setString(4, acc.getEmail()); 
             pt.setDate(5, now);
-            pt.setBoolean(6, false);
+            pt.setBoolean(6, true);
             pt.setBoolean(7, false);
             pt.executeUpdate();
             set = true;
@@ -166,9 +166,14 @@ public class Account_tblDAO implements Serializable {
         ResultSet rs = null;
         try {
             con = DBConnection.getConnection();
-            String query = "SELECT user_id,username,is_admin \n"
-                    + "FROM account_tbl\n"
-                    + "where username like ? and password=? ";
+//            String query = "SELECT user_id,username,is_admin,avatar_url \n"
+//                    + "FROM account_tbl\n"
+//                    + "left join profile_tbl on account_tbl.user_id = profile_tbl.user_id\n"
+//                    + "where username like ? and password=? ";
+            String query= "SELECT account_tbl.user_id, account_tbl.username, is_admin, avatar_url\n" +
+"                     FROM account_tbl\n" +
+"                     left join profile_tbl on account_tbl.user_id = profile_tbl.user_id\n" +
+"                     where username like ? and password = ?";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, username);
             pst.setString(2, pass);
@@ -176,9 +181,10 @@ public class Account_tblDAO implements Serializable {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                int userId = rs.getInt("user_id");
+                int userId = rs.getInt("account_tbl.user_id");
                 boolean isadmin = rs.getBoolean("is_admin");
-                acc = new Account_tblDTO(userId, username, pass, isadmin);
+                String avatar = rs.getString("avatar_url");
+                acc = new Account_tblDTO(userId, username, pass, isadmin,avatar);
 
             }
 

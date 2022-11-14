@@ -304,4 +304,44 @@ public class Profile_tblDAO implements Serializable {
             }
         }
     }
+    
+     public boolean CreateProfileGG_tbl(Profile_tblDTO pro, int currentUserId, String fullname, String avt) throws SQLException {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        boolean set = false;
+
+        Date now = Date.valueOf(LocalDate.now());
+        try {
+            con = DBConnection.getConnection();
+            if (con != null) {
+                String query = " insert into Profile_tbl (user_id, last_modified, full_name,avatar_url) \n"
+                        + "values (?, ?, ?, ?);";
+
+                PreparedStatement pt = con.prepareStatement(query);
+                pt.setInt(1, currentUserId);
+                pt.setDate(2, now);
+                pt.setString(3, fullname);
+                pt.setString(4, avt);
+                pt.executeUpdate();
+                set = true;
+            }
+            //Insert register data to database
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return set;
+    }
 }

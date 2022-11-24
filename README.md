@@ -24,7 +24,7 @@
   <img src="./screenshots/02-login.png" alt="Login" width="45%"></img> &nbsp;&nbsp; <img src="./screenshots/03-single-recipe.png" alt="Single Recipe" width="45%"></img>
   <img src="./screenshots/04-create-new-recipe_01.png" alt="Create new Recipe 1" width="45%"></img> &nbsp;&nbsp; <img src="./screenshots/04-create-new-recipe_02.png" alt="Create new Recipe 2" width="45%"></img>
   <img src="./screenshots/05-search.png" alt="Search" width="45%"></img> &nbsp;&nbsp; <img src="./screenshots/06-single-author.png" alt="Single Author" width="45%"></img> 
-  <img src="./screenshots/Bakery Recipe Fast Demo.gif" alt="Demo" width="45%"></img>
+  <img src="./screenshots/00-fast-demo.gif" alt="Demo" width="45%"></img>
 </div>
   
 ## Technology

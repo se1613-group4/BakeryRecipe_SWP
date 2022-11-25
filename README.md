@@ -1,4 +1,4 @@
-# COOKING RECIPE SHARING WEBAPP
+# Bakery Recipes Sharing Web App
 
 :wave: Welcome to our Software Development Project (SWP391) :wave:
 

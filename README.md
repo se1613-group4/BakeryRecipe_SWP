@@ -80,7 +80,7 @@
 3| -| [Front-end template](https://www.figma.com/file/8bXKMQcuvUHcne1PlG5mlE/Project-Siu-%C4%90%E1%BB%89n?node-id=151%3A368) | Html/css template for the website
 4| -| [Library Folder](https://github.com/SE1613-GROUP4-BakeryReceip/BakeryRecipe_SWP/tree/main/customLib) | Useful libraries
 5| -| [Document Folder](https://drive.google.com/drive/folders/1moVIVOYGr9SAljUZ-F6Qu-Cv7pB3yo2T?usp=share_link) | All of document files (Weekly Report, Product Backlog, SRS, Design Document)
-6| -| [Presentation Slide](https://www.canva.com/design/DAFQ4QdBtLw/cdRimG8gCfShguMBIBD7Rw/view?utm_content=DAFQ4QdBtLw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) | Presentation slide for defense day
+6| -| [Presentation Slide](https://www.canva.com/design/DAFS72MvxDU/0QiOsfJ03MNXx1d1qtafPw/view?utm_content=DAFS72MvxDU&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu) | Presentation slide for defense day
 
 ## Contributors
 **1. Mentors:**

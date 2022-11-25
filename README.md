@@ -13,7 +13,7 @@
   - [License & Copyright](#license--copyright)
 
 ## Description
-- This is a website to publish the graduation projects of Software Development Project subject.
+- A social network that connects baking lovers, allowing them to share their bakery recipes, and interacts with each other's recipes by liking, commenting, and saving.
 - This web works well on desktop, not for mobile.
 - This project started from 05-09-2022 to 08-11-2022.
 

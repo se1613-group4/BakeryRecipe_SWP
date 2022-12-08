@@ -27,6 +27,7 @@
   <img src="./screenshots/05-search.png" alt="Search" width="45%"></img> &nbsp;&nbsp; <img src="./screenshots/06-single-author.png" alt="Single Author" width="45%"></img> 
   
 </div>
+Demo clip: https://youtu.be/98SVpjJ7fcI
   
 ## Technology
 **1. Frontend**
